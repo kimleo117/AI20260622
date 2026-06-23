@@ -20,15 +20,14 @@ AI智能工具站
 
 - Bootstrap CSS：`css/bootstrap.min.css`
 - Bootstrap JS：`js/bootstrap.bundle.min.js`
-- 圖片資料夾：`PIC/`
+- 圖片資料夾：`pic/`
 
 ## 圖片使用
 
-- 輪播圖 1：`PIC/A-1.jpeg`
-- 輪播圖 2：`PIC/A-2.JPG`
-- 輪播圖 3：`PIC/A-3.jpg`
-- 關於我們圖片：`PIC/A-4.jpg`
-- 免費與付費文字參考圖：`PIC/A-6.jpg`
+- 輪播圖 1：`pic/A-1.jpeg`
+- 輪播圖 2：`pic/A-2.JPG`
+- 輪播圖 3：`pic/A-3.jpg`
+- 關於我們圖片：`pic/A-4.jpg`
 
 ## 頁面結構
 
