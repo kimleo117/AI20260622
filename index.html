@@ -265,22 +265,6 @@
         margin-bottom: 0.6rem;
       }
 
-      @media (max-width: 767.98px) {
-        .hero-slide {
-          min-height: 360px;
-          padding: 3rem 1rem;
-        }
-
-        .about-visual {
-          min-height: 240px;
-        }
-
-        .stats-row {
-          gap: 1rem;
-          flex-wrap: wrap;
-        }
-      }
-
       /* Left sidebar for products */
       .left-sidebar {
         max-height: 80vh;
@@ -296,6 +280,7 @@
       .left-sidebar .cat-item {
         display: flex;
         align-items: center;
+        justify-content: space-between;
         gap: 0.6rem;
         padding: 0.6rem 0.5rem;
         border-radius: 6px;
@@ -317,13 +302,28 @@
         background: #f1f5f9;
         color: var(--primary);
         font-weight: 700;
+        flex-shrink: 0;
       }
 
       @media (max-width: 991.98px) {
         .left-sidebar { display: none; }
       }
 
-      /* visual highlight for scrolled-to section */
+      @media (max-width: 767.98px) {
+        .hero-slide {
+          min-height: 360px;
+          padding: 3rem 1rem;
+        }
+
+        .about-visual {
+          min-height: 240px;
+        }
+
+        .stats-row {
+          gap: 1rem;
+          flex-wrap: wrap;
+        }
+      }
       .section-highlight {
         animation: highlight 2s ease-in-out;
       }
@@ -403,19 +403,26 @@
           <aside class="col-lg-3 pe-lg-4">
             <div class="left-sidebar">
               <h5 class="mb-3 fw-bold">快速選項</h5>
-              <div class="cat-item active" data-target="all"><span class="cat-icon">◎</span><span>全部</span></div>
-              <div class="cat-item" data-target="#latest"><span class="cat-icon">🆕</span><span>最新 AI 工具</span><span class="ms-auto text-muted">6</span></div>
-              <div class="cat-item" data-target="#featured"><span class="cat-icon">🌟</span><span>本月精選工具</span><span class="ms-auto text-muted">5</span></div>
-              <div class="cat-item" data-target="#free"><span class="cat-icon">🆓</span><span>熱門免費 AI 工具</span><span class="ms-auto text-muted">6</span></div>
-              <div class="cat-item" data-target="#paid"><span class="cat-icon">💎</span><span>熱門付費 AI 工具</span><span class="ms-auto text-muted">4</span></div>
-              <div class="cat-item" data-target="#more-tools"><span class="cat-icon">✨</span><span>更多 AI 工具</span><span class="ms-auto text-muted">12</span></div>
+              <div class="cat-item active" data-target="all"><span class="cat-icon">◎</span><span>最新 AI 工具</span></div>
+              <div class="cat-item" data-target="#writing"><span class="cat-icon">✍️</span><span>本月精選工具</span></div>
+              <div class="cat-item" data-target="#free"><span class="cat-icon">🆓</span><span>熱門免費 AI 工具</span></div>
+              <div class="cat-item" data-target="#paid"><span class="cat-icon">💎</span><span>熱門付費 AI 工具</span></div>
               <hr>
-              <h6 class="mb-3 fw-bold">快速分類</h6>
-              <div class="cat-item" data-target="cat:design"><span class="cat-icon">🎨</span><span>設計師工具</span></div>
-              <div class="cat-item" data-target="cat:dev"><span class="cat-icon">💻</span><span>開發工具</span></div>
-              <div class="cat-item" data-target="cat:automation"><span class="cat-icon">⚙️</span><span>自動化工具</span></div>
-              <div class="cat-item" data-target="cat:docs"><span class="cat-icon">📄</span><span>文件與總結</span></div>
-              <div class="cat-item" data-target="cat:media"><span class="cat-icon">🎬</span><span>影音工具</span></div>
+              <h6 class="mb-3 fw-bold">工具分類</h6>
+              <div class="cat-item" data-target="cat:work"><span>工作優化</span><span class="ms-auto text-muted">16</span></div>
+              <div class="cat-item" data-target="cat:creative"><span>文藝主宰</span><span class="ms-auto text-muted">6</span></div>
+              <div class="cat-item" data-target="cat:visual"><span>互撮主宰</span><span class="ms-auto text-muted">15</span></div>
+              <div class="cat-item" data-target="cat:media"><span>影音主宰</span><span class="ms-auto text-muted">20</span></div>
+              <div class="cat-item" data-target="cat:summary"><span>文件總結與過濾</span><span class="ms-auto text-muted">5</span></div>
+              <div class="cat-item" data-target="cat:learning"><span>學習教育</span><span class="ms-auto text-muted">5</span></div>
+              <div class="cat-item" data-target="cat:audio"><span>音作工具</span><span class="ms-auto text-muted">7</span></div>
+              <div class="cat-item" data-target="cat:editing"><span>編製主宰</span><span class="ms-auto text-muted">3</span></div>
+              <div class="cat-item" data-target="cat:job"><span>求職面試</span><span class="ms-auto text-muted">4</span></div>
+              <div class="cat-item" data-target="cat:chat"><span>說文機器人</span><span class="ms-auto text-muted">9</span></div>
+              <div class="cat-item" data-target="cat:organize"><span>重托整理</span><span class="ms-auto text-muted">7</span></div>
+              <div class="cat-item" data-target="cat:brand"><span>品牌工具</span><span class="ms-auto text-muted">6</span></div>
+              <div class="cat-item" data-target="cat:seo"><span>提高引擎導搜索</span><span class="ms-auto text-muted">4</span></div>
+              <div class="cat-item" data-target="cat:ecommerce"><span>短式購寬</span><span class="ms-auto text-muted">15</span></div>
             </div>
           </aside>
 
@@ -503,6 +510,38 @@
           </div>
         </div>
 
+        <div class="mb-5" id="writing">
+          <h3 class="h4 fw-bold mb-3">本月精選工具</h3>
+          <div class="row g-4">
+            <div class="col-md-6 col-lg-4">
+              <article class="card ai-card h-100 shadow-sm border-0" data-cat="writing">
+                <div class="card-body p-4">
+                  <div class="card-icon" style="background:#fce7f3;color:#db2777;"><i data-lucide="pen-tool"></i></div>
+                  <h3 class="card-title h5 fw-bold">Copy.ai</h3>
+                  <p class="card-text text-muted">AI 文案與行銷內容生成工具，支援多語言與模板。</p>
+                  <div class="d-flex justify-content-between align-items-center gap-2">
+                    <span class="badge badge-free rounded-pill px-3 py-2">免費</span>
+                    <span class="badge badge-paid rounded-pill px-3 py-2">付費</span>
+                  </div>
+                </div>
+              </article>
+            </div>
+            <div class="col-md-6 col-lg-4">
+              <article class="card ai-card h-100 shadow-sm border-0" data-cat="writing">
+                <div class="card-body p-4">
+                  <div class="card-icon" style="background:#dbeafe;color:#2563eb;"><i data-lucide="align-left"></i></div>
+                  <h3 class="card-title h5 fw-bold">Grammarly</h3>
+                  <p class="card-text text-muted">語法與寫作建議工具，適合編輯、商務與學術寫作。</p>
+                  <div class="d-flex justify-content-between align-items-center gap-2">
+                    <span class="badge badge-free rounded-pill px-3 py-2">免費</span>
+                    <span class="badge badge-paid rounded-pill px-3 py-2">付費</span>
+                  </div>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+
         <div class="mb-5" id="featured">
           <h3 class="h4 fw-bold mb-3">本月精選工具</h3>
           <div class="row g-4">
@@ -569,10 +608,81 @@
                 </div>
               </article>
             </div>
-          </div>
-        </div>
-
-        <div class="mb-5" id="free">
+            <div class="col-md-6 col-lg-4">
+              <article class="card ai-card h-100 shadow-sm border-0" data-cat="work">
+                <div class="card-body p-4">
+                  <div class="card-icon" style="background:#ecfdf5;color:#10b981;"><i data-lucide="zap"></i></div>
+                  <h3 class="card-title h5 fw-bold">Spinach</h3>
+                  <p class="card-text text-muted">敏捷會議 Scrum 助手，自動記錄會議內容與任務分配。</p>
+                  <div class="d-flex justify-content-between align-items-center gap-2">
+                    <span class="badge badge-free rounded-pill px-3 py-2">免費</span>
+                    <span class="badge badge-paid rounded-pill px-3 py-2">付費</span>
+                  </div>
+                </div>
+              </article>
+            </div>
+            <div class="col-md-6 col-lg-4">
+              <article class="card ai-card h-100 shadow-sm border-0" data-cat="audio">
+                <div class="card-body p-4">
+                  <div class="card-icon" style="background:#fce7f3;color:#db2777;"><i data-lucide="radio"></i></div>
+                  <h3 class="card-title h5 fw-bold">Fireflies</h3>
+                  <p class="card-text text-muted">會議錄音與自動轉錄工具，支援多種會議平台與語言。</p>
+                  <div class="d-flex justify-content-between align-items-center gap-2">
+                    <span class="badge badge-free rounded-pill px-3 py-2">免費</span>
+                    <span class="badge badge-paid rounded-pill px-3 py-2">付費</span>
+                  </div>
+                </div>
+              </article>
+            </div>
+            <div class="col-md-6 col-lg-4">
+              <article class="card ai-card h-100 shadow-sm border-0" data-cat="work">
+                <div class="card-body p-4">
+                  <div class="card-icon" style="background:#eef2ff;color:#4338ca;"><i data-lucide="search"></i></div>
+                  <h3 class="card-title h5 fw-bold">genei</h3>
+                  <p class="card-text text-muted">AI 研究助手，自動分析文獻與生成研究摘要。</p>
+                  <div class="d-flex justify-content-between align-items-center gap-2">
+                    <span class="badge badge-free rounded-pill px-3 py-2">免費</span>
+                  </div>
+                </div>
+              </article>
+            </div>
+            <div class="col-md-6 col-lg-4">
+              <article class="card ai-card h-100 shadow-sm border-0" data-cat="writing">
+                <div class="card-body p-4">
+                  <div class="card-icon" style="background:#fff7ed;color:#c2410c;"><i data-lucide="copy"></i></div>
+                  <h3 class="card-title h5 fw-bold">Happy Copy</h3>
+                  <p class="card-text text-muted">Email AI 文案工具，協助撰寫高轉換率的行銷郵件。</p>
+                  <div class="d-flex justify-content-between align-items-center gap-2">
+                    <span class="badge badge-free rounded-pill px-3 py-2">免費</span>
+                  </div>
+                </div>
+              </article>
+            </div>
+            <div class="col-md-6 col-lg-4">
+              <article class="card ai-card h-100 shadow-sm border-0" data-cat="work">
+                <div class="card-body p-4">
+                  <div class="card-icon" style="background:#fdef76;color:#b45309;"><i data-lucide="globe"></i></div>
+                  <h3 class="card-title h5 fw-bold">Deep.L</h3>
+                  <p class="card-text text-muted">AI 翻譯引擎，提供精準的多語言翻譯與本地化。</p>
+                  <div class="d-flex justify-content-between align-items-center gap-2">
+                    <span class="badge badge-free rounded-pill px-3 py-2">免費</span>
+                    <span class="badge badge-paid rounded-pill px-3 py-2">付費</span>
+                  </div>
+                </div>
+              </article>
+            </div>
+            <div class="col-md-6 col-lg-4">
+              <article class="card ai-card h-100 shadow-sm border-0" data-cat="organize">
+                <div class="card-body p-4">
+                  <div class="card-icon" style="background:#f3e8ff;color:#7c3aed;"><i data-lucide="inbox"></i></div>
+                  <h3 class="card-title h5 fw-bold">mem</h3>
+                  <p class="card-text text-muted">AI 記憶庫，自動組織筆記與知識，快速搜尋與回想。</p>
+                  <div class="d-flex justify-content-between align-items-center gap-2">
+                    <span class="badge badge-free rounded-pill px-3 py-2">免費</span>
+                  </div>
+                </div>
+              </article>
+            </div>
           <h3 class="h4 fw-bold mb-3">熱門免費 AI 工具</h3>
           <div class="row g-4">
             <div class="col-md-6 col-lg-4">
@@ -708,11 +818,23 @@
               </article>
             </div>
             <div class="col-md-6 col-lg-4">
-              <article class="card ai-card h-100 shadow-sm border-0">
+              <article class="card ai-card h-100 shadow-sm border-0" data-cat="notes">
                 <div class="card-body p-4">
-                  <div class="card-icon" style="background:#fce7f3;color:#db2777;"><i data-lucide="file-text"></i></div>
-                  <h3 class="card-title h5 fw-bold">ChatWithPDF</h3>
-                  <p class="card-text text-muted">上傳 PDF 後快速總結與互動問答，適合資料整理與閱讀研究。</p>
+                  <div class="card-icon" style="background:#fef3c7;color:#d97706;"><i data-lucide="alert-circle"></i></div>
+                  <h3 class="card-title h5 fw-bold">Warnest</h3>
+                  <p class="card-text text-muted">智能檢測與警報系統，及時提醒重要事項與風險。</p>
+                  <div class="d-flex justify-content-between align-items-center gap-2">
+                    <span class="badge badge-paid rounded-pill px-3 py-2">付費</span>
+                  </div>
+                </div>
+              </article>
+            </div>
+            <div class="col-md-6 col-lg-4">
+              <article class="card ai-card h-100 shadow-sm border-0" data-cat="ecommerce">
+                <div class="card-body p-4">
+                  <div class="card-icon" style="background:#ede9fe;color:#7c3aed;"><i data-lucide="shopping-bag"></i></div>
+                  <h3 class="card-title h5 fw-bold">gidde</h3>
+                  <p class="card-text text-muted">電商 AI 助手，優化商品描述與銷售文案。</p>
                   <div class="d-flex justify-content-between align-items-center gap-2">
                     <span class="badge badge-paid rounded-pill px-3 py-2">付費</span>
                   </div>
@@ -720,207 +842,6 @@
               </article>
             </div>
           </div>
-
-            <div class="mb-5" id="more-tools">
-              <h3 class="h4 fw-bold mb-3">更多 AI 工具</h3>
-              <div class="row g-4">
-                <div class="col-md-6 col-lg-4">
-                  <article class="card ai-card h-100 shadow-sm border-0" data-cat="writing">
-                    <div class="card-body p-4">
-                      <div class="card-icon" style="background:#fff7ed;color:#c2410c;"><i data-lucide="pen-tool"></i></div>
-                      <h3 class="card-title h5 fw-bold">Copy.ai</h3>
-                      <p class="card-text text-muted">AI 文案與行銷內容生成工具，支援多語言與模板。</p>
-                      <div class="d-flex justify-content-between align-items-center gap-2">
-                        <span class="badge badge-free rounded-pill px-3 py-2">免費</span>
-                        <span class="badge badge-paid rounded-pill px-3 py-2">付費</span>
-                      </div>
-                    </div>
-                  </article>
-                </div>
-                <div class="col-md-6 col-lg-4">
-                  <article class="card ai-card h-100 shadow-sm border-0" data-cat="writing">
-                    <div class="card-body p-4">
-                      <div class="card-icon" style="background:#eef2ff;color:#4338ca;"><i data-lucide="align-left"></i></div>
-                      <h3 class="card-title h5 fw-bold">Grammarly</h3>
-                      <p class="card-text text-muted">語法與寫作建議工具，適合編輯、商務與學術寫作。</p>
-                      <div class="d-flex justify-content-between align-items-center gap-2">
-                        <span class="badge badge-free rounded-pill px-3 py-2">免費</span>
-                        <span class="badge badge-paid rounded-pill px-3 py-2">付費</span>
-                      </div>
-                    </div>
-                  </article>
-                </div>
-                <div class="col-md-6 col-lg-4">
-                  <article class="card ai-card h-100 shadow-sm border-0" data-cat="image">
-                    <div class="card-body p-4">
-                      <div class="card-icon" style="background:#fde68a;color:#b45309;"><i data-lucide="image"></i></div>
-                      <h3 class="card-title h5 fw-bold">Canva AI</h3>
-                      <p class="card-text text-muted">視覺設計與影像生成整合，快速產生社群貼文與簡報素材。</p>
-                      <div class="d-flex justify-content-between align-items-center gap-2">
-                        <span class="badge badge-free rounded-pill px-3 py-2">免費</span>
-                        <span class="badge badge-paid rounded-pill px-3 py-2">付費</span>
-                      </div>
-                    </div>
-                  </article>
-                </div>
-
-                <div class="col-md-6 col-lg-4">
-                  <article class="card ai-card h-100 shadow-sm border-0" data-cat="media">
-                    <div class="card-body p-4">
-                      <div class="card-icon" style="background:#fef3c7;color:#d97706;"><i data-lucide="film"></i></div>
-                      <h3 class="card-title h5 fw-bold">Runway</h3>
-                      <p class="card-text text-muted">影片與影像生成平台，提供快速剪輯與視覺效果。</p>
-                      <div class="d-flex justify-content-between align-items-center gap-2">
-                        <span class="badge badge-free rounded-pill px-3 py-2">免費</span>
-                        <span class="badge badge-paid rounded-pill px-3 py-2">付費</span>
-                      </div>
-                    </div>
-                  </article>
-                </div>
-
-                <div class="col-md-6 col-lg-4">
-                  <article class="card ai-card h-100 shadow-sm border-0" data-cat="media">
-                    <div class="card-body p-4">
-                      <div class="card-icon" style="background:#fde2e2;color:#9f1239;"><i data-lucide="music"></i></div>
-                      <h3 class="card-title h5 fw-bold">Descript</h3>
-                      <p class="card-text text-muted">影音編輯結合語音轉文字，適合 podcast 與影片剪輯。</p>
-                      <div class="d-flex justify-content-between align-items-center gap-2">
-                        <span class="badge badge-free rounded-pill px-3 py-2">免費</span>
-                        <span class="badge badge-paid rounded-pill px-3 py-2">付費</span>
-                      </div>
-                    </div>
-                  </article>
-                </div>
-
-                <div class="col-md-6 col-lg-4">
-                  <article class="card ai-card h-100 shadow-sm border-0" data-cat="image">
-                    <div class="card-body p-4">
-                      <div class="card-icon" style="background:#ede9fe;color:#7c3aed;"><i data-lucide="camera"></i></div>
-                      <h3 class="card-title h5 fw-bold">Midjourney</h3>
-                      <p class="card-text text-muted">文字到影像生成服務，以風格化與高品質圖像著稱。</p>
-                      <div class="d-flex justify-content-between align-items-center gap-2">
-                        <span class="badge badge-paid rounded-pill px-3 py-2">付費</span>
-                      </div>
-                    </div>
-                  </article>
-                </div>
-
-                <div class="col-md-6 col-lg-4">
-                  <article class="card ai-card h-100 shadow-sm border-0" data-cat="dev">
-                    <div class="card-body p-4">
-                      <div class="card-icon" style="background:#d1fae5;color:#059669;"><i data-lucide="terminal"></i></div>
-                      <h3 class="card-title h5 fw-bold">Hugging Face</h3>
-                      <p class="card-text text-muted">模型社群與推理平台，提供多種開源模型與 API。</p>
-                      <div class="d-flex justify-content-between align-items-center gap-2">
-                        <span class="badge badge-free rounded-pill px-3 py-2">免費</span>
-                        <span class="badge badge-paid rounded-pill px-3 py-2">付費</span>
-                      </div>
-                    </div>
-                  </article>
-                </div>
-
-                <div class="col-md-6 col-lg-4">
-                  <article class="card ai-card h-100 shadow-sm border-0" data-cat="automation">
-                    <div class="card-body p-4">
-                      <div class="card-icon" style="background:#eef2ff;color:#4338ca;"><i data-lucide="corner-down-right"></i></div>
-                      <h3 class="card-title h5 fw-bold">Zapier</h3>
-                      <p class="card-text text-muted">自動化工具，串接數百種服務，建立工作流程與觸發器。</p>
-                      <div class="d-flex justify-content-between align-items-center gap-2">
-                        <span class="badge badge-free rounded-pill px-3 py-2">免費</span>
-                        <span class="badge badge-paid rounded-pill px-3 py-2">付費</span>
-                      </div>
-                    </div>
-                  </article>
-                </div>
-
-                <div class="col-md-6 col-lg-4">
-                  <article class="card ai-card h-100 shadow-sm border-0" data-cat="speech">
-                    <div class="card-body p-4">
-                      <div class="card-icon" style="background:#f9fafb;color:#0f766e;"><i data-lucide="volume-2"></i></div>
-                      <h3 class="card-title h5 fw-bold">Speechmatics</h3>
-                      <p class="card-text text-muted">高精度語音辨識服務，支援多語言與專業字幕需求。</p>
-                      <div class="d-flex justify-content-between align-items-center gap-2">
-                        <span class="badge badge-paid rounded-pill px-3 py-2">付費</span>
-                      </div>
-                    </div>
-                  </article>
-                </div>
-
-                <div class="col-md-6 col-lg-4">
-                  <article class="card ai-card h-100 shadow-sm border-0" data-cat="search">
-                    <div class="card-body p-4">
-                      <div class="card-icon" style="background:#fff7ed;color:#c2410c;"><i data-lucide="search"></i></div>
-                      <h3 class="card-title h5 fw-bold">You.com</h3>
-                      <p class="card-text text-muted">結合搜尋與 AI 回答的入口，提供自訂化搜尋與工具。</p>
-                      <div class="d-flex justify-content-between align-items-center gap-2">
-                        <span class="badge badge-free rounded-pill px-3 py-2">免費</span>
-                      </div>
-                    </div>
-                  </article>
-                </div>
-                <div class="col-md-6 col-lg-4">
-                  <article class="card ai-card h-100 shadow-sm border-0" data-cat="fun">
-                    <div class="card-body p-4">
-                      <div class="card-icon" style="background:#fde68a;color:#b45309;"><i data-lucide="smile"></i></div>
-                      <h3 class="card-title h5 fw-bold">AI Dungeon</h3>
-                      <p class="card-text text-muted">文字冒險遊戲平台，玩家可與 AI 即時創造故事情節。</p>
-                      <div class="d-flex justify-content-between align-items-center gap-2">
-                        <span class="badge badge-free rounded-pill px-3 py-2">免費</span>
-                      </div>
-                    </div>
-                  </article>
-                </div>
-                <div class="col-md-6 col-lg-4">
-                  <article class="card ai-card h-100 shadow-sm border-0" data-cat="fun">
-                    <div class="card-body p-4">
-                      <div class="card-icon" style="background:#fce7f3;color:#db2777;"><i data-lucide="camera"></i></div>
-                      <h3 class="card-title h5 fw-bold">Reface</h3>
-                      <p class="card-text text-muted">面部交換與影片特效應用，利用 AI 生成有趣的短影音。</p>
-                      <div class="d-flex justify-content-between align-items-center gap-2">
-                        <span class="badge badge-paid rounded-pill px-3 py-2">付費</span>
-                      </div>
-                    </div>
-                  </article>
-                </div>
-                <div class="col-md-6 col-lg-4">
-                  <article class="card ai-card h-100 shadow-sm border-0" data-cat="fun">
-                    <div class="card-body p-4">
-                      <div class="card-icon" style="background:#ede9fe;color:#7c3aed;"><i data-lucide="image"></i></div>
-                      <h3 class="card-title h5 fw-bold">Lensa</h3>
-                      <p class="card-text text-muted">AI 人像修圖與藝術風格濾鏡，打造有趣自拍特效。</p>
-                      <div class="d-flex justify-content-between align-items-center gap-2">
-                        <span class="badge badge-paid rounded-pill px-3 py-2">付費</span>
-                      </div>
-                    </div>
-                  </article>
-                </div>
-                <div class="col-md-6 col-lg-4">
-                  <article class="card ai-card h-100 shadow-sm border-0" data-cat="fun">
-                    <div class="card-body p-4">
-                      <div class="card-icon" style="background:#f8fafc;color:#0f766e;"><i data-lucide="film"></i></div>
-                      <h3 class="card-title h5 fw-bold">Wombo</h3>
-                      <p class="card-text text-muted">AI 創作工具，可生成音樂、動畫與搞笑彩繪視覺內容。</p>
-                      <div class="d-flex justify-content-between align-items-center gap-2">
-                        <span class="badge badge-free rounded-pill px-3 py-2">免費</span>
-                      </div>
-                    </div>
-                  </article>
-                </div>
-                <div class="col-md-6 col-lg-4">
-                  <article class="card ai-card h-100 shadow-sm border-0" data-cat="fun">
-                    <div class="card-body p-4">
-                      <div class="card-icon" style="background:#eef2ff;color:#4338ca;"><i data-lucide="sparkles"></i></div>
-                      <h3 class="card-title h5 fw-bold">NightCafe</h3>
-                      <p class="card-text text-muted">趣味 AI 圖像生成平台，提供風格化藝術、卡通與繪畫效果。</p>
-                      <div class="d-flex justify-content-between align-items-center gap-2">
-                        <span class="badge badge-free rounded-pill px-3 py-2">免費</span>
-                        <span class="badge badge-paid rounded-pill px-3 py-2">付費</span>
-                      </div>
-                    </div>
-                  </article>
-                </div>
-              </div>
-            </div>
 
           </div>
         </div>
