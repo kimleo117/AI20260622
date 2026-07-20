@@ -230,16 +230,22 @@
       .modal-backdrop {
         position: fixed;
         inset: 0;
-        background: rgba(15, 23, 42, 0.95);
-        display: none;
+        background: #020617;
+        display: flex;
         align-items: center;
         justify-content: center;
         z-index: 2000;
         padding: 1rem;
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transition: opacity 0.2s ease, visibility 0.2s ease;
       }
 
       .modal-backdrop.show {
-        display: flex;
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
       }
 
       .modal-card {
@@ -247,7 +253,8 @@
         border-radius: 16px;
         width: min(100%, 420px);
         padding: 1.5rem;
-        box-shadow: 0 20px 60px rgba(15, 23, 42, 0.25);
+        box-shadow: 0 20px 60px rgba(2, 6, 23, 0.35);
+        margin: auto;
       }
 
       footer {
