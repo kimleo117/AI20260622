@@ -1,0 +1,581 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>AI智能工具站</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+    <style>
+      :root {
+        --ink: #172033;
+        --muted: #64748b;
+        --primary: #2f6fed;
+        --primary-dark: #1d4ed8;
+        --line: #dbe3ef;
+        --nav: rgba(12, 18, 33, 0.95);
+        --footer: #101827;
+        --bs-primary: #2f6fed;
+        --bs-primary-rgb: 47, 111, 237;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        position: relative;
+        overflow-x: hidden;
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+      }
+
+      .hero-slide::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(7, 12, 24, 0.48);
+      }
+
+      .hero-slide > div {
+        position: relative;
+        z-index: 1;
+        max-width: 760px;
+      }
+
+      .slide-1 {
+        background-image: url("pic/A-1.jpeg");
+      }
+
+      .slide-2 {
+        background-image: url("pic/A-2.JPG");
+      }
+
+      .slide-3 {
+        background-image: url("pic/A-3.jpg");
+      }
+
+      .hero-slide h1,
+      .hero-slide h2 {
+        margin-bottom: 1rem;
+        font-size: clamp(2.1rem, 5vw, 3.3rem);
+        font-weight: 900;
+        line-height: 1.12;
+        text-shadow: 0 2px 20px rgba(0, 0, 0, 0.45);
+      }
+
+      .hero-slide p {
+        margin: 0;
+        font-size: clamp(1rem, 2vw, 1.25rem);
+        opacity: 0.92;
+      }
+
+      section {
+        scroll-margin-top: 76px;
+      }
+
+      .section-title {
+        margin-bottom: 1rem;
+        font-size: clamp(1.75rem, 3vw, 2.25rem);
+        font-weight: 900;
+      }
+
+      .about-visual {
+        min-height: 320px;
+        border-radius: 8px;
+        background-image: url("pic/A-4.jpg");
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        box-shadow: 0 18px 45px rgba(60, 67, 112, 0.22);
+      }
+
+      .stat-number {
+        color: var(--primary);
+        font-weight: 900;
+      }
+
+      .about-lead {
+        border-left: 4px solid var(--primary);
+        padding-left: 1rem;
+      }
+
+      .about-points li {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.6rem;
+        margin-bottom: 0.75rem;
+        color: var(--muted);
+      }
+
+      .about-points svg {
+        width: 20px;
+        height: 20px;
+        flex: 0 0 auto;
+        color: var(--primary);
+        margin-top: 0.15rem;
+      }
+
+      .stat-box {
+        min-width: 120px;
+        padding: 1rem;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #ffffff;
+      }
+
+      .card {
+        border-radius: 8px;
+      }
+
+      .ai-card {
+        border: 1px solid rgba(219, 227, 239, 0.8);
+        transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+      }
+
+      .ai-card:hover {
+        transform: translateY(-6px);
+        border-color: rgba(47, 111, 237, 0.28);
+        box-shadow: 0 16px 42px rgba(15, 23, 42, 0.14);
+      }
+
+      .pricing-card {
+        border: 1px solid rgba(219, 227, 239, 0.9) !important;
+      }
+
+      .pricing-card:hover {
+        border-color: #3b82f6 !important;
+        box-shadow:
+          0 0 0 4px rgba(59, 130, 246, 0.18),
+          0 18px 44px rgba(37, 99, 235, 0.24);
+      }
+
+      .card-icon {
+        width: 64px;
+        height: 64px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1rem;
+      }
+
+      .card-icon svg {
+        width: 32px;
+        height: 32px;
+      }
+
+      .badge-free {
+        background: #10b981;
+        color: #ffffff;
+      }
+
+      .badge-paid {
+        background: #f59e0b;
+        color: #ffffff;
+      }
+
+      .pricing-section {
+        background: linear-gradient(180deg, #f8fafc, #e2e8f0);
+      }
+
+      .popular-card {
+        border: 2px solid var(--primary);
+      }
+
+      .contact-section {
+        background: #1e293b;
+        color: #e2e8f0;
+      }
+
+      .form-control {
+        border-radius: 8px;
+        border-color: #cbd5e1;
+      }
+
+      .form-control:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 0.2rem rgba(47, 111, 237, 0.18);
+      }
+
+      .btn {
+        border-radius: 999px;
+        font-weight: 700;
+      }
+
+      .btn-primary {
+        background: var(--primary);
+        border-color: var(--primary);
+      }
+
+      .btn-primary:hover {
+        background: var(--primary-dark);
+        border-color: var(--primary-dark);
+      }
+
+      .cart-cta {
+        margin-top: 2rem;
+        text-align: center;
+      }
+
+      footer {
+        background: var(--footer);
+        color: #94a3b8;
+      }
+
+      footer a {
+        color: #60a5fa;
+        text-decoration: none;
+      }
+
+      footer a:hover {
+        color: #93c5fd;
+      }
+
+      .social-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: #1e293b;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 8px;
+        transition: background 0.2s ease, transform 0.2s ease;
+      }
+
+      .social-icon:hover {
+        background: var(--primary);
+        transform: translateY(-2px);
+      }
+
+      .social-icon svg,
+      footer svg {
+        width: 18px;
+        height: 18px;
+      }
+
+      .check-list li {
+        margin-bottom: 0.6rem;
+      }
+
+      /* Left sidebar for products */
+      .left-sidebar {
+        max-height: 80vh;
+        overflow-y: auto;
+        padding: 1rem;
+        border-radius: 8px;
+        background: #ffffff;
+        border: 1px solid var(--line);
+        position: sticky;
+        top: 96px;
+      }
+
+      .left-sidebar .cat-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.6rem;
+        padding: 0.6rem 0.5rem;
+        border-radius: 6px;
+        cursor: pointer;
+        color: var(--ink);
+      }
+
+      .left-sidebar .cat-item:hover {
+        background: rgba(47,111,237,0.06);
+      }
+
+      .left-sidebar .cat-icon {
+        width: 28px;
+        height: 28px;
+        border-radius: 6px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: #f1f5f9;
+        color: var(--primary);
+        font-weight: 700;
+        flex-shrink: 0;
+      }
+
+      @media (max-width: 991.98px) {
+        .left-sidebar { display: none; }
+      }
+
+      @media (max-width: 767.98px) {
+        .hero-slide {
+          min-height: 360px;
+          padding: 3rem 1rem;
+        }
+
+        .about-visual {
+          min-height: 240px;
+        }
+
+        .stats-row {
+          gap: 1rem;
+          flex-wrap: wrap;
+        }
+      }
+      .section-highlight {
+        animation: highlight 2s ease-in-out;
+      }
+
+      @keyframes highlight {
+        0% { box-shadow: 0 0 0 0 rgba(99,102,241,0.0); }
+        10% { box-shadow: 0 8px 24px -8px rgba(99,102,241,0.14); }
+        100% { box-shadow: none; }
+      }
+    </style>
+          <!-- Google tag (gtag.js)這是GA4全網頁追蹤代碼 -->
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-NVRRXE1GQV"></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-NVRRXE1GQV');
+      </script> 
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark nav-custom fixed-top">
+      <div class="container">
+        <a class="navbar-brand fw-bold" href="index.html">AI智能工具站</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-controls="navMenu" aria-expanded="false" aria-label="切換選單">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navMenu">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item"><a class="nav-link" href="about.html">關於我們</a></li>
+            <li class="nav-item"><a class="nav-link" href="pricing.html">免費與付費</a></li>
+            <li class="nav-item"><a class="nav-link" href="https://www.remove.bg/zh-tw" target="_blank" rel="noopener">AI 去背</a></li>
+            <li class="nav-item"><a class="nav-link" href="#products">AI工具</a></li>
+            <li class="nav-item"><a class="nav-link" href="#contact">聯絡我們</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div id="heroCarousel" class="carousel slide hero-carousel" data-bs-ride="carousel">
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active" aria-label="第一張"></button>
+        <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1" aria-label="第二張"></button>
+        <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2" aria-label="第三張"></button>
+      </div>
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <div class="hero-slide slide-1">
+            <div>
+              <h1>AI 驅動的未來工具</h1>
+              <p>讓人工智慧為您的工作加速，釋放無限創造力</p>
+            </div>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <div class="hero-slide slide-2">
+            <div>
+              <h2>一鍵去背，精準無比</h2>
+              <p>智能邊緣偵測，複雜背景也能完美處理</p>
+            </div>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <div class="hero-slide slide-3">
+            <div>
+              <h2>免費開始，隨需升級</h2>
+              <p>基礎功能永久免費，專業需求彈性付費</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev" aria-label="上一張">
+        <span class="carousel-control-prev-icon"></span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next" aria-label="下一張">
+        <span class="carousel-control-next-icon"></span>
+      </button>
+    </div>
+
+    <section id="products" class="py-5 bg-light">
+      <div class="container">
+        <h2 class="section-title text-center mb-5">感謝您的購買</h2>
+        
+        <div class="row">
+          
+          <div class="col-lg-9" id="products-main">
+            <div class="mb-5" id="latest">
+          
+                   
+            
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="py-5 contact-section">
+      <div class="container">
+        <h2 class="section-title text-center mb-5 text-light">聯絡我們</h2>
+        <div class="row justify-content-center">
+          <div class="col-lg-6">
+            <form id="contactForm">
+              <div class="mb-3">
+                <label for="cName" class="form-label">您的姓名</label>
+                <input type="text" class="form-control" id="cName" placeholder="請輸入姓名" required>
+              </div>
+              <div class="mb-3">
+                <label for="cEmail" class="form-label">電子信箱</label>
+                <input type="email" class="form-control" id="cEmail" placeholder="you@example.com" required>
+              </div>
+              <div class="mb-3">
+                <label for="cMsg" class="form-label">訊息內容</label>
+                <textarea class="form-control" id="cMsg" rows="4" placeholder="請輸入您的問題或建議" required></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary px-4">送出訊息</button>
+              <div id="formSuccess" class="mt-3 text-success fw-bold" style="display:none;">訊息已送出，我們會盡快回覆您！</div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="py-5">
+      <div class="container">
+        <div class="row g-4">
+          <div class="col-lg-4">
+            <h2 class="h5 text-white fw-bold mb-3">AI智能工具站</h2>
+            <p>致力於讓 AI 技術普及化，打造人人都能使用的智能工具平台。</p>
+            <p><i data-lucide="mail"></i> contact@aitools.com</p>
+            <p><i data-lucide="phone"></i> (02) 2345-6789</p>
+            <p><i data-lucide="map-pin"></i> 台北市信義區科技路 100 號</p>
+          </div>
+          <div class="col-lg-4">
+            <h2 class="h5 text-white fw-bold mb-3">快速連結</h2>
+            <ul class="list-unstyled">
+              <li class="mb-2"><a href="about.html">關於我們</a></li>
+              <li class="mb-2"><a href="pricing.html">免費與付費</a></li>
+              <li class="mb-2"><a href="index.html#products">AI 工具</a></li>
+              <li class="mb-2"><a href="index.html#contact">聯絡我們</a></li>
+            </ul>
+          </div>
+          <div class="col-lg-4">
+            <h2 class="h5 text-white fw-bold mb-3">關注我們</h2>
+            <p>追蹤社群獲取最新 AI 工具動態與教學</p>
+            <div class="mt-3">
+              <a href="#" class="social-icon text-white" aria-label="社群貼文"><i data-lucide="message-circle"></i></a>
+              <a href="#" class="social-icon text-white" aria-label="圖片動態"><i data-lucide="camera"></i></a>
+              <a href="#" class="social-icon text-white" aria-label="最新消息"><i data-lucide="send"></i></a>
+              <a href="#" class="social-icon text-white" aria-label="影音頻道"><i data-lucide="play-circle"></i></a>
+            </div>
+          </div>
+        </div>
+        <hr class="my-4" style="border-color:#334155;">
+        <p class="text-center mb-0">© 2024 AI智能工具站 版權所有 All Rights Reserved.</p>
+      </div>
+    </footer>
+
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script>
+      if (window.lucide) {
+        lucide.createIcons();
+      }
+
+      const contactForm = document.getElementById("contactForm");
+      const successMessage = document.getElementById("formSuccess");
+      const cartButton = document.getElementById("cartButton");
+
+      if (cartButton) {
+        cartButton.addEventListener("click", () => {
+          if (window.gtag) {
+            gtag("event", "cart_click", {
+              event_category: "button",
+              event_label: "AI工具頁_加入購物車"
+            });
+          }
+        });
+      }
+
+      contactForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        successMessage.style.display = "block";
+        contactForm.reset();
+        window.setTimeout(() => {
+          successMessage.style.display = "none";
+        }, 4000);
+      });
+
+      // Sidebar navigation: smooth scroll and category filter
+      (function(){
+        const sidebar = document.querySelectorAll('.left-sidebar .cat-item');
+        const cards = document.querySelectorAll('#products-main article.card');
+
+        function resetFilter(){
+          cards.forEach(c=>{ c.style.display = ''; });
+        }
+
+        function scrollWithOffset(targetEl){
+          const nav = document.querySelector('.navbar');
+          const navHeight = nav ? nav.getBoundingClientRect().height : 0;
+          const rect = targetEl.getBoundingClientRect();
+          const offsetTop = window.pageYOffset + rect.top - navHeight - 16;
+          window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+
+          targetEl.classList.remove('section-highlight');
+          void targetEl.offsetWidth;
+          targetEl.classList.add('section-highlight');
+          setTimeout(()=> targetEl.classList.remove('section-highlight'), 2000);
+        }
+
+        sidebar.forEach(item=>{
+          item.addEventListener('click', ()=>{
+            const target = item.getAttribute('data-target');
+            document.querySelectorAll('.left-sidebar .cat-item').forEach(i=>i.classList.remove('active'));
+            item.classList.add('active');
+
+            if(!target || target === 'all'){
+              resetFilter();
+              const productsTop = document.querySelector('#products-main');
+              if(productsTop) scrollWithOffset(productsTop);
+              return;
+            }
+
+            if(target.startsWith('#')){
+              const el = document.querySelector(target);
+              if(el) scrollWithOffset(el);
+              resetFilter();
+              return;
+            }
+
+            if(target.startsWith('cat:')){
+              const cat = target.split(':')[1];
+              cards.forEach(c=>{
+                const cats = (c.getAttribute('data-cat')||'').split(',');
+                c.style.display = cats.includes(cat) ? '' : 'none';
+              });
+              const productsTop = document.querySelector('#products-main');
+              if(productsTop) scrollWithOffset(productsTop);
+              return;
+            }
+          });
+        });
+
+        const productCards = document.querySelectorAll('#products-main article.ai-card');
+        productCards.forEach(card=>{
+          card.style.cursor = 'pointer';
+          card.addEventListener('click', ()=>{
+            scrollWithOffset(card);
+          });
+        });
+      })();
+    </script>
+  </body>
+</html>
