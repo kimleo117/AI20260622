@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>關於我們 - AI智能工具站</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+    <style>
+      :root {
+        --ink: #172033;
+        --muted: #64748b;
+        --primary: #2f6fed;
+        --primary-dark: #1d4ed8;
+        --line: #dbe3ef;
+        --nav: rgba(12, 18, 33, 0.95);
+        --footer: #101827;
+        --bs-primary: #2f6fed;
+        --bs-primary-rgb: 47, 111, 237;
+      }
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body { margin: 0; color: var(--ink); background: #ffffff; font-family: "Noto Sans TC", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .nav-custom { background: var(--nav); backdrop-filter: blur(12px); box-shadow: 0 12px 32px rgba(3, 7, 18, 0.18); }
+      .navbar-brand { letter-spacing: 0; }
+      .hero-carousel { margin-top: 56px; }
+      .hero-slide { min-height: 320px; display: flex; align-items: center; justify-content: center; color: #ffffff; padding: 4rem 1.5rem; text-align: center; position: relative; overflow: hidden; background-position: center; background-size: cover; background-repeat: no-repeat; }
+      .hero-slide::before { content: ""; position: absolute; inset: 0; background: rgba(7, 12, 24, 0.48); }
+      .hero-slide > div { position: relative; z-index: 1; max-width: 760px; }
+      .hero-slide h1, .hero-slide h2 { margin-bottom: 1rem; font-size: clamp(2.1rem, 5vw, 3.3rem); font-weight: 900; line-height: 1.12; text-shadow: 0 2px 20px rgba(0, 0, 0, 0.45); }
+      .hero-slide p { margin: 0; font-size: clamp(1rem, 2vw, 1.25rem); opacity: 0.92; }
+      section { scroll-margin-top: 76px; }
+      .about-visual { min-height: 320px; border-radius: 8px; background-image: url("pic/A-4.jpg"); background-position: center; background-size: cover; background-repeat: no-repeat; box-shadow: 0 18px 45px rgba(60, 67, 112, 0.22); }
+      .stat-number { color: var(--primary); font-weight: 900; }
+      .about-lead { border-left: 4px solid var(--primary); padding-left: 1rem; }
+      .about-points li { display: flex; align-items: flex-start; gap: 0.6rem; margin-bottom: 0.75rem; color: var(--muted); }
+      .about-points svg { width: 20px; height: 20px; flex: 0 0 auto; color: var(--primary); margin-top: 0.15rem; }
+      .stat-box { min-width: 120px; padding: 1rem; border: 1px solid var(--line); border-radius: 8px; background: #ffffff; }
+      .btn { border-radius: 999px; font-weight: 700; }
+      .btn-primary { background: var(--primary); border-color: var(--primary); }
+      .btn-primary:hover { background: var(--primary-dark); border-color: var(--primary-dark); }
+      footer { background: var(--footer); color: #94a3b8; }
+      footer a { color: #60a5fa; text-decoration: none; }
+      footer a:hover { color: #93c5fd; }
+      .social-icon { width: 40px; height: 40px; border-radius: 50%; background: #1e293b; display: inline-flex; align-items: center; justify-content: center; margin-right: 8px; transition: background 0.2s ease, transform 0.2s ease; }
+      .social-icon:hover { background: var(--primary); transform: translateY(-2px); }
+      .social-icon svg, footer svg { width: 18px; height: 18px; }
+      @media (max-width: 767.98px) { .hero-slide { min-height: 320px; padding: 3rem 1rem; } .about-visual { min-height: 240px; } }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark nav-custom fixed-top">
+      <div class="container">
+        <a class="navbar-brand fw-bold" href="index.html">AI智能工具站</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-controls="navMenu" aria-expanded="false" aria-label="切換選單">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navMenu">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item"><a class="nav-link active" href="about.html">關於我們</a></li>
+            <li class="nav-item"><a class="nav-link" href="pricing.html">免費與付費</a></li>
+            <li class="nav-item"><a class="nav-link" href="https://www.remove.bg/zh-tw" target="_blank" rel="noopener">AI 去背</a></li>
+            <li class="nav-item"><a class="nav-link" href="index.html#products">AI工具</a></li>
+            <li class="nav-item"><a class="nav-link" href="index.html#contact">聯絡我們</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div id="heroCarousel" class="carousel slide hero-carousel" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <div class="hero-slide slide-1" style="background-image:url('pic/A-1.jpeg');">
+            <div>
+              <h1>關於 AI智能工具站</h1>
+              <p>我們整理與分享 AI 工具，讓技術更容易理解、試用與比較。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section class="py-5">
+      <div class="container">
+        <div class="row align-items-center g-5">
+          <div class="col-lg-6">
+            <div class="about-visual" role="img" aria-label="關於我們圖片"></div>
+          </div>
+          <div class="col-lg-6">
+            <h2 class="section-title">關於我們</h2>
+            <p class="about-lead text-muted fs-5 mb-4">我們專注整理與分享各種領域的 AI 工具，協助使用者快速找到適合自己的解決方案。</p>
+            <ul class="about-points list-unstyled mb-4">
+              <li><i data-lucide="check-circle"></i><span>將複雜的人工智慧技術，轉化成清楚易懂的工具介紹。</span></li>
+              <li><i data-lucide="check-circle"></i><span>協助個人、小型團隊與創作者比較免費與付費工具的差異。</span></li>
+              <li><i data-lucide="check-circle"></i><span>歡迎推薦好用的 AI 工具，讓更多人一起發現實用資源。</span></li>
+            </ul>
+            <p class="text-muted mb-4">自 2022 年成立以來，我們已服務超過 50,000 名用戶。我們相信 AI 應該是每個人的助手，而非少數人的專利。</p>
+            <div class="d-flex stats-row mt-4">
+              <div class="stat-box text-center me-3">
+                <h3 class="stat-number">50K+</h3>
+                <small class="text-muted">活躍用戶</small>
+              </div>
+              <div class="stat-box text-center me-3">
+                <h3 class="stat-number">200+</h3>
+                <small class="text-muted">精選工具</small>
+              </div>
+              <div class="stat-box text-center">
+                <h3 class="stat-number">99.5%</h3>
+                <small class="text-muted">滿意度</small>
+              </div>
+            </div>
+            <div class="mt-4">
+              <a href="index.html" class="btn btn-outline-primary me-2">回到首頁</a>
+              <a href="pricing.html" class="btn btn-primary">查看免費與付費</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="py-5">
+      <div class="container">
+        <div class="row g-4">
+          <div class="col-lg-4">
+            <h2 class="h5 text-white fw-bold mb-3">AI智能工具站</h2>
+            <p>致力於讓 AI 技術普及化，打造人人都能使用的智能工具平台。</p>
+            <p><i data-lucide="mail"></i> contact@aitools.com</p>
+            <p><i data-lucide="phone"></i> (02) 2345-6789</p>
+            <p><i data-lucide="map-pin"></i> 台北市信義區科技路 100 號</p>
+          </div>
+          <div class="col-lg-4">
+            <h2 class="h5 text-white fw-bold mb-3">快速連結</h2>
+            <ul class="list-unstyled">
+              <li class="mb-2"><a href="about.html">關於我們</a></li>
+              <li class="mb-2"><a href="pricing.html">免費與付費</a></li>
+              <li class="mb-2"><a href="index.html#products">AI 工具</a></li>
+              <li class="mb-2"><a href="index.html#contact">聯絡我們</a></li>
+            </ul>
+          </div>
+          <div class="col-lg-4">
+            <h2 class="h5 text-white fw-bold mb-3">關注我們</h2>
+            <p>追蹤社群獲取最新 AI 工具動態與教學</p>
+            <div class="mt-3">
+              <a href="#" class="social-icon text-white" aria-label="社群貼文"><i data-lucide="message-circle"></i></a>
+              <a href="#" class="social-icon text-white" aria-label="圖片動態"><i data-lucide="camera"></i></a>
+              <a href="#" class="social-icon text-white" aria-label="最新消息"><i data-lucide="send"></i></a>
+              <a href="#" class="social-icon text-white" aria-label="影音頻道"><i data-lucide="play-circle"></i></a>
+            </div>
+          </div>
+        </div>
+        <hr class="my-4" style="border-color:#334155;">
+        <p class="text-center mb-0">© 2024 AI智能工具站 版權所有 All Rights Reserved.</p>
+      </div>
+    </footer>
+
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script> if (window.lucide) { lucide.createIcons(); } </script>
+  </body>
+</html>
