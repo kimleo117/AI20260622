@@ -227,6 +227,29 @@
         text-align: center;
       }
 
+      .modal-backdrop {
+        position: fixed;
+        inset: 0;
+        background: rgba(15, 23, 42, 0.6);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 2000;
+        padding: 1rem;
+      }
+
+      .modal-backdrop.show {
+        display: flex;
+      }
+
+      .modal-card {
+        background: #fff;
+        border-radius: 16px;
+        width: min(100%, 420px);
+        padding: 1.5rem;
+        box-shadow: 0 20px 60px rgba(15, 23, 42, 0.25);
+      }
+
       footer {
         background: var(--footer);
         color: #94a3b8;
@@ -862,6 +885,17 @@
               <i data-lucide="shopping-cart" class="me-2"></i>加入購物車
             </button>
           </div>
+
+          <div id="cartModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="cartModalTitle">
+            <div class="modal-card">
+              <h3 id="cartModalTitle" class="h5 fw-bold mb-3">加入購物車成功</h3>
+              <p class="text-muted mb-4">您已加入購物車，點擊確定後將前往目標頁面。</p>
+              <div class="d-flex justify-content-end gap-2">
+                <button type="button" id="cartCancelBtn" class="btn btn-outline-secondary">取消</button>
+                <button type="button" id="cartConfirmBtn" class="btn btn-primary">確定</button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -936,8 +970,11 @@
       const contactForm = document.getElementById("contactForm");
       const successMessage = document.getElementById("formSuccess");
       const cartButton = document.getElementById("cartButton");
+      const cartModal = document.getElementById("cartModal");
+      const cartCancelBtn = document.getElementById("cartCancelBtn");
+      const cartConfirmBtn = document.getElementById("cartConfirmBtn");
 
-      if (cartButton) {
+      if (cartButton && cartModal) {
         cartButton.addEventListener("click", () => {
           if (window.gtag) {
             gtag("event", "cart_click", {
@@ -945,6 +982,19 @@
               event_label: "AI工具頁_加入購物車"
             });
           }
+          cartModal.classList.add("show");
+        });
+      }
+
+      if (cartCancelBtn && cartModal) {
+        cartCancelBtn.addEventListener("click", () => {
+          cartModal.classList.remove("show");
+        });
+      }
+
+      if (cartConfirmBtn && cartModal) {
+        cartConfirmBtn.addEventListener("click", () => {
+          window.location.href = "goal.html";
         });
       }
 
