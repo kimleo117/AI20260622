@@ -67,3 +67,6 @@ AI智能工具站
 ## 開啟方式
 
 直接使用瀏覽器開啟根目錄下的 index.html，或透過 GitHub Pages 發布後瀏覽。
+
+##https://kimleo117.github.io/AI20260622/
+##git@github.com:kimleo117/AI20260622.git

@@ -3,6 +3,9 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>AI智能工具站</title>
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
@@ -219,6 +222,11 @@
         border-color: var(--primary-dark);
       }
 
+      .cart-cta {
+        margin-top: 2rem;
+        text-align: center;
+      }
+
       footer {
         background: var(--footer);
         color: #94a3b8;
@@ -330,13 +338,13 @@
       }
     </style>
           <!-- Google tag (gtag.js)這是GA4全網頁追蹤代碼 -->
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-7QTL4JEJ5L"></script>
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-NVRRXE1GQV"></script>
       <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
 
-        gtag('config', 'G-7QTL4JEJ5L');
+        gtag('config', 'G-NVRRXE1GQV');
       </script> 
   </head>
   <body>
@@ -848,6 +856,12 @@
           </div>
 
           </div>
+
+          <div class="cart-cta">
+            <button type="button" id="cartButton" class="btn btn-primary px-4 py-2">
+              <i data-lucide="shopping-cart" class="me-2"></i>加入購物車
+            </button>
+          </div>
         </div>
       </div>
     </section>
@@ -921,6 +935,18 @@
 
       const contactForm = document.getElementById("contactForm");
       const successMessage = document.getElementById("formSuccess");
+      const cartButton = document.getElementById("cartButton");
+
+      if (cartButton) {
+        cartButton.addEventListener("click", () => {
+          if (window.gtag) {
+            gtag("event", "cart_click", {
+              event_category: "button",
+              event_label: "AI工具頁_加入購物車"
+            });
+          }
+        });
+      }
 
       contactForm.addEventListener("submit", (event) => {
         event.preventDefault();
