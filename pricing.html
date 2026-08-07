@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>免費與付費 - AI智能工具站</title>
+    <title>免費與付費方案 - AI智能工具站</title>
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
@@ -17,16 +17,15 @@
       gtag('js', new Date());
       gtag('config', 'G-NVRRXE1GQV');
     </script>
-     <!-- Google tag (gtag.js)這是ADS全網頁追蹤代碼 -->
-      <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18338806603"></script>
-      <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-
-        gtag('config', 'AW-18338806603');
-        gtag('config', 'GT-PJ5KXZTH');
-      </script>
+    <!-- Google tag (gtag.js)這是ADS全網頁追蹤代碼 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18338806603"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'AW-18338806603');
+      gtag('config', 'GT-PJ5KXZTH');
+    </script>
     <style>
       :root {
         --ink: #172033;
@@ -41,25 +40,111 @@
       html { scroll-behavior: smooth; }
       body { margin: 0; color: var(--ink); background: #f8fbff; font-family: "Noto Sans TC", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
       .nav-custom { background: var(--nav); backdrop-filter: blur(12px); box-shadow: 0 12px 32px rgba(3, 7, 18, 0.18); }
-      .hero-section { margin-top: 56px; }
-      .hero-slide { min-height: 360px; display: flex; align-items: center; justify-content: center; color: #fff; padding: 4rem 1.5rem; text-align: center; position: relative; overflow: hidden; background-position: center; background-size: cover; background-repeat: no-repeat; }
-      .hero-slide::before { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(7, 12, 24, 0.82), rgba(8, 10, 22, 0.4)); }
-      .hero-slide > div { position: relative; z-index: 1; max-width: 760px; }
-      .hero-slide h1 { margin-bottom: 1rem; font-size: clamp(2.1rem, 5vw, 3.3rem); font-weight: 900; line-height: 1.1; }
-      .hero-slide p { margin: 0; font-size: clamp(1rem, 2vw, 1.2rem); opacity: 0.95; }
+      
+      /* Pricing Hero Carousel */
+      .pricing-hero { margin-top: 56px; }
+      .pricing-slide {
+        min-height: 280px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        padding: 3rem 1.5rem;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+      }
+      .pricing-slide::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, rgba(12, 18, 33, 0.75) 0%, rgba(15, 23, 42, 0.88) 100%);
+      }
+      .pricing-slide > div { position: relative; z-index: 1; max-width: 820px; }
+      .pricing-slide h1 { margin-bottom: 0.8rem; font-size: clamp(2rem, 4.5vw, 3rem); font-weight: 900; line-height: 1.15; }
+      .pricing-slide p { margin: 0; font-size: clamp(1rem, 1.8vw, 1.25rem); opacity: 0.92; font-weight: 500; }
+      
+      .slide-img-1 { background-image: url('pic/pricing_slide1.jpg'); }
+      .slide-img-2 { background-image: url('pic/pricing_slide2.jpg'); }
+      .slide-img-3 { background-image: url('pic/pricing_slide3.jpg'); }
+
       .section-title { font-weight: 900; color: var(--ink); }
-      .pricing-card { border: 1px solid rgba(219, 227, 239, 0.95); border-radius: 18px; background: #fff; box-shadow: 0 18px 45px rgba(15, 23, 42, 0.06); }
-      .pricing-card.popular { border-color: var(--primary); box-shadow: 0 20px 48px rgba(47, 111, 237, 0.16); }
-      .btn { border-radius: 999px; font-weight: 700; }
+      
+      /* Pricing Cards Design */
+      .pricing-card {
+        border: 1px solid #e2e8f0;
+        border-radius: 20px;
+        background: #ffffff;
+        box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
+        transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        overflow: hidden;
+      }
+      .pricing-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 20px 45px rgba(47, 111, 237, 0.14);
+        border-color: #93c5fd;
+      }
+      .pricing-card.popular {
+        border: 2px solid var(--primary);
+        box-shadow: 0 20px 48px rgba(47, 111, 237, 0.18);
+        position: relative;
+      }
+      .pricing-badge {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: linear-gradient(135deg, #2f6fed, #1d4ed8);
+        color: #fff;
+        font-size: 12px;
+        font-weight: 700;
+        padding: 4px 12px;
+        border-radius: 999px;
+      }
+      .feature-check {
+        color: #10b981;
+        margin-right: 8px;
+        font-weight: bold;
+      }
+      .btn { border-radius: 999px; font-weight: 700; padding: 10px 24px; }
       .btn-primary { background: var(--primary); border-color: var(--primary); }
       .btn-primary:hover { background: var(--primary-dark); border-color: var(--primary-dark); }
+
       footer { background: var(--footer); color: #94a3b8; }
       footer a { color: #60a5fa; text-decoration: none; }
       footer a:hover { color: #93c5fd; }
       .social-icon { width: 40px; height: 40px; border-radius: 50%; background: #1e293b; display: inline-flex; align-items: center; justify-content: center; margin-right: 8px; transition: background 0.2s ease, transform 0.2s ease; }
       .social-icon:hover { background: var(--primary); transform: translateY(-2px); }
       .social-icon svg, footer svg { width: 18px; height: 18px; }
-      @media (max-width: 767.98px) { .hero-slide { min-height: 320px; padding: 3rem 1rem; } }
+
+      /* Back to Top Button */
+      .back-to-top-btn {
+        position: fixed;
+        bottom: 28px;
+        right: 28px;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: #2f6fed !important;
+        color: #ffffff !important;
+        border: 2px solid #ffffff;
+        box-shadow: 0 8px 24px rgba(47, 111, 237, 0.45);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 99999;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(12px);
+        transition: opacity 0.25s ease, transform 0.25s ease, background 0.2s ease, box-shadow 0.2s ease;
+      }
+      .back-to-top-btn.show { opacity: 1 !important; visibility: visible !important; transform: translateY(0); }
+      .back-to-top-btn:hover { transform: translateY(-4px) scale(1.1); box-shadow: 0 12px 32px rgba(47, 111, 237, 0.65); background: #1d4ed8 !important; }
+
+      @media (max-width: 767.98px) { .pricing-slide { min-height: 240px; padding: 2rem 1rem; } }
     </style>
   </head>
   <body>
@@ -81,53 +166,98 @@
       </div>
     </nav>
 
-    <header class="hero-section">
-      <div class="hero-slide" style="background-image:url('pic/A-3.jpg');">
-        <div>
-          <h1>免費與付費 AI 工具</h1>
-          <p>依照需求選擇最適合的入門或專業方案。</p>
+    <!-- 設計專屬 3 張精彩輪播圖 -->
+    <header class="pricing-hero">
+      <div id="pricingCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="4000">
+        <div class="carousel-indicators">
+          <button type="button" data-bs-target="#pricingCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+          <button type="button" data-bs-target="#pricingCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+          <button type="button" data-bs-target="#pricingCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
         </div>
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <div class="pricing-slide slide-img-1">
+              <div>
+                <h1>零成本入門 • 靈感無限解鎖</h1>
+                <p>探索上百款強大免費 AI 工具，立即提升創作者生產力</p>
+              </div>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <div class="pricing-slide slide-img-2">
+              <div>
+                <h1>專業級高階配樂 • 商業授權無憂</h1>
+                <p>【幻境配樂 Mirage Cinematic BGM】頂級音軌，賦予作品靈魂大片感</p>
+              </div>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <div class="pricing-slide slide-img-3">
+              <div>
+                <h1>企業級 AI 自動化 • 精準高規格產出</h1>
+                <p>專為創作者與品牌團隊量身打造的極致專業方案</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#pricingCarousel" data-bs-slide="prev" aria-label="上一張">
+          <span class="carousel-control-prev-icon"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#pricingCarousel" data-bs-slide="next" aria-label="下一張">
+          <span class="carousel-control-next-icon"></span>
+        </button>
       </div>
     </header>
 
     <main class="py-5">
       <div class="container">
-        <h2 class="section-title text-center mb-2">免費與付費 AI 工具</h2>
-        <p class="text-center text-muted mb-5">依照預算、品質與功能需求，選擇最適合的 AI 工具方案。</p>
+        <h2 class="section-title text-center mb-2">靈活彈性方案比較</h2>
+        <p class="text-center text-muted mb-5">依照預算、品質與商業授權需求，選擇最適合您的 AI 方案</p>
+        
         <div class="row gx-lg-5 gy-4 justify-content-center">
-          <div class="col-md-6 col-lg-4">
-            <article class="pricing-card p-4 h-100">
-              <h3 class="h4 fw-bold mb-3">免費 AI 工具</h3>
-              <p class="h5 fw-bold text-success mb-3">零成本入門選擇</p>
-              <ul class="list-unstyled text-muted">
-                <li class="mb-2">• 零成本，適合先試用</li>
-                <li class="mb-2">• 可滿足基本需求與日常工作</li>
-                <li class="mb-2">• 適合個人、學生與小型團隊</li>
-                <li class="mb-2">• 功能或使用次數有一定限制</li>
-                <li class="mb-2">• 部分工具品質與穩定度較一般版差</li>
+          <div class="col-md-6 col-lg-5">
+            <article class="pricing-card p-4 p-xl-5 h-100 d-flex flex-column">
+              <h3 class="h4 fw-bold mb-2">免費 AI 工具方案</h3>
+              <p class="text-muted small mb-4">適合個人試用、學生與日常簡單體驗</p>
+              <div class="d-flex align-items-baseline mb-4">
+                <span class="h1 fw-900 text-dark mb-0">$0</span>
+                <span class="text-muted ms-2">/ 永久免費</span>
+              </div>
+              <ul class="list-unstyled text-secondary mb-4 flex-grow-1" style="line-height:2.2;">
+                <li><span class="feature-check">✓</span> 零成本入門，隨時開啟體驗</li>
+                <li><span class="feature-check">✓</span> 提供基礎文字生成與文案輔助</li>
+                <li><span class="feature-check">✓</span> 涵蓋 150+ 免費線上工具推薦</li>
+                <li><span class="feature-check">✓</span> 適合日常學習、社群點子發想</li>
+                <li class="text-muted opacity-75">• 每日生成次數與輸出解析度有限</li>
               </ul>
-              <a href="index.html#products" class="btn btn-outline-primary mt-4">免費開始使用</a>
+              <a href="index.html#products" class="btn btn-outline-primary w-100 mt-auto">免費開始瀏覽</a>
             </article>
           </div>
-          <div class="col-md-6 col-lg-4">
-            <article class="pricing-card popular p-4 h-100">
-              <span class="badge bg-primary rounded-pill mb-3">功能完整</span>
-              <h3 class="h4 fw-bold mb-3">付費 AI 工具</h3>
-              <p class="h5 fw-bold text-primary mb-3">精準穩定的專業選擇</p>
-              <ul class="list-unstyled text-muted">
-                <li class="mb-2">• 功能更完整、輸出品質更穩定</li>
-                <li class="mb-2">• 適合長期使用與大量產出</li>
-                <li class="mb-2">• 隱私與企業安全性通常更高</li>
-                <li class="mb-2">• 付費成本較高，但更值得長期投入</li>
-                <li class="mb-2">• 對新手來說可能需要更長學習時間</li>
+          
+          <div class="col-md-6 col-lg-5">
+            <article class="pricing-card popular p-4 p-xl-5 h-100 d-flex flex-column">
+              <span class="pricing-badge">🔥 創作者首選</span>
+              <h3 class="h4 fw-bold mb-2 text-primary">專業 PRO 商業付費方案</h3>
+              <p class="text-muted small mb-4">適合專業創作者、影音團隊與品牌企業</p>
+              <div class="d-flex align-items-baseline mb-4">
+                <span class="h1 fw-900 text-primary mb-0">$490</span>
+                <span class="text-muted ms-2">/ 月 (可隨時取消)</span>
+              </div>
+              <ul class="list-unstyled text-secondary mb-4 flex-grow-1" style="line-height:2.2;">
+                <li><span class="feature-check">✓</span> 完整 4K 高畫質與無損音質下載</li>
+                <li><span class="feature-check">✓</span> 【幻境配樂】商業廣告全頻道授權</li>
+                <li><span class="feature-check">✓</span> 享優先雲端算力，零排隊秒速產出</li>
+                <li><span class="feature-check">✓</span> 數據與作品 100% 商業專屬保密</li>
+                <li><span class="feature-check">✓</span> 專屬客服與一對一配樂顧問支援</li>
               </ul>
-              <a href="index.html#contact" class="btn btn-primary mt-4">查看付費工具</a>
+              <a href="index.html#contact" class="btn btn-primary w-100 mt-auto shadow-sm">立即升級 PRO 方案</a>
             </article>
           </div>
         </div>
-        <div class="text-center mt-5">
-          <a href="index.html" class="btn btn-outline-primary me-2">回到首頁</a>
-          <a href="about.html" class="btn btn-primary">了解我們</a>
+
+        <div class="text-center mt-5 pt-3">
+          <a href="index.html" class="btn btn-outline-primary me-2">回到首頁工具百寶箱</a>
+          <a href="about.html" class="btn btn-primary">關於我們</a>
         </div>
       </div>
     </main>
@@ -167,7 +297,34 @@
       </div>
     </footer>
 
+    <!-- 回到最頂端懸浮按鈕 -->
+    <button type="button" id="backToTopBtn" class="back-to-top-btn" aria-label="回到頁面最頂端" title="回到最頂端">
+      <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m18 15-6-6-6 6"/>
+      </svg>
+    </button>
+
     <script src="js/bootstrap.bundle.min.js"></script>
-    <script> if (window.lucide) { lucide.createIcons(); } </script>
+    <script>
+      if (window.lucide) { lucide.createIcons(); }
+      
+      const backToTopBtn = document.getElementById("backToTopBtn");
+      if (backToTopBtn) {
+        function checkScroll() {
+          if (window.pageYOffset > 150 || document.documentElement.scrollTop > 150) {
+            backToTopBtn.classList.add("show");
+          } else {
+            backToTopBtn.classList.remove("show");
+          }
+        }
+        window.addEventListener("scroll", checkScroll);
+        window.addEventListener("load", checkScroll);
+        checkScroll();
+
+        backToTopBtn.addEventListener("click", () => {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+      }
+    </script>
   </body>
 </html>
