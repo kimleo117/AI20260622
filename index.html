@@ -429,8 +429,42 @@
       .tag-paid { background-color: #9f1239; }
       .tag-zh { background-color: #3b82f6; }
       .tag-en { background-color: #6366f1; }
-      .tag-default { background-color: #64748b; }
-
+      /* Back to Top Floating Button */
+      .back-to-top-btn {
+        position: fixed;
+        bottom: 28px;
+        right: 28px;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #2f6fed, #1d4ed8);
+        color: #ffffff;
+        border: none;
+        box-shadow: 0 10px 25px rgba(47, 111, 237, 0.4);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 9999;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(12px);
+        transition: opacity 0.3s ease, transform 0.3s ease, background 0.2s ease, box-shadow 0.2s ease;
+      }
+      .back-to-top-btn.show {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+      }
+      .back-to-top-btn:hover {
+        transform: translateY(-4px) scale(1.08);
+        box-shadow: 0 14px 30px rgba(47, 111, 237, 0.55);
+        background: linear-gradient(135deg, #3b82f6, #2563eb);
+      }
+      .back-to-top-btn svg {
+        width: 22px;
+        height: 22px;
+      }
     </style>
           <!-- Google tag (gtag.js)這是GA4全網頁追蹤代碼 -->
       <script async src="https://www.googletagmanager.com/gtag/js?id=G-NVRRXE1GQV"></script>
@@ -3364,6 +3398,26 @@
           });
         });
       })();
+
+      // Back to Top button show/hide & scroll behavior
+      const backToTopBtn = document.getElementById("backToTopBtn");
+      if (backToTopBtn) {
+        window.addEventListener("scroll", () => {
+          if (window.scrollY > 300) {
+            backToTopBtn.classList.add("show");
+          } else {
+            backToTopBtn.classList.remove("show");
+          }
+        });
+        backToTopBtn.addEventListener("click", () => {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+      }
     </script>
+
+    <!-- 回到最頂端懸浮按鈕 -->
+    <button type="button" id="backToTopBtn" class="back-to-top-btn" aria-label="回到頁面最頂端" title="回到最頂端">
+      <i data-lucide="arrow-up"></i>
+    </button>
   </body>
 </html>
