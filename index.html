@@ -429,41 +429,42 @@
       .tag-paid { background-color: #9f1239; }
       .tag-zh { background-color: #3b82f6; }
       .tag-en { background-color: #6366f1; }
-      /* Back to Top Floating Button */
+      /* Back to Top Floating Button (Solid Vivid Blue) */
       .back-to-top-btn {
         position: fixed;
         bottom: 28px;
         right: 28px;
-        width: 48px;
-        height: 48px;
+        width: 50px;
+        height: 50px;
         border-radius: 50%;
-        background: linear-gradient(135deg, #2f6fed, #1d4ed8);
-        color: #ffffff;
-        border: none;
-        box-shadow: 0 10px 25px rgba(47, 111, 237, 0.4);
+        background: #2f6fed !important;
+        color: #ffffff !important;
+        border: 2px solid #ffffff;
+        box-shadow: 0 8px 24px rgba(47, 111, 237, 0.45);
         display: flex;
         align-items: center;
         justify-content: center;
         cursor: pointer;
-        z-index: 9999;
+        z-index: 99999;
         opacity: 0;
         visibility: hidden;
         transform: translateY(12px);
-        transition: opacity 0.3s ease, transform 0.3s ease, background 0.2s ease, box-shadow 0.2s ease;
+        transition: opacity 0.25s ease, transform 0.25s ease, background 0.2s ease, box-shadow 0.2s ease;
       }
       .back-to-top-btn.show {
-        opacity: 1;
-        visibility: visible;
+        opacity: 1 !important;
+        visibility: visible !important;
         transform: translateY(0);
       }
       .back-to-top-btn:hover {
-        transform: translateY(-4px) scale(1.08);
-        box-shadow: 0 14px 30px rgba(47, 111, 237, 0.55);
-        background: linear-gradient(135deg, #3b82f6, #2563eb);
+        transform: translateY(-4px) scale(1.1);
+        box-shadow: 0 12px 32px rgba(47, 111, 237, 0.65);
+        background: #1d4ed8 !important;
       }
       .back-to-top-btn svg {
-        width: 22px;
-        height: 22px;
+        width: 24px;
+        height: 24px;
+        stroke: #ffffff;
       }
     </style>
           <!-- Google tag (gtag.js)這是GA4全網頁追蹤代碼 -->
@@ -552,9 +553,12 @@
 
         <div class="row">
           <aside class="col-lg-3 pe-lg-4">
-                                    <div class="left-sidebar">
+                                                <div class="left-sidebar">
               <div class="cat-item active" data-target="all"><span class="cat-icon me-1">⭐</span><span>最新 AI 工具</span></div>
-              <div class="cat-item" data-target="#code"><span class="cat-icon me-1">💻</span><span>程式開發</span><span class="ms-auto text-muted small">15</span></div>
+              <div class="cat-item" data-target="#featured"><span class="cat-icon me-1">🚀</span><span>本月精選工具</span></div>
+              <div class="cat-item" data-target="#free"><span class="cat-icon me-1">🆓</span><span>熱門免費 AI 工具</span></div>
+              <div class="cat-item" data-target="#paid"><span class="cat-icon me-1">💰</span><span>熱門付費 AI 工具</span></div>
+              <hr class="my-2">
               <div class="cat-item" data-target="#work"><span class="cat-icon me-1">⚡</span><span>工作優化</span><span class="ms-auto text-muted small">16</span></div>
               <div class="cat-item" data-target="#creative"><span class="cat-icon me-1">✍️</span><span>文案生成</span><span class="ms-auto text-muted small">6</span></div>
               <div class="cat-item" data-target="#visual"><span class="cat-icon me-1">🎨</span><span>圖像生成</span><span class="ms-auto text-muted small">15</span></div>
@@ -564,6 +568,14 @@
               <div class="cat-item" data-target="#audio"><span class="cat-icon me-1">📝</span><span>寫作工具</span><span class="ms-auto text-muted small">7</span></div>
               <div class="cat-item" data-target="#editing"><span class="cat-icon me-1">📊</span><span>簡報生成</span><span class="ms-auto text-muted small">3</span></div>
               <div class="cat-item" data-target="#job"><span class="cat-icon me-1">💼</span><span>求職面試</span><span class="ms-auto text-muted small">4</span></div>
+              <div class="cat-item" data-target="#chat"><span class="cat-icon me-1">💬</span><span>聊天機器人</span><span class="ms-auto text-muted small">9</span></div>
+              <div class="cat-item" data-target="#organize"><span class="cat-icon me-1">📌</span><span>重點整理</span><span class="ms-auto text-muted small">7</span></div>
+              <div class="cat-item" data-target="#brand"><span class="cat-icon me-1">🏷️</span><span>品牌工具</span><span class="ms-auto text-muted small">6</span></div>
+              <div class="cat-item" data-target="#seo"><span class="cat-icon me-1">🔍</span><span>搜尋引擎與瀏覽器</span><span class="ms-auto text-muted small">4</span></div>
+              <div class="cat-item" data-target="#code"><span class="cat-icon me-1">💻</span><span>程式開發</span><span class="ms-auto text-muted small">15</span></div>
+              <div class="cat-item" data-target="#sec-設計師工具UIUX"><span class="cat-icon me-1">📐</span><span>設計師工具 (UI/UX)</span><span class="ms-auto text-muted small">4</span></div>
+              <div class="cat-item" data-target="#sec-ChatGPT與AI應用"><span class="cat-icon me-1">🤖</span><span>ChatGPT 與 AI 應用</span><span class="ms-auto text-muted small">2</span></div>
+              <div class="cat-item" data-target="#sec-有趣應用"><span class="cat-icon me-1">🎯</span><span>有趣應用</span><span class="ms-auto text-muted small">5</span></div>
             </div>
           </aside>
 
