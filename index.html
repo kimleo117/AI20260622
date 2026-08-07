@@ -3288,6 +3288,13 @@
       </div>
     </footer>
 
+    <!-- 回到最頂端懸浮按鈕 -->
+    <button type="button" id="backToTopBtn" class="back-to-top-btn" aria-label="回到頁面最頂端" title="回到最頂端">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m18 15-6-6-6 6"/>
+      </svg>
+    </button>
+
     <script src="js/bootstrap.bundle.min.js"></script>
     <script>
       if (window.lucide) {
@@ -3402,22 +3409,21 @@
       // Back to Top button show/hide & scroll behavior
       const backToTopBtn = document.getElementById("backToTopBtn");
       if (backToTopBtn) {
-        window.addEventListener("scroll", () => {
-          if (window.scrollY > 300) {
+        function checkScroll() {
+          if (window.pageYOffset > 150 || document.documentElement.scrollTop > 150) {
             backToTopBtn.classList.add("show");
           } else {
             backToTopBtn.classList.remove("show");
           }
-        });
+        }
+        window.addEventListener("scroll", checkScroll);
+        window.addEventListener("load", checkScroll);
+        checkScroll();
+
         backToTopBtn.addEventListener("click", () => {
           window.scrollTo({ top: 0, behavior: "smooth" });
         });
       }
     </script>
-
-    <!-- 回到最頂端懸浮按鈕 -->
-    <button type="button" id="backToTopBtn" class="back-to-top-btn" aria-label="回到頁面最頂端" title="回到最頂端">
-      <i data-lucide="arrow-up"></i>
-    </button>
   </body>
 </html>
