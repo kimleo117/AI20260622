@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>關於我們 - AI智能工具站</title>
+    <title>關於我們 - AI智能工具站 & 幻境配樂</title>
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
@@ -40,22 +40,38 @@
       html { scroll-behavior: smooth; }
       body { margin: 0; color: var(--ink); background: #f8fbff; font-family: "Noto Sans TC", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
       .nav-custom { background: var(--nav); backdrop-filter: blur(12px); box-shadow: 0 12px 32px rgba(3, 7, 18, 0.18); }
+      
+      /* Hero Dragon Banner */
       .hero-section { margin-top: 56px; }
-      .hero-slide { min-height: 320px; display: flex; align-items: center; justify-content: center; color: #fff; padding: 3.5rem 1.5rem; text-align: center; position: relative; overflow: hidden; background-position: center; background-size: cover; background-repeat: no-repeat; }
-      .hero-slide::before { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(7, 12, 24, 0.82) 0%, rgba(15, 23, 42, 0.9) 100%); }
-      .hero-slide > div { position: relative; z-index: 1; max-width: 760px; }
-      .hero-slide h1 { margin-bottom: 1rem; font-size: clamp(2.1rem, 5vw, 3.2rem); font-weight: 900; line-height: 1.1; }
-      .hero-slide p { margin: 0; font-size: clamp(1rem, 2vw, 1.25rem); opacity: 0.95; }
+      .hero-slide-dragon {
+        min-height: 380px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        padding: 4rem 1.5rem;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        background-image: url('pic/huanjing_banner.jpg');
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+      }
+      .hero-slide-dragon::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, rgba(7, 12, 24, 0.75) 0%, rgba(15, 23, 42, 0.92) 100%);
+      }
+      .hero-slide-dragon > div { position: relative; z-index: 1; max-width: 860px; }
+      .hero-slide-dragon h1 { margin-bottom: 1rem; font-size: clamp(2.2rem, 5.5vw, 3.5rem); font-weight: 900; line-height: 1.15; letter-spacing: 1px; }
+      .hero-slide-dragon p { margin: 0; font-size: clamp(1.05rem, 2vw, 1.3rem); opacity: 0.95; font-weight: 500; }
       
       .section-title { font-weight: 900; color: var(--ink); }
-      .about-card { border: 1px solid #e2e8f0; border-radius: 20px; background: #fff; box-shadow: 0 12px 36px rgba(15, 23, 42, 0.05); }
-      .about-points li { display: flex; align-items: flex-start; gap: 0.75rem; margin-bottom: 1rem; color: var(--muted); font-size: 1.05rem; }
-      .about-points svg { width: 22px; height: 22px; flex: 0 0 auto; color: var(--primary); margin-top: 0.15rem; }
-      .stat-box { min-width: 120px; padding: 1.2rem 1rem; border: 1px solid var(--line); border-radius: 14px; background: #ffffff; }
-      .stat-number { color: var(--primary); font-weight: 900; font-size: 1.8rem; }
       
-      /* Brand Card Styling */
-      .brand-card-block {
+      /* Brand Featured Showcase Box */
+      .brand-hero-box {
         border: 2px solid #3b82f6;
         border-radius: 24px;
         background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
@@ -63,15 +79,34 @@
         box-shadow: 0 20px 50px rgba(15, 23, 42, 0.35);
         overflow: hidden;
       }
-      .brand-badge {
+      .brand-tag-gold {
         background: linear-gradient(135deg, #f59e0b, #d97706);
         color: #ffffff;
         font-weight: 700;
         font-size: 13px;
-        padding: 6px 14px;
+        padding: 6px 16px;
         border-radius: 999px;
         display: inline-block;
       }
+
+      /* Story Manifesto Card */
+      .story-card {
+        border: 1px solid #e2e8f0;
+        border-radius: 20px;
+        background: #ffffff;
+        box-shadow: 0 12px 36px rgba(15, 23, 42, 0.05);
+      }
+      .manifesto-quote {
+        border-left: 4px solid var(--primary);
+        padding-left: 1.25rem;
+        font-style: normal;
+        background: #f1f5f9;
+        border-radius: 0 12px 12px 0;
+        padding: 1.2rem 1.5rem;
+      }
+
+      .stat-box { min-width: 130px; padding: 1.2rem 1rem; border: 1px solid var(--line); border-radius: 14px; background: #ffffff; }
+      .stat-number { color: var(--primary); font-weight: 900; font-size: 1.9rem; }
 
       .btn { border-radius: 999px; font-weight: 700; padding: 10px 24px; }
       .btn-primary { background: var(--primary); border-color: var(--primary); }
@@ -109,7 +144,7 @@
       .back-to-top-btn.show { opacity: 1 !important; visibility: visible !important; transform: translateY(0); }
       .back-to-top-btn:hover { transform: translateY(-4px) scale(1.1); box-shadow: 0 12px 32px rgba(47, 111, 237, 0.65); background: #1d4ed8 !important; }
 
-      @media (max-width: 767.98px) { .hero-slide { min-height: 260px; padding: 2.5rem 1rem; } }
+      @media (max-width: 767.98px) { .hero-slide-dragon { min-height: 280px; padding: 2.5rem 1rem; } }
     </style>
   </head>
   <body>
@@ -131,93 +166,120 @@
       </div>
     </nav>
 
+    <!-- 頂部 Hero 視覺大圖：昨日金龍藝術巨作 -->
     <header class="hero-section">
-      <div class="hero-slide" style="background-image:url('pic/A-1.jpeg');">
+      <div class="hero-slide-dragon">
         <div>
-          <h1>關於 AI智能工具站</h1>
-          <p>專注整理與推薦優質 AI 工具，賦予每位創作者高效升級體驗。</p>
+          <h1>音樂靈魂 • AI 科技賦能</h1>
+          <p>從電影級史詩原聲帶到全網精選 AI 工具，我們為每位創作者打造無限可能的創作生態系。</p>
         </div>
       </div>
     </header>
 
     <main class="py-5">
       <div class="container">
-        <!-- 關於我們核心願景區塊 -->
-        <div class="row g-4 align-items-center mb-5">
-          <div class="col-lg-6">
-            <div class="about-card p-4 p-lg-5 h-100">
-              <h2 class="section-title mb-3">讓 AI 技術無縫賦能創作者</h2>
-              <p class="text-muted mb-4">我們致力於篩選全球最頂尖、實用且高效的 AI 工具。無論是文案創作、圖像去背、簡報製作還是音樂配樂，都能在這裡找到最佳解答。</p>
-              <ul class="about-points list-unstyled mb-4">
-                <li><i data-lucide="check-circle"></i><span>白話拆解複雜 AI 技術，提供 150+ 工具指南。</span></li>
-                <li><i data-lucide="check-circle"></i><span>清晰對比免費與付費工具效益，為團隊節省摸索成本。</span></li>
-                <li><i data-lucide="check-circle"></i><span>結合原創音樂與 AI 工具，打造一站式影音創作生態系。</span></li>
-              </ul>
-              <div class="d-flex flex-wrap gap-3 mt-4">
-                <div class="stat-box text-center">
-                  <h3 class="stat-number">50K+</h3>
-                  <small class="text-muted">創作者選用</small>
-                </div>
-                <div class="stat-box text-center">
-                  <h3 class="stat-number">150+</h3>
-                  <small class="text-muted">精選 AI 工具</small>
-                </div>
-                <div class="stat-box text-center">
-                  <h3 class="stat-number">99.8%</h3>
-                  <small class="text-muted">滿意推薦</small>
-                </div>
-              </div>
+        
+        <!-- 【區塊一】：最優先秀出旗艦品牌【幻境配樂 Mirage Cinematic BGM】 -->
+        <div class="brand-hero-box p-4 p-lg-5 mb-5">
+          <div class="row align-items-center g-4">
+            <div class="col-lg-5 text-center">
+              <img src="pic/huanjing_masterpiece_logo.jpg" alt="【幻境配樂】Mirage Cinematic BGM Masterpiece Logo" class="img-fluid rounded-4 shadow-lg border border-warning border-opacity-30" style="max-height: 360px; width: 100%; object-fit: contain; background: #000000;">
             </div>
-          </div>
-          <div class="col-lg-6">
-            <div class="about-card p-4 p-lg-5 h-100 d-flex flex-col justify-content-between">
-              <div>
-                <img src="pic/A-4.jpg" alt="AI工具介紹" class="img-fluid rounded-4 mb-4 shadow-sm" style="height: 250px; width: 100%; object-fit: cover;">
-                <h3 class="h4 fw-bold mb-2">我們的使命與承諾</h3>
-                <p class="text-muted mb-4">自成立以來，我們持續更新最前線的 AI 工具資訊，幫助數萬名設計師、影音創作者與行銷人員提升 300% 生產力。</p>
+            <div class="col-lg-7">
+              <span class="brand-tag-gold mb-3">🎵 旗艦品牌獨立呈現</span>
+              <h2 class="h1 fw-bold text-white mb-3">【幻境配樂】Mirage Cinematic BGM</h2>
+              <p class="text-light opacity-90 fs-5 mb-4" style="line-height:1.7;">
+                【幻境配樂】專注於「電影級史詩配樂」、「東方奇幻音樂」與「商業原聲帶」之專業創作。
+                結合管弦樂團現場演奏感與現代 AI 音訊技術，賦予影片、遊戲、廣告無可比擬的大片級靈魂氛圍！
+              </p>
+
+              <div class="row g-3 mb-4 text-start">
+                <div class="col-md-6">
+                  <div class="p-3 rounded-3 bg-white bg-opacity-10 border border-white border-opacity-10 h-100">
+                    <div class="fw-bold text-warning fs-6 mb-1">🎼 電影史詩交響巨作</div>
+                    <small class="text-light opacity-75">獨特奇幻題材與壯闊管弦樂編曲</small>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="p-3 rounded-3 bg-white bg-opacity-10 border border-white border-opacity-10 h-100">
+                    <div class="fw-bold text-info fs-6 mb-1">📜 100% 商業授權保障</div>
+                    <small class="text-light opacity-75">YouTube、廣告與商業發行安心使用</small>
+                  </div>
+                </div>
               </div>
-              <div class="d-flex gap-2">
-                <a href="index.html" class="btn btn-outline-primary">瀏覽工具百寶箱</a>
-                <a href="pricing.html" class="btn btn-primary">查看免費付費比較</a>
+
+              <div class="d-flex flex-wrap gap-3">
+                <a href="https://www.facebook.com/bgm.mirage.cinematic/" target="_blank" rel="noopener" class="btn btn-warning text-dark font-bold px-4 py-2 fs-6">
+                  👍 關注【幻境配樂】官方粉專
+                </a>
+                <a href="contact.html" class="btn btn-outline-light px-4 py-2 fs-6">
+                  ✉️ 洽詢專屬商業配樂委託
+                </a>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- 頁面底部：旗艦品牌【幻境配樂 Mirage Cinematic BGM】Showcase 區塊 -->
-        <div class="brand-card-block p-4 p-lg-5 mt-5">
-          <div class="row align-items-center g-4">
+        <!-- 【區塊二】：說明我們「佛心免費整理全網 AI 工具」的創作者賦能故事 -->
+        <div class="story-card p-4 p-lg-5">
+          <div class="row g-4 align-items-center">
             <div class="col-lg-6">
-              <img src="pic/huanjing_masterpiece_logo.jpg" alt="【幻境配樂】Mirage Cinematic BGM Masterpiece Logo" class="img-fluid rounded-4 shadow-lg border border-warning border-opacity-25" style="max-height: 380px; width: 100%; object-fit: contain; background: #000000;">
-            </div>
-            <div class="col-lg-6">
-              <span class="brand-badge mb-3">🎵 旗下旗艦音樂品牌</span>
-              <h2 class="h2 fw-bold text-white mb-3">【幻境配樂】Mirage Cinematic BGM</h2>
-              <p class="text-light opacity-90 mb-4" style="line-height:1.7;">
-                【幻境配樂】專注於「電影級史詩配樂」、「東方奇幻音效」與「廣告商業原聲帶」之創作。
-                結合現場管弦大師與現代 AI 音訊技術，為遊戲、影音短片、品牌廣告提供震撼靈魂的大片級音軌支援！
-              </p>
-              <div class="row g-3 mb-4 text-start">
-                <div class="col-6">
-                  <div class="p-3 rounded-3 bg-white bg-opacity-10 border border-white border-opacity-10">
-                    <div class="fw-bold text-warning mb-1">🎼 電影史詩級配樂</div>
-                    <small class="text-light opacity-75">獨特奇幻與壯闊交響</small>
-                  </div>
+              <span class="badge bg-primary rounded-pill mb-3 px-3 py-2">🕊️ 創作者佛心賦能計劃</span>
+              <h2 class="section-title mb-3">為什麼我們佛心免費整理全網 AI 工具？</h2>
+              
+              <div class="manifesto-quote text-secondary mb-4 fs-6" style="line-height:1.8;">
+                「在 AI 科技爆發的時代，我們發現無數創作者與品牌面臨著<strong>『工具太多、試錯太累、付費太貴』</strong>的沉重痛點。<br><br>
+                作為音樂與影音創作的先行者，【幻境配樂】深知創作不易。我們不只專注於產出頂級配樂，更決定以<strong>『佛心共享、全免費整理』</strong>的精神，打造全台最完整的【AI 智能工具百寶箱】！<br><br>
+                我們無償幫大家篩選、分類與測試上百款免費與付費 AI 工具，白話拆解使用門檻，讓每一位追夢的創作者都能零負擔享受到科技紅利，把時間留給真正的創意！」
+              </div>
+
+              <div class="d-flex flex-wrap gap-3">
+                <div class="stat-box text-center">
+                  <h3 class="stat-number">50K+</h3>
+                  <small class="text-muted">受益創作者</small>
                 </div>
-                <div class="col-6">
-                  <div class="p-3 rounded-3 bg-white bg-opacity-10 border border-white border-opacity-10">
-                    <div class="fw-bold text-info mb-1">📜 100% 商業授權</div>
-                    <small class="text-light opacity-75">廣告發行全管道安心保障</small>
-                  </div>
+                <div class="stat-box text-center">
+                  <h3 class="stat-number">150+</h3>
+                  <small class="text-muted">佛心整理工具</small>
+                </div>
+                <div class="stat-box text-center">
+                  <h3 class="stat-number">100%</h3>
+                  <small class="text-muted">免費共享對比</small>
                 </div>
               </div>
-              <div class="d-flex flex-wrap gap-2">
-                <a href="https://www.facebook.com/bgm.mirage.cinematic/" target="_blank" rel="noopener" class="btn btn-warning text-dark font-bold px-4">
-                  👍 關注【幻境配樂】官方粉專
-                </a>
-                <a href="contact.html" class="btn btn-outline-light px-4">
-                  📋 填寫品牌需求問卷
-                </a>
+            </div>
+
+            <div class="col-lg-6">
+              <div class="bg-light p-4 rounded-4 border border-secondary-subtle">
+                <h3 class="h4 fw-bold mb-3 text-dark">🚀 我們為創作者帶來的 3 大承諾</h3>
+                
+                <div class="d-flex align-items-start gap-3 mb-4">
+                  <div class="p-3 rounded-3 bg-primary bg-opacity-10 text-primary fw-bold fs-5">01</div>
+                  <div>
+                    <h4 class="h6 fw-bold mb-1 text-dark">佛心共享，零隱藏費用</h4>
+                    <p class="small text-muted mb-0">全站 150+ AI 工具分類無償開放瀏覽與對比，絕無任何強制消費門檻。</p>
+                  </div>
+                </div>
+
+                <div class="d-flex align-items-start gap-3 mb-4">
+                  <div class="p-3 rounded-3 bg-success bg-opacity-10 text-success fw-bold fs-5">02</div>
+                  <div>
+                    <h4 class="h6 fw-bold mb-1 text-dark">白話拆解，省時 90% 摸索期</h4>
+                    <p class="small text-muted mb-0">替您過濾劣質工具，秒速定位『工作優化』、『文案』、『圖像』與『影音生成』最佳方案。</p>
+                  </div>
+                </div>
+
+                <div class="d-flex align-items-start gap-3">
+                  <div class="p-3 rounded-3 bg-warning bg-opacity-10 text-warning fw-bold fs-5">03</div>
+                  <div>
+                    <h4 class="h6 fw-bold mb-1 text-dark">音樂 + 科技雙引擎加持</h4>
+                    <p class="small text-muted mb-0">結合【幻境配樂】頂級大片音軌與熱門 AI 工具，助您的作品輕鬆創造爆款流量！</p>
+                  </div>
+                </div>
+
+                <div class="mt-4 pt-3 text-center border-top">
+                  <a href="index.html" class="btn btn-primary w-100 shadow-sm">🚀 立即前往 AI 工具百寶箱</a>
+                </div>
               </div>
             </div>
           </div>
