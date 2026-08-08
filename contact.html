@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>關於我們 - AI智能工具站</title>
+    <title>聯絡我們 - AI智能工具站</title>
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
@@ -40,40 +40,19 @@
       html { scroll-behavior: smooth; }
       body { margin: 0; color: var(--ink); background: #f8fbff; font-family: "Noto Sans TC", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
       .nav-custom { background: var(--nav); backdrop-filter: blur(12px); box-shadow: 0 12px 32px rgba(3, 7, 18, 0.18); }
+      
       .hero-section { margin-top: 56px; }
-      .hero-slide { min-height: 320px; display: flex; align-items: center; justify-content: center; color: #fff; padding: 3.5rem 1.5rem; text-align: center; position: relative; overflow: hidden; background-position: center; background-size: cover; background-repeat: no-repeat; }
-      .hero-slide::before { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(7, 12, 24, 0.82) 0%, rgba(15, 23, 42, 0.9) 100%); }
+      .hero-slide { min-height: 280px; display: flex; align-items: center; justify-content: center; color: #fff; padding: 3rem 1.5rem; text-align: center; position: relative; overflow: hidden; background-position: center; background-size: cover; background-repeat: no-repeat; }
+      .hero-slide::before { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(7, 12, 24, 0.85) 0%, rgba(15, 23, 42, 0.92) 100%); }
       .hero-slide > div { position: relative; z-index: 1; max-width: 760px; }
-      .hero-slide h1 { margin-bottom: 1rem; font-size: clamp(2.1rem, 5vw, 3.2rem); font-weight: 900; line-height: 1.1; }
+      .hero-slide h1 { margin-bottom: 0.8rem; font-size: clamp(2.1rem, 5vw, 3.2rem); font-weight: 900; line-height: 1.1; }
       .hero-slide p { margin: 0; font-size: clamp(1rem, 2vw, 1.25rem); opacity: 0.95; }
       
       .section-title { font-weight: 900; color: var(--ink); }
-      .about-card { border: 1px solid #e2e8f0; border-radius: 20px; background: #fff; box-shadow: 0 12px 36px rgba(15, 23, 42, 0.05); }
-      .about-points li { display: flex; align-items: flex-start; gap: 0.75rem; margin-bottom: 1rem; color: var(--muted); font-size: 1.05rem; }
-      .about-points svg { width: 22px; height: 22px; flex: 0 0 auto; color: var(--primary); margin-top: 0.15rem; }
-      .stat-box { min-width: 120px; padding: 1.2rem 1rem; border: 1px solid var(--line); border-radius: 14px; background: #ffffff; }
-      .stat-number { color: var(--primary); font-weight: 900; font-size: 1.8rem; }
-      
-      /* Brand Card Styling */
-      .brand-card-block {
-        border: 2px solid #3b82f6;
-        border-radius: 24px;
-        background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
-        color: #ffffff;
-        box-shadow: 0 20px 50px rgba(15, 23, 42, 0.35);
-        overflow: hidden;
-      }
-      .brand-badge {
-        background: linear-gradient(135deg, #f59e0b, #d97706);
-        color: #ffffff;
-        font-weight: 700;
-        font-size: 13px;
-        padding: 6px 14px;
-        border-radius: 999px;
-        display: inline-block;
-      }
+      .contact-card { border: 1px solid #e2e8f0; border-radius: 20px; background: #ffffff; box-shadow: 0 12px 36px rgba(15, 23, 42, 0.06); }
+      .contact-info-card { border: 1px solid #cbd5e1; border-radius: 20px; background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: #ffffff; box-shadow: 0 14px 40px rgba(15, 23, 42, 0.15); }
 
-      .btn { border-radius: 999px; font-weight: 700; padding: 10px 24px; }
+      .btn { border-radius: 999px; font-weight: 700; padding: 12px 24px; }
       .btn-primary { background: var(--primary); border-color: var(--primary); }
       .btn-primary:hover { background: var(--primary-dark); border-color: var(--primary-dark); }
       
@@ -109,7 +88,7 @@
       .back-to-top-btn.show { opacity: 1 !important; visibility: visible !important; transform: translateY(0); }
       .back-to-top-btn:hover { transform: translateY(-4px) scale(1.1); box-shadow: 0 12px 32px rgba(47, 111, 237, 0.65); background: #1d4ed8 !important; }
 
-      @media (max-width: 767.98px) { .hero-slide { min-height: 260px; padding: 2.5rem 1rem; } }
+      @media (max-width: 767.98px) { .hero-slide { min-height: 240px; padding: 2.5rem 1rem; } }
     </style>
   </head>
   <body>
@@ -121,108 +100,121 @@
         </button>
         <div class="collapse navbar-collapse" id="navMenu">
           <ul class="navbar-nav ms-auto">
-            <li class="nav-item"><a class="nav-link active" href="about.html">關於我們</a></li>
+            <li class="nav-item"><a class="nav-link" href="about.html">關於我們</a></li>
             <li class="nav-item"><a class="nav-link" href="pricing.html">免費與付費</a></li>
             <li class="nav-item"><a class="nav-link" href="https://www.remove.bg/zh-tw" target="_blank" rel="noopener">AI 去背</a></li>
             <li class="nav-item"><a class="nav-link" href="index.html#products">AI工具</a></li>
-            <li class="nav-item"><a class="nav-link" href="contact.html">聯絡我們</a></li>
+            <li class="nav-item"><a class="nav-link active" href="contact.html">聯絡我們</a></li>
           </ul>
         </div>
       </div>
     </nav>
 
     <header class="hero-section">
-      <div class="hero-slide" style="background-image:url('pic/A-1.jpeg');">
+      <div class="hero-slide" style="background-image:url('pic/A-2.JPG');">
         <div>
-          <h1>關於 AI智能工具站</h1>
-          <p>專注整理與推薦優質 AI 工具，賦予每位創作者高效升級體驗。</p>
+          <h1>聯絡我們 • 專屬合作與諮詢</h1>
+          <p>無論是商業合作、AI 工具申請上架、建議反饋或一般詢問，我們隨時為您服務。</p>
         </div>
       </div>
     </header>
 
     <main class="py-5">
       <div class="container">
-        <!-- 關於我們核心願景區塊 -->
-        <div class="row g-4 align-items-center mb-5">
-          <div class="col-lg-6">
-            <div class="about-card p-4 p-lg-5 h-100">
-              <h2 class="section-title mb-3">讓 AI 技術無縫賦能創作者</h2>
-              <p class="text-muted mb-4">我們致力於篩選全球最頂尖、實用且高效的 AI 工具。無論是文案創作、圖像去背、簡報製作還是音樂配樂，都能在這裡找到最佳解答。</p>
-              <ul class="about-points list-unstyled mb-4">
-                <li><i data-lucide="check-circle"></i><span>白話拆解複雜 AI 技術，提供 150+ 工具指南。</span></li>
-                <li><i data-lucide="check-circle"></i><span>清晰對比免費與付費工具效益，為團隊節省摸索成本。</span></li>
-                <li><i data-lucide="check-circle"></i><span>結合原創音樂與 AI 工具，打造一站式影音創作生態系。</span></li>
-              </ul>
-              <div class="d-flex flex-wrap gap-3 mt-4">
-                <div class="stat-box text-center">
-                  <h3 class="stat-number">50K+</h3>
-                  <small class="text-muted">創作者選用</small>
+        <div class="row g-5 justify-content-center">
+          <!-- 聯絡表單專屬卡片 -->
+          <div class="col-lg-7">
+            <div class="contact-card p-4 p-lg-5">
+              <h2 class="h3 fw-bold mb-2">✉️ 填寫聯絡表單</h2>
+              <p class="text-muted small mb-4">請填寫以下資訊，專人將於 24 小時內主動與您聯繫。</p>
+              
+              <form id="standaloneContactForm">
+                <div class="mb-4">
+                  <label for="userName" class="form-label fw-bold text-dark mb-1">1. 您的姓名 / 單位名稱 <span class="text-danger">*</span></label>
+                  <input type="text" id="userName" class="form-control form-control-lg border-secondary-subtle rounded-3 fs-6" required placeholder="例：王小明 / 創作者工作室">
                 </div>
-                <div class="stat-box text-center">
-                  <h3 class="stat-number">150+</h3>
-                  <small class="text-muted">精選 AI 工具</small>
+
+                <div class="mb-4">
+                  <label for="userEmail" class="form-label fw-bold text-dark mb-1">2. 電子信箱 Email <span class="text-danger">*</span></label>
+                  <input type="email" id="userEmail" class="form-control form-control-lg border-secondary-subtle rounded-3 fs-6" required placeholder="example@domain.com">
                 </div>
-                <div class="stat-box text-center">
-                  <h3 class="stat-number">99.8%</h3>
-                  <small class="text-muted">滿意推薦</small>
+
+                <div class="mb-4">
+                  <label for="userTopic" class="form-label fw-bold text-dark mb-1">3. 諮詢主旨 / 主題類別 <span class="text-danger">*</span></label>
+                  <select id="userTopic" class="form-select form-select-lg border-secondary-subtle rounded-3 fs-6" required>
+                    <option value="">-- 請選擇聯絡主題 --</option>
+                    <option value="collaboration">🤝 商業合作 / 品牌聯名企劃</option>
+                    <option value="tool_submission">🚀 申請 AI 工具提交上架</option>
+                    <option value="music_commission">🎼 【幻境配樂】專屬商業配樂委託</option>
+                    <option value="feedback_complaint">📣 意見反饋與建議改進 (投訴與建言)</option>
+                    <option value="general_inquiry">❓ 一般問題與技術諮詢</option>
+                  </select>
                 </div>
+
+                <div class="mb-4">
+                  <label for="userMessage" class="form-label fw-bold text-dark mb-1">4. 詳細說明 / 留言內容 <span class="text-danger">*</span></label>
+                  <textarea id="userMessage" rows="5" class="form-control border-secondary-subtle rounded-3 fs-6" required placeholder="請詳細說明您的需求、合作提案內容、AI 工具介紹或寶貴建議..."></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-lg w-100 shadow-sm mt-2">✉️ 立即送出聯絡訊息</button>
+              </form>
+
+              <div id="formSuccessAlert" class="alert alert-success mt-4 rounded-3 p-3 text-center border-0 shadow-sm" style="display:none;">
+                <h5 class="fw-bold mb-1">🎉 訊息已成功送出！</h5>
+                <p class="small mb-0 text-secondary">感謝您的來信，我們已收到您的訊息，專人將於 24 小時內與您聯繫。</p>
               </div>
             </div>
           </div>
-          <div class="col-lg-6">
-            <div class="about-card p-4 p-lg-5 h-100 d-flex flex-col justify-content-between">
+
+          <!-- 右側資訊與聯絡管道 -->
+          <div class="col-lg-5">
+            <div class="contact-info-card p-4 p-lg-5 h-100 d-flex flex-column justify-content-between">
               <div>
-                <img src="pic/A-4.jpg" alt="AI工具介紹" class="img-fluid rounded-4 mb-4 shadow-sm" style="height: 250px; width: 100%; object-fit: cover;">
-                <h3 class="h4 fw-bold mb-2">我們的使命與承諾</h3>
-                <p class="text-muted mb-4">自成立以來，我們持續更新最前線的 AI 工具資訊，幫助數萬名設計師、影音創作者與行銷人員提升 300% 生產力。</p>
-              </div>
-              <div class="d-flex gap-2">
-                <a href="index.html" class="btn btn-outline-primary">瀏覽工具百寶箱</a>
-                <a href="pricing.html" class="btn btn-primary">查看免費付費比較</a>
-              </div>
-            </div>
-          </div>
-        </div>
+                <span class="badge bg-primary rounded-pill mb-3 px-3 py-2">⚡ 快速對接</span>
+                <h3 class="h3 fw-bold text-white mb-3">多元溝通管道</h3>
+                <p class="text-light opacity-75 mb-4" style="line-height:1.8;">
+                  感謝您對【AI智能工具站】與【幻境配樂 Mirage Cinematic BGM】的支持。無論是商務談判、廣宣合作或工具評測需求，歡迎隨時聯繫！
+                </p>
 
-        <!-- 頁面底部：旗艦品牌【幻境配樂 Mirage Cinematic BGM】Showcase 區塊 -->
-        <div class="brand-card-block p-4 p-lg-5 mt-5">
-          <div class="row align-items-center g-4">
-            <div class="col-lg-6">
-              <img src="pic/huanjing_masterpiece_logo.jpg" alt="【幻境配樂】Mirage Cinematic BGM Masterpiece Logo" class="img-fluid rounded-4 shadow-lg border border-warning border-opacity-25" style="max-height: 380px; width: 100%; object-fit: contain; background: #000000;">
-            </div>
-            <div class="col-lg-6">
-              <span class="brand-badge mb-3">🎵 旗下旗艦音樂品牌</span>
-              <h2 class="h2 fw-bold text-white mb-3">【幻境配樂】Mirage Cinematic BGM</h2>
-              <p class="text-light opacity-90 mb-4" style="line-height:1.7;">
-                【幻境配樂】專注於「電影級史詩配樂」、「東方奇幻音效」與「廣告商業原聲帶」之創作。
-                結合現場管弦大師與現代 AI 音訊技術，為遊戲、影音短片、品牌廣告提供震撼靈魂的大片級音軌支援！
-              </p>
-              <div class="row g-3 mb-4 text-start">
-                <div class="col-6">
-                  <div class="p-3 rounded-3 bg-white bg-opacity-10 border border-white border-opacity-10">
-                    <div class="fw-bold text-warning mb-1">🎼 電影史詩級配樂</div>
-                    <small class="text-light opacity-75">獨特奇幻與壯闊交響</small>
+                <div class="d-flex align-items-start gap-3 mb-4">
+                  <div class="p-3 rounded-circle bg-white bg-opacity-10 text-primary">
+                    <i data-lucide="mail"></i>
+                  </div>
+                  <div>
+                    <div class="fw-bold text-white mb-1">客服與商務信箱</div>
+                    <div class="text-light opacity-75 small">contact@aitools.com</div>
                   </div>
                 </div>
-                <div class="col-6">
-                  <div class="p-3 rounded-3 bg-white bg-opacity-10 border border-white border-opacity-10">
-                    <div class="fw-bold text-info mb-1">📜 100% 商業授權</div>
-                    <small class="text-light opacity-75">廣告發行全管道安心保障</small>
+
+                <div class="d-flex align-items-start gap-3 mb-4">
+                  <div class="p-3 rounded-circle bg-white bg-opacity-10 text-warning">
+                    <i data-lucide="message-circle"></i>
+                  </div>
+                  <div>
+                    <div class="fw-bold text-white mb-1">【幻境配樂】FB 官方私訊</div>
+                    <div class="text-light opacity-75 small">即時線上回應，討論專屬配樂</div>
+                  </div>
+                </div>
+
+                <div class="d-flex align-items-start gap-3 mb-4">
+                  <div class="p-3 rounded-circle bg-white bg-opacity-10 text-info">
+                    <i data-lucide="clock"></i>
+                  </div>
+                  <div>
+                    <div class="fw-bold text-white mb-1">服務回應時間</div>
+                    <div class="text-light opacity-75 small">週一至週日 09:00 - 22:00 (24h 內處理)</div>
                   </div>
                 </div>
               </div>
-              <div class="d-flex flex-wrap gap-2">
-                <a href="https://www.facebook.com/bgm.mirage.cinematic/" target="_blank" rel="noopener" class="btn btn-warning text-dark font-bold px-4">
-                  👍 關注【幻境配樂】官方粉專
-                </a>
-                <a href="contact.html" class="btn btn-outline-light px-4">
-                  📋 填寫品牌需求問卷
+
+              <div class="mt-4 pt-3 border-top border-secondary border-opacity-25">
+                <a href="https://www.facebook.com/bgm.mirage.cinematic/" target="_blank" rel="noopener" class="btn btn-warning text-dark w-100 font-bold">
+                  👍 點我前往 FB 官方粉專私訊
                 </a>
               </div>
             </div>
           </div>
         </div>
-
       </div>
     </main>
 
@@ -271,6 +263,26 @@
     <script src="js/bootstrap.bundle.min.js"></script>
     <script>
       if (window.lucide) { lucide.createIcons(); }
+
+      const standaloneContactForm = document.getElementById("standaloneContactForm");
+      const formSuccessAlert = document.getElementById("formSuccessAlert");
+
+      if (standaloneContactForm && formSuccessAlert) {
+        standaloneContactForm.addEventListener("submit", (e) => {
+          e.preventDefault();
+          if (window.gtag) {
+            gtag("event", "contact_form_submit", {
+              event_category: "form",
+              event_label: "聯絡我們專屬表單提交"
+            });
+          }
+          formSuccessAlert.style.display = "block";
+          standaloneContactForm.reset();
+          window.setTimeout(() => {
+            formSuccessAlert.style.display = "none";
+          }, 5000);
+        });
+      }
 
       const backToTopBtn = document.getElementById("backToTopBtn");
       if (backToTopBtn) {
