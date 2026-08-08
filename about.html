@@ -44,7 +44,7 @@
       /* Hero Dragon Banner */
       .hero-section { margin-top: 56px; }
       .hero-slide-dragon {
-        min-height: 380px;
+        min-height: 360px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -69,6 +69,7 @@
       .hero-slide-dragon p { margin: 0; font-size: clamp(1.05rem, 2vw, 1.3rem); opacity: 0.95; font-weight: 500; }
       
       .section-title { font-weight: 900; color: var(--ink); }
+      .single-line-title { font-size: clamp(1.3rem, 2.6vw, 2.1rem) !important; white-space: nowrap !important; overflow: hidden; text-overflow: ellipsis; }
       
       /* Brand Featured Showcase Box */
       .brand-hero-box {
@@ -144,7 +145,10 @@
       .back-to-top-btn.show { opacity: 1 !important; visibility: visible !important; transform: translateY(0); }
       .back-to-top-btn:hover { transform: translateY(-4px) scale(1.1); box-shadow: 0 12px 32px rgba(47, 111, 237, 0.65); background: #1d4ed8 !important; }
 
-      @media (max-width: 767.98px) { .hero-slide-dragon { min-height: 280px; padding: 2.5rem 1rem; } }
+      @media (max-width: 767.98px) { 
+        .hero-slide-dragon { min-height: 280px; padding: 2.5rem 1rem; }
+        .single-line-title { font-size: 1.15rem !important; }
+      }
     </style>
   </head>
   <body>
@@ -186,46 +190,52 @@
               <img src="pic/huanjing_masterpiece_logo.jpg" alt="【幻境配樂】Mirage Cinematic BGM Masterpiece Logo" class="img-fluid rounded-4 shadow-lg border border-warning border-opacity-30" style="max-height: 360px; width: 100%; object-fit: contain; background: #000000;">
             </div>
             <div class="col-lg-7">
-              <span class="brand-tag-gold mb-3">🎵 旗艦品牌獨立呈現</span>
-              <h2 class="h1 fw-bold text-white mb-3">【幻境配樂】Mirage Cinematic BGM</h2>
-              <p class="text-light opacity-90 fs-5 mb-4" style="line-height:1.7;">
-                【幻境配樂】專注於「電影級史詩配樂」、「東方奇幻音樂」與「商業原聲帶」之專業創作。
-                結合管弦樂團現場演奏感與現代 AI 音訊技術，賦予影片、遊戲、廣告無可比擬的大片級靈魂氛圍！
+              <div class="d-flex flex-wrap gap-2 mb-3 align-items-center">
+                <span class="brand-tag-gold">🎵 免版稅素材庫</span>
+                <span class="badge bg-danger rounded-pill px-3 py-2">🔥 免費商業使用</span>
+              </div>
+              <h2 class="h1 fw-bold text-white mb-2">【幻境配樂】Mirage Cinematic BGM</h2>
+              <p class="text-warning fw-bold fs-6 mb-3">頂級 AI 技術創作 • 史詩級大氣交響樂 (Google Flow Lyria 3)</p>
+              
+              <p class="text-light opacity-90 fs-6 mb-4" style="line-height:1.75;">
+                【幻境配樂】專為短影音創作者、Vlogger 與遊戲玩家打造！全頻道純音樂大方開放 <strong>Shorts / TikTok / Reels 免費商業使用</strong>！
+                結合頂級 AI 聲音模型與管弦交響樂，1 分鐘提供震撼心靈的史詩音軌！
               </p>
 
               <div class="row g-3 mb-4 text-start">
                 <div class="col-md-6">
                   <div class="p-3 rounded-3 bg-white bg-opacity-10 border border-white border-opacity-10 h-100">
-                    <div class="fw-bold text-warning fs-6 mb-1">🎼 電影史詩交響巨作</div>
-                    <small class="text-light opacity-75">獨特奇幻題材與壯闊管弦樂編曲</small>
+                    <div class="fw-bold text-warning fs-6 mb-1">🎼 大氣管弦史詩交響</div>
+                    <small class="text-light opacity-75">1 分鐘高品質配樂，極致大片感</small>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="p-3 rounded-3 bg-white bg-opacity-10 border border-white border-opacity-10 h-100">
-                    <div class="fw-bold text-info fs-6 mb-1">📜 100% 商業授權保障</div>
-                    <small class="text-light opacity-75">YouTube、廣告與商業發行安心使用</small>
+                    <div class="fw-bold text-info fs-6 mb-1">📜 免版稅安心使用</div>
+                    <small class="text-light opacity-75">YouTube、TikTok 與全頻道開放商用</small>
                   </div>
                 </div>
               </div>
 
-              <div class="d-flex flex-wrap gap-3">
+              <div class="d-flex flex-wrap gap-3 align-items-center">
                 <a href="https://www.facebook.com/bgm.mirage.cinematic/" target="_blank" rel="noopener" class="btn btn-warning text-dark font-bold px-4 py-2 fs-6">
-                  👍 關注【幻境配樂】官方粉專
+                  👍 關注【幻境配樂】FB 粉專
                 </a>
-                <a href="contact.html" class="btn btn-outline-light px-4 py-2 fs-6">
-                  ✉️ 洽詢專屬商業配樂委託
+                <a href="https://www.youtube.com/@bgm.mirage.cinematic" target="_blank" rel="noopener" class="btn btn-outline-light px-4 py-2 fs-6">
+                  ▶️ YouTube 搜尋 @bgm.mirage.cinematic
                 </a>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- 【區塊二】：說明我們「佛心免費整理全網 AI 工具」的創作者賦能故事 -->
+        <!-- 【區塊二】：說明我們「免費整理全網 AI 工具給大家使用」的創作者賦能故事 -->
         <div class="story-card p-4 p-lg-5">
           <div class="row g-4 align-items-center">
             <div class="col-lg-6">
-              <span class="badge bg-primary rounded-pill mb-3 px-3 py-2">🕊️ 創作者佛心賦能計劃</span>
-              <h2 class="section-title mb-3">為什麼我們佛心免費整理全網 AI 工具？</h2>
+              <span class="badge bg-primary rounded-pill mb-3 px-3 py-2">🕊️ 創作者賦能計劃</span>
+              <!-- 標題單行不折行 -->
+              <h2 class="section-title mb-3 single-line-title text-dark">免費整理全網 AI 工具給大家使用</h2>
               
               <div class="manifesto-quote text-secondary mb-4 fs-6" style="line-height:1.8;">
                 「在 AI 科技爆發的時代，我們發現無數創作者與品牌面臨著<strong>『工具太多、試錯太累、付費太貴』</strong>的沉重痛點。<br><br>
