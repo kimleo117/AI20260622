@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SoundSync AI - 音樂字幕與時間軸生成助手 | 獨家旗艦AI工具</title>
+  <meta name="description" content="SoundSync AI - 專業 AI 音樂聽打、歌詞時間軸對齊與 SRT/LRC 字幕精準自動打軸工具。">
+  <link rel="icon" type="image/png" href="pic/favicon.png">
+  <link rel="shortcut icon" type="image/x-icon" href="pic/favicon.ico">
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #2f6fed;
+      --ink: #0f172a;
+    }
+    body {
+      background: #f8fafc;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      color: var(--ink);
+    }
+    .hero-box {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: white;
+      border-radius: 24px;
+      padding: 3rem 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 20px 40px rgba(15, 23, 42, 0.15);
+    }
+    .glass-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+    }
+    .btn-primary-custom {
+      background: var(--primary);
+      color: white;
+      font-weight: 700;
+      border-radius: 999px;
+      padding: 12px 32px;
+      border: none;
+      transition: all 0.2s ease;
+    }
+    .btn-primary-custom:hover {
+      background: #1d4ed8;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(47, 111, 237, 0.35);
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3 sticky-top shadow-sm">
+    <div class="container">
+      <a class="navbar-brand fw-bold fs-4 d-flex align-items-center gap-2" href="index.html">
+        <img src="pic/favicon.png" alt="Logo" width="32" height="32" class="rounded-circle">
+        AI智能工具站 <span class="badge bg-primary fs-7">SoundSync AI</span>
+      </a>
+      <div class="ms-auto d-flex gap-2">
+        <a href="index.html" class="btn btn-outline-light rounded-pill px-4">🏠 回首頁</a>
+        <a href="contact.html" class="btn btn-primary rounded-pill px-4">✉️ 聯絡我們</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container py-5">
+    <div class="hero-box text-center">
+      <div class="badge bg-primary px-3 py-2 rounded-pill fs-7 mb-3">⭐ 獨家自研旗艦 AI 工具</div>
+      <h1 class="display-5 fw-bold mb-3">🎵 SoundSync AI</h1>
+      <p class="lead text-light opacity-90 mb-4">專業 AI 音樂聽打 • 歌詞時間軸對齊 • SRT / LRC 字幕精準自動打軸助手</p>
+      <div class="d-flex justify-content-center gap-3">
+        <a href="https://aistudio.google.com/apps/0fad7146-b729-46a1-a793-a049aca49676" target="_blank" rel="noopener" class="btn btn-primary-custom fs-5">
+          🚀 立即開啟 SoundSync AI 雲端工具
+        </a>
+      </div>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="glass-card h-100">
+          <div class="fs-1 mb-3">🎤</div>
+          <h3 class="h5 fw-bold mb-2">1. 聽寫與自動打軸</h3>
+          <p class="text-secondary small mb-0">支援 MP3 / WAV 影音檔上傳，採用 Google Gemini 2.0 / 3.6 音訊分析模型，自動辨識歌詞與講話時間點。</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="glass-card h-100">
+          <div class="fs-1 mb-3">⚡</div>
+          <h3 class="h5 fw-bold mb-2">2. 邊界重疊衝突修復</h3>
+          <p class="text-secondary small mb-0">獨家微秒級邊界對齊演算法，徹底解決「上一句 / 下一句」時間點連號造成的播放失靈與跳動 Bug。</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="glass-card h-100">
+          <div class="fs-1 mb-3">💾</div>
+          <h3 class="h5 fw-bold mb-2">3. 多格式一鍵匯出</h3>
+          <p class="text-secondary small mb-0">支援匯出 SRT、LRC、VTT 及 TXT 格式，隨插即用於 Premiere、Final Cut 及剪映等專業剪輯軟體。</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="glass-card mt-5 p-4 text-center">
+      <h3 class="fw-bold mb-3">📦 SoundSync AI 開發源碼與進階整合</h3>
+      <p class="text-secondary mb-4">已成功在 `SoundSync_AI_Source` 完成完整解壓與 React / TypeScript 元件分析，包含 14 個專業模組。</p>
+      <a href="index.html#products" class="btn btn-outline-primary rounded-pill px-4 me-2">🔍 瀏覽更多全網 AI 工具</a>
+      <a href="contact.html" class="btn btn-success rounded-pill px-4">💬 客製化 AI 工具開發諮詢</a>
+    </div>
+  </main>
+
+  <footer class="bg-dark text-white py-4 mt-5">
+    <div class="container text-center text-muted small">
+      <p class="mb-0">© 2026 AI 智能工具站 & 【幻境配樂 Mirage Cinematic BGM】. 版權所有.</p>
+    </div>
+  </footer>
+
+</body>
+</html>
