@@ -3376,6 +3376,7 @@
   
     
     
+    
     <script id="realtime-search-script">
       document.addEventListener("DOMContentLoaded", function() {
         const searchInput = document.getElementById("toolSearchInput");
@@ -3385,12 +3386,13 @@
         const toolCards = document.querySelectorAll(".ai-card-huanjing");
         const hotTagBtns = document.querySelectorAll(".hot-tag-btn");
 
-        // 台灣常見搜尋同義詞地圖
+        // 台灣常見搜尋同義詞地圖 (精準比對，不包含雜訊)
         const synonymMap = {
-          "作影片": ["影片", "影音", "剪輯", "短影音", "動畫", "生成", "video", "media"],
-          "做影片": ["影片", "影音", "剪輯", "短影音", "動畫", "生成", "video", "media"],
-          "影片": ["影片", "影音", "剪輯", "短影音", "動畫", "生成", "video", "media"],
-          "圖片": ["圖像", "繪圖", "去背", "圖片", "照片", "畫", "draw", "image", "photo", "pic"],
+          "作影片": ["影片", "剪輯", "短影音", "動畫", "生成", "video"],
+          "做影片": ["影片", "剪輯", "短影音", "動畫", "生成", "video"],
+          "影片": ["影片", "剪輯", "短影音", "動畫", "video"],
+          "影音": ["影音", "聲音", "音訊", "配樂", "聽打", "audio", "video"],
+          "圖片": ["圖像", "繪圖", "去背", "圖片", "照片", "畫", "draw", "image", "photo"],
           "作圖": ["圖像", "繪圖", "去背", "圖片", "照片", "畫", "draw", "image"],
           "做圖": ["圖像", "繪圖", "去背", "圖片", "照片", "畫", "draw", "image"],
           "畫圖": ["圖像", "繪圖", "去背", "圖片", "照片", "畫", "draw", "image"],
@@ -3398,36 +3400,6 @@
           "寫文章": ["文案", "寫作", "文章", "編輯", "創作", "writer", "copy"],
           "聽音樂": ["音樂", "配樂", "聽打", "soundsync", "bgm", "音軌", "audio", "music"]
         };
-
-        function updateHeadersVisibility(isSearching) {
-          // 抓取所有章節標題
-          const allHeaderNodes = document.querySelectorAll("h2, h3, .section-title, [id^='sec-'], #latest, #featured, #free, #paid, #work, #creative, #visual, #media, #summary, #learning, #audio, #editing, #job, #chat, #organize, #brand, #seo, #code");
-
-          allHeaderNodes.forEach(header => {
-            if (!header.classList.contains("ai-card-huanjing") && !header.closest(".ai-card-huanjing")) {
-              if (isSearching) {
-                // 檢查該標題後的下一個同級容器或同區域卡片是否有顯示的
-                let parentContainer = header.closest(".mb-5, .mb-4, section") || header.parentElement;
-                let visibleCards = [];
-                
-                if (parentContainer) {
-                  visibleCards = Array.from(parentContainer.querySelectorAll(".ai-card-huanjing")).filter(c => {
-                    const p = c.closest(".col-md-6, .col-lg-4, .mb-4");
-                    return p && p.style.display !== "none";
-                  });
-                }
-
-                if (visibleCards.length === 0) {
-                  header.style.setProperty("display", "none", "important");
-                } else {
-                  header.style.setProperty("display", "", "");
-                }
-              } else {
-                header.style.setProperty("display", "", "");
-              }
-            }
-          });
-        }
 
         function performSearch(query) {
           query = query.trim().toLowerCase();
@@ -3442,7 +3414,12 @@
             let matchCount = 0;
 
             toolCards.forEach(card => {
-              const cardText = (card.innerText + " " + (card.getAttribute("data-seo-keyword") || "")).toLowerCase();
+              // 關鍵重點修復：只抓取卡片上的『標題』、『說明內文』與『標籤』，嚴禁抓取隱形SEO背景詞，避免全站卡片誤判！
+              const cardTitle = (card.querySelector('h3, h4')?.innerText || '').toLowerCase();
+              const cardDesc = (card.querySelector('p')?.innerText || '').toLowerCase();
+              const cardTags = Array.from(card.querySelectorAll('.badge-tag, .badge')).map(b => b.innerText.toLowerCase()).join(' ');
+              
+              const cardText = cardTitle + " " + cardDesc + " " + cardTags;
               const cardParent = card.closest(".col-md-6, .col-lg-4, .mb-4");
 
               const isMatch = searchTerms.some(term => cardText.includes(term));
@@ -3457,8 +3434,17 @@
               }
             });
 
-            // 100% 精準隱藏沒資料的分區標題
-            updateHeadersVisibility(true);
+            // 精準隱藏全站無符合項目的分區
+            const sections = document.querySelectorAll("section[id], div[id^='sec-'], #latest, #featured, #free, #paid, #work, #creative, #visual, #media, #summary, #learning, #audio, #editing, #job, #chat, #organize, #brand, #seo, #code");
+            sections.forEach(sec => {
+              const visibleCards = Array.from(sec.querySelectorAll(".ai-card-huanjing")).filter(c => c.style.display === "flex");
+              const secHeader = sec.querySelector("h2, h3, .section-title");
+              if (visibleCards.length === 0) {
+                if (secHeader) secHeader.style.display = "none";
+              } else {
+                if (secHeader) secHeader.style.display = "block";
+              }
+            });
 
             countDisplay.style.display = "block";
             countDisplay.innerHTML = `找到了 <strong class="text-primary fs-6">${matchCount}</strong> 個符合「<strong>${query}</strong>」的 AI 工具`;
@@ -3480,7 +3466,8 @@
             });
 
             // 恢復所有分區標題
-            updateHeadersVisibility(false);
+            const sectionHeaders = document.querySelectorAll("h2, h3, .section-title");
+            sectionHeaders.forEach(h => h.style.display = "block");
           }
         }
 
@@ -3506,6 +3493,7 @@
         }
       });
     </script>
+
 
 
 
