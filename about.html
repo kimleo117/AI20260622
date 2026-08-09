@@ -209,6 +209,49 @@
         }
       }
 
+    
+      /* 貫穿頂部選單極致滿版 Hero 大圖樣式 (Full-Bleed Transparent Header) */
+      .hero-section {
+        margin-top: 0 !important;
+        padding-top: 0 !important;
+      }
+      .hero-slide, .hero-slide-dragon {
+        height: 380px !important;
+        min-height: 380px !important;
+        max-height: 380px !important;
+        padding-top: 80px !important;
+        padding-bottom: 2rem !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        text-align: center !important;
+        position: relative !important;
+        overflow: hidden !important;
+        background-position: center center !important;
+        background-size: cover !important;
+        background-repeat: no-repeat !important;
+      }
+      .hero-slide::before, .hero-slide-dragon::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, rgba(7, 12, 24, 0.65) 0%, rgba(15, 23, 42, 0.88) 100%) !important;
+      }
+      .nav-custom {
+        background: rgba(12, 18, 33, 0.72) !important;
+        backdrop-filter: blur(16px) !important;
+        -webkit-backdrop-filter: blur(16px) !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+      }
+      @media (max-width: 767.98px) {
+        .hero-slide, .hero-slide-dragon {
+          height: 300px !important;
+          min-height: 300px !important;
+          max-height: 300px !important;
+          padding-top: 70px !important;
+        }
+      }
+
     </style>
   
     <!-- OUR Official Brand SEO Meta Tags -->
