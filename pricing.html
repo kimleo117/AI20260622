@@ -707,5 +707,22 @@
         });
       }
     </script>
-  </body>
+  <script>
+  function scrollToQubei(e) {
+    var target = document.getElementById('sec-AI去背');
+    if (target && (window.location.pathname.endsWith('index.html') || window.location.pathname.endsWith('/') || window.location.pathname === '')) {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      window.history.pushState(null, '', '#sec-AI去背');
+    }
+  }
+
+  // 確保點擊 AI工具 必定頂部 0,0 顯現 Hero 大圖
+  window.addEventListener('DOMContentLoaded', function() {
+    if (!window.location.hash || window.location.hash === '' || window.location.hash === '#top') {
+      window.scrollTo(0, 0);
+    }
+  });
+</script>
+</body>
 </html>
