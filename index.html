@@ -3481,83 +3481,71 @@
     
     
     
+    <!-- 全新精準 AI 搜尋引擎 (Smart Search Engine) -->
     <script id="realtime-search-script">
       document.addEventListener("DOMContentLoaded", function() {
-        const searchInput = document.getElementById("toolSearchInput");
+        const searchInput = document.getElementById("searchInput");
         const clearBtn = document.getElementById("clearSearchBtn");
-        const countDisplay = document.getElementById("searchResultsCount");
+        const countDisplay = document.getElementById("searchResultCount");
         const noResultsAlert = document.getElementById("noResultsAlert");
         const toolCards = document.querySelectorAll(".ai-card-huanjing");
         const hotTagBtns = document.querySelectorAll(".hot-tag-btn");
-        const catItems = document.querySelectorAll(".cat-item, .mobile-cat-pill");
+        const catItems = document.querySelectorAll(".cat-item");
 
-        // 台灣常見搜尋同義詞地圖 (精準去除「生成」、「YouTube 摘要」等干擾詞)
+        // 同義詞與精準意圖對照表
         const synonymMap = {
-          "作影片": ["影片", "短影音", "videogen", "memo ai", "opusclip", "rask", "good tape", "video"],
-          "做影片": ["影片", "短影音", "videogen", "memo ai", "opusclip", "rask", "good tape", "video"],
-          "影片": ["影片", "短影音", "videogen", "memo ai", "opusclip", "rask", "good tape", "video"],
-          "影音": ["影音", "影片", "短影音", "videogen", "memo ai", "opusclip", "rask", "good tape", "video"],
-          "圖片": ["圖片", "圖像", "繪圖", "去背", "照片", "photo", "image", "pic"],
-          "作圖": ["圖片", "圖像", "繪圖", "去背", "照片", "photo", "image", "pic"],
-          "做圖": ["圖片", "圖像", "繪圖", "去背", "照片", "photo", "image", "pic"],
-          "畫圖": ["圖片", "圖像", "繪圖", "去背", "照片", "photo", "image", "pic"],
-          "寫程式": ["程式", "code", "開發", "寫碼", "python", "javascript", "developer"],
-          "寫文章": ["文案", "寫作", "文章", "編輯", "創作", "writer", "copy"],
-          "聽音樂": ["音樂", "配樂", "聽打", "soundsync", "bgm", "音軌", "music"]
-        };
-
-        // 關鍵字對應的主力目標區塊
-        const catKeywordMap = {
-          "影片": ["#media", "影音生成"],
-          "影音": ["#media", "影音生成"],
-          "作影片": ["#media", "影音生成"],
-          "做影片": ["#media", "影音生成"],
-          "圖片": ["#visual", "圖像生成"],
-          "作圖": ["#visual", "圖像生成"],
-          "做圖": ["#visual", "圖像生成"],
-          "畫圖": ["#visual", "圖像生成"],
-          "文案": ["#creative", "文案生成"],
-          "寫文章": ["#creative", "文案生成"],
-          "程式": ["#code", "程式開發"],
-          "寫程式": ["#code", "程式開發"],
-          "音樂": ["#media", "影音生成"],
-          "聽音樂": ["#media", "影音生成"],
-          "soundsync": ["#media", "影音生成"]
+          "可以": ["可靈", "kling"],
+          "可": ["可靈", "kling"],
+          "影片": ["影音", "影片", "video", "kling", "luma", "hailuo", "sora", "runway", "opusclip", "pika", "viggle", "heygen", "剪映", "capcut"],
+          "做影片": ["影音", "影片", "video", "kling", "luma", "hailuo", "sora", "runway", "opusclip"],
+          "作影片": ["影音", "影片", "video", "kling", "luma", "hailuo", "sora", "runway", "opusclip"],
+          "繪圖": ["繪圖", "圖像", "midjourney", "flux", "firefly", "canva", "ideogram", "recraft", "dall-e"],
+          "畫圖": ["繪圖", "圖像", "midjourney", "flux", "firefly", "canva", "ideogram", "recraft"],
+          "去背": ["去背", "remove.bg", "photopea", "picwish", "photoshop"],
+          "寫程式": ["程式", "cursor", "windsurf", "v0", "bolt", "copilot", "code"],
+          "簡報": ["簡報", "gamma", "canva", "tome", "chatslide"],
+          "對話": ["聊天", "機器人", "chatgpt", "deepseek", "claude", "gemini", "豆包", "kimi", "grok"]
         };
 
         function performSearch(query, triggerScroll = false) {
-          query = query.trim().toLowerCase();
+          const rawQuery = query.trim();
+          const q = rawQuery.toLowerCase();
 
-          let searchTerms = [query];
-          if (synonymMap[query]) {
-            searchTerms = searchTerms.concat(synonymMap[query]);
-          }
-
-          if (query.length > 0) {
+          if (q.length > 0) {
             clearBtn.style.display = "block";
             let matchCount = 0;
 
-            toolCards.forEach(card => {
-              const cardTitle = (card.querySelector('h3, h4')?.innerText || '').toLowerCase();
-              const cardDesc = (card.querySelector('p')?.innerText || '').toLowerCase();
-              const cardTags = Array.from(card.querySelectorAll('.badge-tag, .badge')).map(b => b.innerText.toLowerCase()).join(' ');
-              const cardSection = card.closest("section, div[id]")?.id || "";
+            // 取得搜尋擴展詞
+            let searchTerms = [q];
+            if (synonymMap[rawQuery]) {
+              searchTerms = searchTerms.concat(synonymMap[rawQuery]);
+            }
 
+            toolCards.forEach(card => {
+              const cardParent = card.closest(".col-md-6, .col-lg-4, .mb-4");
+              
+              // 提煉卡片的核心重要文字：標題 (h4, h3, h5) + 標籤 (.badge-tag, .text-danger, .text-primary)
+              const titleElem = card.querySelector("h4, h3, h5");
+              const titleText = titleElem ? titleElem.innerText.toLowerCase() : "";
+              const subtitleElem = card.querySelector(".text-danger, .text-primary, .text-warning, .text-info, .text-purple, .text-pink");
+              const subtitleText = subtitleElem ? subtitleElem.innerText.toLowerCase() : "";
+              const tagsElems = card.querySelectorAll(".badge-tag");
+              const tagsText = Array.from(tagsElems).map(t => t.innerText.toLowerCase()).join(" ");
+              const bodyElem = card.querySelector(".card-text");
+              const bodyText = bodyElem ? bodyElem.innerText.toLowerCase() : "";
+
+              // 優先匹配標題與標籤
               let isMatch = false;
 
-              // 如果搜尋「影片」或「影音」，優先將【影音生成】專區(#media)的所有卡片全部判斷為強匹配！
-              if ((query === "影片" || query === "影音" || query === "作影片" || query === "做影片") && (cardSection === "media" || cardSection.includes("影音"))) {
-                isMatch = true;
-              } else {
-                // 否則進行內文精準比對 (忽略僅提及 "YouTube 影片" 的文章保存工具)
-                if (cardDesc.includes("youtube 影片") && !query.includes("youtube")) {
-                  isMatch = false;
-                } else {
-                  isMatch = searchTerms.some(term => cardTitle.includes(term) || cardDesc.includes(term) || cardTags.includes(term));
+              searchTerms.forEach(term => {
+                const t = term.toLowerCase();
+                if (titleText.includes(t) || subtitleText.includes(t) || tagsText.includes(t)) {
+                  isMatch = true;
+                } else if (q.length >= 2 && bodyText.includes(t)) {
+                  // 如果搜尋詞長度 >= 2，才允許匹配內文說明
+                  isMatch = true;
                 }
-              }
-
-              const cardParent = card.closest(".col-md-6, .col-lg-4, .mb-4");
+              });
 
               if (isMatch) {
                 if (cardParent) cardParent.style.display = "block";
@@ -3569,58 +3557,19 @@
               }
             });
 
-            // 精準隱藏全站無符合項目的分區標題
-            const allHeaderElements = document.querySelectorAll(".container h2, .container h3, .section-title");
-            allHeaderElements.forEach(header => {
-              const parentBlock = header.closest("section, div.mb-5, div.mb-4, div.row") || header.parentElement;
-              let hasVisibleCards = false;
-
-              if (parentBlock) {
-                const cardChildren = parentBlock.querySelectorAll(".ai-card-huanjing");
-                if (cardChildren.length > 0) {
-                  hasVisibleCards = Array.from(cardChildren).some(c => c.style.display === "flex");
-                } else {
-                  let nextElem = header.nextElementSibling;
-                  while (nextElem && !hasVisibleCards) {
-                    const subCards = nextElem.querySelectorAll ? nextElem.querySelectorAll(".ai-card-huanjing") : [];
-                    if (subCards.length > 0) {
-                      hasVisibleCards = Array.from(subCards).some(c => c.style.display === "flex");
-                    }
-                    nextElem = nextElem.nextElementSibling;
-                  }
-                }
-              }
-
-              if (!hasVisibleCards) {
-                header.style.setProperty("display", "none", "important");
+            // 動態隱藏無卡片展示的專區標題
+            const categoryBlocks = document.querySelectorAll(".category-section-block");
+            categoryBlocks.forEach(block => {
+              const visibleCards = block.querySelectorAll('.ai-card-huanjing[style*="display: flex"]');
+              if (visibleCards.length === 0) {
+                block.style.setProperty("display", "none", "important");
               } else {
-                header.style.setProperty("display", "", "");
+                block.style.setProperty("display", "block", "");
               }
             });
 
-            // 側邊欄 Highlight 與平滑捲動
-            if (catKeywordMap[query]) {
-              const targetSelector = catKeywordMap[query][0];
-              const targetText = catKeywordMap[query][1];
-
-              catItems.forEach(item => {
-                if (item.innerText.includes(targetText) || item.getAttribute("href") === targetSelector || item.getAttribute("data-target") === targetSelector) {
-                  item.classList.add("active");
-                } else {
-                  item.classList.remove("active");
-                }
-              });
-
-              if (triggerScroll) {
-                const targetSection = document.querySelector(targetSelector) || document.querySelector(`[id*="${targetText}"]`);
-                if (targetSection) {
-                  targetSection.scrollIntoView({ behavior: "smooth", block: "start" });
-                }
-              }
-            }
-
             countDisplay.style.display = "block";
-            countDisplay.innerHTML = `找到了 <strong class="text-primary fs-6">${matchCount}</strong> 個符合「<strong>${query}</strong>」的 AI 工具`;
+            countDisplay.innerHTML = `找到了 <strong class="text-primary fs-6">${matchCount}</strong> 個符合「<strong>${rawQuery}</strong>」的 AI 工具`;
 
             if (matchCount === 0) {
               if (noResultsAlert) noResultsAlert.style.display = "block";
@@ -3638,18 +3587,16 @@
               card.style.display = "flex";
             });
 
-            const allHeaderElements = document.querySelectorAll(".container h2, .container h3, .section-title");
-            allHeaderElements.forEach(h => h.style.setProperty("display", "", ""));
+            const categoryBlocks = document.querySelectorAll(".category-section-block");
+            categoryBlocks.forEach(block => block.style.setProperty("display", "block", ""));
           }
         }
 
         if (searchInput) {
           searchInput.addEventListener("input", function() {
-            // 打字時進行精準比對，不滾動視角
             performSearch(this.value, false);
           });
 
-          // 按 Enter 鍵時平滑對焦至目標分區
           searchInput.addEventListener("keydown", function(e) {
             if (e.key === "Enter") {
               e.preventDefault();
