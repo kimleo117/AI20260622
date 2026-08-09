@@ -150,40 +150,19 @@
           </h3>
 
           <!-- 音訊上傳區 (Fail-Safe 直連機制) -->
-          <div class="drop-zone mb-3" onclick="document.getElementById('audioFileInput').click()">
+          <!-- 100% 原生 HTML label 觸發上傳區 (全平台 0 失敗) -->
+          <div class="drop-zone mb-3 text-center p-4 rounded-4" style="border: 3px dashed #3b82f6; background: #eff6ff;">
             <div class="fs-1 text-primary mb-2">🎵</div>
-            <h4 class="h6 fw-bold text-dark mb-1">點擊此處選擇歌曲 MP3 / WAV 檔案</h4>
-            <p class="text-muted small mb-3">或將音訊檔拖曳至此 (支援 MP3, WAV, M4A, OGG, FLAC 等所有格式)</p>
-            <input type="file" id="audioFileInput" style="display:none !important;" accept="audio/*,video/*,.mp3,.wav,.m4a,.ogg,.flac,.aac,.wma,.webm,.mp4,.mkv,.mov" onchange="if(this.files && this.files.length>0) handleAudioFile(this.files[0])">
-            <button type="button" class="btn btn-primary btn-sm rounded-pill px-4 font-bold" onclick="event.stopPropagation(); document.getElementById('audioFileInput').click()">📂 選擇檔案上傳</button>
-          </div>
-          
-          <!-- 音訊播放器 -->
-          <div id="audioPlayerContainer" class="mb-4 p-3 bg-light rounded-3 border" style="display:none;">
-            <div class="fw-bold text-dark small mb-2 d-flex justify-content-between align-items-center">
-              <span id="audioFileName" class="text-truncate" style="max-width:260px;">已載入音訊</span>
-              <span id="audioDuration" class="time-badge">00:00</span>
-            </div>
-            <audio id="audioPlayer" controls class="w-100"></audio>
-          </div>
-
-          <!-- 參考歌詞輸入區 -->
-          <div class="mb-3">
-            <label for="lyricsInput" class="form-label fw-bold text-dark small d-flex justify-content-between">
-              <span>📜 參考歌詞 (可貼上完整歌詞，對齊 100% 精準不漏字)：</span>
-              <span class="text-muted font-normal" style="font-size:0.75rem;">(選填)</span>
+            <h4 class="h5 fw-bold text-dark mb-2">請上傳歌曲 MP3 / WAV 檔案</h4>
+            <p class="text-muted small mb-3">點擊下方按鈕或拖曳音樂檔案至此 (支援所有音訊格式)</p>
+            
+            <!-- 原生隱藏 input + 滿版原生 label 觸發按鈕 -->
+            <input type="file" id="audioFileInput" accept="audio/*,video/*" style="display:none !important;" onchange="if(this.files && this.files.length>0) { handleAudioFile(this.files[0]); }">
+            
+            <label for="audioFileInput" class="btn btn-primary btn-lg rounded-pill px-5 py-3 shadow font-bold fs-6 cursor-pointer" style="cursor: pointer;">
+              📂 點擊選擇歌曲 MP3 / WAV 上傳
             </label>
-            <textarea id="lyricsInput" class="form-control rounded-3" rows="6" placeholder="請將歌曲歌詞貼在此處（每句一行）...&#10;範例：&#10;把說不出口的愛 寫成一首歌&#10;伴隨著旋律 唱進你的心坎&#10;這是我們的 幻境配樂"></textarea>
           </div>
-
-          <button id="startSyncBtn" class="btn btn-primary-custom w-100 py-3 fs-6 d-flex align-items-center justify-content-center gap-2 shadow">
-            <span>⚡</span> 開始 AI 聽打與精準打軸 (Start Sync)
-          </button>
-          <div id="syncProgressMsg" class="text-primary text-center fw-bold mt-2 small" style="display:none;">
-            <span class="spinner-border spinner-border-sm me-2" role="status"></span>
-            <span id="syncProgressText">SoundSync AI 正在解析音訊與歌詞對齊中...</span>
-          </div>
-        </div>
       </div>
 
       <!-- 右欄：時間軸預覽、提詞機與匯出 -->
