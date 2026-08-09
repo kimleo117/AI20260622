@@ -681,6 +681,18 @@
         <h2 class="section-title text-center mb-5">AI 工具列表</h2>
         <p class="text-center text-muted mb-5">【AI智能工具站】聯合【幻境配樂】精選全網 150+ 熱門 AI 工具與分類，協助創作者與團隊快速對比、試用與升級。</p>
 
+        <!-- 搜尋列區塊 (Suggestion 1: 即時關鍵字搜尋框) -->
+        <div class="row justify-content-center mb-4">
+          <div class="col-lg-8 col-md-10">
+            <div class="position-relative">
+              <input type="text" id="toolSearchInput" class="form-control form-control-lg rounded-pill shadow-sm ps-4 pe-5 border-2 border-primary border-opacity-25" placeholder="🔍 輸入關鍵字或工具用途搜尋 (例如：去背、ChatGPT、音樂、影片、寫程式)..." style="font-size: 1.05rem; background: #ffffff;">
+              <button type="button" id="clearSearchBtn" class="btn btn-sm btn-light text-muted position-absolute end-0 top-50 translate-middle-y me-3 rounded-circle" style="display:none; width: 28px; height: 28px; padding: 0; line-height: 28px;" title="清除搜尋">✕</button>
+            </div>
+            <div id="searchResultsCount" class="text-center text-muted small mt-2" style="display:none;"></div>
+          </div>
+        </div>
+
+
         <div class="row">
           <aside class="col-lg-3 pe-lg-4">
                                                 <div class="left-sidebar">
@@ -3567,5 +3579,57 @@
         });
       }
     </script>
-  </body>
+  
+    <script id="realtime-search-script">
+      document.addEventListener("DOMContentLoaded", function() {
+        const searchInput = document.getElementById("toolSearchInput");
+        const clearBtn = document.getElementById("clearSearchBtn");
+        const countDisplay = document.getElementById("searchResultsCount");
+        const toolCards = document.querySelectorAll(".ai-card-huanjing");
+
+        if (searchInput) {
+          searchInput.addEventListener("input", function() {
+            const query = this.value.trim().toLowerCase();
+
+            if (query.length > 0) {
+              clearBtn.style.display = "block";
+              let matchCount = 0;
+
+              toolCards.forEach(card => {
+                const cardText = card.innerText.toLowerCase();
+                const cardParent = card.closest(".col-md-6, .col-lg-4, .mb-4");
+                
+                if (cardText.includes(query)) {
+                  if (cardParent) cardParent.style.display = "block";
+                  card.style.display = "flex";
+                  matchCount++;
+                } else {
+                  if (cardParent) cardParent.style.display = "none";
+                }
+              });
+
+              countDisplay.style.display = "block";
+              countDisplay.innerHTML = `找到了 <strong class="text-primary fs-6">${matchCount}</strong> 個符合「<strong>${query}</strong>」的 AI 工具`;
+            } else {
+              clearBtn.style.display = "none";
+              countDisplay.style.display = "none";
+
+              toolCards.forEach(card => {
+                const cardParent = card.closest(".col-md-6, .col-lg-4, .mb-4");
+                if (cardParent) cardParent.style.display = "block";
+                card.style.display = "flex";
+              });
+            }
+          });
+
+          clearBtn.addEventListener("click", function() {
+            searchInput.value = "";
+            searchInput.dispatchEvent(new Event("input"));
+            searchInput.focus();
+          });
+        }
+      });
+    </script>
+
+</body>
 </html>
