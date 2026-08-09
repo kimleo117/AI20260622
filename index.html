@@ -765,7 +765,7 @@
         <div class="row justify-content-center mb-4">
           <div class="col-lg-8 col-md-10">
             <div class="position-relative">
-              <input type="text" id="searchInput" id="toolSearchInput" class="form-control form-control-lg rounded-pill shadow-sm ps-4 pe-5 border-2 border-primary border-opacity-25" placeholder="🔍 輸入關鍵字或工具用途搜尋 (例如：去背、ChatGPT、音樂、影片、寫程式)..." style="font-size: 1.05rem; background: #ffffff;">
+              <input type="text" id="searchInput" oninput="window.performSearch(this.value)" onkeyup="window.performSearch(this.value)" class="form-control form-control-lg rounded-pill shadow-sm ps-4 pe-5 border-2 border-primary border-opacity-25" placeholder="🔍 輸入關鍵字或工具用途搜尋 (例如：去背、ChatGPT、音樂、影片、寫程式)..." style="font-size: 1.05rem; background: #ffffff;">
               <button type="button" id="clearSearchBtn" class="btn btn-sm btn-light text-muted position-absolute end-0 top-50 translate-middle-y me-3 rounded-circle" style="display:none; width: 28px; height: 28px; padding: 0; line-height: 28px;" title="清除搜尋">✕</button>
             </div>
             <div id="searchResultsCount" class="text-center text-muted small mt-2" style="display:none;"></div>
@@ -3413,14 +3413,9 @@
     <!-- 精準全 21 分類 AI 搜尋引擎 (Strict Class-based Hiding) -->
     <!-- 精準全 21 分類 AI 搜尋引擎 (Bulletproof Inline Style + Class Hiding) -->
     <!-- 精準全 21 分類 AI 搜尋引擎 (Dual ID Target + Strict Hide) -->
+    <!-- 精準全 21 分類 AI 搜尋引擎 (Global window.performSearch + Inline HTML Binding) -->
     <script id="realtime-search-script">
-      document.addEventListener("DOMContentLoaded", function() {
-        const searchInput = document.getElementById("searchInput") || document.getElementById("toolSearchInput");
-        const clearBtn = document.getElementById("clearSearchBtn");
-        const countDisplay = document.getElementById("searchResultCount");
-        const noResultsAlert = document.getElementById("noResultsAlert");
-        const hotTagBtns = document.querySelectorAll(".hot-tag-btn");
-
+      (function() {
         const synonymMap = {
           "剪映": ["剪映", "capcut", "CapCut"],
           "capcut": ["剪映", "capcut", "CapCut"],
@@ -3436,8 +3431,13 @@
           "notebooklm": ["notebooklm", "notebook", "lm"]
         };
 
-        function performSearch(query, triggerScroll = false) {
-          const rawQuery = query.trim();
+        window.performSearch = function(query, triggerScroll = false) {
+          const searchInput = document.getElementById("searchInput") || document.getElementById("toolSearchInput");
+          const clearBtn = document.getElementById("clearSearchBtn");
+          const countDisplay = document.getElementById("searchResultsCount") || document.getElementById("searchResultCount");
+          const noResultsAlert = document.getElementById("noResultsAlert");
+
+          const rawQuery = (query || (searchInput ? searchInput.value : "")).trim();
           const q = rawQuery.toLowerCase();
           const allArticles = document.querySelectorAll("article.ai-card-huanjing");
 
@@ -3491,7 +3491,7 @@
               }
             });
 
-            // 隱藏完全沒有相符卡片的專區標題
+            // 隱藏沒有相符卡片的專區標題
             const categoryBlocks = document.querySelectorAll(".category-section-block");
             categoryBlocks.forEach(block => {
               const visibleCards = Array.from(block.querySelectorAll("article.ai-card-huanjing")).filter(c => c.style.display !== "none" && !c.classList.contains("d-none"));
@@ -3509,8 +3509,11 @@
               countDisplay.innerHTML = `找到了 <strong class="text-primary fs-6">${matchCount}</strong> 個符合「<strong>${rawQuery}</strong>」的 AI 工具`;
             }
 
-            if (noResultsAlert) noResultsAlert.style.display = "block";
-            else if (noResultsAlert) noResultsAlert.style.display = "none";
+            if (matchCount === 0) {
+              if (noResultsAlert) noResultsAlert.style.display = "block";
+            } else {
+              if (noResultsAlert) noResultsAlert.style.display = "none";
+            }
           } else {
             if (clearBtn) clearBtn.style.display = "none";
             if (countDisplay) countDisplay.style.display = "none";
@@ -3532,38 +3535,36 @@
               block.classList.remove("d-none", "search-hidden");
             });
           }
-        }
+        };
 
-        if (searchInput) {
-          searchInput.addEventListener("input", function() {
-            performSearch(this.value, false);
-          });
-
-          searchInput.addEventListener("keydown", function(e) {
-            if (e.key === "Enter") {
-              e.preventDefault();
-              performSearch(this.value, true);
-            }
-          });
+        document.addEventListener("DOMContentLoaded", function() {
+          const clearBtn = document.getElementById("clearSearchBtn");
+          const hotTagBtns = document.querySelectorAll(".hot-tag-btn");
 
           if (clearBtn) {
             clearBtn.addEventListener("click", function() {
-              searchInput.value = "";
-              performSearch("", false);
-              searchInput.focus();
+              const searchInput = document.getElementById("searchInput") || document.getElementById("toolSearchInput");
+              if (searchInput) {
+                searchInput.value = "";
+                window.performSearch("", false);
+                searchInput.focus();
+              }
             });
           }
 
           hotTagBtns.forEach(btn => {
             btn.addEventListener("click", function() {
               const kw = this.getAttribute("data-keyword");
-              searchInput.value = kw;
-              performSearch(kw, true);
-              searchInput.focus();
+              const searchInput = document.getElementById("searchInput") || document.getElementById("toolSearchInput");
+              if (searchInput) {
+                searchInput.value = kw;
+                window.performSearch(kw, true);
+                searchInput.focus();
+              }
             });
           });
-        }
-      });
+        });
+      })();
     </script>
 
 
