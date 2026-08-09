@@ -3414,13 +3414,17 @@
     <!-- 精準全 21 分類 AI 搜尋引擎 (Bulletproof Inline Style + Class Hiding) -->
     <!-- 精準全 21 分類 AI 搜尋引擎 (Dual ID Target + Strict Hide) -->
     <!-- 精準全 21 分類 AI 搜尋引擎 (Global window.performSearch + Inline HTML Binding) -->
+    <!-- 精準全 21 分類 AI 搜尋引擎 (Single-character Chinese Search Enabled) -->
     <script id="realtime-search-script">
       (function() {
         const synonymMap = {
           "剪映": ["剪映", "capcut", "CapCut"],
+          "剪": ["剪映", "capcut", "CapCut"],
           "capcut": ["剪映", "capcut", "CapCut"],
           "可以": ["可靈", "kling"],
-          "可": ["可靈", "kling"],
+          "可": ["可靈", "kling", "可"],
+          "可靈": ["可靈", "kling"],
+          "影": ["影音", "影片", "video", "kling", "luma", "hailuo", "sora", "runway", "opusclip", "pika", "viggle", "heygen", "剪映", "capcut"],
           "影片": ["影音", "影片", "video", "kling", "luma", "hailuo", "sora", "runway", "opusclip", "pika", "viggle", "heygen", "剪映", "capcut"],
           "做影片": ["影音", "影片", "video", "kling", "luma", "hailuo", "sora", "runway"],
           "去背": ["去背", "remove.bg", "photopea", "picwish", "photoshop"],
@@ -3466,9 +3470,7 @@
 
               searchTerms.forEach(term => {
                 const t = term.toLowerCase();
-                if (titleText.includes(t) || subtitleText.includes(t) || tagsText.includes(t)) {
-                  isMatch = true;
-                } else if (q.length >= 2 && bodyText.includes(t)) {
+                if (titleText.includes(t) || subtitleText.includes(t) || tagsText.includes(t) || bodyText.includes(t)) {
                   isMatch = true;
                 }
               });
