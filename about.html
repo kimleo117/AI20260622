@@ -38,11 +38,11 @@
       }
       * { box-sizing: border-box; }
       html { scroll-behavior: smooth; }
-      body { margin: 0; color: #172033; background: #ffffff !important; font-family: "Noto Sans TC", sans-serif; }
+      body { margin: 0; color: var(--ink); background: #f8fbff; font-family: "Noto Sans TC", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
       .nav-custom { background: var(--nav); backdrop-filter: blur(12px); box-shadow: 0 12px 32px rgba(3, 7, 18, 0.18); }
       
       /* Hero Dragon Banner */
-      .hero-section { margin-top: 0px !important; }
+      .hero-section { margin-top: 56px; }
       .hero-slide-dragon {
         min-height: 360px;
         display: flex;
@@ -159,7 +159,7 @@
     
       /* 全站統一高質感 Hero 頂部大圖/輪播圖尺寸樣式 */
       .hero-section {
-        margin-top: 0px !important;
+        margin-top: 56px;
       }
       /* 修正輪播圖文字重疊 Bug：只有 active 項目才 display: flex，非 active 項目 display: none */
       .hero-slide {
@@ -404,7 +404,7 @@
       }
       * { box-sizing: border-box; }
       html { scroll-behavior: smooth; }
-      body { margin: 0; color: #172033; background: #ffffff !important; font-family: "Noto Sans TC", sans-serif; }
+      body { margin: 0; color: var(--ink); background: var(--bg-body); font-family: "Noto Sans TC", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
       
       .nav-custom { background: var(--nav); backdrop-filter: blur(12px); box-shadow: 0 12px 32px rgba(3, 7, 18, 0.22); }
       section { scroll-margin-top: 76px; }
@@ -514,7 +514,7 @@
 
   </head>
   <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3 shadow-sm sticky-top">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3 shadow-sm sticky-top">
     <div class="container-fluid px-3 px-xl-5">
       <a class="navbar-brand d-flex align-items-center gap-2 fw-bold fs-4 text-white me-3" href="index.html">
         <img src="pic/favicon.png" alt="Logo" width="36" height="36" class="rounded-circle shadow-sm">
@@ -528,20 +528,12 @@
           <li class="nav-item"><a class="nav-link text-warning font-bold text-nowrap active" href="about.html" style="font-size:0.92rem;">📖 關於我們</a></li>
           <li class="nav-item"><a class="nav-link text-white fw-bold text-nowrap" href="pricing.html" style="font-size:0.92rem;">💎 免費與付費</a></li>
           <li class="nav-item"><a class="nav-link text-white fw-bold text-nowrap" href="index.html" style="font-size:0.92rem;">🤖 AI工具</a></li>
-          <li class="nav-item"><a class="nav-link text-white fw-bold text-nowrap" href="https://www.remove.bg/zh" target="_blank" style="font-size:0.92rem;">✂️ AI 去背</a></li>
+          <li class="nav-item"><a class="nav-link text-white fw-bold text-nowrap" href="https://www.remove.bg/zh" target="_blank" rel="noopener" style="font-size:0.92rem;">✂️ AI 去背</a></li>
           <li class="nav-item"><a class="nav-link text-white fw-bold text-nowrap" href="contact.html" style="font-size:0.92rem;">✉️ 聯絡我們</a></li>
         </ul>
       </div>
     </div>
   </nav>
-<!-- 原始乾淨標準頂部導覽列 -->
-  
-
-
-
-
-
-    
 
     <!-- 頂部 Hero 視覺大圖：昨日金龍藝術巨作 -->
     <header class="hero-section">
@@ -889,6 +881,5 @@
         });
       }
     </script>
-  
-</body>
+  </body>
 </html>
