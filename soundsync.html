@@ -387,13 +387,12 @@
 
       try {
         syncProgressText.innerText = "SoundSync AI 正在編碼音訊檔案檔載荷...";
-        let rawBase64 = currentAudioBase64;
-        if (selectedAudioFile) {
+        let rawBase64 = currentAudioBase64 || "";
+        if (!rawBase64 && selectedAudioFile) {
           rawBase64 = await fileToBase64(selectedAudioFile);
         }
-
-        if (!rawBase64 || rawBase64.length < 100) {
-          throw new Error("音訊檔案編碼失敗，請重新選擇音訊檔案。");
+        if (rawBase64.includes(",")) {
+          rawBase64 = rawBase64.split(",")[1];
         }
 
         let cleanMime = "audio/mp3";
@@ -492,7 +491,7 @@ ${userLyrics ? "參考歌詞文本如下 (請務必將以下歌詞 100% 完整�
         resultCountBadge.innerText = `已精準打軸 ${parsedSubtitles.length} 句`;
 
       } catch (err) {
-        alert("❌ 打軸失敗：" + err.message + "\n\n👉 提示：請確保您填入的 Google Gemini API Key 正確且有效。");
+        alert(getFriendlyChineseError(err.message));
       } finally {
         startSyncBtn.disabled = false;
         syncProgressMsg.style.display = "none";

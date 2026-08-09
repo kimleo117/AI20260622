@@ -213,7 +213,11 @@ function createDOMEnvironment(htmlFilePath) {
 
   class MockFileReader {
     readAsDataURL(file) {
-      const base64Data = Buffer.from(file.content || 'mock audio content').toString('base64');
+      let content = file.content || 'mock audio content '.repeat(10);
+      if (typeof content === 'string' && content.length < 100) {
+        content = content.padEnd(100, 'X');
+      }
+      const base64Data = Buffer.from(content).toString('base64');
       this.result = `data:${file.type || 'audio/mp3'};base64,${base64Data}`;
       if (this.onload) this.onload({ target: { result: this.result } });
     }

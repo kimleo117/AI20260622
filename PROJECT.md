@@ -32,8 +32,8 @@ Every feature from user requirements and survey is inventoried below and assigne
 ## Milestones
 | # | Name | Scope | Dependencies | Status |
 |---|------|-------|-------------|--------|
-| M1 | Fail-Safe Audio File Selection & Resampling | R1: Audio Drag-and-drop, Windows file picker fail-safe, Audio Player UI, WebAudio 16kHz Mono WAV Resampling Pipeline | none | PLANNED |
-| M2 | Gemini 2.0 Flash API Integration & Alignment | R2: API Key storage, Reference Lyrics, REST API client, JSON Schema, Fallback chain, Robust Millisecond Timestamp Parser, Traditional Chinese error translation | M1 | PLANNED |
+| M1 | Fail-Safe Audio File Selection & Resampling | R1: Audio Drag-and-drop, Windows file picker fail-safe, Audio Player UI, WebAudio 16kHz Mono WAV Resampling Pipeline | none | DONE |
+| M2 | Gemini 2.0 Flash API Integration & Alignment | R2: API Key storage, Reference Lyrics, REST API client, JSON Schema, Fallback chain, Robust Millisecond Timestamp Parser, Traditional Chinese error translation | M1 | IN_PROGRESS |
 | M3 | Overlap Eraser & Multi-Format Subtitle Export | R3: Overlap Eraser algorithm, Interactive Teleprompter with line jump & centered scroll, Exporters (.SRT, .LRC, .VTT, Clipboard) | M2 | PLANNED |
 | M4 | Pass 100% E2E Test Suite & Hardening | Phase 1: Tier 1-4 E2E Test Pass. Phase 2: Tier 5 Adversarial Coverage Hardening | M1, M2, M3 | PLANNED |
 
