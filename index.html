@@ -818,6 +818,29 @@
         background-repeat: no-repeat !important;
       }
 
+    
+      /* 首頁輪播圖 100% 替換為老闆要的金龍與幻境巨作大圖 */
+      .slide-1 {
+        background-image: url("pic/huanjing_banner.jpg") !important;
+        background-size: cover !important;
+        background-position: center center !important;
+        background-repeat: no-repeat !important;
+      }
+
+      .slide-2 {
+        background-image: url("pic/b-7.png") !important;
+        background-size: cover !important;
+        background-position: center center !important;
+        background-repeat: no-repeat !important;
+      }
+
+      .slide-3 {
+        background-image: url("pic/b-3.png") !important;
+        background-size: cover !important;
+        background-position: center center !important;
+        background-repeat: no-repeat !important;
+      }
+
     </style>
           <!-- Google tag (gtag.js)這是GA4全網頁追蹤代碼 -->
       <script async src="https://www.googletagmanager.com/gtag/js?id=G-NVRRXE1GQV"></script>
@@ -978,16 +1001,18 @@
   <body>
     <nav class="navbar navbar-expand-lg navbar-dark nav-custom fixed-top">
       <div class="container-fluid px-3 px-lg-4 px-xl-5">
-        <a class="navbar-brand fw-bold" href="index.html">AI智能工具站</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-controls="navMenu" aria-expanded="false" aria-label="切換選單">
+        <a class="navbar-brand d-flex align-items-center gap-2 fw-bold fs-4 text-white" href="index.html">
+          AI智能工具站
+        </a>
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navMenu">
-          <ul class="navbar-nav ms-auto">
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto gap-1 gap-lg-3 align-items-center">
             <li class="nav-item"><a class="nav-link" href="about.html">📖 關於我們</a></li>
             <li class="nav-item"><a class="nav-link" href="pricing.html">💎 免費與付費</a></li>
-            <li class="nav-item"><a class="nav-link" href="https://www.remove.bg/zh-tw" target="_blank" rel="noopener">✂️ AI 去背</a></li>
-            <li class="nav-item"><a class="nav-link" href="#products">AI工具</a></li>
+            <li class="nav-item"><a class="nav-link" href="index.html#sec-AI去背">✂️ AI 去背</a></li>
+            <li class="nav-item"><a class="nav-link" href="index.html">🎒 AI 工具百寶箱</a></li>
             <li class="nav-item"><a class="nav-link" href="contact.html">✉️ 聯絡我們</a></li>
           </ul>
         </div>
