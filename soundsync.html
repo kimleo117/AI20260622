@@ -91,25 +91,27 @@
 <body>
 
   <!-- 頂部導覽列 -->
-  <nav class="navbar navbar-expand-lg navbar-dark nav-custom fixed-top">
-      <div class="container-fluid px-3 px-lg-4 px-xl-5">
-        <a class="navbar-brand d-flex align-items-center gap-2 fw-bold fs-4 text-white" href="index.html">
-          AI智能工具站
-        </a>
-        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ms-auto gap-1 gap-lg-3 align-items-center">
-            <li class="nav-item"><a class="nav-link" href="about.html">📖 關於我們</a></li>
-            <li class="nav-item"><a class="nav-link" href="pricing.html">💎 免費與付費</a></li>
-            <li class="nav-item"><a class="nav-link text-warning font-bold" href="soundsync.html">🎵 SoundSync AI 旗艦</a></li>
-            <li class="nav-item"><a class="nav-link" href="index.html#sec-AI去背">✂️ AI 去背</a></li>
-            <li class="nav-item"><a class="nav-link" href="contact.html">✉️ 聯絡我們</a></li>
-          </ul>
-        </div>
+  <!-- 頂部滿版乾淨選單 -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3 sticky-top shadow">
+    <div class="container-fluid px-3 px-lg-5">
+      <a class="navbar-brand d-flex align-items-center gap-2 fw-bold fs-4 text-white" href="index.html">
+        <img src="pic/favicon.png" alt="Logo" width="32" height="32" class="rounded-circle">
+        AI智能工具站 <span class="badge bg-primary fs-7">SoundSync AI 旗艦版</span>
+      </a>
+      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto gap-1 gap-lg-3 align-items-center">
+          <li class="nav-item"><a class="nav-link" href="about.html">📖 關於我們</a></li>
+          <li class="nav-item"><a class="nav-link" href="pricing.html">💎 免費與付費</a></li>
+          <li class="nav-item"><a class="nav-link text-warning font-bold active" href="soundsync.html">🎵 SoundSync AI 旗艦</a></li>
+          <li class="nav-item"><a class="nav-link" href="index.html#sec-AI去背">✂️ AI 去背</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html">✉️ 聯絡我們</a></li>
+        </ul>
       </div>
-    </nav>
+    </div>
+  </nav>
 
   <main class="container py-4">
 
@@ -148,40 +150,14 @@
           </h3>
 
           <!-- 音訊拖曳上傳 -->
+          <!-- 音訊上傳 -->
           <div class="drop-zone mb-3" id="dropZone">
             <div class="fs-1 text-primary mb-2">🎵</div>
             <h4 class="h6 fw-bold text-dark mb-1">拖曳歌曲 MP3 / WAV 檔案至此</h4>
-            <p class="text-muted small mb-3">或點擊選擇檔案 (支援 MP3, WAV, M4A, OGG)</p>
-            <input type="file" id="audioFileInput" accept=".mp3,.wav,.m4a,.ogg,.flac,.aac,.mp4,audio/*" class="d-none">
-            <button class="btn btn-outline-primary btn-sm rounded-pill px-4" onclick="document.getElementById('audioFileInput').click()">選擇檔案</button>
+            <p class="text-muted small mb-3">或點擊選擇檔案 (支援所有音訊格式)</p>
+            <input type="file" id="audioFileInput" class="d-none">
+            <button type="button" class="btn btn-outline-primary btn-sm rounded-pill px-4" id="selectFileBtn">選擇檔案</button>
           </div>
-          
-          <!-- 音訊播放器 -->
-          <div id="audioPlayerContainer" class="mb-4" style="display:none;">
-            <div class="fw-bold text-dark small mb-1 d-flex justify-content-between">
-              <span id="audioFileName">已載入音訊</span>
-              <span id="audioDuration" class="time-badge">00:00</span>
-            </div>
-            <audio id="audioPlayer" controls class="w-100 rounded-3"></audio>
-          </div>
-
-          <!-- 參考歌詞輸入區 (解決歌詞出不來與對不準的關鍵！) -->
-          <div class="mb-3">
-            <label for="lyricsInput" class="form-label fw-bold text-dark small d-flex justify-content-between">
-              <span>📜 參考歌詞 (可貼上完整歌詞，對齊 100% 精準不漏字)：</span>
-              <span class="text-muted font-normal" style="font-size:0.75rem;">(選填，貼上歌詞精度翻倍)</span>
-            </label>
-            <textarea id="lyricsInput" class="form-control rounded-3" rows="6" placeholder="請將歌曲歌詞貼在此處（每句一行）...&#10;範例：&#10;把說不出口的愛 寫成一首歌&#10;伴隨著旋律 唱進你的心坎&#10;這是我們的 幻境配樂"></textarea>
-          </div>
-
-          <button id="startSyncBtn" class="btn btn-primary-custom w-100 py-3 fs-6 d-flex align-items-center justify-content-center gap-2 shadow">
-            <span>⚡</span> 開始 AI 聽打與精準打軸 (Start Sync)
-          </button>
-          <div id="syncProgressMsg" class="text-primary text-center fw-bold mt-2 small" style="display:none;">
-            <span class="spinner-border spinner-border-sm me-2" role="status"></span>
-            <span id="syncProgressText">AI 正在深度解析音訊與歌詞對齊中，請稍候...</span>
-          </div>
-        </div>
       </div>
 
       <!-- 右欄：時間軸預覽、提詞機與匯出 -->
@@ -253,122 +229,35 @@
         }
       });
 
-      // 音訊上傳處理
+      // 音訊上傳處理 (移除重複觸發與嚴格檢查)
       const dropZone = document.getElementById("dropZone");
-      dropZone.addEventListener("click", function(e) {
-        document.getElementById("audioFileInput").click();
-      });
       const audioFileInput = document.getElementById("audioFileInput");
+      const selectFileBtn = document.getElementById("selectFileBtn");
       const audioPlayerContainer = document.getElementById("audioPlayerContainer");
       const audioPlayer = document.getElementById("audioPlayer");
       const audioFileName = document.getElementById("audioFileName");
       const audioDuration = document.getElementById("audioDuration");
 
-      ["dragenter", "dragover"].forEach(eventName => {
-        dropZone.addEventListener(eventName, e => {
-          e.preventDefault();
-          dropZone.classList.add("dragover");
-        }, false);
-      });
-
-      ["dragleave", "drop"].forEach(eventName => {
-        dropZone.addEventListener(eventName, e => {
-          e.preventDefault();
-          dropZone.classList.remove("dragover");
-        }, false);
-      });
-
-      dropZone.addEventListener("drop", e => {
-        const dt = e.dataTransfer;
-        const files = dt.files;
-        if (files.length > 0) handleAudioFile(files[0]);
-      });
-
-      audioFileInput.addEventListener("change", function() {
-        if (this.files.length > 0) handleAudioFile(this.files[0]);
-      });
-
-      
-      // WebAudio 16kHz Mono 聽寫降噪重抽樣引擎 (SoundSync Core Resampler)
-      async function extract16kHzMonoWavBase64(file, progressCb) {
-        if (progressCb) progressCb("正在啟動 WebAudio 引擎將音訊轉為 16kHz 語音聲軌...");
-        
-        try {
-          const arrayBuffer = await file.arrayBuffer();
-          const audioCtx = new (window.AudioContext || window.webkitAudioContext)({ sampleRate: 16000 });
-          const audioBuffer = await audioCtx.decodeAudioData(arrayBuffer);
-          
-          const targetSampleRate = 16000;
-          const duration = audioBuffer.duration;
-          const targetLength = Math.ceil(duration * targetSampleRate);
-
-          const offlineCtx = new OfflineAudioContext(1, targetLength, targetSampleRate);
-          const source = offlineCtx.createBufferSource();
-          source.buffer = audioBuffer;
-          source.connect(offlineCtx.destination);
-          source.start(0);
-
-          const renderedBuffer = await offlineCtx.startRendering();
-          const pcmData = renderedBuffer.getChannelData(0);
-          const wavBuffer = createWavFileBuffer(pcmData, targetSampleRate);
-          
-          await audioCtx.close();
-          const blob = new Blob([wavBuffer], { type: "audio/wav" });
-          const base64 = await blobToBase64(blob);
-          
-          return { base64, mimeType: "audio/wav" };
-        } catch (err) {
-          console.warn("WebAudio 16kHz 轉換失敗，自動退回原檔 Base64:", err);
-          const base64 = await blobToBase64(file);
-          return { base64, mimeType: file.type || "audio/mp3" };
-        }
+      if (selectFileBtn) {
+        selectFileBtn.addEventListener("click", function(e) {
+          e.stopPropagation();
+          audioFileInput.click();
+        });
       }
 
-      function createWavFileBuffer(pcmData, sampleRate) {
-        const numChannels = 1;
-        const bitsPerSample = 16;
-        const bytesPerSample = bitsPerSample / 8;
-        const blockAlign = numChannels * bytesPerSample;
-        const byteRate = sampleRate * blockAlign;
-        const dataSize = pcmData.length * bytesPerSample;
-        const buffer = new ArrayBuffer(44 + dataSize);
-        const view = new DataView(buffer);
-
-        writeString(view, 0, 'RIFF');
-        view.setUint32(4, 36 + dataSize, true);
-        writeString(view, 8, 'WAVE');
-        writeString(view, 12, 'fmt ');
-        view.setUint32(16, 16, true);
-        view.setUint16(20, 1, true);
-        view.setUint16(22, numChannels, true);
-        view.setUint32(24, sampleRate, true);
-        view.setUint32(28, byteRate, true);
-        view.setUint16(32, blockAlign, true);
-        view.setUint16(34, bitsPerSample, true);
-        writeString(view, 36, 'data');
-        view.setUint32(40, dataSize, true);
-
-        let offset = 44;
-        for (let i = 0; i < pcmData.length; i++) {
-          let s = Math.max(-1, Math.min(1, pcmData[i]));
-          view.setInt16(offset, s < 0 ? s * 0x8000 : s * 0x7FFF, true);
-          offset += 2;
-        }
-        return buffer;
+      if (dropZone) {
+        dropZone.addEventListener("click", function(e) {
+          if (e.target !== selectFileBtn) {
+            audioFileInput.click();
+          }
+        });
       }
 
-      function writeString(view, offset, string) {
-        for (let i = 0; i < string.length; i++) {
-          view.setUint8(offset + i, string.charCodeAt(i));
-        }
-      }
-
-      function blobToBase64(blob) {
-        return new Promise((resolve, reject) => {
-          const reader = new FileReader();
-          reader.onloadend = () => resolve(reader.result.split(',')[1]);
-          reader.onerror = reject;
-          reader.readAsDataURL(blob);
+      if (audioFileInput) {
+        audioFileInput.addEventListener("change", function() {
+          if (this.files && this.files.length > 0) {
+            handleAudioFile(this.files[0]);
+          }
         });
       }
 
@@ -378,8 +267,6 @@
 
       function handleAudioFile(file) {
         if (!file) return;
-
-        // 允許所有選擇之音訊檔案處理
 
         selectedAudioFile = file;
         currentAudioMime = file.type || "audio/mp3";
@@ -397,11 +284,10 @@
           audioDuration.innerText = `${mins.toString().padStart(2,'0')}:${secs.toString().padStart(2,'0')}`;
         };
 
-        // 讀取為 Base64
         const reader = new FileReader();
         reader.onload = function(e) {
           currentAudioBase64 = e.target.result.split(",")[1];
-          console.log("Audio file loaded successfully, Base64 size:", currentAudioBase64.length);
+          console.log("Audio file loaded successfully, Base64 length:", currentAudioBase64.length);
         };
         reader.readAsDataURL(file);
       }
