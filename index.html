@@ -528,12 +528,6 @@
     .social-icon-line:hover { background: #06c755 !important; box-shadow: 0 6px 16px rgba(6, 199, 85, 0.45) !important; transform: translateY(-3px) !important; }
     .social-icon-ig:hover { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888) !important; box-shadow: 0 6px 16px rgba(220, 39, 67, 0.45) !important; transform: translateY(-3px) !important; }
 
-    
-      /* 搜尋隱藏強效類別 */
-      .search-hidden {
-        display: none !important;
-      }
-
     </style>
           <!-- Google tag (gtag.js)這是GA4全網頁追蹤代碼 -->
       <script async src="https://www.googletagmanager.com/gtag/js?id=G-NVRRXE1GQV"></script>
@@ -682,12 +676,6 @@
       }
       .back-to-top-btn.show { opacity: 1 !important; visibility: visible !important; transform: translateY(0); }
       .back-to-top-btn:hover { transform: translateY(-4px) scale(1.1); box-shadow: 0 12px 32px rgba(47, 111, 237, 0.65); background: #1d4ed8 !important; }
-    
-      /* 搜尋隱藏強效類別 */
-      .search-hidden {
-        display: none !important;
-      }
-
     </style>
 
   
@@ -765,7 +753,7 @@
         <div class="row justify-content-center mb-4">
           <div class="col-lg-8 col-md-10">
             <div class="position-relative">
-              <input type="text" id="searchInput" oninput="window.performSearch(this.value)" onkeyup="window.performSearch(this.value)" class="form-control form-control-lg rounded-pill shadow-sm ps-4 pe-5 border-2 border-primary border-opacity-25" placeholder="🔍 輸入關鍵字或工具用途搜尋 (例如：去背、ChatGPT、音樂、影片、寫程式)..." style="font-size: 1.05rem; background: #ffffff;">
+              <input type="text" id="toolSearchInput" class="form-control form-control-lg rounded-pill shadow-sm ps-4 pe-5 border-2 border-primary border-opacity-25" placeholder="🔍 輸入關鍵字或工具用途搜尋 (例如：去背、ChatGPT、音樂、影片、寫程式)..." style="font-size: 1.05rem; background: #ffffff;">
               <button type="button" id="clearSearchBtn" class="btn btn-sm btn-light text-muted position-absolute end-0 top-50 translate-middle-y me-3 rounded-circle" style="display:none; width: 28px; height: 28px; padding: 0; line-height: 28px;" title="清除搜尋">✕</button>
             </div>
             <div id="searchResultsCount" class="text-center text-muted small mt-2" style="display:none;"></div>
@@ -830,28 +818,6 @@
 
             <!-- 標題對應區塊：最新 AI 工具 -->
             <div class="category-section-block mb-5" id="latest">
-<div class="row g-3">
-                <!-- 可靈 AI (Kling AI) -->
-                <div class="col-md-6 col-lg-4 mb-4">
-                  <a href="https://klingai.org/zh" target="_blank" rel="noopener" class="text-decoration-none">
-                    <article data-huanjing-bgm="幻境配樂 Mirage Cinematic BGM" class="card ai-card-huanjing h-100 shadow-sm border-2 border-danger rounded-4 p-4 bg-white position-relative overflow-hidden">
-                      <div class="position-absolute top-0 end-0 bg-danger text-white font-bold px-3 py-1 fs-7 shadow-sm" style="border-bottom-left-radius: 12px; font-size: 0.75rem;">🍿 全網最強影音 AI</div>
-                      <div class="d-flex align-items-center gap-3 mb-3">
-                        <div class="p-3 rounded-3 text-white fs-3 font-bold d-flex align-items-center justify-content-center shadow-sm" style="width: 52px; height: 52px; background: linear-gradient(135deg, #ef4444, #b91c1c);">🎬</div>
-                        <div>
-                          <h4 class="h5 fw-bold text-dark mb-0">可靈 AI (Kling AI)</h4>
-                          <div class="text-danger small fw-bold">快手頂級影音生成大派</div>
-                        </div>
-                      </div>
-                      <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">全網最強影音生成模型！支援高精度文字圖片轉影片、導演級鏡頭控制與 1080p 超擬真電影質感。</p>
-                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2">
-                        <div><span class="badge-tag tag-free">免費試用</span><span class="badge-tag tag-zh">繁體中文</span></div>
-                        <span class="btn-card-visit">立即體驗 ↗</span>
-                      </div>
-                    </article>
-                  </a>
-                </div>
-
               <h3 class="h4 fw-bold text-dark mb-4 pb-2 border-bottom border-secondary-subtle d-flex align-items-center gap-2">
                 <span class="text-primary">▌</span> 最新 AI 工具
               </h3>
@@ -1200,37 +1166,6 @@
 
             <!-- 標題對應區塊：工作優化 -->
             <div class="category-section-block mb-5" id="work">
-<div class="row g-3">
-                <!-- Coze (扣子 AI) -->
-                <div class="col-md-6 col-lg-4 mb-4">
-                  <a href="https://www.coze.com/" target="_blank" rel="noopener" class="text-decoration-none">
-                    <article data-huanjing-bgm="幻境配樂 Mirage Cinematic BGM" class="card ai-card-huanjing h-100 shadow-sm border-2 border-primary rounded-4 p-4 bg-white position-relative overflow-hidden">
-                      <div class="position-absolute top-0 end-0 bg-primary text-white font-bold px-3 py-1 fs-7 shadow-sm" style="border-bottom-left-radius: 12px; font-size: 0.75rem;">🤖 自動化 Bot 平台</div>
-                      <div class="d-flex align-items-center gap-3 mb-3">
-                        <div class="p-3 rounded-3 text-white fs-3 font-bold d-flex align-items-center justify-content-center shadow-sm" style="width: 52px; height: 52px; background: linear-gradient(135deg, #2563eb, #1d4ed8);">⚙️</div>
-                        <div><h4 class="h5 fw-bold text-dark mb-0">Coze (扣子 AI)</h4><div class="text-primary small fw-bold">字節跳動無程式碼 AI 機器人</div></div>
-                      </div>
-                      <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">零程式碼打造專屬 AI Bot 流程！免費整合 GPT-4o 與 DALL-E 3 外掛與知識庫。</p>
-                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div><span class="badge-tag tag-free">100%免費</span><span class="badge-tag tag-zh">繁體中文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div>
-                    </article>
-                  </a>
-                </div>
-
-                <!-- Genspark / Dia AI -->
-                <div class="col-md-6 col-lg-4 mb-4">
-                  <a href="https://www.genspark.ai/" target="_blank" rel="noopener" class="text-decoration-none">
-                    <article data-huanjing-bgm="幻境配樂 Mirage Cinematic BGM" class="card ai-card-huanjing h-100 shadow-sm border-2 border-success rounded-4 p-4 bg-white position-relative overflow-hidden">
-                      <div class="position-absolute top-0 end-0 bg-success text-white font-bold px-3 py-1 fs-7 shadow-sm" style="border-bottom-left-radius: 12px; font-size: 0.75rem;">✨ 智能 Spark 頁面</div>
-                      <div class="d-flex align-items-center gap-3 mb-3">
-                        <div class="p-3 rounded-3 text-white fs-3 font-bold d-flex align-items-center justify-content-center shadow-sm" style="width: 52px; height: 52px; background: linear-gradient(135deg, #059669, #047857);">⚡</div>
-                        <div><h4 class="h5 fw-bold text-dark mb-0">Genspark / Dia AI</h4><div class="text-success small fw-bold">AI 整合搜尋與報告生成引擎</div></div>
-                      </div>
-                      <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">次世代 AI 搜尋代理！輸入問題自動檢索全網並即時生成結構化 Spark 網頁簡報。</p>
-                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div><span class="badge-tag tag-free">免費使用</span><span class="badge-tag tag-en">英文介面</span></div><span class="btn-card-visit">立即體驗 ↗</span></div>
-                    </article>
-                  </a>
-                </div>
-
               <h3 class="h4 fw-bold text-dark mb-4 pb-2 border-bottom border-secondary-subtle d-flex align-items-center gap-2">
                 <span class="text-primary">▌</span> 工作優化
               </h3>
@@ -1536,47 +1471,23 @@
             <!-- 標題對應區塊：圖像生成 -->
             <div class="category-section-block mb-5" id="visual">
 <div class="row g-3">
-                <!-- Ideogram 2 -->
+                <!-- 即夢 AI (Jimeng AI / Dreamina) -->
                 <div class="col-md-6 col-lg-4 mb-4">
-                  <a href="https://ideogram.ai/" target="_blank" rel="noopener" class="text-decoration-none">
-                    <article data-huanjing-bgm="幻境配樂 Mirage Cinematic BGM" class="card ai-card-huanjing h-100 shadow-sm border-2 border-primary rounded-4 p-4 bg-white position-relative overflow-hidden">
-                      <div class="position-absolute top-0 end-0 bg-primary text-white font-bold px-3 py-1 fs-7 shadow-sm" style="border-bottom-left-radius: 12px; font-size: 0.75rem;">🔤 排版文字渲染霸主</div>
+                  <a href="https://jimeng.jianying.com/" target="_blank" rel="noopener" class="text-decoration-none">
+                    <article data-huanjing-bgm="幻境配樂 Mirage Cinematic BGM" class="card ai-card-huanjing h-100 shadow-sm border-2 border-danger rounded-4 p-4 bg-white position-relative overflow-hidden">
+                      <div class="position-absolute top-0 end-0 bg-danger text-white font-bold px-3 py-1 fs-7 shadow-sm" style="border-bottom-left-radius: 12px; font-size: 0.75rem;">🎨 圖像與短影音大模型</div>
                       <div class="d-flex align-items-center gap-3 mb-3">
-                        <div class="p-3 rounded-3 text-white fs-3 font-bold d-flex align-items-center justify-content-center shadow-sm" style="width: 52px; height: 52px; background: linear-gradient(135deg, #3b82f6, #1d4ed8);">🖼️</div>
-                        <div><h4 class="h5 fw-bold text-dark mb-0">Ideogram 2.0</h4><div class="text-primary small fw-bold">海報標籤文字繪圖首選</div></div>
+                        <div class="p-3 rounded-3 text-white fs-3 font-bold d-flex align-items-center justify-content-center shadow-sm" style="width: 52px; height: 52px; background: linear-gradient(135deg, #ef4444, #dc2626);">🌙</div>
+                        <div>
+                          <h4 class="h5 fw-bold text-dark mb-0">即夢 AI (Jimeng AI / Dreamina)</h4>
+                          <div class="text-danger small fw-bold">字節跳動旗艦繪圖與影片生成</div>
+                        </div>
                       </div>
-                      <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">全網最強文字渲染繪圖 AI！解決繪圖軟體文字錯亂亂碼，海報與 Logo 排版精準無誤。</p>
-                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div><span class="badge-tag tag-free">免費版</span><span class="badge-tag tag-en">英文介面</span></div><span class="btn-card-visit">立即體驗 ↗</span></div>
-                    </article>
-                  </a>
-                </div>
-
-                <!-- Recraft V3 -->
-                <div class="col-md-6 col-lg-4 mb-4">
-                  <a href="https://www.recraft.ai/" target="_blank" rel="noopener" class="text-decoration-none">
-                    <article data-huanjing-bgm="幻境配樂 Mirage Cinematic BGM" class="card ai-card-huanjing h-100 shadow-sm border-2 border-info rounded-4 p-4 bg-white position-relative overflow-hidden">
-                      <div class="position-absolute top-0 end-0 bg-info text-dark font-bold px-3 py-1 fs-7 shadow-sm" style="border-bottom-left-radius: 12px; font-size: 0.75rem;">🎨 SVG 向量繪圖</div>
-                      <div class="d-flex align-items-center gap-3 mb-3">
-                        <div class="p-3 rounded-3 text-white fs-3 font-bold d-flex align-items-center justify-content-center shadow-sm" style="width: 52px; height: 52px; background: linear-gradient(135deg, #06b6d4, #0891b2);">🖌️</div>
-                        <div><h4 class="h5 fw-bold text-dark mb-0">Recraft V3</h4><div class="text-info small fw-bold">設計師向量圖像生成工具</div></div>
+                      <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">字節跳動旗艦 AI 創作平台！文字生成高質感圖像、動漫人物與 4K 擬真短影音生成。</p>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2">
+                        <div><span class="badge-tag tag-free">免費點數</span><span class="badge-tag tag-zh">繁體中文</span></div>
+                        <span class="btn-card-visit">立即體驗 ↗</span>
                       </div>
-                      <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">專業設計師愛用向量 AI！可直接生成可編輯 SVG 向量圖檔與 3D 圖標。</p>
-                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div><span class="badge-tag tag-free">免費版</span><span class="badge-tag tag-en">英文介面</span></div><span class="btn-card-visit">立即體驗 ↗</span></div>
-                    </article>
-                  </a>
-                </div>
-
-                <!-- SeaArt (海藝 AI) -->
-                <div class="col-md-6 col-lg-4 mb-4">
-                  <a href="https://www.seaart.ai/" target="_blank" rel="noopener" class="text-decoration-none">
-                    <article data-huanjing-bgm="幻境配樂 Mirage Cinematic BGM" class="card ai-card-huanjing h-100 shadow-sm border-2 border-success rounded-4 p-4 bg-white position-relative overflow-hidden">
-                      <div class="position-absolute top-0 end-0 bg-success text-white font-bold px-3 py-1 fs-7 shadow-sm" style="border-bottom-left-radius: 12px; font-size: 0.75rem;">🌊 動漫二次元熱門</div>
-                      <div class="d-flex align-items-center gap-3 mb-3">
-                        <div class="p-3 rounded-3 text-white fs-3 font-bold d-flex align-items-center justify-content-center shadow-sm" style="width: 52px; height: 52px; background: linear-gradient(135deg, #10b981, #059669);">🎨</div>
-                        <div><h4 class="h5 fw-bold text-dark mb-0">SeaArt (海藝 AI)</h4><div class="text-success small fw-bold">繁體繪圖社群模型繪圖</div></div>
-                      </div>
-                      <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">超好上手繪圖社群平台！內建上萬種模型 LoRA，二次元、寫實人物輕鬆生成。</p>
-                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div><span class="badge-tag tag-free">免費點數</span><span class="badge-tag tag-zh">繁體中文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div>
                     </article>
                   </a>
                 </div>
@@ -1785,75 +1696,6 @@
 
             <!-- 標題對應區塊：影音生成 -->
             <div class="category-section-block mb-5" id="media">
-<div class="row g-3">
-                <!-- 可靈 AI (Kling AI) -->
-                <div class="col-md-6 col-lg-4 mb-4">
-                  <a href="https://klingai.org/zh" target="_blank" rel="noopener" class="text-decoration-none">
-                    <article data-huanjing-bgm="幻境配樂 Mirage Cinematic BGM" class="card ai-card-huanjing h-100 shadow-sm border-2 border-danger rounded-4 p-4 bg-white position-relative overflow-hidden">
-                      <div class="position-absolute top-0 end-0 bg-danger text-white font-bold px-3 py-1 fs-7 shadow-sm" style="border-bottom-left-radius: 12px; font-size: 0.75rem;">🍿 全網最強影音 AI</div>
-                      <div class="d-flex align-items-center gap-3 mb-3">
-                        <div class="p-3 rounded-3 text-white fs-3 font-bold d-flex align-items-center justify-content-center shadow-sm" style="width: 52px; height: 52px; background: linear-gradient(135deg, #ef4444, #b91c1c);">🎬</div>
-                        <div>
-                          <h4 class="h5 fw-bold text-dark mb-0">可靈 AI (Kling AI)</h4>
-                          <div class="text-danger small fw-bold">快手頂級影音生成大派</div>
-                        </div>
-                      </div>
-                      <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">全網最強影音生成模型！支援高精度文字圖片轉影片、導演級鏡頭控制與 1080p 超擬真電影質感。</p>
-                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2">
-                        <div><span class="badge-tag tag-free">免費試用</span><span class="badge-tag tag-zh">繁體中文</span></div>
-                        <span class="btn-card-visit">立即體驗 ↗</span>
-                      </div>
-                    </article>
-                  </a>
-                </div>
-
-<div class="row g-3">
-                <!-- Google Veo 3.1 -->
-                <div class="col-md-6 col-lg-4 mb-4">
-                  <a href="https://deepmind.google/technologies/veo/" target="_blank" rel="noopener" class="text-decoration-none">
-                    <article data-huanjing-bgm="幻境配樂 Mirage Cinematic BGM" class="card ai-card-huanjing h-100 shadow-sm border-2 border-danger rounded-4 p-4 bg-white position-relative overflow-hidden">
-                      <div class="position-absolute top-0 end-0 bg-danger text-white font-bold px-3 py-1 fs-7 shadow-sm" style="border-bottom-left-radius: 12px; font-size: 0.75rem;">🔥 Google 旗艦</div>
-                      <div class="d-flex align-items-center gap-3 mb-3">
-                        <div class="p-3 rounded-3 text-white fs-3 font-bold d-flex align-items-center justify-content-center shadow-sm" style="width: 52px; height: 52px; background: linear-gradient(135deg, #ea4335, #c5221f);">🎥</div>
-                        <div><h4 class="h5 fw-bold text-dark mb-0">Google Veo 3.1</h4><div class="text-danger small fw-bold">Google 旗艦高畫質影音模型</div></div>
-                      </div>
-                      <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">Google 最新影音生成大模型！支援 1080p 超高畫質影音生成與導演級鏡頭控制。</p>
-                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div><span class="badge-tag tag-paid">付費訂閱</span><span class="badge-tag tag-zh">繁體中文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div>
-                    </article>
-                  </a>
-                </div>
-
-                <!-- Flow Music -->
-                <div class="col-md-6 col-lg-4 mb-4">
-                  <a href="https://aitestkitchen.withgoogle.com/" target="_blank" rel="noopener" class="text-decoration-none">
-                    <article data-huanjing-bgm="幻境配樂 Mirage Cinematic BGM" class="card ai-card-huanjing h-100 shadow-sm border-2 border-purple rounded-4 p-4 bg-white position-relative overflow-hidden">
-                      <div class="position-absolute top-0 end-0 bg-purple text-white font-bold px-3 py-1 fs-7 shadow-sm" style="border-bottom-left-radius: 12px; font-size: 0.75rem; background: #8b5cf6;">🎵 靈感音樂</div>
-                      <div class="d-flex align-items-center gap-3 mb-3">
-                        <div class="p-3 rounded-3 text-white fs-3 font-bold d-flex align-items-center justify-content-center shadow-sm" style="width: 52px; height: 52px; background: linear-gradient(135deg, #a855f7, #7c3aed);">🎼</div>
-                        <div><h4 class="h5 fw-bold text-dark mb-0">Flow Music</h4><div class="text-purple small fw-bold" style="color:#8b5cf6;">Google Lyria 3 旋律助手</div></div>
-                      </div>
-                      <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">Google 實驗室原創音樂生成器！輸入風格描述秒出專業質感短影音背景音樂。</p>
-                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div><span class="badge-tag tag-free">免費試用</span><span class="badge-tag tag-en">英文介面</span></div><span class="btn-card-visit">立即體驗 ↗</span></div>
-                    </article>
-                  </a>
-                </div>
-
-<div class="row g-3">
-                <!-- CapCut / 剪映 AI -->
-                <div class="col-md-6 col-lg-4 mb-4">
-                  <a href="https://www.capcut.com/" target="_blank" rel="noopener" class="text-decoration-none">
-                    <article data-huanjing-bgm="幻境配樂 Mirage Cinematic BGM" class="card ai-card-huanjing h-100 shadow-sm border-2 border-danger rounded-4 p-4 bg-white position-relative overflow-hidden">
-                      <div class="position-absolute top-0 end-0 bg-danger text-white font-bold px-3 py-1 fs-7 shadow-sm" style="border-bottom-left-radius: 12px; font-size: 0.75rem;">🔥 剪映 / CapCut 霸主</div>
-                      <div class="d-flex align-items-center gap-3 mb-3">
-                        <div class="p-3 rounded-3 text-white fs-3 font-bold d-flex align-items-center justify-content-center shadow-sm" style="width: 52px; height: 52px; background: linear-gradient(135deg, #ef4444, #dc2626);">✂️</div>
-                        <div><h4 class="h5 fw-bold text-dark mb-0">CapCut / 剪映 AI</h4><div class="text-danger small fw-bold">社群短影音剪輯字幕霸主</div></div>
-                      </div>
-                      <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">字節跳動旗下短影音剪輯神器！自動生成繁體字幕、花字特效、卡點剪輯與智慧去背景。</p>
-                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div><span class="badge-tag tag-free">免費版</span><span class="badge-tag tag-zh">繁體中文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div>
-                    </article>
-                  </a>
-                </div>
-
               <h3 class="h4 fw-bold text-dark mb-4 pb-2 border-bottom border-secondary-subtle d-flex align-items-center gap-2">
                 <span class="text-primary">▌</span> 影音生成
               </h3>
@@ -2197,22 +2039,6 @@
 
             <!-- 標題對應區塊：學習教育 -->
             <div class="category-section-block mb-5" id="learning">
-<div class="row g-3">
-                <!-- Monica AI -->
-                <div class="col-md-6 col-lg-4 mb-4">
-                  <a href="https://monica.im/" target="_blank" rel="noopener" class="text-decoration-none">
-                    <article data-huanjing-bgm="幻境配樂 Mirage Cinematic BGM" class="card ai-card-huanjing h-100 shadow-sm border-2 border-info rounded-4 p-4 bg-white position-relative overflow-hidden">
-                      <div class="position-absolute top-0 end-0 bg-info text-dark font-bold px-3 py-1 fs-7 shadow-sm" style="border-bottom-left-radius: 12px; font-size: 0.75rem;">🌐 瀏覽器全能側邊欄</div>
-                      <div class="d-flex align-items-center gap-3 mb-3">
-                        <div class="p-3 rounded-3 text-white fs-3 font-bold d-flex align-items-center justify-content-center shadow-sm" style="width: 52px; height: 52px; background: linear-gradient(135deg, #0284c7, #0369a1);">💡</div>
-                        <div><h4 class="h5 fw-bold text-dark mb-0">Monica AI</h4><div class="text-info small fw-bold">學習寫作翻譯全能外掛</div></div>
-                      </div>
-                      <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">全能 Chrome 側邊欄助手！整合 Claude 3.5、GPT-4o，隨時劃詞翻譯、總結網頁與寫作。</p>
-                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div><span class="badge-tag tag-free">免費版</span><span class="badge-tag tag-zh">繁體中文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div>
-                    </article>
-                  </a>
-                </div>
-
               <h3 class="h4 fw-bold text-dark mb-4 pb-2 border-bottom border-secondary-subtle d-flex align-items-center gap-2">
                 <span class="text-primary">▌</span> 學習教育
               </h3>
@@ -2870,22 +2696,6 @@
 
             <!-- 標題對應區塊：程式開發 -->
             <div class="category-section-block mb-5" id="code">
-<div class="row g-3">
-                <!-- Lovable.dev -->
-                <div class="col-md-6 col-lg-4 mb-4">
-                  <a href="https://lovable.dev/" target="_blank" rel="noopener" class="text-decoration-none">
-                    <article data-huanjing-bgm="幻境配樂 Mirage Cinematic BGM" class="card ai-card-huanjing h-100 shadow-sm border-2 border-danger rounded-4 p-4 bg-white position-relative overflow-hidden">
-                      <div class="position-absolute top-0 end-0 bg-danger text-white font-bold px-3 py-1 fs-7 shadow-sm" style="border-bottom-left-radius: 12px; font-size: 0.75rem;">💖 全套 App 生成</div>
-                      <div class="d-flex align-items-center gap-3 mb-3">
-                        <div class="p-3 rounded-3 text-white fs-3 font-bold d-flex align-items-center justify-content-center shadow-sm" style="width: 52px; height: 52px; background: linear-gradient(135deg, #ec4899, #be185d);">💻</div>
-                        <div><h4 class="h5 fw-bold text-dark mb-0">Lovable.dev</h4><div class="text-danger small fw-bold">對話即生成完整 Web App</div></div>
-                      </div>
-                      <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">對話即產出完整全棧 Web 應用！整合 Github 與 Supabase，不懂程式也能秒出網頁產品。</p>
-                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div><span class="badge-tag tag-free">免費版</span><span class="badge-tag tag-en">英文介面</span></div><span class="btn-card-visit">立即體驗 ↗</span></div>
-                    </article>
-                  </a>
-                </div>
-
               <h3 class="h4 fw-bold text-dark mb-4 pb-2 border-bottom border-secondary-subtle d-flex align-items-center gap-2">
                 <span class="text-primary">▌</span> 程式開發
               </h3>
@@ -3090,22 +2900,6 @@
 
             <!-- 標題對應區塊：設計師工具 (UI/UX) -->
             <div class="category-section-block mb-5" id="sec-設計師工具UIUX">
-<div class="row g-3">
-                <!-- Magnific AI -->
-                <div class="col-md-6 col-lg-4 mb-4">
-                  <a href="https://magnific.ai/" target="_blank" rel="noopener" class="text-decoration-none">
-                    <article data-huanjing-bgm="幻境配樂 Mirage Cinematic BGM" class="card ai-card-huanjing h-100 shadow-sm border-2 border-warning rounded-4 p-4 bg-white position-relative overflow-hidden">
-                      <div class="position-absolute top-0 end-0 bg-warning text-dark font-bold px-3 py-1 fs-7 shadow-sm" style="border-bottom-left-radius: 12px; font-size: 0.75rem;">✨ 4K 8K 畫質修復</div>
-                      <div class="d-flex align-items-center gap-3 mb-3">
-                        <div class="p-3 rounded-3 text-white fs-3 font-bold d-flex align-items-center justify-content-center shadow-sm" style="width: 52px; height: 52px; background: linear-gradient(135deg, #f59e0b, #d97706);">🔍</div>
-                        <div><h4 class="h5 fw-bold text-dark mb-0">Magnific AI</h4><div class="text-warning small fw-bold">魔法高清修復放大神器</div></div>
-                      </div>
-                      <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">好萊塢級高清圖像放大神器！填補無數幻境細節，將模糊小圖轉為 8K 電影級高清大片。</p>
-                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div><span class="badge-tag tag-paid">高級付費</span><span class="badge-tag tag-en">英文介面</span></div><span class="btn-card-visit">立即體驗 ↗</span></div>
-                    </article>
-                  </a>
-                </div>
-
               <h3 class="h4 fw-bold text-dark mb-4 pb-2 border-bottom border-secondary-subtle d-flex align-items-center gap-2">
                 <span class="text-primary">▌</span> 設計師工具 (UI/UX)
               </h3>
@@ -3609,27 +3403,26 @@
     
     
     
-    <!-- 精準全 21 分類 AI 搜尋引擎 -->
-    <!-- 精準全 21 分類 AI 搜尋引擎 (Strict Class-based Hiding) -->
-    <!-- 精準全 21 分類 AI 搜尋引擎 (Bulletproof Inline Style + Class Hiding) -->
-    <!-- 精準全 21 分類 AI 搜尋引擎 (Dual ID Target + Strict Hide) -->
-    <!-- 精準全 21 分類 AI 搜尋引擎 (Global window.performSearch + Inline HTML Binding) -->
-    <!-- 精準全 21 分類 AI 搜尋引擎 (Single-character Chinese Search Enabled) -->
+    <!-- 精準全 AI 工具搜尋引擎 (Ultra-Precise Synonym & Exact Title Match) -->
     <script id="realtime-search-script">
       (function() {
         const synonymMap = {
-          "剪映": ["剪映", "capcut", "CapCut"],
-          "剪": ["剪映", "capcut", "CapCut"],
-          "capcut": ["剪映", "capcut", "CapCut"],
-          "可以": ["可靈", "kling"],
-          "可": ["可靈", "kling", "可"],
+          "即": ["即夢", "jimeng", "dreamina"],
+          "即夢": ["即夢", "jimeng", "dreamina"],
+          "jimeng": ["即夢", "jimeng", "dreamina"],
+          "可": ["可靈", "kling"],
           "可靈": ["可靈", "kling"],
-          "影": ["影音", "影片", "video", "kling", "luma", "hailuo", "sora", "runway", "opusclip", "pika", "viggle", "heygen", "剪映", "capcut"],
-          "影片": ["影音", "影片", "video", "kling", "luma", "hailuo", "sora", "runway", "opusclip", "pika", "viggle", "heygen", "剪映", "capcut"],
-          "做影片": ["影音", "影片", "video", "kling", "luma", "hailuo", "sora", "runway"],
+          "kling": ["可靈", "kling"],
+          "剪": ["剪映", "capcut"],
+          "剪映": ["剪映", "capcut"],
+          "capcut": ["剪映", "capcut"],
+          "豆包": ["豆包", "doubao"],
+          "doubao": ["豆包", "doubao"],
+          "影片": ["影音", "影片", "video", "kling", "luma", "hailuo", "sora", "runway", "opusclip", "pika", "viggle", "heygen", "剪映", "capcut", "即夢"],
+          "做影片": ["影音", "影片", "video", "kling", "luma", "hailuo", "sora", "runway", "即夢"],
           "去背": ["去背", "remove.bg", "photopea", "picwish", "photoshop"],
-          "寫程式": ["程式", "cursor", "windsurf", "v0", "bolt", "copilot", "code"],
-          "簡報": ["簡報", "gamma", "canva", "tome", "chronicle"],
+          "寫程式": ["程式", "cursor", "windsurf", "v0", "bolt", "copilot", "code", "lovable"],
+          "簡報": ["簡報", "gamma", "canva", "tome", "chronicle", "napkin"],
           "對話": ["聊天", "機器人", "chatgpt", "deepseek", "claude", "gemini", "豆包", "kimi", "grok"],
           "lm": ["notebooklm", "notebook", "lm"],
           "notebooklm": ["notebooklm", "notebook", "lm"]
@@ -3668,9 +3461,12 @@
 
               let isMatch = false;
 
+              // 精準匹配邏輯：若為單一字元，僅比對標題、副標題與同義詞清單
               searchTerms.forEach(term => {
                 const t = term.toLowerCase();
-                if (titleText.includes(t) || subtitleText.includes(t) || tagsText.includes(t) || bodyText.includes(t)) {
+                if (titleText.includes(t) || subtitleText.includes(t) || tagsText.includes(t)) {
+                  isMatch = true;
+                } else if (q.length >= 2 && bodyText.includes(t)) {
                   isMatch = true;
                 }
               });
