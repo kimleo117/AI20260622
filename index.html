@@ -1670,6 +1670,7 @@
 
     <!-- 桌面與手機側邊欄點擊平滑滾動對焦腳本 (Fixed Navbar Offset Smooth Scroll Handler) -->
     <!-- 側邊欄點擊平滑捲動增強對焦腳本 (Sidebar Click Scroll Fix) -->
+    <!-- 桌面與手機側邊欄點擊平滑滾動對焦腳本 (Fixed Navbar Offset Smooth Scroll Handler) -->
     <script id="sidebar-click-scroll-script">
       document.addEventListener("DOMContentLoaded", function() {
         const allCatItems = document.querySelectorAll(".cat-item, .mobile-cat-pill");
@@ -1682,37 +1683,19 @@
             this.classList.add("active");
 
             const targetSelector = this.getAttribute("data-target");
-            const itemText = this.innerText.trim();
-
-            let targetEl = null;
             if (targetSelector) {
-              targetEl = document.querySelector(targetSelector);
-            }
+              const targetEl = document.querySelector(targetSelector);
+              if (targetEl) {
+                const nav = document.querySelector('.navbar, .nav-custom, header');
+                const navHeight = nav ? nav.getBoundingClientRect().height : 80;
+                const rect = targetEl.getBoundingClientRect();
+                const offsetTop = window.pageYOffset + rect.top - navHeight - 20;
 
-            if (!targetEl) {
-              // Fallback to match heading text
-              const headings = document.querySelectorAll('.category-section-block h3, .category-section-block h2');
-              headings.forEach(h => {
-                if (h.innerText.includes('聊天機器人') && itemText.includes('聊天機器人')) {
-                  targetEl = h.closest('.category-section-block');
-                } else if (h.innerText.includes('影音') && itemText.includes('影音')) {
-                  targetEl = h.closest('.category-section-block');
-                } else if (h.innerText.includes('圖像') && itemText.includes('圖像')) {
-                  targetEl = h.closest('.category-section-block');
-                }
-              });
-            }
-
-            if (targetEl) {
-              const nav = document.querySelector('.navbar, .nav-custom, header');
-              const navHeight = nav ? nav.getBoundingClientRect().height : 80;
-              const rect = targetEl.getBoundingClientRect();
-              const offsetTop = window.pageYOffset + rect.top - navHeight - 20;
-
-              window.scrollTo({
-                top: offsetTop,
-                behavior: 'smooth'
-              });
+                window.scrollTo({
+                  top: offsetTop,
+                  behavior: 'smooth'
+                });
+              }
             }
           });
         });
