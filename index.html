@@ -466,6 +466,61 @@
         height: 24px;
         stroke: #ffffff;
       }
+    
+    /* Mobile Horizontal Category Scroll Pills (Suggestion 2) */
+    .mobile-cat-scroll {
+      display: none;
+      overflow-x: auto;
+      white-space: nowrap;
+      -webkit-overflow-scrolling: touch;
+      padding: 8px 4px 12px 4px;
+      margin-bottom: 1.5rem;
+      scrollbar-width: none;
+    }
+    .mobile-cat-scroll::-webkit-scrollbar { display: none; }
+    
+    @media (max-width: 991.98px) {
+      .mobile-cat-scroll { display: flex; gap: 8px; }
+    }
+    .mobile-cat-pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      color: var(--ink);
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+    }
+    .mobile-cat-pill.active, .mobile-cat-pill:hover {
+      background: var(--primary) !important;
+      color: #ffffff !important;
+      border-color: var(--primary) !important;
+      box-shadow: 0 4px 12px rgba(47, 111, 237, 0.35);
+    }
+
+    /* Card CTA Visit Button (Suggestion 4) */
+    .btn-card-visit {
+      font-size: 0.78rem !important;
+      padding: 4px 12px !important;
+      border-radius: 999px !important;
+      font-weight: 700 !important;
+      transition: all 0.2s ease !important;
+      background: rgba(47, 111, 237, 0.08) !important;
+      color: var(--primary) !important;
+      border: 1px solid rgba(47, 111, 237, 0.2) !important;
+    }
+    .ai-card-huanjing:hover .btn-card-visit {
+      background: var(--primary) !important;
+      color: #ffffff !important;
+      border-color: var(--primary) !important;
+      transform: translateX(2px) translateY(-1px);
+    }
+
     </style>
           <!-- Google tag (gtag.js)這是GA4全網頁追蹤代碼 -->
       <script async src="https://www.googletagmanager.com/gtag/js?id=G-NVRRXE1GQV"></script>
@@ -693,6 +748,31 @@
         </div>
 
 
+        
+        <!-- 手機版橫向滑動分類標籤列 (Suggestion 2) -->
+        <div class="mobile-cat-scroll" id="mobileCatScroll">
+          <div class="mobile-cat-pill active" data-target="#latest">⭐ 最新 AI 工具</div>
+          <div class="mobile-cat-pill" data-target="#featured">🚀 本月精選</div>
+          <div class="mobile-cat-pill" data-target="#free">🆓 熱門免費</div>
+          <div class="mobile-cat-pill" data-target="#paid">💰 熱門付費</div>
+          <div class="mobile-cat-pill" data-target="#work">⚡ 工作優化</div>
+          <div class="mobile-cat-pill" data-target="#creative">✍️ 文案生成</div>
+          <div class="mobile-cat-pill" data-target="#visual">🎨 圖像生成</div>
+          <div class="mobile-cat-pill" data-target="#media">🎬 影音生成</div>
+          <div class="mobile-cat-pill" data-target="#summary">📄 文件處理</div>
+          <div class="mobile-cat-pill" data-target="#learning">🎓 學習教育</div>
+          <div class="mobile-cat-pill" data-target="#audio">📝 寫作工具</div>
+          <div class="mobile-cat-pill" data-target="#editing">📊 簡報生成</div>
+          <div class="mobile-cat-pill" data-target="#job">💼 求職面試</div>
+          <div class="mobile-cat-pill" data-target="#chat">💬 聊天機器人</div>
+          <div class="mobile-cat-pill" data-target="#organize">📌 重點整理</div>
+          <div class="mobile-cat-pill" data-target="#brand">🏷️ 品牌工具</div>
+          <div class="mobile-cat-pill" data-target="#seo">🔍 搜尋與瀏覽器</div>
+          <div class="mobile-cat-pill" data-target="#code">💻 程式開發</div>
+          <div class="mobile-cat-pill" data-target="#sec-設計師工具UIUX">📐 UI/UX設計</div>
+          <div class="mobile-cat-pill" data-target="#sec-ChatGPT與AI應用">🤖 ChatGPT應用</div>
+        </div>
+
         <div class="row">
           <aside class="col-lg-3 pe-lg-4">
                                                 <div class="left-sidebar">
@@ -738,10 +818,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Onlook</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">Onlook 介紹自己為設計師版的 Cursor，支援 React、Next.js 與 Figma 匯入，讓設計師與產品經理能透過 AI 快速打造可運行的網頁體驗。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-zh">中文</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-zh">中文</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -753,10 +831,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Kuse</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">Kuse 是一款 AI 驅動的視覺化工作平台，將雜亂資料轉化為結構化成果。無限畫布設計，整合內容生成、網路搜尋與資料分析，助力工作與學習，提升生產力與創意。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-zh">中文</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-zh">中文</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -768,10 +844,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Chronicle</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">Chronicle 結合 AI 與簡報模板，協助團隊將想法快速轉化為專業簡報，免設計基礎也能產出高質感內容。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-zh">中文</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-zh">中文</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -783,10 +857,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Claude Code</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">Anthropic 所推出的 AI 程式助手，特別擅長處理複雜的程式任務與程式碼分析。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -798,10 +870,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Windsurf</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">基於 VS Code 為基礎的 IDE，內建自動補全 和 Cascade 功能，也可以串接許多不同 AI 供應商的模型，讓你可以在同一個介面中使用不同的 AI 模型。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -813,10 +883,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">n8n</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">n8n 是一款開源自動化工具，能用拖拉方式把不同服務串起來，例如寄信、同步資料或串 API，還能自己架設伺服器，靈活又省錢。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-zh">中文</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-zh">中文</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
               </div>
@@ -837,10 +905,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Claude Code</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">Anthropic 所推出的 AI 程式助手，特別擅長處理複雜的程式任務與程式碼分析。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -852,10 +918,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">NotebookLM</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">Google 推出的 AI 研究助手，能根據上傳的文件生成個人化指南、對話提問。Audio Overview 則會將文件內容轉換為引人入勝的對話式 Podcast，讓你在 10 分鐘內快速掌握重點。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -867,10 +931,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Napkin AI</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">Napkin AI 是一款「文字轉視覺化圖像」的免費 AI 工具，把寫好的文字內容導入，它能幫忙把每個段落視覺化，生成出的圖能幫助更好理解文字,例如流程圖、漏斗圖、文氏圖等。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-zh">中文</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-zh">中文</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -882,10 +944,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Gamma</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">提供許多簡報模版，使用者可以輸入文字自動生成簡報</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-zh">中文</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-zh">中文</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -897,10 +957,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">SaveDay</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">SaveDay 是一款智慧工具，幫助你快速儲存、搜尋和總結喜愛的內容，支援文章、YouTube 影片等多種格式，並能即時生成摘要與問答，打造個人知識庫。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-zh">中文</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-zh">中文</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -912,10 +970,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Notion AI</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">最完整的文字筆記 AI 工具，結合生成、分析與搜尋功能，讓你在 Notion 內輕鬆創建、編輯文件、分析 PDF，並從多種應用中搜尋答案。支援 GPT-4，適合團隊高效合作。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
               </div>
@@ -936,10 +992,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">NotebookLM</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">Google 推出的 AI 研究助手，能根據上傳的文件生成個人化指南、對話提問。Audio Overview 則會將文件內容轉換為引人入勝的對話式 Podcast，讓你在 10 分鐘內快速掌握重點。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -951,10 +1005,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Screenshot to Code</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">Screenshot to Code 是一款利用 AI 將截圖或設計稿快速轉換為乾淨程式碼的工具，支援多數框架，可即時生成網站介面，大幅提升 UI 開發效率。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -966,10 +1018,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Superwhisper</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">Superwhisper 是一款離線語音轉文字工具，適用於 macOS 和 iOS。支援 100 多種語言，無需網路即可運行，確保資料隱私。打字速度比鍵盤快 3 倍，適合口述郵件、筆記或與 AI 應用互動。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-zh">中文</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-zh">中文</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -981,10 +1031,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">llElevenLabs：AI 配音工具</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">可以將輸入的內容翻譯成 20 多種語言，同時保留原始聲音，讓翻譯完的配音聽起來與原音相近</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -996,10 +1044,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Napkin AI</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">Napkin AI 是一款「文字轉視覺化圖像」的免費 AI 工具，把寫好的文字內容導入,它能幫忙把每個段落視覺化，生成出的圖能幫助更好理解文字,例如流程圖、漏斗圖、文氏圖等</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-zh">中文</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-zh">中文</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -1011,10 +1057,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Elmo</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">Elmo 可將網站內容簡化摘要，總結 YouTube 影片，與 PDF 互動，直接從網頁回答問題，並抓取關鍵詞相關資訊，提升瀏覽及學習效率。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-zh">中文</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-zh">中文</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
               </div>
@@ -1035,10 +1079,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">n8n</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">n8n 是一款開源自動化工具，能用拖拉方式把不同服務串起來，例如寄信、同步資料或串 API，還能自己架設伺服器，靈活又省錢。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-zh">中文</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-zh">中文</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -1050,10 +1092,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Cursor</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">使用 GPT-4，在一種新型編輯器中撰寫、編輯的程式碼</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -1065,10 +1105,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Memo AI</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">Memo AI 是一款「影音轉文字」的 AI 工具，功能包含：影音轉文字、字幕翻譯等等，支援包含中文等多種語言</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-zh">中文</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-zh">中文</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -1080,10 +1118,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">ChatWithPDF</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">ChatWithPDF 讓你可以上傳 PDF 後，請 AI 幫你總結 PDF 的內容，或者讓你可以提問有關 PDF 內容的問題。它跟 ChatPDF 的功能相近，但使用介面更友善一點</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -1095,10 +1131,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Notion AI</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">最完整的文字筆記 AI 工具，結合生成、分析與搜尋功能，讓你在 Notion 內輕鬆創建、編輯文件、分析 PDF，並從多種應用中搜尋答案。支援 GPT-4，適合團隊高效合作。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -1110,10 +1144,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Headshots AI</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">可在幾分鐘內生成不同版本的專業 AI 大頭照</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
               </div>
@@ -1134,10 +1166,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">n8n</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">n8n 是一款開源自動化工具，能用拖拉方式把不同服務串起來，例如寄信、同步資料或串 API，還能自己架設伺服器，靈活又省錢。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-zh">中文</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-zh">中文</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -1149,10 +1179,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Kuse</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">Kuse 是一款 AI 驅動的視覺化工作平台，將雜亂資料轉化為結構化成果。無限畫布設計，整合內容生成、網路搜尋與資料分析，助力工作與學習，提升生產力與創意。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-zh">中文</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-zh">中文</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -1164,10 +1192,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Superwhisper</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">Superwhisper 是一款離線語音轉文字工具，適用於 macOS 和 iOS。支援 100 多種語言，無需網路即可運行，確保資料隱私。打字速度比鍵盤快 3 倍，適合口述郵件、筆記或與 AI 應用互動。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-zh">中文</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-zh">中文</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -1179,10 +1205,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Speechify</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">超過兩千萬人使用的文字轉語音閱讀器，使用自然的聲音，將文字內容（文章、email 和 PDF）轉化為語音，供使用者在線收聽</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -1194,10 +1218,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">ElevenLabs Reader</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">ElevenLabs 推出的 iOS Reader。主打可以讓你貼上一個網址、上傳某個文件，或者輸入一段文字，然後由 AI 唸給你聽</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -1209,10 +1231,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Bardeen</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">Bardeen.ai 是一個 no code 自動化平台，利用 ChatGPT 風格的 AI 聊天機器人來創建自動化。它可以抓取網頁數據、生成內容、自動化工作流程，節省時間，提高生產力</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -1224,10 +1244,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Spinach</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">幫助團隊執行 Scrum。Spinach 能夠立即提供開發團隊會議摘要，記錄行動項目，並提供建議，同時讓您的團隊保持最新狀態。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -1239,10 +1257,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">guidde</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">在幾秒鐘內創建操作教學影片，輕鬆與客戶或團隊分享。 非常適合用於知識庫文章、客戶溝通、新功能公告和內部知識交流</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -1254,10 +1270,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Notion AI</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">最完整的文字筆記 AI 工具，結合生成、分析與搜尋功能，讓你在 Notion 內輕鬆創建、編輯文件、分析 PDF，並從多種應用中搜尋答案。支援 GPT-4，適合團隊高效合作。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -1269,10 +1283,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Fireflies</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">可將會議紀錄的內容或是課堂上的內容，錄音、轉為文字檔，還有總結、記筆記等功能。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -1284,10 +1296,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">mem</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">自動化整合你所有的工具</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -1299,10 +1309,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Otter</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">會議錄音、重點整理、自動生成逐字檔</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -1314,10 +1322,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">genei</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">是一提升生產力的工具，只需提出問題，Genei的AI 就能為用戶找到答案，還提供了 AI 強化的摘要和關鍵詞提取功能，幫助用戶更快地找到關鍵信息。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -1329,10 +1335,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Hoppy Copy</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">透過 AI 快速生成 Email 內容，並且提供各類樣板，例如：行銷活動、電子報等。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -1344,10 +1348,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Warmest.ai</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">當收到電子郵件時，Warmest 會收到通知並開始準備草稿，使用者只需審查並編輯後即可發送</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -1359,10 +1361,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Deep L</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">準確即時的翻譯工具，目前支援 31 種語言</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-zh">中文</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-zh">中文</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
               </div>
@@ -1383,10 +1383,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Easy-Peasy.AI</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">Easy-Peasy.AI 工具提供多種 AI 功能，涵蓋內容創作、圖像生成與自動轉錄等功能。支持多語言語音合成，還可以根據資料訓練自己的 AI 機器人，適合嵌入網站或分享。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-zh">中文</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-zh">中文</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -1398,10 +1396,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Jasper</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">目前歐美最受歡迎的 AI 寫作工作之一，同時也支援包含中文等語言，可以用來生成文章、廣告、社群貼文、Email 等文案</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-zh">中文</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-zh">中文</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -1413,10 +1409,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Copy.ai</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">透過 AI 技術，該工具能夠協助專業人士更快速地撰寫部落格文章、創造更有說服力的廣告文案，以及更吸引人的電子郵件。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -1428,10 +1422,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">MagicPost</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">AI 生成專業的 LinkedIn 貼文</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -1443,10 +1435,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">anyword</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">文案內容分析優化</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -1458,10 +1448,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">peppertype</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">提供多種樣本，再結合 AI 技術，讓你可以快速地生成所需的內容</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
               </div>
@@ -1482,10 +1470,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Dreamina</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">Dreamina 是一個 AI 圖像影音生成工具。用戶只需輸入提示詞，即可生成圖像以及影音。平台提供 Canvas 編輯功能，精確調整內容，滿足需求。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-zh">中文</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-zh">中文</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -1497,10 +1483,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Napkin AI</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">Napkin AI 是一款「文字轉視覺化圖像」的免費 AI 工具，把寫好的文字內容導入,它能幫忙把每個段落視覺化，生成出的圖能幫助更好理解文字,例如流程圖、漏斗圖、文氏圖等</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-zh">中文</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-zh">中文</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -1512,10 +1496,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Jector AI</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">Jector AI是一款專為電子商務打造的 AI 產品照片生成工具。可以輕鬆生成自定義背景，提升產品照片質量。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -1527,10 +1509,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">AI Emojis</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">使用 AI 創建個性化表情符號，只需簡單的提示即可生成。支持 iMessage 整合、搜尋、下載及即時分享功能。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -1542,10 +1522,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Quick QR Art：藝術 QR Code 生成器</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">Quick QR Art 這款工具透過 AI 技術，輸入指令後融合圖片與 QR Code</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -1557,10 +1535,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Headshots AI</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">可在幾分鐘內生成不同版本的專業 AI 大頭照</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -1572,10 +1548,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">misgif</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">misgif 是一款在推特上爆紅的 AI 小工具，這個工具讓你可以上傳自己的照片，然後搭配某張迷因圖，把自己的臉換到迷因圖上面。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -1587,10 +1561,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Spirals</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">輸入提示詞 (prompts)，AI 就會根據提示詞產出以螺旋為主體的圖像，並且讓你透過網址，就可以跟別人分享你創作出來的螺旋藝術。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -1602,10 +1574,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Microsoft Designer</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">微軟推出類似於 Canva 的設計師工具</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -1617,10 +1587,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Stable Doodle</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">這款工具可以用草稿搭配指令，去生成更完整的圖片</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -1632,10 +1600,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">STOCKIMG.AI</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">將文字描述轉為圖片的工具。可用於海報、書的封面和網站設計等。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -1647,10 +1613,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Microsoft Bing 影像建立</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">文字轉圖片工具，還提供影片和照片優化</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-zh">中文</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-zh">中文</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -1662,10 +1626,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">neural.love</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">文字轉圖片工具，還提供影片和照片優化</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -1677,10 +1639,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Midjourney</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">輸入文字生成圖片</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -1692,10 +1652,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Craiyon</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">文字轉圖片工具</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
               </div>
@@ -1716,10 +1674,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Memo AI</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">Memo AI 是一款「影音轉文字」的 AI 工具，功能包含：影音轉文字、字幕翻譯等等，支援包含中文等多種語言</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-zh">中文</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-zh">中文</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -1731,10 +1687,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">VideoGen</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">VideoGen 是一款 AI 影片生成工具，讓你幾秒內創建專業無版權影片，支援多語言語音與字幕，非常適合內容創作者與行銷人員使用</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-zh">中文</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-zh">中文</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -1746,10 +1700,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Suno</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">Suno 是一款音樂生成 AI 工具。使用者只需輸入歌詞，Suno就可以在短時間內自動完成作曲、編曲及演唱的過程。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -1761,10 +1713,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Murf</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">在幾分鐘內製作出工作室品質的配音。使用逼真聲音為 Podcast、影片等製作配音。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -1776,10 +1726,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">llElevenLabs：AI 配音工具</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">可以將輸入的內容翻譯成 20 多種語言，同時保留原始聲音，讓翻譯完的配音聽起來與原音相近</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -1791,10 +1739,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">文字MP3專業版</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">AI 語音生成工具，不需真人錄音與後製、文字編輯即可製作對話配音。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-zh">中文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-zh">中文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -1806,10 +1752,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">OpusClip</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">OpusClip 能將冗長影片轉為短片，只需一鍵點擊即可完成。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -1821,10 +1765,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Rask</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">將影片或音檔翻譯為其他語言，支援超過 130 種語言</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-zh">中文</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-zh">中文</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -1836,10 +1778,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Good Tape</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">自動轉錄服務，可以輕鬆地將錄音轉換為文字，而不受聲音質量的影響，並且也支持多種語言</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -1851,10 +1791,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">D-ID</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">AI 合成影片工具。使用者可以選擇人像、輸入文字轉成影片</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -1866,10 +1804,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Descript</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">多功能的影片和 Podcast 編輯軟體，功能包括將音頻轉錄成文本、像編輯文檔一樣輕鬆編輯影片、螢幕錄製等。申請 waitlist 也可以試用到 GPT-4 的功能。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -1881,10 +1817,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Uberduck</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">輸入文案自動生成聲音，提供 5000+ 不同的聲音可以選</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -1896,10 +1830,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Mubert</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">簡單輸入指令，AI 會自動化生成符合內容的背景音樂</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -1911,10 +1843,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Tavus</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">根據你的臉與聲音，用 AI 幫你做客製化影片，省去做影片的時間</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -1926,10 +1856,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Runway</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">AI 影片編輯、AI 文字生成圖片</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -1941,10 +1869,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">synthesia</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">輸入文字稿，即可生成有真人主持人的影片</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -1956,10 +1882,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Fliki</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">將文字轉為影音、並加上 AI 的音訊。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -1971,10 +1895,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">capsho</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">Capsho是專為專業播客製作的。指教練、顧問、服務提供商等，透過 AI 生成集數介紹、節目摘要、社媒標題，等內容。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -1986,10 +1908,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Jitter</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">Jitter 讓創作者和團隊輕鬆地設計出令人驚艷的動畫內容和介面。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -2001,10 +1921,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Twelve labs</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">影片內容搜尋工具。使用者可以輸入文字，可從所有影片中找到符合文字的內容</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
               </div>
@@ -2025,10 +1943,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">SaveDay</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">SaveDay 是一款智慧工具，幫助你快速儲存、搜尋和總結喜愛的內容，支援文章、YouTube 影片等多種格式，並能即時生成摘要與問答，打造個人知識庫。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-zh">中文</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-zh">中文</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -2040,10 +1956,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Upword</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">透過 Upword 可以用輕鬆搜尋文件內的內容、取得文件摘要、分析報告和管理知識等</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -2055,10 +1969,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">ChatWithPDF</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">ChatWithPDF 讓你可以上傳 PDF 後，請 AI 幫你總結 PDF 的內容，或者讓你可以提問有關 PDF 內容的問題。它跟 ChatPDF 的功能相近，但使用介面更友善一點</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -2070,10 +1982,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">ChatPDF</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">快速總結 PDF 內容，並且可以再用指令與之對話</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -2085,10 +1995,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Excel formula bot</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">利用 ChatGPT 生成 Excel 公式</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-zh">中文</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-zh">中文</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
               </div>
@@ -2109,10 +2017,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">STORM &amp; CO-STORM</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">STORM &amp; CO-STORM 是一套由史丹佛開發的寫作研究輔助工具，能根據主題進行網路搜尋，過程是透過不同的 AI 代理角色進行對話與提問，而 Co-STORM 則進一步加入人類與 AI 協作的元素，進而生成結構化的長文。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -2124,10 +2030,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Recall</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">Recall 是一款線上內容管理與總結工具，可將文章、YouTube 及 Podcast 等內容提煉成知識卡，並透過動態知識圖譜整理資訊，結合間隔重複和主動回想技術提升學習成效。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -2139,10 +2043,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">NotebookLM</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">Google 推出的 AI 研究助手，能根據上傳的文件生成個人化指南、對話提問。Audio Overview 則會將文件內容轉換為引人入勝的對話式 Podcast，讓你在 10 分鐘內快速掌握重點。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -2154,10 +2056,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Unriddle</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">Unriddle 是一款幫助您更快地閱讀、寫作和學習的工具。 簡化複雜的主題、查找信息、提出問題並立即獲得答案。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -2169,10 +2069,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Elicit</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">Elicit 使用語言模型幫助您自動化研究工作流程，例如文獻回顧的部分。Elicit 可以在沒有完美關鍵詞匹配的情況下找到相關論文，總結與您問題相關的論文要點。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
               </div>
@@ -2193,10 +2091,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Essay AI</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">Essay AI 提供即時語法、標點及風格建議，助你提升寫作品質。AI 自動補全、互動式建議、及自動引用功能讓寫作更快速高效。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -2208,10 +2104,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Jenni</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">AI 寫作輔助工具，擁有幫助完成段落、客製化語調、重新編寫等功能。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -2223,10 +2117,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Rytr</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">Rytr 是一個 AI 寫作助手，可以用於 Email、部落格、社群媒體文章等</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -2238,10 +2130,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Writesonic</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">用於內容創作、包括寫文章、部落格的 AI 工具</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -2253,10 +2143,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Deep L Write</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">英文、德文寫作工具，可以及時修正寫作錯誤、改寫句子。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-zh">中文</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-zh">中文</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -2268,10 +2156,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">quillbot</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">使用 QuillBot 改寫，有兩種免費模式和五種高級模式可供選擇，可以提高文章的流暢度、使用適當的詞彙、語氣和風格。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -2283,10 +2169,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Wordtune</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">可用於重新編寫、改述和改寫用戶的寫作，還可用於文章、學術論文、電子郵件和任何其他在線內容。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
               </div>
@@ -2307,10 +2191,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Chronicle</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">Chronicle 結合 AI 與簡報模板，協助團隊將想法快速轉化為專業簡報，免設計基礎也能產出高質感內容。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-zh">中文</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-zh">中文</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -2322,10 +2204,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Gamma</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">提供許多簡報模版，使用者可以輸入文字自動生成簡報</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-zh">中文</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-zh">中文</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -2337,10 +2217,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Beautiful.ai</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">簡單輸入指令，即可生成圖文並茂的簡報</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
               </div>
@@ -2361,10 +2239,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Jobright</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">Jobright 是 AI 求職助手，提供精準匹配、即時公司趨勢分析，並自動生成專屬履歷，助你迅速獲得理想職位。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -2376,10 +2252,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">FlowCV</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">FlowCV 提供強大且簡單的履歷製作工具，幫助求職者展示潛力與獨特性。提供免費及高級選項，讓求職者節省時間並留下深刻印象。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -2391,10 +2265,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">aiApply</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">AI 求職準備工具，包括履歷撰寫、求職信撰寫、面試準備等</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -2406,10 +2278,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Final Round</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">協助面試的 AI 工具。透過 AI 提供面試即時轉錄和個人化協助</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
               </div>
@@ -2430,10 +2300,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">DeepSeek</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">是由中國人工智慧公司開發的聊天機器人應用程式。該應用程式基於 DeepSeek-R1 開源模型，提供類似於其他 AI 聊天機器人的功能，如回答問題、解決邏輯問題和編寫程式碼。目前為免費使用。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-zh">中文</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-zh">中文</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -2445,10 +2313,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Google Gemini</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">Google 開發的聊天機器人，目前免費版本使用 Pro Model。同時也有推出付費版本 Gemini Advanced，可以使用到進階的 Ultra Model。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-zh">中文</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-zh">中文</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -2460,10 +2326,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">ChaGPT</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">由 OpenAI 所開發的聊天機器人，目前免費的版本是使用 GPT-3.5，付費版本是使用 GPT-4，包含如圖片生成、建立 GPTs 等進階功能。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -2475,10 +2339,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Claude</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">Anthropic 所開發的聊天機器人，可以上傳圖片、PDF 檔案。除了免費版之外，同樣也有推出使用進階 Model - Opus 的付費版本：PRO，可以處理更困難的分析和多重步驟等。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -2490,10 +2352,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Pi</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">一款由 Deepmind 前總監創立的 Inflection AI 所開發的聊天機器人，比起 ChatGPT 時常被拿來當生產力工具，Pi 被設計成像朋友一般的聊天機器人</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -2505,10 +2365,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Typing Mind</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">功能是基於 ChatGPT，但這個工具 UI 更加美觀易用</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -2520,10 +2378,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Andi</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">準確、無廣告且注重隱私的人工智慧搜尋聊天機器人。Andi 不僅提供連結，還會直接回答的問題</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -2535,10 +2391,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">character.ai</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">Character.ai是一個神經語言模型聊天機器人網絡應用程式，可以生成類似人類的文本回復，並結合上下文進行對話。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -2550,10 +2404,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Poe</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">Poe 讓您可以提問、獲得即時答案，並且與人工智慧進行來回對話</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
               </div>
@@ -2574,10 +2426,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Elmo</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">Elmo 可將網站內容簡化摘要，總結 YouTube 影片，與 PDF 互動，直接從網頁回答問題，並抓取關鍵詞相關資訊，提升瀏覽及學習效率。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-zh">中文</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-zh">中文</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -2589,10 +2439,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Briefy</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">Briefy 是一款 AI 知識助理，為專業用戶簡化日常信息的消耗。它將複雜的信息提煉成結構化的摘要，組織成知識庫，並能用自然語言按需檢索知識。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -2604,10 +2452,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Eightify</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">總結 Youtube 影片的重點以及洞見 (insights)，支援多種語言</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-zh">中文</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-zh">中文</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -2619,10 +2465,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">SUMMARI</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">提供專門總結的 API 功能，讓開發者輕易串接在自己的產品上</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -2634,10 +2478,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">TLDR This</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">輸入網址或文字，即可得到文章內容總結</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -2649,10 +2491,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">ChatGPT for YouTube</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">Chrome 插件快速取得 Youtube 影片內容</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -2664,10 +2504,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Chat Youtube</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">傳 Youtube 連結給他，就能像他提問影片內容、總結等</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-zh">中文</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-zh">中文</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
               </div>
@@ -2688,10 +2526,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Shootmail</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">Shootmail 是一款類似 Notion 的郵件設計工具，提供直觀的可視化編輯界面與多樣化的預設模板，支援響應式設計、黑暗模式與主流郵件客戶端，並整合多家郵件服務商 SDK。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -2703,10 +2539,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Namify</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">Namify 是一個免費的 AI 品牌名稱生成器，能檢查商標、域名及社交媒體用戶名，並提供免費標誌</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -2718,10 +2552,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Typedream</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">透過類似 Notion 的熟悉介面快速建立網頁、表格、部落格或是 Link in bio</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -2733,10 +2565,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Looka</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">Logo 製作工具</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -2748,10 +2578,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">namelix</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">品牌名稱產生器</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -2763,10 +2591,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Namecheap Logo Maker</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">只要回答幾個簡單問題，即可設計、免費下載數百種商標設計。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
               </div>
@@ -2787,10 +2613,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Perplexity AI</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">perplexity 是 AI 搜尋引擎，對標的不是 ChatGPT 而是 Google。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -2802,10 +2626,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Arc</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">Arc 是一款注重隱私、安全和效率的瀏覽器，還擁有許多 AI 功能。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -2817,10 +2639,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Microsoft Bing</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">Bing 可以用於聊天回答問題，提供答案和靈感，草擬草稿協助寫作，適用於電子郵件、故事、飲食計劃等。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-zh">中文</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-zh">中文</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -2832,10 +2652,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">You.com</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">You.com 與 Bing 皆為搜尋引擎平台，可以總結用戶的搜尋內容，還提供了文字轉圖片等工具。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
               </div>
@@ -2856,10 +2674,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Windsurf</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">基於 VS Code 為基礎的 IDE，內建自動補全 和 Cascade 功能，也可以串接許多不同 AI 供應商的模型，讓你可以在同一個介面中使用不同的 AI 模型。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -2871,10 +2687,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Claude Code</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">Anthropic 所推出的 AI 程式助手，特別擅長處理複雜的程式任務與程式碼分析。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -2886,10 +2700,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Mintlify</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">Mintlify 是一款專為開發者設計的 AI 文件工具，可自動生成指南、API 參考與 SDK 文件，並提供模板與組件輔助格式化，協助企業快速打造高效、互動性強的軟體文件。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -2901,10 +2713,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Screenshot to Code</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">Screenshot to Code 是一款利用 AI 將截圖或設計稿快速轉換為乾淨程式碼的工具，支援多數框架，可即時生成網站介面，大幅提升 UI 開發效率。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -2916,10 +2726,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">CodeRabbit</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">CodeRabbit 是一款 AI 程式碼碼審查工具。透過即時聊天功能，開發者可獲得建議或生成程式碼，自動生成發布說明及日常報告。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -2931,10 +2739,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">v0</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">Vercel 推出透過下指令生成 UI 元件的 AI 工具</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -2946,10 +2752,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Locofy</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">將 Figma 或 Adpbe XD 的設計稿轉換成原始碼，並且可以直接導入到你的專案中。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -2961,10 +2765,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">CS50 ddb</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">哈佛的 CS50 推出的 AI 程式家教，CS50 ddb 不只能解決你修 CS50 遇到的問題，基本上各類程式問題都可以。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -2976,10 +2778,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">replit - Ghostwriter</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">線上 IDE replit 推出的 Ghostwriter，透過 AI 幫助你寫程式，並且可以幫助你找到錯誤。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -2991,10 +2791,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Github Copilot X</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">透過內建聊天和終端介面、支援 pull request、以及採用 OpenAI 的 GPT-4 技術，GitHub Copilot X 是未來 AI 動力軟體開發的領航產品。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -3006,10 +2804,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">AI Query</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">輸入簡單的英文，即可透過此工具幫你生成 SQL 語法</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -3021,10 +2817,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Cursor</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">使用 GPT-4，在一種新型編輯器中撰寫、編輯的程式碼</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -3036,10 +2830,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">ChatGPT for VSCode</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">透過結合 VS Code 和 ChatGPT 的方式，使用者可以得到 AI 提供的程式設計指引，包括程式碼解釋、偵錯等功能</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -3051,10 +2843,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Codeium</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">Codeium 自動化生成程式碼。它支援超過 40 種語言，且仍在不斷擴充中。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -3066,10 +2856,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">GitHub Copilot</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">GitHub 和 OpenAI 合作開發的一個 AI 工具，幫助工程師快速產生編寫程式碼</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
               </div>
@@ -3090,10 +2878,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Onlook</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">Onlook 介紹自己為設計師版的 Cursor，支援 React、Next.js 與 Figma 匯入，讓設計師與產品經理能透過 AI 快速打造可運行的網頁體驗。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-zh">中文</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-zh">中文</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -3105,10 +2891,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">uizard</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">搭載 AI 的 UX/UI 設計工具，快速設計出手機應用程式、網站和 UI</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -3120,10 +2904,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Synthetic Users</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">Syntheticusers 使用 AI 來生成能夠模擬真實人類行為的人物誌 (personas)。用戶輸入一個人物的特徵、該人物存在的問題以及提出的解決方案，然後該模型運行虛擬用戶訪談，從人物誌 (personas)中收集反饋，然後將其總結在完整的報告中。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -3135,10 +2917,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">User Evaluation</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">User Evaluation 是一個透過 AI 來分析使用者的工具。重要的功能包括：分析使用者、可上傳使用者資料並透過 AI 問答，以取得有關使用者得關鍵資料以及透過 AI 產生使用哲研究報告等。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
               </div>
@@ -3159,10 +2939,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Vercel AI Playground</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">Vercel AI Playground 工具是由 OpenAI、Anthropic、Replicate、Huggingface 和 Cohere 提供的 AI 模型和工具集合。透過輸入 prompt 並選定 AI 模型，快速預覽結果</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -3174,10 +2952,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">PromptPerfect</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">優化輸入的提示詞 (prompt)</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-zh">中文</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-zh">中文</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
               </div>
@@ -3198,10 +2974,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Dad Can't Draw</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">Dad Can't Draw 是一個文字轉圖片的著色生成器，只要輸入指令即可簡單快速創作專屬著色頁。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-paid">付費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -3213,10 +2987,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Joy Wedding Writer’s Block</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">這個 AI 助手可以幫助你產出婚禮致詞、感謝信、拒絕信等。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -3228,10 +3000,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">Dream Interpreter AI</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">這個 AI 工具可以讓你輸入夢境，並幫助你解析夢境。</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-zh">中文</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-zh">中文</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -3243,10 +3013,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">HOTOKE AI</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">這個線上工具，結合 AI 透過佛教等觀點為使用者解答疑惑</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-zh">中文</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-zh">中文</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
 
@@ -3258,10 +3026,8 @@
                         <h4 class="h5 fw-bold text-dark mb-0">AutoDraw</h4>
                       </div>
                       <p class="card-text text-secondary mb-4 small flex-grow-1" style="line-height:1.6;">Autodraw 可以猜測使用者想要繪製的物體或形狀，從而讓使用者更快速地繪圖</p>
-                      <div class="d-flex justify-content-end gap-1 mt-auto">
-                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-en">英文</span>
-                      </div>
-                    </article>
+                      <div class="d-flex justify-content-between align-items-center gap-1 mt-auto pt-2"><div>
+                        <span class="badge-tag tag-free">免費</span><span class="badge-tag tag-en">英文</span></div><span class="btn-card-visit">立即體驗 ↗</span></div></article>
                   </a>
                 </div>
               </div>
@@ -3629,6 +3395,24 @@
             searchInput.focus();
           });
         }
+      });
+    </script>
+
+
+    <script id="mobile-scroll-script">
+      document.addEventListener("DOMContentLoaded", function() {
+        const mobilePills = document.querySelectorAll(".mobile-cat-pill");
+        mobilePills.forEach(pill => {
+          pill.addEventListener("click", function() {
+            mobilePills.forEach(p => p.classList.remove("active"));
+            this.classList.add("active");
+            const targetId = this.getAttribute("data-target");
+            const targetSec = document.querySelector(targetId);
+            if (targetSec) {
+              targetSec.scrollIntoView({ behavior: "smooth", block: "start" });
+            }
+          });
+        });
       });
     </script>
 
