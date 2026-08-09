@@ -369,14 +369,23 @@
         });
       }
 
-      let currentAudioMime = "audio/wav";
+      let selectedAudioFile = null;
+      let currentAudioBase64 = "";
+      let currentAudioMime = "audio/mp3";
 
       function handleAudioFile(file) {
-        if (!file.type.startsWith("audio/")) {
-          alert("請選擇有效的音訊檔案 (MP3, WAV, M4A, OGG)！");
+        if (!file) return;
+
+        const ext = file.name.split('.').pop().toLowerCase();
+        const validExts = ['mp3', 'wav', 'm4a', 'ogg', 'flac', 'aac', 'mp4', 'webm'];
+        const isAudioType = file.type.startsWith("audio/") || file.type.startsWith("video/");
+
+        if (!isAudioType && !validExts.includes(ext)) {
+          alert("請選擇有效的音訊檔案 (支援 MP3, WAV, M4A, OGG, FLAC)！");
           return;
         }
 
+        selectedAudioFile = file;
         currentAudioMime = file.type || "audio/mp3";
         if (currentAudioMime === "audio/mpeg") currentAudioMime = "audio/mp3";
 
@@ -386,13 +395,19 @@
         audioPlayerContainer.style.display = "block";
 
         audioPlayer.onloadedmetadata = function() {
-          const dur = Math.floor(audioPlayer.duration);
+          const dur = Math.floor(audioPlayer.duration || 0);
           const mins = Math.floor(dur / 60);
           const secs = dur % 60;
           audioDuration.innerText = `${mins.toString().padStart(2,'0')}:${secs.toString().padStart(2,'0')}`;
         };
 
-        // WebAudio 原生即時聲軌擷取機制
+        // 讀取為 Base64
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          currentAudioBase64 = e.target.result.split(",")[1];
+          console.log("Audio file loaded successfully, Base64 size:", currentAudioBase64.length);
+        };
+        reader.readAsDataURL(file);
       }
 
       // 開始 AI 對齊與時間軸生成
@@ -410,7 +425,7 @@
           return;
         }
 
-        if (!currentAudioBase64) {
+        if (!selectedAudioFile && !currentAudioBase64) {
           alert("請先選擇或拖曳上傳音訊檔案！");
           return;
         }
@@ -419,67 +434,51 @@
 
         startSyncBtn.disabled = true;
         syncProgressMsg.style.display = "block";
-        syncProgressText.innerText = "SoundSync AI 正在透過 Google Gemini 聽打與精準校正時間軸中...";
 
         try {
-          const requestBody = {
-            contents: [
-              {
-                parts: [
-                  {
-                    inlineData: {
-                      mimeType: "audio/mp3",
-                      data: currentAudioBase64
-                    }
-                  },
-                  {
-                    text: `你是一位專業的音訊工程師與歌詞字幕打軸大師。
-請解析這段音訊檔，將歌詞/對白進行高精度時間軸對齊 (Timestamps Alignment)。
+          // 若有 selectedAudioFile，優先提取 16kHz 重抽樣聲軌
+          let audioPayloadBase64 = currentAudioBase64;
+          let audioPayloadMime = currentAudioMime;
 
-${userLyrics ? "參考歌詞文本如下 (請務必將以下歌詞 100% 完整對齊音訊時間點，絕不可遺漏任何一句)：\n" + userLyrics : "請自動聽寫並標出整首音訊的對白/歌詞與時間點。"}
-
-【輸出格式嚴格要求】：
-請務必且只能輸出一個純 JSON Array 格式，不要包含任何 markdown codeblock 標籤外殼：
-[
-  {
-    "start": "00:00:01.200",
-    "end": "00:00:04.500",
-    "text": "歌詞第一句"
-  }
-]
-時間格式必須為 HH:MM:SS.mmm (例如 00:01:12.450)。每個句子的 end 時間不可超過下一句的 start 時間。`
-                  }
-                ]
+          if (selectedAudioFile) {
+            try {
+              syncProgressText.innerText = "SoundSync AI 正在透過 WebAudio 提取 16kHz 降噪聲軌...";
+              const extracted = await extract16kHzMonoWavBase64(selectedAudioFile);
+              if (extracted && extracted.base64) {
+                audioPayloadBase64 = extracted.base64;
+                audioPayloadMime = extracted.mimeType;
               }
-            ]
-          };
+            } catch (wErr) {
+              console.warn("WebAudio 擷取跳過，使用原檔 Base64:", wErr);
+            }
+          }
 
           const candidateEndpoints = [
-          { url: "https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent", name: "Gemini 1.5 Flash (v1)" },
-          { url: "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent", name: "Gemini 2.0 Flash (v1beta)" },
-          { url: "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent", name: "Gemini 1.5 Flash Latest" },
-          { url: "https://generativelanguage.googleapis.com/v1/models/gemini-1.5-pro:generateContent", name: "Gemini 1.5 Pro (v1)" }
-        ];
+            { url: "https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent", name: "Gemini 1.5 Flash (v1 正式版)" },
+            { url: "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent", name: "Gemini 2.0 Flash (v1beta)" },
+            { url: "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent", name: "Gemini 1.5 Flash Latest" },
+            { url: "https://generativelanguage.googleapis.com/v1/models/gemini-1.5-pro:generateContent", name: "Gemini 1.5 Pro" }
+          ];
 
-        let successData = null;
-        let lastError = null;
+          let successData = null;
+          let lastError = null;
 
-        for (const ep of candidateEndpoints) {
-          try {
-            syncProgressText.innerText = `SoundSync AI 正在使用 [${ep.name}] 解析【${audioFileName.innerText}】中...`;
-            
-            const requestBody = {
-              contents: [
-                {
-                  parts: [
-                    {
-                      inlineData: {
-                        mimeType: currentAudioMime,
-                        data: currentAudioBase64
-                      }
-                    },
-                    {
-                      text: `你是一位專業的音訊工程師與歌詞字幕打軸大師。
+          for (const ep of candidateEndpoints) {
+            try {
+              syncProgressText.innerText = `SoundSync AI 正在使用 [${ep.name}] 解析【${audioFileName.innerText}】中...`;
+              
+              const requestBody = {
+                contents: [
+                  {
+                    parts: [
+                      {
+                        inlineData: {
+                          mimeType: audioPayloadMime,
+                          data: audioPayloadBase64
+                        }
+                      },
+                      {
+                        text: `你是一位專業的音訊工程師與歌詞字幕打軸大師。
 請解析這段音訊檔，將歌詞/對白進行高精度時間軸對齊 (Timestamps Alignment)。
 
 ${userLyrics ? "參考歌詞文本如下 (請務必將以下歌詞 100% 完整對齊音訊時間點，絕不可遺漏任何一句)：
@@ -495,45 +494,43 @@ ${userLyrics ? "參考歌詞文本如下 (請務必將以下歌詞 100% 完整�
   }
 ]
 時間格式必須為 HH:MM:SS.mmm (例如 00:01:12.450)。每個句子的 end 時間不可超過下一句的 start 時間。`
-                    }
-                  ]
-                }
-              ]
-            };
+                      }
+                    ]
+                  }
+                ]
+              };
 
-            const response = await fetch(`${ep.url}?key=${apiKey}`, {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json"
-              },
-              body: JSON.stringify(requestBody)
-            });
+              const response = await fetch(`${ep.url}?key=${apiKey}`, {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json"
+                },
+                body: JSON.stringify(requestBody)
+              });
 
-            const data = await response.json();
-            if (data.error) {
-              lastError = new Error(data.error.message || `模型 ${ep.name} 呼叫失敗`);
-              continue; // 自動換下一個相容端點
+              const data = await response.json();
+              if (data.error) {
+                lastError = new Error(data.error.message || `模型 ${ep.name} 呼叫失敗`);
+                continue; // 自動嘗試下一個模型
+              }
+
+              if (data.candidates && data.candidates[0] && data.candidates[0].content) {
+                successData = data;
+                break; // 成功！
+              }
+            } catch (e) {
+              lastError = e;
             }
-
-            if (data.candidates && data.candidates[0] && data.candidates[0].content) {
-              successData = data;
-              break; // 成功！中斷循環
-            }
-          } catch (e) {
-            lastError = e;
           }
-        }
 
-        if (!successData) {
-          throw lastError || new Error("全數 Gemini API 端點嘗試失敗，請檢查 API Key 是否正確。");
-        }
+          if (!successData) {
+            throw lastError || new Error("全數 Gemini API 模型嘗試失敗，請檢查 API Key 是否正確。");
+          }
 
-        let responseText = successData.candidates[0].content.parts[0].text;
+          let responseText = successData.candidates[0].content.parts[0].text;
           responseText = responseText.replace(/```json/g, "").replace(/```/g, "").trim();
 
           const rawSubtitles = JSON.parse(responseText);
-
-          // 獨家邊界重疊衝突修復演算法 (Overlap Eraser)
           parsedSubtitles = fixSubtitleOverlaps(rawSubtitles);
 
           renderSubtitles(parsedSubtitles);
