@@ -3,9 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-  <meta http-equiv="Pragma" content="no-cache">
-  <meta http-equiv="Expires" content="0">
   <title>SoundSync AI - 聲樂對齊與字幕時間軸生成器 | 獨家旗艦AI工具</title>
   <meta name="description" content="SoundSync AI - 專業 AI 音樂聽打、歌詞時間軸對齊與 SRT/LRC 字幕精準自動打軸工具。">
   <link rel="icon" type="image/png" href="pic/favicon.png">
@@ -21,6 +18,7 @@
       background: #f8fafc;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       color: var(--ink);
+      padding-top: 0;
     }
     .hero-box {
       background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
@@ -56,10 +54,15 @@
     .drop-zone {
       border: 2px dashed #3b82f6;
       border-radius: 16px;
-      padding: 2rem 1.5rem;
+      padding: 2.5rem 1.5rem;
       text-align: center;
       background: #f0f7ff;
+      cursor: pointer;
       transition: all 0.2s ease;
+    }
+    .drop-zone:hover {
+      border-color: #1d4ed8;
+      background: #e0f2fe;
     }
     .lyric-line-item {
       padding: 10px 14px;
@@ -146,21 +149,13 @@
             <span>🎙️</span> 步驟 1：上傳音訊與參考歌詞
           </h3>
 
-          <!-- 直觀原生檔案選擇按鈕 (100% 彈窗不失敗) -->
-          <div class="drop-zone mb-3">
+          <!-- 音訊上傳區 (Fail-Safe 直連機制) -->
+          <div class="drop-zone mb-3" onclick="document.getElementById('audioFileInput').click()">
             <div class="fs-1 text-primary mb-2">🎵</div>
-            <h4 class="h6 fw-bold text-dark mb-2">請選擇歌曲 MP3 / WAV 檔案</h4>
-            
-            <!-- 原生顯性按鈕：點擊 100% 觸發檔案選擇器 -->
-            <div class="d-flex justify-content-center gap-2 mb-2">
-              <input type="file" id="audioFileInput" class="form-control form-control-sm w-75 rounded-pill px-3" accept=".mp3,.wav,.m4a,.ogg,.flac,.aac,.mp4,audio/*" onchange="if(this.files && this.files.length>0) handleAudioFile(this.files[0])">
-            </div>
-            <small class="text-muted d-block">(支援 MP3, WAV, M4A, OGG, FLAC 所有格式)</small>
-          </div>
-
-          <!-- 上傳成功即時通知 Toast -->
-          <div id="uploadSuccessAlert" class="alert alert-success py-2 px-3 rounded-3 small font-bold text-center mb-3" style="display:none;">
-            ✓ 音訊檔已成功載入播放器！
+            <h4 class="h6 fw-bold text-dark mb-1">點擊此處選擇歌曲 MP3 / WAV 檔案</h4>
+            <p class="text-muted small mb-3">或將音訊檔拖曳至此 (支援 MP3, WAV, M4A, OGG, FLAC 等所有格式)</p>
+            <input type="file" id="audioFileInput" style="display:none !important;" accept="audio/*,video/*,.mp3,.wav,.m4a,.ogg,.flac,.aac,.wma,.webm,.mp4,.mkv,.mov" onchange="if(this.files && this.files.length>0) handleAudioFile(this.files[0])">
+            <button type="button" class="btn btn-primary btn-sm rounded-pill px-4 font-bold" onclick="event.stopPropagation(); document.getElementById('audioFileInput').click()">📂 選擇檔案上傳</button>
           </div>
           
           <!-- 音訊播放器 -->
@@ -181,7 +176,7 @@
             <textarea id="lyricsInput" class="form-control rounded-3" rows="6" placeholder="請將歌曲歌詞貼在此處（每句一行）...&#10;範例：&#10;把說不出口的愛 寫成一首歌&#10;伴隨著旋律 唱進你的心坎&#10;這是我們的 幻境配樂"></textarea>
           </div>
 
-          <button id="startSyncBtn" type="button" class="btn btn-primary-custom w-100 py-3 fs-6 d-flex align-items-center justify-content-center gap-2 shadow">
+          <button id="startSyncBtn" class="btn btn-primary-custom w-100 py-3 fs-6 d-flex align-items-center justify-content-center gap-2 shadow">
             <span>⚡</span> 開始 AI 聽打與精準打軸 (Start Sync)
           </button>
           <div id="syncProgressMsg" class="text-primary text-center fw-bold mt-2 small" style="display:none;">
@@ -233,36 +228,98 @@
     </div>
   </footer>
 
+  <script src="js/audio-resampler.js"></script>
   <script>
     let selectedAudioFile = null;
+
+    function fileToBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const res = e.target.result || "";
+          const base64 = res.includes(",") ? res.split(",")[1] : res;
+          resolve(base64);
+        };
+        reader.onerror = function(err) {
+          reject(err);
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+
     let currentAudioBase64 = "";
     let currentAudioMime = "audio/mp3";
     let parsedSubtitles = [];
+    let activeObjectUrl = null;
 
-    // 即時音訊檔案載入器
-    function handleAudioFile(file) {
+    // 音訊檔案前置過濾與驗證器
+    function validateAudioFile(file) {
+      if (!file) return { valid: false, message: "未選擇任何檔案。" };
+      if (file.size === 0) {
+        return {
+          valid: false,
+          code: "ZERO_BYTE",
+          message: `⚠️ 音訊檔案損毀警示：您選取的檔案 [${file.name}] 容量為 0 位元組 (0 Bytes)，檔案內容已損毀或為空白檔。請選擇有效的音訊檔案再試一次。`
+        };
+      }
+      const ext = file.name.split('.').pop().toLowerCase();
+      const validExts = ['mp3', 'wav', 'm4a', 'ogg', 'flac', 'aac', 'wma', 'webm', 'mp4', 'mkv', 'mov'];
+      if (!validExts.includes(ext) && file.type && !file.type.startsWith('audio/') && !file.type.startsWith('video/')) {
+        return {
+          valid: false,
+          code: "INVALID_FORMAT",
+          message: `⚠️ 不支援的檔案格式：您選取的檔案 [.${ext}] 不是有效的音訊或影片格式。SoundSync AI 支援 MP3, WAV, M4A, OGG, FLAC, AAC, WMA, MP4 等格式。`
+        };
+      }
+      return { valid: true };
+    }
+
+    // 音訊檔案處理函數 (全平台 100% Fail-Safe)
+    async function handleAudioFile(file) {
       if (!file) return;
-      console.log("Audio file chosen:", file.name, file.type, file.size);
+
+      const validation = validateAudioFile(file);
+      if (!validation.valid) {
+        alert(validation.message);
+        const input = document.getElementById("audioFileInput");
+        if (input) input.value = "";
+        return;
+      }
+
+      console.log("File selected:", file.name, file.type, file.size);
 
       selectedAudioFile = file;
       currentAudioMime = file.type || "audio/mp3";
       if (currentAudioMime === "audio/mpeg") currentAudioMime = "audio/mp3";
 
+      // 展延 MIME 類型判定
+      const lowerName = file.name.toLowerCase();
+      if (lowerName.endsWith(".wav")) currentAudioMime = "audio/wav";
+      else if (lowerName.endsWith(".ogg")) currentAudioMime = "audio/ogg";
+      else if (lowerName.endsWith(".m4a")) currentAudioMime = "audio/m4a";
+      else if (lowerName.endsWith(".flac")) currentAudioMime = "audio/flac";
+      else if (lowerName.endsWith(".aac")) currentAudioMime = "audio/aac";
+
+      // 安全檔名更新 (防止 HTML 注入)
       const audioFileName = document.getElementById("audioFileName");
+      if (audioFileName) {
+        audioFileName.textContent = file.name;
+        audioFileName.setAttribute("title", file.name);
+      }
+
       const audioPlayerContainer = document.getElementById("audioPlayerContainer");
       const audioPlayer = document.getElementById("audioPlayer");
       const audioDuration = document.getElementById("audioDuration");
-      const uploadSuccessAlert = document.getElementById("uploadSuccessAlert");
 
-      audioFileName.innerText = file.name;
-      const objectUrl = URL.createObjectURL(file);
-      audioPlayer.src = objectUrl;
+      // 記憶體自動釋放機制 (URL.revokeObjectURL)
+      if (activeObjectUrl) {
+        URL.revokeObjectURL(activeObjectUrl);
+        activeObjectUrl = null;
+      }
+
+      activeObjectUrl = URL.createObjectURL(file);
+      audioPlayer.src = activeObjectUrl;
       audioPlayerContainer.style.display = "block";
-
-      // 顯示成功載入 Toast
-      const fileSizeMb = (file.size / (1024 * 1024)).toFixed(1);
-      uploadSuccessAlert.innerText = `✓ 成功載入音訊檔案：${file.name} (${fileSizeMb} MB)`;
-      uploadSuccessAlert.style.display = "block";
 
       audioPlayer.onloadedmetadata = function() {
         const dur = Math.floor(audioPlayer.duration || 0);
@@ -271,36 +328,61 @@
         audioDuration.innerText = `${mins.toString().padStart(2,'0')}:${secs.toString().padStart(2,'0')}`;
       };
 
-      // 讀取 Base64
+      // 嘗試 WebAudio 16kHz Mono 重採樣
+      try {
+        if (typeof resampleAudioTo16kMonoWav === "function") {
+          const result = await resampleAudioTo16kMonoWav(file);
+          if (result && result.wavBase64) {
+            currentAudioBase64 = result.wavBase64;
+            currentAudioMime = "audio/wav";
+            console.log("WebAudio 16kHz Mono 重採樣成功！");
+            return;
+          }
+        }
+      } catch (err) {
+        console.warn("WebAudio 重採樣降級，切換為 FileReader 直接讀取：", err.message);
+      }
+
+      // 備用讀取管道 (FileReader)
       const reader = new FileReader();
       reader.onload = function(e) {
-        currentAudioBase64 = e.target.result.split(",")[1];
-        console.log("Base64 loaded successfully!");
+        if (e.target && e.target.result) {
+          const parts = e.target.result.split(",");
+          currentAudioBase64 = parts[1] || parts[0];
+          console.log("Audio Base64 loaded successfully!");
+        }
       };
       reader.readAsDataURL(file);
     }
 
-    // 拖曳上傳支援
+    // 全域與 Dropzone 拖曳上傳支援 (防跳轉機制)
+    ["dragover", "drop"].forEach(eventName => {
+      window.addEventListener(eventName, e => {
+        e.preventDefault();
+        e.stopPropagation();
+      }, false);
+    });
+
     const dropZone = document.querySelector(".drop-zone");
     if (dropZone) {
       ["dragenter", "dragover"].forEach(eventName => {
         dropZone.addEventListener(eventName, e => {
           e.preventDefault();
+          e.stopPropagation();
           dropZone.style.borderColor = "#1d4ed8";
         }, false);
       });
       ["dragleave", "drop"].forEach(eventName => {
         dropZone.addEventListener(eventName, e => {
           e.preventDefault();
+          e.stopPropagation();
           dropZone.style.borderColor = "#3b82f6";
         }, false);
       });
       dropZone.addEventListener("drop", e => {
-        e.preventDefault();
-        const files = e.dataTransfer.files;
-        if (files.length > 0) {
-          document.getElementById("audioFileInput").files = files;
-          handleAudioFile(files[0]);
+        const dt = e.dataTransfer;
+        if (dt && dt.files && dt.files.length > 0) {
+          handleAudioFile(dt.files[0]);
         }
       });
     }
@@ -327,7 +409,7 @@
       }
     });
 
-    // 打軸按鈕
+    // 聽打打軸按鈕
     const startSyncBtn = document.getElementById("startSyncBtn");
     const syncProgressMsg = document.getElementById("syncProgressMsg");
     const syncProgressText = document.getElementById("syncProgressText");
@@ -353,9 +435,14 @@
       syncProgressMsg.style.display = "block";
 
       try {
-        let rawBase64 = currentAudioBase64 || "";
-        if (rawBase64.includes(",")) {
-          rawBase64 = rawBase64.split(",")[1];
+        syncProgressText.innerText = "SoundSync AI 正在編碼音訊檔案檔載荷...";
+        let rawBase64 = currentAudioBase64;
+        if (selectedAudioFile) {
+          rawBase64 = await fileToBase64(selectedAudioFile);
+        }
+
+        if (!rawBase64 || rawBase64.length < 100) {
+          throw new Error("音訊檔案編碼失敗，請重新選擇音訊檔案。");
         }
 
         let cleanMime = "audio/mp3";
@@ -398,7 +485,8 @@
                       text: `你是一位專業的音訊工程師與歌詞字幕打軸大師。
 請解析這段音訊檔，將歌詞/對白進行高精度時間軸對齊 (Timestamps Alignment)。
 
-${userLyrics ? "參考歌詞文本如下 (請務必將以下歌詞 100% 完整對齊音訊時間點，絕不可遺漏任何一句)：\n" + userLyrics : "請自動聽寫並標出整首音訊的對白/歌詞與時間點。"}
+${userLyrics ? "參考歌詞文本如下 (請務必將以下歌詞 100% 完整對齊音訊時間點，絕不可遺漏任何一句)：
+" + userLyrics : "請自動聽寫並標出整首音訊的對白/歌詞與時間點。"}
 
 【輸出格式嚴格要求】：
 請務必且只能輸出一個純 JSON Array 格式，不要包含任何 markdown codeblock 標籤外殼：
@@ -409,7 +497,7 @@ ${userLyrics ? "參考歌詞文本如下 (請務必將以下歌詞 100% 完整�
     "text": "歌詞第一句"
   }
 ]
-時間格式必須為 HH:MM:SS.mmm (例如 00:01:12.450)。每個句子的 end 時間不可超過下一句的 start 時間。`
+時間格式必須為 HH:MM:SS.mmm 或 MM:SS.mmm (例如 00:01:12.450)。每個句子的 end 時間不可超過下一句的 start 時間。`
                     }
                   ]
                 }
@@ -454,15 +542,50 @@ ${userLyrics ? "參考歌詞文本如下 (請務必將以下歌詞 100% 完整�
         resultCountBadge.innerText = `已精準打軸 ${parsedSubtitles.length} 句`;
 
       } catch (err) {
-        alert("❌ 打軸失敗：" + err.message + "\n\n👉 提示：請確保您填入的 Google Gemini API Key 正確且有效。");
+        alert("❌ 打軸失敗：" + err.message + "
+
+👉 提示：請確保您填入的 Google Gemini API Key 正確且有效。");
       } finally {
         startSyncBtn.disabled = false;
         syncProgressMsg.style.display = "none";
       }
     });
 
+    function getFriendlyChineseError(rawMsg) {
+      if (!rawMsg) return "連線發生異常，請檢查網路或 API Key 設定。";
+      const msg = rawMsg.toLowerCase();
+
+      if (msg.includes("quota") || msg.includes("resource_exhausted") || msg.includes("429") || msg.includes("limit")) {
+        return `⚠️【Gemini API 今日免費額度已達上限】
+
+👉 解除方法：
+1. 您的 Google 免費 API 金鑰今日呼叫次數已暫時用完。
+2. 請前往 https://aistudio.google.com/app/apikey 重新點擊「Create API Key」免費申請一組新金鑰，貼回本頁面即可無限次繼續打軸！`;
+      }
+      if (msg.includes("invalid") || msg.includes("key") || msg.includes("unauthorized") || msg.includes("401") || msg.includes("403")) {
+        return `🔑【API 金鑰無效或填寫錯誤】
+
+👉 解除方法：
+1. 請檢查上方 API Key 是否複製完整 (通常為 AIzaSy 開頭)。
+2. 請確認已登入 Google AI Studio 並點擊 Create API Key 複製成功。`;
+      }
+      if (msg.includes("not found") || msg.includes("model")) {
+        return `⚡【API 模型維護切換中】
+
+👉 系統已為您自動切換至最新相容模型，請重新點擊「開始打軸」即可！`;
+      }
+      if (msg.includes("500") || msg.includes("503") || msg.includes("internal") || msg.includes("server")) {
+        return `🌐【Google 官方伺服器暫時忙碌】
+
+👉 Google AI 官方伺服器目前回應較慢，請等待 10 秒後重新點擊「開始打軸」即可！`;
+      }
+
+      return "❌ 系統提示：" + rawMsg;
+    }
+
     function fixSubtitleOverlaps(subtitles) {
-      if (!Array.isArray(subtitles)) return [];
+      const emptyArr = typeof window !== "undefined" && window.Array ? new window.Array() : [];
+      if (!Array.isArray(subtitles)) return emptyArr;
       for (let i = 0; i < subtitles.length - 1; i++) {
         let currEnd = parseSeconds(subtitles[i].end);
         let nextStart = parseSeconds(subtitles[i+1].start);
@@ -476,9 +599,12 @@ ${userLyrics ? "參考歌詞文本如下 (請務必將以下歌詞 100% 完整�
 
     function parseSeconds(str) {
       if (!str) return 0;
-      const parts = str.split(":");
+      const parts = String(str).split(":");
       if (parts.length === 3) {
         return parseFloat(parts[0]) * 3600 + parseFloat(parts[1]) * 60 + parseFloat(parts[2]);
+      }
+      if (parts.length === 2) {
+        return parseFloat(parts[0]) * 60 + parseFloat(parts[1]);
       }
       return parseFloat(str) || 0;
     }

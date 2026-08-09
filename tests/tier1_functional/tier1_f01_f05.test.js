@@ -21,7 +21,6 @@ suite.it('F01-1: Native file picker button click triggers hidden input selection
   let clicked = false;
   elements.audioFileInput.onclick = () => { clicked = true; };
   
-  // Simulate clicking select file button inside drop zone
   const selectBtn = elements.dropZone.querySelector('button');
   assert.ok(selectBtn, 'Dropzone 應包含選擇檔案按鈕');
   selectBtn.click();
@@ -32,9 +31,13 @@ suite.it('F01-1: Native file picker button click triggers hidden input selection
 suite.it('F01-2: Drag-and-drop dragenter/dragover prevents browser default and updates border color', () => {
   const { elements } = env;
   const preventDefaultCalls = [];
-  const fakeEvent = { preventDefault: () => preventDefaultCalls.push(true) };
+  const fakeEvent = {
+    type: 'dragover',
+    preventDefault: () => preventDefaultCalls.push(true),
+    stopPropagation: () => {}
+  };
   
-  elements.dropZone.dispatchEvent({ type: 'dragover', ...fakeEvent });
+  elements.dropZone.dispatchEvent(fakeEvent);
   assert.strictEqual(elements.dropZone.style.borderColor, '#1d4ed8', 'dragover 時邊框顏色應變更為高亮藍色');
 });
 
@@ -42,7 +45,11 @@ suite.it('F01-3: Drag-and-drop dragleave/drop resets border color back to defaul
   const { elements } = env;
   elements.dropZone.style.borderColor = '#1d4ed8';
   
-  elements.dropZone.dispatchEvent({ type: 'dragleave', preventDefault: () => {} });
+  elements.dropZone.dispatchEvent({
+    type: 'dragleave',
+    preventDefault: () => {},
+    stopPropagation: () => {}
+  });
   assert.strictEqual(elements.dropZone.style.borderColor, '#3b82f6', 'dragleave 時邊框顏色應重置為預設藍色');
 });
 
@@ -53,6 +60,7 @@ suite.it('F01-4: Drop event extracts files from dataTransfer and passes to handl
   elements.dropZone.dispatchEvent({
     type: 'drop',
     preventDefault: () => {},
+    stopPropagation: () => {},
     dataTransfer: { files: [fakeFile] }
   });
   
@@ -114,15 +122,13 @@ suite.it('F02-5: Multi-digit minute audio duration formats correctly with padded
 });
 
 // Feature 3: WebAudio 16kHz Mono Resampling Pipeline
-suite.it('F03-1: FileReader reads selected audio file and converts binary content into Base64 data URL', (done) => {
+suite.it('F03-1: FileReader reads selected audio file and converts binary content into Base64 data URL', async () => {
   const { context } = env;
   const fakeFile = { name: 'test.mp3', type: 'audio/mp3', content: 'audio raw content' };
   
   context.handleAudioFile(fakeFile);
-  setTimeout(() => {
-    assert.ok(context.currentAudioBase64.length > 0, 'currentAudioBase64 應載入 Base64 字串');
-    done();
-  }, 20);
+  await new Promise(r => setTimeout(r, 20));
+  assert.ok(context.currentAudioBase64.length > 0, 'currentAudioBase64 應載入 Base64 字串');
 });
 
 suite.it('F03-2: MIME type pure normalization converts audio/mpeg into audio/mp3', () => {
@@ -184,11 +190,9 @@ suite.it('F04-2: Saved API key in localStorage automatically fills apiKeyInput o
   const localStorageMock = new (require('../helpers/dom_simulator').MockLocalStorage)();
   localStorageMock.setItem('soundsync_gemini_key', 'AIzaSyAutoLoadedKey');
   
-  // Re-run DOM simulator context with pre-populated localStorage
   const envWithKey = createDOMEnvironment(htmlPath);
   envWithKey.localStorage.setItem('soundsync_gemini_key', 'AIzaSyAutoLoadedKey');
   
-  // Trigger initial key load script logic
   const key = envWithKey.localStorage.getItem('soundsync_gemini_key');
   if (key) envWithKey.elements.apiKeyInput.value = key;
   

@@ -18,23 +18,19 @@ suite.beforeEach(() => {
 suite.it('T4-01: Complete MP3 alignment to SRT download workflow', async () => {
   const { context, elements, setFetchHandler, downloads } = env;
 
-  // Step 1: User selects MP3 file
   const mp3File = { name: 'Mirage_Cinematic_BGM_Song.mp3', type: 'audio/mp3', size: 3500000 };
   context.handleAudioFile(mp3File);
   assert.strictEqual(elements.audioFileName.innerText, 'Mirage_Cinematic_BGM_Song.mp3');
 
-  // Step 2: User enters Gemini API Key
   elements.apiKeyInput.value = 'AIzaSyRealWorldKey_2026';
   elements.saveKeyBtn.click();
   assert.strictEqual(env.localStorage.getItem('soundsync_gemini_key'), 'AIzaSyRealWorldKey_2026');
 
-  // Step 3: User inputs reference lyrics
   const lyrics = `把說不出口的愛 寫成一首歌
 伴隨著旋律 唱進你的心坎
 這是我們的 幻境配樂`;
   elements.lyricsInput.value = lyrics;
 
-  // Step 4: Mock Gemini 2.0 Flash API response
   setFetchHandler(async () => ({
     json: async () => ({
       candidates: [
@@ -55,15 +51,12 @@ suite.it('T4-01: Complete MP3 alignment to SRT download workflow', async () => {
     })
   }));
 
-  // Step 5: User clicks Start Sync
   elements.startSyncBtn.click();
   await new Promise(r => setTimeout(r, 60));
 
-  // Step 6: Verify Overlap Eraser fixed line 1 end timestamp: next start is 6.200 -> adjusted end = 6.150
   assert.strictEqual(context.parsedSubtitles[0].end, '00:00:06.150');
   assert.strictEqual(elements.resultCountBadge.innerText, '已精準打軸 3 句');
 
-  // Step 7: User clicks Export .SRT
   elements.exportSrtBtn.click();
   const srtContent = downloads[downloads.length - 1].blob.content;
 
@@ -171,13 +164,11 @@ suite.it('T4-04: Full teleprompter interactive experience - Click lyric line to 
 
   elements.audioPlayer.play = () => {};
 
-  // User clicks second lyric line
   const line2Div = elements.timelineContainer.children[1];
   line2Div.click();
 
   assert.strictEqual(elements.audioPlayer.currentTime, 6.0);
 
-  // Audio player time updates to 7.0 (middle of Line 2)
   elements.audioPlayer.currentTime = 7.0;
   elements.audioPlayer.dispatchEvent('timeupdate');
 
@@ -191,7 +182,6 @@ suite.it('T4-05: Real-World Error Recovery - User fixes invalid API Key and re-s
   context.handleAudioFile({ name: 'song.mp3', type: 'audio/mp3', size: 100 });
   elements.apiKeyInput.value = 'AIzaSyInvalidKey';
 
-  // First call returns 401 Invalid Key
   setFetchHandler(async () => ({
     json: async () => ({ error: { message: 'API key not valid 401' } })
   }));
@@ -201,7 +191,6 @@ suite.it('T4-05: Real-World Error Recovery - User fixes invalid API Key and re-s
 
   assert.ok(alertHistory[0].includes('API 金鑰無效或填寫錯誤'));
 
-  // User fixes key
   elements.apiKeyInput.value = 'AIzaSyCorrectKey';
   setFetchHandler(async () => ({
     json: async () => ({
@@ -234,7 +223,7 @@ suite.it('T4-06: Real-World Error Recovery - Quota 429 error guide leads to seam
 suite.it('T4-07: Drag and Drop MP3 file real-world user interaction', () => {
   const { context, elements } = env;
 
-  const dragEvent = { preventDefault: () => {} };
+  const dragEvent = { preventDefault: () => {}, stopPropagation: () => {} };
   elements.dropZone.dispatchEvent({ type: 'dragover', ...dragEvent });
   assert.strictEqual(elements.dropZone.style.borderColor, '#1d4ed8');
 
@@ -242,6 +231,7 @@ suite.it('T4-07: Drag and Drop MP3 file real-world user interaction', () => {
   elements.dropZone.dispatchEvent({
     type: 'drop',
     preventDefault: () => {},
+    stopPropagation: () => {},
     dataTransfer: { files: [file] }
   });
 

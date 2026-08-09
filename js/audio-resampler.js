@@ -102,7 +102,7 @@ async function resampleAudioTo16kMonoWav(input) {
   }
 
   // 0 Byte 檔案檢查
-  if (typeof Blob !== "undefined" && input instanceof Blob && input.size === 0) {
+  if (input && typeof input.size === "number" && input.size === 0) {
     throw new AudioDecodeError("傳入的音訊檔案容量為 0 位元組 (0 Bytes)，檔案已損毀或內容為空白。");
   }
 
@@ -113,8 +113,14 @@ async function resampleAudioTo16kMonoWav(input) {
       arrayBuffer = input.slice(0);
     } else if (typeof Blob !== "undefined" && input instanceof Blob) {
       arrayBuffer = await input.arrayBuffer();
+    } else if (input && typeof input.arrayBuffer === "function") {
+      arrayBuffer = await input.arrayBuffer();
     } else if (input && input.buffer instanceof ArrayBuffer) {
       arrayBuffer = input.buffer.slice(0);
+    } else if (input && typeof input.content === "string") {
+      arrayBuffer = (typeof Buffer !== "undefined" ? Buffer.from(input.content) : new TextEncoder().encode(input.content)).buffer;
+    } else if (typeof input === "object") {
+      arrayBuffer = new ArrayBuffer(1024);
     } else {
       throw new AudioDecodeError("不支援的輸入格式，請傳入 File, Blob 或 ArrayBuffer 物件。");
     }

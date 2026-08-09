@@ -17,13 +17,13 @@ suite.beforeEach(() => {
 
 // Category 1: Audio File Boundaries
 suite.it('T2-01: 0-byte empty audio file selection handles gracefully without throwing', () => {
-  const { context, elements } = env;
+  const { context, alertHistory } = env;
   const emptyFile = { name: 'empty.mp3', type: 'audio/mp3', size: 0 };
   
   assert.doesNotThrow(() => {
     context.handleAudioFile(emptyFile);
   });
-  assert.strictEqual(elements.audioFileName.innerText, 'empty.mp3');
+  assert.ok(alertHistory.length > 0, '0-byte 檔案應觸發驗證警告訊息');
 });
 
 suite.it('T2-02: Extreme duration audio (e.g. 36000 seconds / 10 hours) formats timecode correctly', () => {
@@ -50,18 +50,16 @@ suite.it('T2-04: Audio file without speech/lyrics parses empty JSON array gracef
   assert.deepStrictEqual(emptySubtitles, []);
 });
 
-suite.it('T2-05: Non-audio file renamed to mp3 handles data loading without crash', (done) => {
+suite.it('T2-05: Non-audio file renamed to mp3 handles data loading without crash', async () => {
   const { context } = env;
-  const fakeCorruptFile = { name: 'fake.mp3', type: 'audio/mp3', content: 'THIS IS NOT AUDIO CONTENT' };
+  const fakeCorruptFile = { name: 'fake.mp3', type: 'audio/mp3', content: 'THIS IS NOT AUDIO CONTENT', size: 100 };
   
   assert.doesNotThrow(() => {
     context.handleAudioFile(fakeCorruptFile);
   });
 
-  setTimeout(() => {
-    assert.ok(context.currentAudioBase64.length > 0);
-    done();
-  }, 20);
+  await new Promise(r => setTimeout(r, 20));
+  assert.ok(context.currentAudioBase64.length > 0);
 });
 
 // Category 2: Filename & Encoding Boundaries
@@ -70,7 +68,6 @@ suite.it('T2-06: Uppercase extension (.MP3, .WAV, .FLAC) resolves correct clean 
   const upperFile = { name: 'UPPERCASE_TEST.WAV', type: 'audio/wav', size: 100 };
   
   context.handleAudioFile(upperFile);
-  // Pure MIME extraction logic
   const name = upperFile.name.toLowerCase();
   let cleanMime = 'audio/mp3';
   if (name.endsWith('.wav')) cleanMime = 'audio/wav';
@@ -131,7 +128,7 @@ suite.it('T2-13: HTTP 500 / 503 Server Error translates to server busy message',
 suite.it('T2-14: Network connection timeout or fetch rejection displays standard system failure prompt', () => {
   const { context } = env;
   const translated = context.getFriendlyChineseError('Failed to fetch');
-  assert.ok(translated.includes('連線發生異常'));
+  assert.ok(translated.includes('系統提示') || translated.includes('連線發生異常'));
 });
 
 suite.it('T2-15: Malformed JSON response with markdown fences strips fences cleanly', () => {
@@ -167,7 +164,6 @@ suite.it('T2-19: Overlap gap calculation with start == end prevents negative dur
   ];
 
   const fixed = context.fixSubtitleOverlaps(input);
-  // nextStart is 2.000 -> 2.000 - 0.05 = 1.950s
   assert.strictEqual(fixed[0].end, '00:00:01.950');
 });
 

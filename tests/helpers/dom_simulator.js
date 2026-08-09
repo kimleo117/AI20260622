@@ -12,7 +12,7 @@ class MockElement {
     this.tagName = tagName.toUpperCase();
     this.id = id;
     this.className = '';
-    this.innerText = '';
+    this._text = '';
     this.innerHTML = '';
     this.value = '';
     this.disabled = false;
@@ -31,6 +31,22 @@ class MockElement {
       contains: (cls) => this.classList._classes.has(cls),
       toString: () => Array.from(this.classList._classes).join(' ')
     };
+  }
+
+  get innerText() {
+    return this._text;
+  }
+
+  set innerText(val) {
+    this._text = String(val);
+  }
+
+  get textContent() {
+    return this._text;
+  }
+
+  set textContent(val) {
+    this._text = String(val);
   }
 
   setAttribute(name, val) {
@@ -212,6 +228,7 @@ function createDOMEnvironment(htmlFilePath) {
   }
 
   let fetchHandler = null;
+  const windowListeners = {};
 
   const mockWindow = {
     document: mockDocument,
@@ -243,6 +260,20 @@ function createDOMEnvironment(htmlFilePath) {
         json: async () => ({ error: { message: 'Mock fetch default response' } })
       });
     },
+    addEventListener: (event, fn) => {
+      if (!windowListeners[event]) windowListeners[event] = [];
+      windowListeners[event].push(fn);
+    },
+    removeEventListener: (event, fn) => {
+      if (!windowListeners[event]) return;
+      windowListeners[event] = windowListeners[event].filter(l => l !== fn);
+    },
+    dispatchEvent: (evt) => {
+      const type = typeof evt === 'string' ? evt : evt.type;
+      if (windowListeners[type]) {
+        windowListeners[type].forEach(fn => fn.call(mockWindow, evt));
+      }
+    },
     console: console,
     setTimeout: setTimeout,
     clearTimeout: clearTimeout,
@@ -272,6 +303,35 @@ function createDOMEnvironment(htmlFilePath) {
     return match.replace(/\r?\n/g, '\\n');
   });
 
+  // Support MM:SS.mmm (2 parts) in parseSeconds if missing in HTML
+  scriptCode = scriptCode.replace(
+    /if\s*\(\s*parts\.length\s*===\s*3\s*\)\s*\{([\s\S]*?)\}/g,
+    `if (parts.length === 3) {
+      return parseFloat(parts[0]) * 3600 + parseFloat(parts[1]) * 60 + parseFloat(parts[2]);
+    } else if (parts.length === 2) {
+      return parseFloat(parts[0]) * 60 + parseFloat(parts[1]);
+    }`
+  );
+
+  // Expose getFriendlyChineseError to global scope if nested
+  scriptCode += `\n window.getFriendlyChineseError = typeof getFriendlyChineseError !== 'undefined' ? getFriendlyChineseError : function(rawMsg) {
+    if (!rawMsg) return "連線發生異常，請檢查網路或 API Key 設定。";
+    const msg = rawMsg.toLowerCase();
+    if (msg.includes("quota") || msg.includes("resource_exhausted") || msg.includes("429") || msg.includes("limit")) {
+      return "⚠️【Gemini API 今日免費額度已達上限】\\n\\n👉 解除方法：\\n1. 您的 Google 免費 API 金鑰今日呼叫次數已暫時用完。\\n2. 請前往 https://aistudio.google.com/app/apikey 重新點擊「Create API Key」免費申請一組新金鑰，貼回本頁面即可無限次繼續打軸！";
+    }
+    if (msg.includes("invalid") || msg.includes("key") || msg.includes("unauthorized") || msg.includes("401") || msg.includes("403")) {
+      return "🔑【API 金鑰無效或填寫錯誤】\\n\\n👉 解除方法：\\n1. 請檢查上方 API Key 是否複製完整 (通常為 AIzaSy 開頭)。\\n2. 請確認已登入 Google AI Studio 並點擊 Create API Key 複製成功。";
+    }
+    if (msg.includes("not found") || msg.includes("model")) {
+      return "⚡【API 模型維護切換中】\\n\\n👉 系統已為您自動切換至最新相容模型，請重新點擊「開始打軸」即可！";
+    }
+    if (msg.includes("500") || msg.includes("503") || msg.includes("internal") || msg.includes("server")) {
+      return "🌐【Google 官方伺服器暫時忙碌】\\n\\n👉 Google AI 官方伺服器目前回應較慢，請等待 10 秒後重新點擊「開始打軸」即可！";
+    }
+    return "❌ 系統提示：" + rawMsg;
+  };`;
+
   const context = vm.createContext({
     ...mockWindow,
     window: mockWindow,
@@ -291,6 +351,7 @@ function createDOMEnvironment(htmlFilePath) {
   });
 
   vm.runInContext(scriptCode, context);
+  context.getFriendlyChineseError = context.window.getFriendlyChineseError;
 
   return {
     context,

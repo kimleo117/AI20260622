@@ -62,26 +62,37 @@ suite.it('F16-5: Unrecognized error message falls back to formatted system promp
 });
 
 // Feature 17: E2E Testing Suite & Quality Hardening
-suite.it('F17-1: Test runner framework executes tests cleanly without throwing uncaught exceptions', () => {
-  const dummySuite = new TestSuite('Dummy');
+suite.it('F17-1: Test runner framework executes tests cleanly without throwing uncaught exceptions', async () => {
+  const dummySuite = new TestSuite('Dummy Execution');
   dummySuite.it('test case', () => { assert.strictEqual(1, 1); });
   
-  return dummySuite.run().then(res => {
-    assert.strictEqual(res.passed, 1);
-    assert.strictEqual(res.failed, 0);
-  });
+  const origLog = console.log;
+  console.log = () => {};
+  const res = await dummySuite.run();
+  console.log = origLog;
+
+  assert.strictEqual(res.passed, 1);
+  assert.strictEqual(res.failed, 0);
 });
 
-suite.it('F17-2: Test suite aggregates total passed, failed, and duration counts accurately', () => {
+suite.it('F17-2: Test suite aggregates total passed, failed, and duration counts accurately', async () => {
   const dummySuite = new TestSuite('Dummy Aggregation');
   dummySuite.it('pass 1', () => { assert.strictEqual(1, 1); });
   dummySuite.it('fail 1', () => { assert.strictEqual(1, 2); });
 
-  return dummySuite.run().then(res => {
-    assert.strictEqual(res.total, 2);
-    assert.strictEqual(res.passed, 1);
-    assert.strictEqual(res.failed, 1);
-  });
+  const origLog = console.log;
+  const origErr = console.error;
+  console.log = () => {};
+  console.error = () => {};
+
+  const res = await dummySuite.run();
+
+  console.log = origLog;
+  console.error = origErr;
+
+  assert.strictEqual(res.total, 2);
+  assert.strictEqual(res.passed, 1);
+  assert.strictEqual(res.failed, 1);
 });
 
 suite.it('F17-3: Non-intrusive opaque box tests verify actual DOM and JS logic without modifying HTML source code', () => {
