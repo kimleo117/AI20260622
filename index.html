@@ -3375,6 +3375,7 @@
     </script>
   
     
+    
     <script id="realtime-search-script">
       document.addEventListener("DOMContentLoaded", function() {
         const searchInput = document.getElementById("toolSearchInput");
@@ -3383,14 +3384,13 @@
         const noResultsAlert = document.getElementById("noResultsAlert");
         const toolCards = document.querySelectorAll(".ai-card-huanjing");
         const hotTagBtns = document.querySelectorAll(".hot-tag-btn");
-        const sectionTitles = document.querySelectorAll(".section-title, .h4.fw-bold, section h2");
 
-        // 同義詞與近義詞地圖 (Synonym map for Taiwanese user search habits)
+        // 台灣常見搜尋同義詞地圖
         const synonymMap = {
           "作影片": ["影片", "影音", "剪輯", "短影音", "動畫", "生成", "video", "media"],
           "做影片": ["影片", "影音", "剪輯", "短影音", "動畫", "生成", "video", "media"],
           "影片": ["影片", "影音", "剪輯", "短影音", "動畫", "生成", "video", "media"],
-          "剪片": ["影片", "影音", "剪輯", "短影音"],
+          "圖片": ["圖像", "繪圖", "去背", "圖片", "照片", "畫", "draw", "image", "photo", "pic"],
           "作圖": ["圖像", "繪圖", "去背", "圖片", "照片", "畫", "draw", "image"],
           "做圖": ["圖像", "繪圖", "去背", "圖片", "照片", "畫", "draw", "image"],
           "畫圖": ["圖像", "繪圖", "去背", "圖片", "照片", "畫", "draw", "image"],
@@ -3399,10 +3399,39 @@
           "聽音樂": ["音樂", "配樂", "聽打", "soundsync", "bgm", "音軌", "audio", "music"]
         };
 
+        function updateHeadersVisibility(isSearching) {
+          // 抓取所有章節標題
+          const allHeaderNodes = document.querySelectorAll("h2, h3, .section-title, [id^='sec-'], #latest, #featured, #free, #paid, #work, #creative, #visual, #media, #summary, #learning, #audio, #editing, #job, #chat, #organize, #brand, #seo, #code");
+
+          allHeaderNodes.forEach(header => {
+            if (!header.classList.contains("ai-card-huanjing") && !header.closest(".ai-card-huanjing")) {
+              if (isSearching) {
+                // 檢查該標題後的下一個同級容器或同區域卡片是否有顯示的
+                let parentContainer = header.closest(".mb-5, .mb-4, section") || header.parentElement;
+                let visibleCards = [];
+                
+                if (parentContainer) {
+                  visibleCards = Array.from(parentContainer.querySelectorAll(".ai-card-huanjing")).filter(c => {
+                    const p = c.closest(".col-md-6, .col-lg-4, .mb-4");
+                    return p && p.style.display !== "none";
+                  });
+                }
+
+                if (visibleCards.length === 0) {
+                  header.style.setProperty("display", "none", "important");
+                } else {
+                  header.style.setProperty("display", "", "");
+                }
+              } else {
+                header.style.setProperty("display", "", "");
+              }
+            }
+          });
+        }
+
         function performSearch(query) {
           query = query.trim().toLowerCase();
 
-          // 判斷同義詞列表
           let searchTerms = [query];
           if (synonymMap[query]) {
             searchTerms = searchTerms.concat(synonymMap[query]);
@@ -3416,7 +3445,6 @@
               const cardText = (card.innerText + " " + (card.getAttribute("data-seo-keyword") || "")).toLowerCase();
               const cardParent = card.closest(".col-md-6, .col-lg-4, .mb-4");
 
-              // 智慧比對任一關鍵詞
               const isMatch = searchTerms.some(term => cardText.includes(term));
 
               if (isMatch) {
@@ -3429,19 +3457,8 @@
               }
             });
 
-            // 隱藏沒有符合項目的分區標題 (Hide Empty Section Titles)
-            sectionTitles.forEach(title => {
-              const section = title.closest("section, div.mb-5, div.mb-4");
-              if (section) {
-                const visibleCards = section.querySelectorAll(".ai-card-huanjing[style*='display: flex']");
-                const headerWrapper = title.closest(".mb-4, .mb-3, h2, h3, .section-title");
-                if (visibleCards.length === 0) {
-                  if (headerWrapper) headerWrapper.style.display = "none";
-                } else {
-                  if (headerWrapper) headerWrapper.style.display = "block";
-                }
-              }
-            });
+            // 100% 精準隱藏沒資料的分區標題
+            updateHeadersVisibility(true);
 
             countDisplay.style.display = "block";
             countDisplay.innerHTML = `找到了 <strong class="text-primary fs-6">${matchCount}</strong> 個符合「<strong>${query}</strong>」的 AI 工具`;
@@ -3463,10 +3480,7 @@
             });
 
             // 恢復所有分區標題
-            sectionTitles.forEach(title => {
-              const headerWrapper = title.closest(".mb-4, .mb-3, h2, h3, .section-title");
-              if (headerWrapper) headerWrapper.style.display = "block";
-            });
+            updateHeadersVisibility(false);
           }
         }
 
@@ -3492,6 +3506,7 @@
         }
       });
     </script>
+
 
 
 
