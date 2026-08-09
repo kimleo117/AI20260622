@@ -1,0 +1,39 @@
+<svg width="600" height="240" viewBox="0 0 320 120" fill="none" xmlns="http://www.w3.org/2000/svg" style="background: #0b0518;">
+    <defs>
+        <!-- 高燃金漸層 -->
+        <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#FFE57F" />
+            <stop offset="50%" stop-color="#FFD700" />
+            <stop offset="100%" stop-color="#B8860B" />
+        </linearGradient>
+        <!-- 幻境紫發光效果 -->
+        <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="4" result="blur" />
+            <feComposite in="SourceGraphic" in2="blur" operator="over" />
+        </filter>
+    </defs>
+
+    <!-- 無限符號 × 聲波組合軌跡 -->
+    <g filter="url(#glow)">
+        <!-- 背景無限符號光軌 -->
+        <path d="M 80,60 C 50,20 10,20 10,60 C 10,100 50,100 80,60 C 110,20 150,20 150,60 C 150,100 110,100 80,60 Z" 
+              stroke="url(#goldGradient)" stroke-width="4" fill="none" opacity="0.4" stroke-dasharray="6 4"/>
+        
+        <!-- 核心聲波律動條 (中心爆發) -->
+        <rect x="76" y="45" width="3" height="30" rx="1.5" fill="url(#goldGradient)" />
+        <rect x="70" y="50" width="3" height="20" rx="1.5" fill="url(#goldGradient)" />
+        <rect x="82" y="48" width="3" height="24" rx="1.5" fill="url(#goldGradient)" />
+        <rect x="64" y="54" width="3" height="12" rx="1.5" fill="url(#goldGradient)" opacity="0.7"/>
+        <rect x="88" y="53" width="3" height="14" rx="1.5" fill="url(#goldGradient)" opacity="0.7"/>
+    </g>
+
+    <!-- 品牌標準字：RUMINA -->
+    <text x="175" y="62" font-family="'Montserrat', Arial, sans-serif" font-weight="900" font-size="28" fill="url(#goldGradient)" letter-spacing="3">
+        RUMINA
+    </text>
+    
+    <!-- 副標題：MIRAGE CINEMATIC -->
+    <text x="176" y="78" font-family="'Montserrat', Arial, sans-serif" font-weight="500" font-size="9" fill="#A48fff" letter-spacing="2">
+        MIRAGE CINEMATIC BGM
+    </text>
+</svg>
