@@ -3411,6 +3411,7 @@
     
     <!-- 精準全 21 分類 AI 搜尋引擎 -->
     <!-- 精準全 21 分類 AI 搜尋引擎 (Strict Class-based Hiding) -->
+    <!-- 精準全 21 分類 AI 搜尋引擎 (Bulletproof Inline Style + Class Hiding) -->
     <script id="realtime-search-script">
       document.addEventListener("DOMContentLoaded", function() {
         const searchInput = document.getElementById("searchInput");
@@ -3449,7 +3450,7 @@
             }
 
             allArticles.forEach(card => {
-              const cardCol = card.closest(".col-md-6, .col-lg-4, .mb-4");
+              const cardCol = card.closest(".col-md-6, .col-lg-4, .col-12, .mb-4");
               
               const titleElem = card.querySelector("h4, h3, h5");
               const titleText = titleElem ? titleElem.innerText.toLowerCase() : "";
@@ -3472,23 +3473,33 @@
               });
 
               if (isMatch) {
-                if (cardCol) cardCol.classList.remove("search-hidden");
-                card.classList.remove("search-hidden");
+                card.style.setProperty("display", "flex", "important");
+                card.classList.remove("d-none", "search-hidden");
+                if (cardCol) {
+                  cardCol.style.setProperty("display", "block", "important");
+                  cardCol.classList.remove("d-none", "search-hidden");
+                }
                 matchCount++;
               } else {
-                if (cardCol) cardCol.classList.add("search-hidden");
-                card.classList.add("search-hidden");
+                card.style.setProperty("display", "none", "important");
+                card.classList.add("d-none", "search-hidden");
+                if (cardCol) {
+                  cardCol.style.setProperty("display", "none", "important");
+                  cardCol.classList.add("d-none", "search-hidden");
+                }
               }
             });
 
-            // 隱藏完全沒有相符卡片的專區
+            // 隱藏沒有相符卡片的專區標題區塊
             const categoryBlocks = document.querySelectorAll(".category-section-block");
             categoryBlocks.forEach(block => {
-              const visibleCards = Array.from(block.querySelectorAll("article.ai-card-huanjing")).filter(c => !c.classList.contains("search-hidden"));
+              const visibleCards = Array.from(block.querySelectorAll("article.ai-card-huanjing")).filter(c => c.style.display !== "none" && !c.classList.contains("d-none"));
               if (visibleCards.length === 0) {
-                block.classList.add("search-hidden");
+                block.style.setProperty("display", "none", "important");
+                block.classList.add("d-none", "search-hidden");
               } else {
-                block.classList.remove("search-hidden");
+                block.style.setProperty("display", "block", "");
+                block.classList.remove("d-none", "search-hidden");
               }
             });
 
@@ -3508,13 +3519,20 @@
             if (noResultsAlert) noResultsAlert.style.display = "none";
 
             allArticles.forEach(card => {
-              const cardCol = card.closest(".col-md-6, .col-lg-4, .mb-4");
-              if (cardCol) cardCol.classList.remove("search-hidden");
-              card.classList.remove("search-hidden");
+              card.style.setProperty("display", "flex", "");
+              card.classList.remove("d-none", "search-hidden");
+              const cardCol = card.closest(".col-md-6, .col-lg-4, .col-12, .mb-4");
+              if (cardCol) {
+                cardCol.style.setProperty("display", "block", "");
+                cardCol.classList.remove("d-none", "search-hidden");
+              }
             });
 
             const categoryBlocks = document.querySelectorAll(".category-section-block");
-            categoryBlocks.forEach(block => block.classList.remove("search-hidden"));
+            categoryBlocks.forEach(block => {
+              block.style.setProperty("display", "block", "");
+              block.classList.remove("d-none", "search-hidden");
+            });
           }
         }
 
