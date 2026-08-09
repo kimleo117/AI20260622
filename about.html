@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>關於我們 - 🤖 AI工具 & 幻境配樂</title>
+    <title>關於我們 - AI智能工具站 & 幻境配樂</title>
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
@@ -42,7 +42,7 @@
       .nav-custom { background: var(--nav); backdrop-filter: blur(12px); box-shadow: 0 12px 32px rgba(3, 7, 18, 0.18); }
       
       /* Hero Dragon Banner */
-      .hero-section { margin-top: 56px; }
+      .hero-section { margin-top: 0px !important; }
       .hero-slide-dragon {
         min-height: 360px;
         display: flex;
@@ -156,231 +156,12 @@
     .social-icon-line:hover { background: #06c755 !important; box-shadow: 0 6px 16px rgba(6, 199, 85, 0.45) !important; transform: translateY(-3px) !important; }
     .social-icon-ig:hover { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888) !important; box-shadow: 0 6px 16px rgba(220, 39, 67, 0.45) !important; transform: translateY(-3px) !important; }
 
-    
-      /* 全站統一高質感 Hero 頂部大圖/輪播圖尺寸樣式 */
-      .hero-section {
-        margin-top: 56px;
-      }
-      /* 修正輪播圖文字重疊 Bug：只有 active 項目才 display: flex，非 active 項目 display: none */
-      .hero-slide {
-        height: 380px !important;
-        min-height: 380px !important;
-        max-height: 380px !important;
-        padding-top: 80px !important;
-        padding-bottom: 2rem !important;
-        text-align: center !important;
-        position: relative !important;
-        overflow: hidden !important;
-        background-position: center center !important;
-        background-size: cover !important;
-        background-repeat: no-repeat !important;
-      }
-      .carousel-item.hero-slide.active {
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-      }
-      .carousel-item.hero-slide:not(.active) {
-        display: none !important;
-      }
-      .hero-slide-dragon {
-        height: 380px !important;
-        min-height: 380px !important;
-        max-height: 380px !important;
-        padding-top: 80px !important;
-        padding-bottom: 2rem !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        text-align: center !important;
-        position: relative !important;
-        overflow: hidden !important;
-        background-position: center center !important;
-        background-size: cover !important;
-        background-repeat: no-repeat !important;
-      }
-      .hero-slide::before, .hero-slide-dragon::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(180deg, rgba(7, 12, 24, 0.72) 0%, rgba(15, 23, 42, 0.90) 100%);
-      }
-      .hero-slide > div, .hero-slide-dragon > div {
-        position: relative;
-        z-index: 1;
-        max-width: 860px;
-      }
-      .hero-slide h1, .hero-slide h2, .hero-slide-dragon h1 {
-        margin-bottom: 1rem;
-        font-size: clamp(2rem, 4.5vw, 3.2rem) !important;
-        font-weight: 900 !important;
-        line-height: 1.15;
-        text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
-      }
-      .hero-slide p, .hero-slide-dragon p {
-        margin: 0;
-        font-size: clamp(1rem, 2vw, 1.2rem) !important;
-        opacity: 0.95;
-        font-weight: 500;
-      }
-      @media (max-width: 767.98px) {
-        /* 修正輪播圖文字重疊 Bug：只有 active 項目才 display: flex，非 active 項目 display: none */
-      .hero-slide {
-        height: 380px !important;
-        min-height: 380px !important;
-        max-height: 380px !important;
-        padding-top: 80px !important;
-        padding-bottom: 2rem !important;
-        text-align: center !important;
-        position: relative !important;
-        overflow: hidden !important;
-        background-position: center center !important;
-        background-size: cover !important;
-        background-repeat: no-repeat !important;
-      }
-      .carousel-item.hero-slide.active {
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-      }
-      .carousel-item.hero-slide:not(.active) {
-        display: none !important;
-      }
-      .hero-slide-dragon {
-        height: 380px !important;
-        min-height: 380px !important;
-        max-height: 380px !important;
-        padding-top: 80px !important;
-        padding-bottom: 2rem !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        text-align: center !important;
-        position: relative !important;
-        overflow: hidden !important;
-        background-position: center center !important;
-        background-size: cover !important;
-        background-repeat: no-repeat !important;
-      }
-      }
-
-    
-      /* 貫穿頂部選單極致滿版 Hero 大圖樣式 (Full-Bleed Transparent Header) */
-      .hero-section {
-        margin-top: 0 !important;
-        padding-top: 0 !important;
-      }
-      /* 修正輪播圖文字重疊 Bug：只有 active 項目才 display: flex，非 active 項目 display: none */
-      .hero-slide {
-        height: 380px !important;
-        min-height: 380px !important;
-        max-height: 380px !important;
-        padding-top: 80px !important;
-        padding-bottom: 2rem !important;
-        text-align: center !important;
-        position: relative !important;
-        overflow: hidden !important;
-        background-position: center center !important;
-        background-size: cover !important;
-        background-repeat: no-repeat !important;
-      }
-      .carousel-item.hero-slide.active {
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-      }
-      .carousel-item.hero-slide:not(.active) {
-        display: none !important;
-      }
-      .hero-slide-dragon {
-        height: 380px !important;
-        min-height: 380px !important;
-        max-height: 380px !important;
-        padding-top: 80px !important;
-        padding-bottom: 2rem !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        text-align: center !important;
-        position: relative !important;
-        overflow: hidden !important;
-        background-position: center center !important;
-        background-size: cover !important;
-        background-repeat: no-repeat !important;
-      }
-      .hero-slide::before, .hero-slide-dragon::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(180deg, rgba(7, 12, 24, 0.65) 0%, rgba(15, 23, 42, 0.88) 100%) !important;
-      }
-      .nav-custom {
-        background: rgba(12, 18, 33, 0.72) !important;
-        backdrop-filter: blur(16px) !important;
-        -webkit-backdrop-filter: blur(16px) !important;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
-      }
-      @media (max-width: 767.98px) {
-        /* 修正輪播圖文字重疊 Bug：只有 active 項目才 display: flex，非 active 項目 display: none */
-      .hero-slide {
-        height: 380px !important;
-        min-height: 380px !important;
-        max-height: 380px !important;
-        padding-top: 80px !important;
-        padding-bottom: 2rem !important;
-        text-align: center !important;
-        position: relative !important;
-        overflow: hidden !important;
-        background-position: center center !important;
-        background-size: cover !important;
-        background-repeat: no-repeat !important;
-      }
-      .carousel-item.hero-slide.active {
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-      }
-      .carousel-item.hero-slide:not(.active) {
-        display: none !important;
-      }
-      .hero-slide-dragon {
-        height: 380px !important;
-        min-height: 380px !important;
-        max-height: 380px !important;
-        padding-top: 80px !important;
-        padding-bottom: 2rem !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        text-align: center !important;
-        position: relative !important;
-        overflow: hidden !important;
-        background-position: center center !important;
-        background-size: cover !important;
-        background-repeat: no-repeat !important;
-      }
-      }
-
-    
-      /* 全站 Hero 大圖與輪播圖標題文字 100% 純白高對比清晰樣式 */
-      .hero-slide h1, .hero-slide h2, .hero-slide h3, .hero-slide-dragon h1, .hero-slide-dragon h2 {
-        color: #ffffff !important;
-        font-weight: 900 !important;
-        text-shadow: 0 2px 14px rgba(0, 0, 0, 0.95), 0 0 24px rgba(0, 0, 0, 0.8) !important;
-      }
-
-      .hero-slide p, .hero-slide-dragon p {
-        color: rgba(255, 255, 255, 0.95) !important;
-        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.95) !important;
-        font-weight: 500 !important;
-      }
-
     </style>
   
     <!-- OUR Official Brand SEO Meta Tags -->
-    <meta name="keywords" content="幻境配樂, Mirage Cinematic BGM, 🤖 AI工具, AI工具百寶箱, 免版稅素材庫, 免費商業使用, 電影級史詩配樂, 大氣管弦交響樂, 短影音配樂, Shorts配樂, TikTok配樂, Reels配樂, 遊戲配樂, 商業廣告配樂, 免費AI工具, 付費AI工具, AI去背, AI文案生成, AI圖像生成, AI影音生成, AI程式開發, bgm.mirage.cinematic">
-    <meta name="description" content="🤖 AI工具聯合【幻境配樂 Mirage Cinematic BGM】提供全網最完整 150+ AI 工具免費對比整理，以及免版稅商業級電影史詩配樂素材庫。專為影音創作者、Vlogger 與品牌團隊打造。">
-    <meta property="og:title" content="🤖 AI工具 & 【幻境配樂】Mirage Cinematic BGM">
+    <meta name="keywords" content="幻境配樂, Mirage Cinematic BGM, AI智能工具站, AI工具百寶箱, 免版稅素材庫, 免費商業使用, 電影級史詩配樂, 大氣管弦交響樂, 短影音配樂, Shorts配樂, TikTok配樂, Reels配樂, 遊戲配樂, 商業廣告配樂, 免費AI工具, 付費AI工具, AI去背, AI文案生成, AI圖像生成, AI影音生成, AI程式開發, bgm.mirage.cinematic">
+    <meta name="description" content="AI智能工具站聯合【幻境配樂 Mirage Cinematic BGM】提供全網最完整 150+ AI 工具免費對比整理，以及免版稅商業級電影史詩配樂素材庫。專為影音創作者、Vlogger 與品牌團隊打造。">
+    <meta property="og:title" content="AI智能工具站 & 【幻境配樂】Mirage Cinematic BGM">
     <meta property="og:description" content="全網最完整 AI 工具百寶箱與免版稅電影級史詩配樂素材庫，100% 免費商業使用！">
     <meta property="og:image" content="pic/huanjing_masterpiece_logo.jpg">
 
@@ -599,8 +380,8 @@
 
         <!-- 白色區域：獨家與熱門 AI 工具卡片區 (新增於深藍卡片下方與頁尾上方之間) -->
         
-        <!-- 白色區域：專屬自研 AI 工具卡片區 (僅保留 SoundSync AI 字幕機) -->
-        <!-- 專屬自研 AI 工具卡片區 (SoundSync AI 字幕機 + Gemini API 金鑰獲取教學) -->
+        <!-- 白色區域：專屬自研 AI 工具卡片區 (僅保留 SoundSync AI 旗艦) -->
+        <!-- 專屬自研 AI 工具卡片區 (SoundSync AI 旗艦 + Gemini API 金鑰獲取教學) -->
         <section class="py-5 my-4 bg-white p-4 p-lg-5 rounded-4 border shadow-sm" id="whiteAreaToolCards">
           <div class="text-center mb-4">
             <span class="badge bg-primary rounded-pill px-3 py-2 fs-7 fw-bold">⭐ 獨家自研 AI 工具</span>
@@ -657,7 +438,7 @@
                         <li class="mb-0">✅ 直連 Premiere / 剪映一鍵匯出</li>
                       </ul>
                     </div>
-                    <a href="soundsync.html" target="_blank" rel="noopener" class="btn btn-primary font-bold px-5 py-3 fs-6 rounded-pill w-100 shadow">
+                    <a href="https://aistudio.google.com/apps/0fad7146-b729-46a1-a793-a049aca49676?showPreview=true&showAssistant=true" target="_blank" rel="noopener" class="btn btn-primary font-bold px-5 py-3 fs-6 rounded-pill w-100 shadow">
                       🚀 立即體驗 SoundSync AI 專頁 ↗
                     </a>
                   </div>
@@ -788,7 +569,60 @@
 
         
 
-        
+        <!-- 【【幻境配樂】10 大品牌問卷調查模組】（移至關於我們自肥區塊下方） -->
+        <div class="my-5 p-4 p-lg-5 bg-white rounded-4 border border-primary shadow-sm">
+          <div class="text-center mb-4">
+            <span class="badge bg-primary rounded-pill px-3 py-2 fs-7 fw-bold">📋 創作者意見回饋</span>
+            <h2 class="h3 fw-bold text-dark mt-2">【幻境配樂】10 大品牌問卷調查</h2>
+            <p class="text-secondary small">填寫問卷即刻獲得無損高音質 BGM 試聽下載包！</p>
+          </div>
+          <form id="brandSurveyForm" onsubmit="event.preventDefault(); document.getElementById('formSuccess').style.display='block';">
+            <div class="row g-4">
+              <div class="col-md-6">
+                <label class="form-label fw-bold text-dark">Q1. 您的主要創作者身份是什麼？</label>
+                <select class="form-select" required>
+                  <option value="">請選擇身份...</option>
+                  <option>YouTube 遊戲實況 / 精華剪輯師</option>
+                  <option>獨立導演 / 商業廣告剪輯師</option>
+                  <option>學生 / 程式開發者 / 專注聽眾</option>
+                  <option>遊戲開發者 / 獨立遊戲製作人</option>
+                  <option>其他影音創作者</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-bold text-dark">Q2. 您最常在什麼情境下使用【幻境配樂】？</label>
+                <select class="form-select" required>
+                  <option value="">請選擇情境...</option>
+                  <option>遊戲精華與高光場面剪輯</option>
+                  <option>商業廣告 / 品牌形象片配樂</option>
+                  <option>寫程式 / 讀書 / 工作專注沉浸</option>
+                  <option>YouTube 長影片 / Vlog 背景音樂</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-bold text-dark">Q3. 您最偏好的配樂風格？</label>
+                <select class="form-select" required>
+                  <option value="">請選擇風格...</option>
+                  <option>Epic Battle (史詩龐大戰鬥管弦樂)</option>
+                  <option>Cyberpunk (賽博朋克 / 科幻脈衝)</option>
+                  <option>Dark Ambient (暗黑懸疑 / 空間氛圍)</option>
+                  <option>Lofi Chill (放鬆讀書爵士)</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-bold text-dark">Q4. 「100% 免版權警告」對您的重要性？</label>
+                <select class="form-select" required>
+                  <option value="">請選擇重要程度...</option>
+                  <option>5分：極度重要！絕對不能被抽收益！</option>
+                  <option>4分：蠻重要的</option>
+                  <option>3分：普通</option>
+                </select>
+              </div>
+              <div class="col-12">
+                <label class="form-label fw-bold text-dark">Q5. 您對【幻境配樂】或【AI智能工具站】的建議或許願？</label>
+                <textarea class="form-control" rows="3" placeholder="請寫下您的寶貴建議..."></textarea>
+              </div>
+            </div>
             <div class="text-center mt-4">
               <button type="submit" class="btn btn-primary px-5 py-3 fs-6 rounded-pill fw-bold shadow">
                 🚀 提交 10 大問卷 ➔
@@ -807,7 +641,7 @@
       <div class="container">
         <div class="row g-4">
           <div class="col-lg-4">
-            <h2 class="h5 text-white fw-bold mb-3">🤖 AI工具</h2>
+            <h2 class="h5 text-white fw-bold mb-3">AI智能工具站</h2>
             <p>致力於讓 AI 技術普及化，打造人人都能使用的智能工具平台。</p>
             <p><i data-lucide="mail"></i> contact@aitools.com</p>
             <p><i data-lucide="phone"></i> (02) 2345-6789</p>
@@ -818,7 +652,7 @@
             <ul class="list-unstyled">
               <li class="mb-2"><a href="about.html">📖 關於我們</a></li>
               <li class="mb-2"><a href="pricing.html">💎 免費與付費</a></li>
-              <li class="mb-2"><a href="index.html">AI 工具</a></li>
+              <li class="mb-2"><a href="index.html#products">AI 工具</a></li>
               <li class="mb-2"><a href="contact.html">✉️ 聯絡我們</a></li>
             </ul>
           </div>
@@ -848,7 +682,7 @@
           </div>
         </div>
         <hr class="my-4" style="border-color:#334155;">
-        <p class="text-center mb-0">© 2024 🤖 AI工具 & 【幻境配樂 Mirage Cinematic BGM】 版權所有 All Rights Reserved.</p>
+        <p class="text-center mb-0">© 2024 AI智能工具站 & 【幻境配樂 Mirage Cinematic BGM】 版權所有 All Rights Reserved.</p>
       </div>
     </footer>
 
