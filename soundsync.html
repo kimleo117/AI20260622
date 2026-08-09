@@ -231,87 +231,53 @@
   <script src="js/audio-resampler.js"></script>
   <script>
     let selectedAudioFile = null;
-
-    function fileToBase64(file) {
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-          const res = e.target.result || "";
-          const base64 = res.includes(",") ? res.split(",")[1] : res;
-          resolve(base64);
-        };
-        reader.onerror = function(err) {
-          reject(err);
-        };
-        reader.readAsDataURL(file);
-      });
-    }
-
     let currentAudioBase64 = "";
     let currentAudioMime = "audio/mp3";
     let parsedSubtitles = [];
     let activeObjectUrl = null;
 
-    // 音訊檔案前置過濾與驗證器
-    function validateAudioFile(file) {
-      if (!file) return { valid: false, message: "未選擇任何檔案。" };
-      if (file.size === 0) {
-        return {
-          valid: false,
-          code: "ZERO_BYTE",
-          message: `⚠️ 音訊檔案損毀警示：您選取的檔案 [${file.name}] 容量為 0 位元組 (0 Bytes)，檔案內容已損毀或為空白檔。請選擇有效的音訊檔案再試一次。`
-        };
-      }
-      const ext = file.name.split('.').pop().toLowerCase();
-      const validExts = ['mp3', 'wav', 'm4a', 'ogg', 'flac', 'aac', 'wma', 'webm', 'mp4', 'mkv', 'mov'];
-      if (!validExts.includes(ext) && file.type && !file.type.startsWith('audio/') && !file.type.startsWith('video/')) {
-        return {
-          valid: false,
-          code: "INVALID_FORMAT",
-          message: `⚠️ 不支援的檔案格式：您選取的檔案 [.${ext}] 不是有效的音訊或影片格式。SoundSync AI 支援 MP3, WAV, M4A, OGG, FLAC, AAC, WMA, MP4 等格式。`
-        };
-      }
-      return { valid: true };
-    }
-
-    // 音訊檔案處理函數 (全平台 100% Fail-Safe)
-    async function handleAudioFile(file) {
+    // 全平台 100% 零失敗檔案載入器
+    function handleAudioFile(file) {
       if (!file) return;
+      console.log("Audio file selected:", file.name, file.type, file.size);
 
-      const validation = validateAudioFile(file);
-      if (!validation.valid) {
-        alert(validation.message);
-        const input = document.getElementById("audioFileInput");
-        if (input) input.value = "";
+      if (file.size === 0) {
+        alert("⚠️ 檔案容量為 0 位元組 (0 Bytes)，請選擇有效的音訊檔案！");
         return;
       }
 
-      console.log("File selected:", file.name, file.type, file.size);
-
       selectedAudioFile = file;
-      currentAudioMime = file.type || "audio/mp3";
-      if (currentAudioMime === "audio/mpeg") currentAudioMime = "audio/mp3";
 
-      // 展延 MIME 類型判定
-      const lowerName = file.name.toLowerCase();
-      if (lowerName.endsWith(".wav")) currentAudioMime = "audio/wav";
-      else if (lowerName.endsWith(".ogg")) currentAudioMime = "audio/ogg";
-      else if (lowerName.endsWith(".m4a")) currentAudioMime = "audio/m4a";
-      else if (lowerName.endsWith(".flac")) currentAudioMime = "audio/flac";
-      else if (lowerName.endsWith(".aac")) currentAudioMime = "audio/aac";
+      // 純化 MIME Type
+      const ext = file.name.split('.').pop().toLowerCase().trim();
+      let mime = file.type || "audio/mp3";
+      if (mime === "audio/mpeg") mime = "audio/mp3";
+      if (ext === "wav") mime = "audio/wav";
+      else if (ext === "ogg") mime = "audio/ogg";
+      else if (ext === "m4a") mime = "audio/m4a";
+      else if (ext === "flac") mime = "audio/flac";
+      else if (ext === "aac") mime = "audio/aac";
+      currentAudioMime = mime;
 
-      // 安全檔名更新 (防止 HTML 注入)
+      // 檔名與 Alert Toast 顯示
       const audioFileName = document.getElementById("audioFileName");
       if (audioFileName) {
         audioFileName.textContent = file.name;
         audioFileName.setAttribute("title", file.name);
       }
 
+      const uploadSuccessAlert = document.getElementById("uploadSuccessAlert");
+      if (uploadSuccessAlert) {
+        const sizeMb = (file.size / (1024 * 1024)).toFixed(2);
+        uploadSuccessAlert.innerHTML = `✓ 成功載入音訊檔：<strong>${file.name}</strong> (${sizeMb} MB)`;
+        uploadSuccessAlert.style.display = "block";
+      }
+
+      // 音訊播放器載入
       const audioPlayerContainer = document.getElementById("audioPlayerContainer");
       const audioPlayer = document.getElementById("audioPlayer");
       const audioDuration = document.getElementById("audioDuration");
 
-      // 記憶體自動釋放機制 (URL.revokeObjectURL)
       if (activeObjectUrl) {
         URL.revokeObjectURL(activeObjectUrl);
         activeObjectUrl = null;
@@ -328,28 +294,13 @@
         audioDuration.innerText = `${mins.toString().padStart(2,'0')}:${secs.toString().padStart(2,'0')}`;
       };
 
-      // 嘗試 WebAudio 16kHz Mono 重採樣
-      try {
-        if (typeof resampleAudioTo16kMonoWav === "function") {
-          const result = await resampleAudioTo16kMonoWav(file);
-          if (result && result.wavBase64) {
-            currentAudioBase64 = result.wavBase64;
-            currentAudioMime = "audio/wav";
-            console.log("WebAudio 16kHz Mono 重採樣成功！");
-            return;
-          }
-        }
-      } catch (err) {
-        console.warn("WebAudio 重採樣降級，切換為 FileReader 直接讀取：", err.message);
-      }
-
-      // 備用讀取管道 (FileReader)
+      // 即時 Base64 轉換
       const reader = new FileReader();
       reader.onload = function(e) {
         if (e.target && e.target.result) {
-          const parts = e.target.result.split(",");
-          currentAudioBase64 = parts[1] || parts[0];
-          console.log("Audio Base64 loaded successfully!");
+          const res = e.target.result;
+          currentAudioBase64 = res.includes(",") ? res.split(",")[1] : res;
+          console.log("Base64 encoding complete, length:", currentAudioBase64.length);
         }
       };
       reader.readAsDataURL(file);
@@ -485,8 +436,7 @@
                       text: `你是一位專業的音訊工程師與歌詞字幕打軸大師。
 請解析這段音訊檔，將歌詞/對白進行高精度時間軸對齊 (Timestamps Alignment)。
 
-${userLyrics ? "參考歌詞文本如下 (請務必將以下歌詞 100% 完整對齊音訊時間點，絕不可遺漏任何一句)：
-" + userLyrics : "請自動聽寫並標出整首音訊的對白/歌詞與時間點。"}
+${userLyrics ? "參考歌詞文本如下 (請務必將以下歌詞 100% 完整對齊音訊時間點，絕不可遺漏任何一句)：\n" + userLyrics : "請自動聽寫並標出整首音訊的對白/歌詞與時間點。"}
 
 【輸出格式嚴格要求】：
 請務必且只能輸出一個純 JSON Array 格式，不要包含任何 markdown codeblock 標籤外殼：
@@ -542,9 +492,7 @@ ${userLyrics ? "參考歌詞文本如下 (請務必將以下歌詞 100% 完整�
         resultCountBadge.innerText = `已精準打軸 ${parsedSubtitles.length} 句`;
 
       } catch (err) {
-        alert("❌ 打軸失敗：" + err.message + "
-
-👉 提示：請確保您填入的 Google Gemini API Key 正確且有效。");
+        alert("❌ 打軸失敗：" + err.message + "\n\n👉 提示：請確保您填入的 Google Gemini API Key 正確且有效。");
       } finally {
         startSyncBtn.disabled = false;
         syncProgressMsg.style.display = "none";

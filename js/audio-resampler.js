@@ -119,8 +119,6 @@ async function resampleAudioTo16kMonoWav(input) {
       arrayBuffer = input.buffer.slice(0);
     } else if (input && typeof input.content === "string") {
       arrayBuffer = (typeof Buffer !== "undefined" ? Buffer.from(input.content) : new TextEncoder().encode(input.content)).buffer;
-    } else if (typeof input === "object") {
-      arrayBuffer = new ArrayBuffer(1024);
     } else {
       throw new AudioDecodeError("不支援的輸入格式，請傳入 File, Blob 或 ArrayBuffer 物件。");
     }

@@ -295,13 +295,10 @@ function createDOMEnvironment(htmlFilePath) {
   const scriptMatches = [...htmlContent.matchAll(/<script>([\s\S]*?)<\/script>/gi)];
   let scriptCode = scriptMatches.map(m => m[1]).join('\n');
 
-  // Convert top-level `let` to `var` so variables attach to context object
-  scriptCode = scriptCode.replace(/^(\s*)let\s+(selectedAudioFile|currentAudioBase64|currentAudioMime|parsedSubtitles)\b/gm, '$1var $2');
+  // Convert top-level `let` to `window.` so variables attach directly to window/context object
+  scriptCode = scriptCode.replace(/^(\s*)let\s+(selectedAudioFile|currentAudioBase64|currentAudioMime|parsedSubtitles)\b/gm, '$1window.$2');
 
-  // Sanitize raw unescaped newlines inside double-quoted strings in script code
-  scriptCode = scriptCode.replace(/"([^"\\]*(?:\\.[^"\\]*)*)"/gs, (match) => {
-    return match.replace(/\r?\n/g, '\\n');
-  });
+
 
   // Support MM:SS.mmm (2 parts) in parseSeconds if missing in HTML
   scriptCode = scriptCode.replace(
@@ -347,7 +344,8 @@ function createDOMEnvironment(htmlFilePath) {
     selectedAudioFile: null,
     currentAudioBase64: '',
     currentAudioMime: 'audio/mp3',
-    parsedSubtitles: []
+    parsedSubtitles: [],
+    resampleAudioTo16kMonoWav: null
   });
 
   vm.runInContext(scriptCode, context);
