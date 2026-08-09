@@ -441,10 +441,41 @@ ${userLyrics ? "參考歌詞文本如下 (請務必將以下歌詞 100% 完整�
         enableExportButtons();
         resultCountBadge.innerText = `已精準打軸 ${parsedSubtitles.length} 句`;
 
-      } catch (err) {
-        alert("❌ 打軸失敗：" + err.message + "
+      function getFriendlyChineseError(rawMsg) {
+          if (!rawMsg) return "連線發生異常，請檢查網路或 API Key 設定。";
+          const msg = rawMsg.toLowerCase();
 
-👉 提示：請確保您填入的 Google Gemini API Key 正確且有效。");
+          if (msg.includes("quota") || msg.includes("resource_exhausted") || msg.includes("429") || msg.includes("limit")) {
+            return "⚠️【Gemini API 今日免費額度已達上限】
+
+👉 解除方法：
+1. 您的 Google 免費 API 金鑰今日呼叫次數已暫時用完。
+2. 請前往 https://aistudio.google.com/app/apikey 重新點擊「Create API Key」免費申請一組新金鑰，貼回本頁面即可無限次繼續打軸！";
+          }
+          if (msg.includes("invalid") || msg.includes("key") || msg.includes("unauthorized") || msg.includes("401") || msg.includes("403")) {
+            return "🔑【API 金鑰無效或填寫錯誤】
+
+👉 解除方法：
+1. 請檢查上方 API Key 是否複製完整 (通常為 AIzaSy 開頭)。
+2. 請確認已登入 Google AI Studio 並點擊 Create API Key 複製成功。";
+          }
+          if (msg.includes("not found") || msg.includes("model")) {
+            return "⚡【API 模型維護切換中】
+
+👉 系統已為您自動切換至最新相容模型，請重新點擊「開始打軸」即可！";
+          }
+          if (msg.includes("500") || msg.includes("503") || msg.includes("internal") || msg.includes("server")) {
+            return "🌐【Google 官方伺服器暫時忙碌】
+
+👉 Google AI 官方伺服器目前回應較慢，請等待 10 秒後重新點擊「開始打軸」即可！";
+          }
+
+          return "❌ 系統提示：" + rawMsg;
+        }
+
+      } catch (err) {
+        const friendlyMsg = getFriendlyChineseError(err.message);
+        alert(friendlyMsg);
       } finally {
         startSyncBtn.disabled = false;
         syncProgressMsg.style.display = "none";
