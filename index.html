@@ -528,6 +528,12 @@
     .social-icon-line:hover { background: #06c755 !important; box-shadow: 0 6px 16px rgba(6, 199, 85, 0.45) !important; transform: translateY(-3px) !important; }
     .social-icon-ig:hover { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888) !important; box-shadow: 0 6px 16px rgba(220, 39, 67, 0.45) !important; transform: translateY(-3px) !important; }
 
+    
+      /* 搜尋隱藏強效類別 */
+      .search-hidden {
+        display: none !important;
+      }
+
     </style>
           <!-- Google tag (gtag.js)這是GA4全網頁追蹤代碼 -->
       <script async src="https://www.googletagmanager.com/gtag/js?id=G-NVRRXE1GQV"></script>
@@ -676,6 +682,12 @@
       }
       .back-to-top-btn.show { opacity: 1 !important; visibility: visible !important; transform: translateY(0); }
       .back-to-top-btn:hover { transform: translateY(-4px) scale(1.1); box-shadow: 0 12px 32px rgba(47, 111, 237, 0.65); background: #1d4ed8 !important; }
+    
+      /* 搜尋隱藏強效類別 */
+      .search-hidden {
+        display: none !important;
+      }
+
     </style>
 
   
@@ -3398,6 +3410,7 @@
     
     
     <!-- 精準全 21 分類 AI 搜尋引擎 -->
+    <!-- 精準全 21 分類 AI 搜尋引擎 (Strict Class-based Hiding) -->
     <script id="realtime-search-script">
       document.addEventListener("DOMContentLoaded", function() {
         const searchInput = document.getElementById("searchInput");
@@ -3459,23 +3472,23 @@
               });
 
               if (isMatch) {
-                if (cardCol) cardCol.style.setProperty("display", "block", "important");
-                card.style.setProperty("display", "flex", "important");
+                if (cardCol) cardCol.classList.remove("search-hidden");
+                card.classList.remove("search-hidden");
                 matchCount++;
               } else {
-                if (cardCol) cardCol.style.setProperty("display", "none", "important");
-                card.style.setProperty("display", "none", "important");
+                if (cardCol) cardCol.classList.add("search-hidden");
+                card.classList.add("search-hidden");
               }
             });
 
-            // 隱藏沒有相符卡片的專區標題
+            // 隱藏完全沒有相符卡片的專區
             const categoryBlocks = document.querySelectorAll(".category-section-block");
             categoryBlocks.forEach(block => {
-              const visibleCards = Array.from(block.querySelectorAll("article.ai-card-huanjing")).filter(c => c.style.display !== "none" && c.offsetHeight > 0);
+              const visibleCards = Array.from(block.querySelectorAll("article.ai-card-huanjing")).filter(c => !c.classList.contains("search-hidden"));
               if (visibleCards.length === 0) {
-                block.style.setProperty("display", "none", "important");
+                block.classList.add("search-hidden");
               } else {
-                block.style.setProperty("display", "block", "");
+                block.classList.remove("search-hidden");
               }
             });
 
@@ -3496,12 +3509,12 @@
 
             allArticles.forEach(card => {
               const cardCol = card.closest(".col-md-6, .col-lg-4, .mb-4");
-              if (cardCol) cardCol.style.setProperty("display", "block", "");
-              card.style.setProperty("display", "flex", "");
+              if (cardCol) cardCol.classList.remove("search-hidden");
+              card.classList.remove("search-hidden");
             });
 
             const categoryBlocks = document.querySelectorAll(".category-section-block");
-            categoryBlocks.forEach(block => block.style.setProperty("display", "block", ""));
+            categoryBlocks.forEach(block => block.classList.remove("search-hidden"));
           }
         }
 
