@@ -2004,17 +2004,42 @@
 
 
 
-    <script id="mobile-scroll-script">
+    
+
+
+    <!-- 桌面與手機側邊欄點擊平滑滾動對焦腳本 (Desktop & Mobile Sidebar Click Scroll Handler) -->
+    <script id="sidebar-click-scroll-script">
       document.addEventListener("DOMContentLoaded", function() {
-        const mobilePills = document.querySelectorAll(".mobile-cat-pill");
-        mobilePills.forEach(pill => {
-          pill.addEventListener("click", function() {
-            mobilePills.forEach(p => p.classList.remove("active"));
+        const allCatItems = document.querySelectorAll(".cat-item, .mobile-cat-pill");
+
+        allCatItems.forEach(item => {
+          item.addEventListener("click", function(e) {
+            e.preventDefault();
+
+            // 高亮目前點擊的項目
+            allCatItems.forEach(i => i.classList.remove("active"));
             this.classList.add("active");
-            const targetId = this.getAttribute("data-target");
-            const targetSec = document.querySelector(targetId);
-            if (targetSec) {
-              targetSec.scrollIntoView({ behavior: "smooth", block: "start" });
+
+            const targetSelector = this.getAttribute("data-target");
+            if (targetSelector) {
+              const targetEl = document.querySelector(targetSelector);
+              if (targetEl) {
+                const nav = document.querySelector('.navbar');
+                const navHeight = nav ? nav.getBoundingClientRect().height : 75;
+                const rect = targetEl.getBoundingClientRect();
+                const offsetTop = window.pageYOffset + rect.top - navHeight - 16;
+
+                window.scrollTo({
+                  top: offsetTop,
+                  behavior: 'smooth'
+                });
+
+                // 閃爍對焦提示
+                targetEl.classList.remove('section-highlight');
+                void targetEl.offsetWidth;
+                targetEl.classList.add('section-highlight');
+                setTimeout(() => targetEl.classList.remove('section-highlight'), 2000);
+              }
             }
           });
         });
