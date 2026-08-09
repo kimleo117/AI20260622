@@ -3380,6 +3380,7 @@
     
     
     
+    
     <script id="realtime-search-script">
       document.addEventListener("DOMContentLoaded", function() {
         const searchInput = document.getElementById("toolSearchInput");
@@ -3390,12 +3391,12 @@
         const hotTagBtns = document.querySelectorAll(".hot-tag-btn");
         const catItems = document.querySelectorAll(".cat-item, .mobile-cat-pill");
 
-        // 台灣常見搜尋同義詞地圖 (精準去除「生成」等泛用語，避免 Kuse/NotebookLM 等卡片被誤判)
+        // 台灣常見搜尋同義詞地圖 (精準去除「生成」、「YouTube 摘要」等干擾詞)
         const synonymMap = {
-          "作影片": ["影片", "短影音", "video", "mov"],
-          "做影片": ["影片", "短影音", "video", "mov"],
-          "影片": ["影片", "短影音", "video", "mov"],
-          "影音": ["影音", "影片", "短影音", "video"],
+          "作影片": ["影片", "短影音", "videogen", "memo ai", "opusclip", "rask", "good tape", "video"],
+          "做影片": ["影片", "短影音", "videogen", "memo ai", "opusclip", "rask", "good tape", "video"],
+          "影片": ["影片", "短影音", "videogen", "memo ai", "opusclip", "rask", "good tape", "video"],
+          "影音": ["影音", "影片", "短影音", "videogen", "memo ai", "opusclip", "rask", "good tape", "video"],
           "圖片": ["圖片", "圖像", "繪圖", "去背", "照片", "photo", "image", "pic"],
           "作圖": ["圖片", "圖像", "繪圖", "去背", "照片", "photo", "image", "pic"],
           "做圖": ["圖片", "圖像", "繪圖", "去背", "照片", "photo", "image", "pic"],
@@ -3405,7 +3406,7 @@
           "聽音樂": ["音樂", "配樂", "聽打", "soundsync", "bgm", "音軌", "music"]
         };
 
-        // 關鍵字與側邊欄分區自動對應表
+        // 關鍵字對應的主力目標區塊
         const catKeywordMap = {
           "影片": ["#media", "影音生成"],
           "影音": ["#media", "影音生成"],
@@ -3424,7 +3425,7 @@
           "soundsync": ["#media", "影音生成"]
         };
 
-        function performSearch(query, shouldScroll = false) {
+        function performSearch(query, triggerScroll = false) {
           query = query.trim().toLowerCase();
 
           let searchTerms = [query];
@@ -3437,15 +3438,26 @@
             let matchCount = 0;
 
             toolCards.forEach(card => {
-              // 抓取卡片上的『標題』、『說明內文』與『標籤』，100% 剔除背景隱形SEO詞
               const cardTitle = (card.querySelector('h3, h4')?.innerText || '').toLowerCase();
               const cardDesc = (card.querySelector('p')?.innerText || '').toLowerCase();
               const cardTags = Array.from(card.querySelectorAll('.badge-tag, .badge')).map(b => b.innerText.toLowerCase()).join(' ');
-              
-              const cardText = cardTitle + " " + cardDesc + " " + cardTags;
-              const cardParent = card.closest(".col-md-6, .col-lg-4, .mb-4");
+              const cardSection = card.closest("section, div[id]")?.id || "";
 
-              const isMatch = searchTerms.some(term => cardText.includes(term));
+              let isMatch = false;
+
+              // 如果搜尋「影片」或「影音」，優先將【影音生成】專區(#media)的所有卡片全部判斷為強匹配！
+              if ((query === "影片" || query === "影音" || query === "作影片" || query === "做影片") && (cardSection === "media" || cardSection.includes("影音"))) {
+                isMatch = true;
+              } else {
+                // 否則進行內文精準比對 (忽略僅提及 "YouTube 影片" 的文章保存工具)
+                if (cardDesc.includes("youtube 影片") && !query.includes("youtube")) {
+                  isMatch = false;
+                } else {
+                  isMatch = searchTerms.some(term => cardTitle.includes(term) || cardDesc.includes(term) || cardTags.includes(term));
+                }
+              }
+
+              const cardParent = card.closest(".col-md-6, .col-lg-4, .mb-4");
 
               if (isMatch) {
                 if (cardParent) cardParent.style.display = "block";
@@ -3457,20 +3469,17 @@
               }
             });
 
-            // 100% 隱藏全站無資料的分區標題 (包含 h2, h3 及分區容器)
+            // 精準隱藏全站無符合項目的分區標題
             const allHeaderElements = document.querySelectorAll(".container h2, .container h3, .section-title");
             allHeaderElements.forEach(header => {
-              // 尋找此標題所屬的父容器 (如 row 或 section 或 div)
               const parentBlock = header.closest("section, div.mb-5, div.mb-4, div.row") || header.parentElement;
               let hasVisibleCards = false;
 
               if (parentBlock) {
-                // 如果父容器包含卡片，檢查是否有任何張顯示
                 const cardChildren = parentBlock.querySelectorAll(".ai-card-huanjing");
                 if (cardChildren.length > 0) {
                   hasVisibleCards = Array.from(cardChildren).some(c => c.style.display === "flex");
                 } else {
-                  // 如果同層下一個元素的卡片顯示
                   let nextElem = header.nextElementSibling;
                   while (nextElem && !hasVisibleCards) {
                     const subCards = nextElem.querySelectorAll ? nextElem.querySelectorAll(".ai-card-huanjing") : [];
@@ -3489,7 +3498,7 @@
               }
             });
 
-            // 側邊欄 Highlight
+            // 側邊欄 Highlight 與平滑捲動
             if (catKeywordMap[query]) {
               const targetSelector = catKeywordMap[query][0];
               const targetText = catKeywordMap[query][1];
@@ -3502,7 +3511,7 @@
                 }
               });
 
-              if (shouldScroll) {
+              if (triggerScroll) {
                 const targetSection = document.querySelector(targetSelector) || document.querySelector(`[id*="${targetText}"]`);
                 if (targetSection) {
                   targetSection.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -3529,7 +3538,6 @@
               card.style.display = "flex";
             });
 
-            // 恢復所有分區標題
             const allHeaderElements = document.querySelectorAll(".container h2, .container h3, .section-title");
             allHeaderElements.forEach(h => h.style.setProperty("display", "", ""));
           }
@@ -3537,7 +3545,16 @@
 
         if (searchInput) {
           searchInput.addEventListener("input", function() {
+            // 打字時進行精準比對，不滾動視角
             performSearch(this.value, false);
+          });
+
+          // 按 Enter 鍵時平滑對焦至目標分區
+          searchInput.addEventListener("keydown", function(e) {
+            if (e.key === "Enter") {
+              e.preventDefault();
+              performSearch(this.value, true);
+            }
           });
 
           clearBtn.addEventListener("click", function() {
@@ -3557,6 +3574,7 @@
         }
       });
     </script>
+
 
 
 
