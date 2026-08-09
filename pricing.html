@@ -154,6 +154,128 @@
     <meta property="og:description" content="全網最完整 AI 工具百寶箱與免版稅電影級史詩配樂素材庫，100% 免費商業使用！">
     <meta property="og:image" content="pic/huanjing_masterpiece_logo.jpg">
 
+  
+    <style id="design-system-style">
+      :root {
+        --primary: #2f6fed;
+        --primary-dark: #1d4ed8;
+        --primary-light: #60a5fa;
+        --ink: #172033;
+        --muted: #64748b;
+        --line: #dbe3ef;
+        --bg-body: #f8fbff;
+        --bg-card: #ffffff;
+        --nav: rgba(12, 18, 33, 0.95);
+        --footer: #101827;
+        --tag-free: #10b981;
+        --tag-paid: #f59e0b;
+        --tag-zh: #3b82f6;
+        --tag-en: #6366f1;
+      }
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body { margin: 0; color: var(--ink); background: var(--bg-body); font-family: "Noto Sans TC", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      
+      .nav-custom { background: var(--nav); backdrop-filter: blur(12px); box-shadow: 0 12px 32px rgba(3, 7, 18, 0.22); }
+      section { scroll-margin-top: 76px; }
+
+      /* Elevate Category Sticky Sidebar */
+      .left-sidebar {
+        position: sticky;
+        top: 96px;
+        background: rgba(255, 255, 255, 0.92);
+        backdrop-filter: blur(12px);
+        border: 1px solid #e2e8f0;
+        border-radius: 16px;
+        padding: 1.25rem;
+        box-shadow: 0 8px 24px rgba(15, 23, 42, 0.04);
+      }
+      .cat-item {
+        padding: 8px 14px;
+        border-radius: 10px;
+        font-weight: 500;
+        transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        margin-bottom: 4px;
+        color: var(--ink);
+      }
+      .cat-item:hover {
+        background: rgba(47, 111, 237, 0.08);
+        color: var(--primary);
+        transform: translateX(3px);
+      }
+      .cat-item.active {
+        background: var(--primary) !important;
+        color: #ffffff !important;
+        font-weight: 700;
+        box-shadow: 0 4px 14px rgba(47, 111, 237, 0.35);
+      }
+      .cat-item.active span { color: #ffffff !important; }
+
+      /* Elevate AI Tool Cards Hover Lift Effect */
+      .ai-card-huanjing {
+        border: 1px solid #e2e8f0 !important;
+        border-radius: 16px !important;
+        background: #ffffff !important;
+        box-shadow: 0 4px 14px rgba(15, 23, 42, 0.04) !important;
+        transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease !important;
+      }
+      .ai-card-huanjing:hover {
+        transform: translateY(-5px) scale(1.01) !important;
+        box-shadow: 0 16px 36px rgba(47, 111, 237, 0.15), 0 4px 12px rgba(15, 23, 42, 0.08) !important;
+        border-color: #93c5fd !important;
+      }
+
+      /* Elevate Section Titles */
+      .section-title {
+        font-weight: 900;
+        color: var(--ink);
+        letter-spacing: -0.3px;
+      }
+
+      /* Elevate Pill Buttons */
+      .btn { border-radius: 999px; font-weight: 700; padding: 10px 24px; transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease; }
+      .btn-primary { background: var(--primary); border-color: var(--primary); }
+      .btn-primary:hover { background: var(--primary-dark); border-color: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(47, 111, 237, 0.35); }
+      .btn-outline-primary { color: var(--primary); border-color: var(--primary); }
+      .btn-outline-primary:hover { background: var(--primary); color: #ffffff; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(47, 111, 237, 0.25); }
+
+      /* Elevate Footer */
+      footer { background: var(--footer); color: #94a3b8; }
+      footer a { color: #60a5fa; text-decoration: none; transition: color 0.2s ease; }
+      footer a:hover { color: #93c5fd; }
+      .social-icon { width: 40px; height: 40px; border-radius: 50%; background: #1e293b; display: inline-flex; align-items: center; justify-content: center; margin-right: 8px; transition: background 0.2s ease, transform 0.2s ease; }
+      .social-icon:hover { background: var(--primary); transform: translateY(-3px); box-shadow: 0 6px 16px rgba(47, 111, 237, 0.4); }
+      .social-icon svg, footer svg { width: 18px; height: 18px; }
+
+      /* Back to Top Button */
+      .back-to-top-btn {
+        position: fixed;
+        bottom: 28px;
+        right: 28px;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: #2f6fed !important;
+        color: #ffffff !important;
+        border: 2px solid #ffffff;
+        box-shadow: 0 8px 24px rgba(47, 111, 237, 0.45);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 99999;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(12px);
+        transition: opacity 0.25s ease, transform 0.25s ease, background 0.2s ease, box-shadow 0.2s ease;
+      }
+      .back-to-top-btn.show { opacity: 1 !important; visibility: visible !important; transform: translateY(0); }
+      .back-to-top-btn:hover { transform: translateY(-4px) scale(1.1); box-shadow: 0 12px 32px rgba(47, 111, 237, 0.65); background: #1d4ed8 !important; }
+    </style>
+
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-dark nav-custom fixed-top">
