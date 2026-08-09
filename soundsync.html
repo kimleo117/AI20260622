@@ -231,6 +231,22 @@
   <script src="js/audio-resampler.js"></script>
   <script>
     let selectedAudioFile = null;
+
+    function fileToBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const res = e.target.result || "";
+          const base64 = res.includes(",") ? res.split(",")[1] : res;
+          resolve(base64);
+        };
+        reader.onerror = function(err) {
+          reject(err);
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+
     let currentAudioBase64 = "";
     let currentAudioMime = "audio/mp3";
     let parsedSubtitles = [];
@@ -306,34 +322,27 @@
       reader.readAsDataURL(file);
     }
 
-    // 全域與 Dropzone 拖曳上傳支援 (防跳轉機制)
-    ["dragover", "drop"].forEach(eventName => {
-      window.addEventListener(eventName, e => {
-        e.preventDefault();
-        e.stopPropagation();
-      }, false);
-    });
-
+    // 拖曳上傳支援
     const dropZone = document.querySelector(".drop-zone");
     if (dropZone) {
       ["dragenter", "dragover"].forEach(eventName => {
         dropZone.addEventListener(eventName, e => {
           e.preventDefault();
-          e.stopPropagation();
           dropZone.style.borderColor = "#1d4ed8";
         }, false);
       });
       ["dragleave", "drop"].forEach(eventName => {
         dropZone.addEventListener(eventName, e => {
           e.preventDefault();
-          e.stopPropagation();
           dropZone.style.borderColor = "#3b82f6";
         }, false);
       });
       dropZone.addEventListener("drop", e => {
-        const dt = e.dataTransfer;
-        if (dt && dt.files && dt.files.length > 0) {
-          handleAudioFile(dt.files[0]);
+        e.preventDefault();
+        const files = e.dataTransfer.files;
+        if (files.length > 0) {
+          document.getElementById("audioFileInput").files = files;
+          handleAudioFile(files[0]);
         }
       });
     }
@@ -360,7 +369,31 @@
       }
     });
 
-    // 聽打打軸按鈕
+    // 繁體中文錯誤轉換
+    function getFriendlyChineseError(rawMsg) {
+      if (!rawMsg) return "連線發生異常，請檢查網路或 API Key 設定。";
+      const msg = String(rawMsg).toLowerCase();
+
+      if (msg.includes("quota") || msg.includes("resource_exhausted") || msg.includes("429") || msg.includes("limit")) {
+        return "⚠️【Gemini API 今日免費額度已達上限】
+
+👉 解除方法：
+1. 您的 Google 免費 API 金鑰今日呼叫次數已暫時用完。
+2. 請前往 https://aistudio.google.com/app/apikey 重新點擊「Create API Key」免費申請一組新金鑰，貼回本頁面即可無限次繼續打軸！";
+      }
+      if (msg.includes("invalid") || msg.includes("key") || msg.includes("unauthorized") || msg.includes("401") || msg.includes("403")) {
+        return "🔑【API 金鑰無效或填寫錯誤】
+
+👉 解除方法：
+1. 請檢查上方 API Key 是否複製完整 (通常為 AIzaSy 開頭)。
+2. 請確認已登入 Google AI Studio 並點擊 Create API Key 複製成功。";
+      }
+      return "❌ 打軸失敗：" + rawMsg + "
+
+👉 提示：請確保您填入的 Google Gemini API Key 正確且有效。";
+    }
+
+    // 打軸按鈕
     const startSyncBtn = document.getElementById("startSyncBtn");
     const syncProgressMsg = document.getElementById("syncProgressMsg");
     const syncProgressText = document.getElementById("syncProgressText");
@@ -406,21 +439,26 @@
           else cleanMime = "audio/mp3";
         }
 
-        const candidateEndpoints = [
-          { url: "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent", name: "Gemini 1.5 Flash (v1beta)" },
-          { url: "https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent", name: "Gemini 1.5 Flash (v1)" },
-          { url: "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent", name: "Gemini 2.0 Flash Exp" },
-          { url: "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent", name: "Gemini 1.5 Pro" }
+        const candidateModels = [
+          { id: "gemini-1.5-flash", name: "Gemini 1.5 Flash 旗艦模型" },
+          { id: "gemini-2.0-flash", name: "Gemini 2.0 Flash 模型" },
+          { id: "gemini-2.0-flash-exp", name: "Gemini 2.0 Flash Exp" },
+          { id: "gemini-1.5-flash-latest", name: "Gemini 1.5 Flash Latest" }
         ];
 
         let successData = null;
         let lastErrorMsg = "";
 
-        for (const ep of candidateEndpoints) {
+        const promptInstruction = userLyrics 
+          ? `參考歌詞文本如下 (請務必將以下歌詞 100% 完整對齊音訊時間點，絕不可遺漏任何一句)：
+${userLyrics}`
+          : `請自動聽寫並標出整首音訊的對白/歌詞與時間點。`;
+
+        for (const mod of candidateModels) {
           try {
-            syncProgressText.innerText = `SoundSync AI 正在使用 [${ep.name}] 解析【${document.getElementById("audioFileName").innerText}】中...`;
+            syncProgressText.innerText = `SoundSync AI 正在使用 [${mod.name}] 高速對齊打軸中...`;
             
-            const requestUrl = `${ep.url}?key=${apiKey}`;
+            const requestUrl = `https://generativelanguage.googleapis.com/v1beta/models/${mod.id}:generateContent?key=${apiKey}`;
             const requestBody = {
               contents: [
                 {
@@ -435,8 +473,7 @@
                       text: `你是一位專業的音訊工程師與歌詞字幕打軸大師。
 請解析這段音訊檔，將歌詞/對白進行高精度時間軸對齊 (Timestamps Alignment)。
 
-${userLyrics ? "參考歌詞文本如下 (請務必將以下歌詞 100% 完整對齊音訊時間點，絕不可遺漏任何一句)：
-" + userLyrics : "請自動聽寫並標出整首音訊的對白/歌詞與時間點。"}
+${promptInstruction}
 
 【輸出格式嚴格要求】：
 請務必且只能輸出一個純 JSON Array 格式，不要包含任何 markdown codeblock 標籤外殼：
@@ -464,14 +501,13 @@ ${userLyrics ? "參考歌詞文本如下 (請務必將以下歌詞 100% 完整�
 
             const data = await response.json();
             if (data.error) {
-              lastErrorMsg = data.error.message || `端點 ${ep.name} 呼叫失敗`;
-              console.warn(`Endpoint ${ep.name} failed:`, data.error);
-              continue; // 自動默默切換至下一個相容端點，不跳出中途彈窗！
+              lastErrorMsg = data.error.message || `模型 ${mod.id} 回傳錯誤`;
+              continue;
             }
 
             if (data.candidates && data.candidates[0] && data.candidates[0].content) {
               successData = data;
-              break; // 成功！
+              break;
             }
           } catch (e) {
             lastErrorMsg = e.message;
@@ -479,7 +515,7 @@ ${userLyrics ? "參考歌詞文本如下 (請務必將以下歌詞 100% 完整�
         }
 
         if (!successData) {
-          throw new Error(lastErrorMsg || "API 端點呼叫失敗，請檢查金鑰是否正確。");
+          throw new Error(lastErrorMsg || "API 呼叫失敗，請檢查金鑰或網路連線。");
         }
 
         let responseText = successData.candidates[0].content.parts[0].text;
@@ -499,38 +535,6 @@ ${userLyrics ? "參考歌詞文本如下 (請務必將以下歌詞 100% 完整�
         syncProgressMsg.style.display = "none";
       }
     });
-
-    function getFriendlyChineseError(rawMsg) {
-      if (!rawMsg) return "連線發生異常，請檢查網路或 API Key 設定。";
-      const msg = rawMsg.toLowerCase();
-
-      if (msg.includes("quota") || msg.includes("resource_exhausted") || msg.includes("429") || msg.includes("limit")) {
-        return `⚠️【Gemini API 今日免費額度已達上限】
-
-👉 解除方法：
-1. 您的 Google 免費 API 金鑰今日呼叫次數已暫時用完。
-2. 請前往 https://aistudio.google.com/app/apikey 重新點擊「Create API Key」免費申請一組新金鑰，貼回本頁面即可無限次繼續打軸！`;
-      }
-      if (msg.includes("invalid") || msg.includes("key") || msg.includes("unauthorized") || msg.includes("401") || msg.includes("403")) {
-        return `🔑【API 金鑰無效或填寫錯誤】
-
-👉 解除方法：
-1. 請檢查上方 API Key 是否複製完整 (通常為 AIzaSy 開頭)。
-2. 請確認已登入 Google AI Studio 並點擊 Create API Key 複製成功。`;
-      }
-      if (msg.includes("not found") || msg.includes("model")) {
-        return `⚡【API 模型維護切換中】
-
-👉 系統已為您自動切換至最新相容模型，請重新點擊「開始打軸」即可！`;
-      }
-      if (msg.includes("500") || msg.includes("503") || msg.includes("internal") || msg.includes("server")) {
-        return `🌐【Google 官方伺服器暫時忙碌】
-
-👉 Google AI 官方伺服器目前回應較慢，請等待 10 秒後重新點擊「開始打軸」即可！`;
-      }
-
-      return "❌ 系統提示：" + rawMsg;
-    }
 
     function fixSubtitleOverlaps(subtitles) {
       const emptyArr = typeof window !== "undefined" && window.Array ? new window.Array() : [];
@@ -622,7 +626,11 @@ ${userLyrics ? "參考歌詞文本如下 (請務必將以下歌詞 100% 完整�
       parsedSubtitles.forEach((sub, i) => {
         let s = sub.start.replace(".", ",");
         let e = sub.end.replace(".", ",");
-        srtStr += `${i + 1}\n${s} --> ${e}\n${sub.text}\n\n`;
+        srtStr += `${i + 1}
+${s} --> ${e}
+${sub.text}
+
+`;
       });
       downloadFile(srtStr, "SoundSync_Lyrics.srt", "text/plain");
     });
@@ -633,15 +641,22 @@ ${userLyrics ? "參考歌詞文本如下 (請務必將以下歌詞 100% 完整�
         let parts = sub.start.split(":");
         let min = parseInt(parts[0]) * 60 + parseInt(parts[1]);
         let sec = parseFloat(parts[2]).toFixed(2);
-        lrcStr += `[${min.toString().padStart(2,'0')}:${sec.padStart(5,'0')}]${sub.text}\n`;
+        lrcStr += `[${min.toString().padStart(2,'0')}:${sec.padStart(5,'0')}]${sub.text}
+`;
       });
       downloadFile(lrcStr, "SoundSync_Lyrics.lrc", "text/plain");
     });
 
     document.getElementById("exportVttBtn").addEventListener("click", function() {
-      let vttStr = "WEBVTT\n\n";
+      let vttStr = "WEBVTT
+
+";
       parsedSubtitles.forEach((sub, i) => {
-        vttStr += `${i + 1}\n${sub.start} --> ${sub.end}\n${sub.text}\n\n`;
+        vttStr += `${i + 1}
+${sub.start} --> ${sub.end}
+${sub.text}
+
+`;
       });
       downloadFile(vttStr, "SoundSync_Lyrics.vtt", "text/plain");
     });
@@ -649,7 +664,8 @@ ${userLyrics ? "參考歌詞文本如下 (請務必將以下歌詞 100% 完整�
     document.getElementById("exportTxtBtn").addEventListener("click", function() {
       let txtStr = "";
       parsedSubtitles.forEach(sub => {
-        txtStr += `[${sub.start}] ${sub.text}\n`;
+        txtStr += `[${sub.start}] ${sub.text}
+`;
       });
       navigator.clipboard.writeText(txtStr).then(() => {
         alert("✓ 歌詞時間軸文字已成功複製到剪貼簿！");
