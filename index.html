@@ -894,6 +894,41 @@
         font-weight: 500 !important;
       }
 
+    
+      /* 100% 超醒目高對比發光輪播左右箭頭按鈕 */
+      .carousel-control-prev, .carousel-control-next {
+        width: 52px !important;
+        height: 52px !important;
+        top: 50% !important;
+        transform: translateY(-50%) !important;
+        background: rgba(15, 23, 42, 0.82) !important;
+        border: 2px solid rgba(255, 255, 255, 0.3) !important;
+        border-radius: 50% !important;
+        opacity: 0.95 !important;
+        z-index: 100 !important;
+        transition: all 0.25s ease !important;
+        margin: 0 16px !important;
+      }
+      .carousel-control-prev:hover, .carousel-control-next:hover {
+        opacity: 1 !important;
+        background: #2563eb !important;
+        border-color: #60a5fa !important;
+        transform: translateY(-50%) scale(1.12) !important;
+        box-shadow: 0 0 24px rgba(37, 99, 235, 0.8) !important;
+      }
+      .carousel-control-prev-icon, .carousel-control-next-icon {
+        width: 1.6rem !important;
+        height: 1.6rem !important;
+        filter: drop-shadow(0 2px 4px rgba(0,0,0,0.6)) !important;
+      }
+      @media (max-width: 767.98px) {
+        .carousel-control-prev, .carousel-control-next {
+          width: 40px !important;
+          height: 40px !important;
+          margin: 0 6px !important;
+        }
+      }
+
     </style>
           <!-- Google tag (gtag.js)這是GA4全網頁追蹤代碼 -->
       <script async src="https://www.googletagmanager.com/gtag/js?id=G-NVRRXE1GQV"></script>
