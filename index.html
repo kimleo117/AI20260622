@@ -3378,6 +3378,7 @@
     
     
     
+    
     <script id="realtime-search-script">
       document.addEventListener("DOMContentLoaded", function() {
         const searchInput = document.getElementById("toolSearchInput");
@@ -3403,7 +3404,7 @@
           "聽音樂": ["音樂", "配樂", "聽打", "soundsync", "bgm", "音軌", "music"]
         };
 
-        // 關鍵字與側邊欄分區自動對應表
+        // 關鍵字與側邊欄分區自動對應表 (僅用於 Highlight 側邊欄，絕不強制拉扯視角)
         const catKeywordMap = {
           "影片": ["#media", "影音生成"],
           "影音": ["#media", "影音生成"],
@@ -3422,7 +3423,7 @@
           "soundsync": ["#media", "影音生成"]
         };
 
-        function performSearch(query) {
+        function performSearch(query, shouldScroll = false) {
           query = query.trim().toLowerCase();
 
           let searchTerms = [query];
@@ -3435,7 +3436,7 @@
             let matchCount = 0;
 
             toolCards.forEach(card => {
-              // 抓取卡片上的『標題』、『說明內文』與『標籤』，嚴禁抓取背景隱形SEO詞
+              // 只抓取卡片上的『標題』、『說明內文』與『標籤』，100% 剔除隱形背景詞
               const cardTitle = (card.querySelector('h3, h4')?.innerText || '').toLowerCase();
               const cardDesc = (card.querySelector('p')?.innerText || '').toLowerCase();
               const cardTags = Array.from(card.querySelectorAll('.badge-tag, .badge')).map(b => b.innerText.toLowerCase()).join(' ');
@@ -3467,7 +3468,7 @@
               }
             });
 
-            // 側邊欄 Highlight 與自動平滑捲動至主要目標分區
+            // 側邊欄 Highlight (不強制捲動畫面，維護使用者打字體驗)
             if (catKeywordMap[query]) {
               const targetSelector = catKeywordMap[query][0];
               const targetText = catKeywordMap[query][1];
@@ -3480,9 +3481,12 @@
                 }
               });
 
-              const targetSection = document.querySelector(targetSelector) || document.querySelector(`[id*="${targetText}"]`);
-              if (targetSection) {
-                targetSection.scrollIntoView({ behavior: "smooth", block: "start" });
+              // 只有當使用者點擊熱門標籤時(shouldScroll=true)才滾動，鍵盤打字時絕不滾動
+              if (shouldScroll) {
+                const targetSection = document.querySelector(targetSelector) || document.querySelector(`[id*="${targetText}"]`);
+                if (targetSection) {
+                  targetSection.scrollIntoView({ behavior: "smooth", block: "start" });
+                }
               }
             }
 
@@ -3513,12 +3517,13 @@
 
         if (searchInput) {
           searchInput.addEventListener("input", function() {
-            performSearch(this.value);
+            // 打字與退格刪字時只進行過濾與側邊欄Highlight，絕不安裝自動強制跳轉
+            performSearch(this.value, false);
           });
 
           clearBtn.addEventListener("click", function() {
             searchInput.value = "";
-            performSearch("");
+            performSearch("", false);
             searchInput.focus();
           });
 
@@ -3526,13 +3531,15 @@
             btn.addEventListener("click", function() {
               const kw = this.getAttribute("data-keyword");
               searchInput.value = kw;
-              performSearch(kw);
+              // 點擊熱門標籤時才平滑滾動
+              performSearch(kw, true);
               searchInput.focus();
             });
           });
         }
       });
     </script>
+
 
 
 
