@@ -841,6 +841,45 @@
         background-repeat: no-repeat !important;
       }
 
+    
+      /* 依老闆指示：100% 採用 B-3, B-7, B-4, B-1 順序設定輪播大圖 */
+      .slide-1 {
+        background-image: url("pic/b-3.png"), url("pic/B-3.png"), url("pic/B-1.png") !important;
+        background-size: cover !important;
+        background-position: center center !important;
+        background-repeat: no-repeat !important;
+      }
+
+      .slide-2 {
+        background-image: url("pic/b-7.png"), url("pic/B-7.png"), url("pic/B-1.png") !important;
+        background-size: cover !important;
+        background-position: center center !important;
+        background-repeat: no-repeat !important;
+      }
+
+      .slide-3 {
+        background-image: url("pic/b-4.png"), url("pic/B-4.png"), url("pic/B-1.png") !important;
+        background-size: cover !important;
+        background-position: center center !important;
+        background-repeat: no-repeat !important;
+      }
+
+      .slide-4 {
+        background-image: url("pic/B-1.png"), url("pic/b-1.png") !important;
+        background-size: cover !important;
+        background-position: center center !important;
+        background-repeat: no-repeat !important;
+      }
+
+      .carousel-item.hero-slide.active {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+      }
+      .carousel-item.hero-slide:not(.active) {
+        display: none !important;
+      }
+
     </style>
           <!-- Google tag (gtag.js)這是GA4全網頁追蹤代碼 -->
       <script async src="https://www.googletagmanager.com/gtag/js?id=G-NVRRXE1GQV"></script>
@@ -1025,16 +1064,33 @@
       <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
       <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
       <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="3" aria-label="Slide 4"></button>
-      <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="4" aria-label="Slide 5"></button>
-      <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="5" aria-label="Slide 6"></button>
     </div>
-<div class="carousel-inner">
+    <div class="carousel-inner">
       <div class="carousel-item active hero-slide slide-1">
         <div>
           <h1>AI 智能工具百寶箱</h1>
           <p>精選全網 150+ 熱門 AI 工具與分類，協助創作者與團隊快速對比、試用與升級。</p>
         </div>
       </div>
+      <div class="carousel-item hero-slide slide-2">
+        <div>
+          <h2>量子運算 • 全網最強 AI 工具免費對比</h2>
+          <p>零門檻白話拆解，讓每位創作者享受到科技與算力紅利</p>
+        </div>
+      </div>
+      <div class="carousel-item hero-slide slide-3">
+        <div>
+          <h2>一鍵去背 & 影音繪圖</h2>
+          <p>智能邊緣偵測與音律聲波，複雜背景與創作也能完美處理</p>
+        </div>
+      </div>
+      <div class="carousel-item hero-slide slide-4">
+        <div>
+          <h2>【幻境配樂】電影級史詩 BGM</h2>
+          <p>100% 免費開放 Shorts / TikTok / YouTube 免費商業使用</p>
+        </div>
+      </div>
+    </div>
       <div class="carousel-item hero-slide slide-2">
         <div>
           <h2>一鍵去背 & 影音繪圖</h2>
