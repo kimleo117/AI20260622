@@ -842,8 +842,8 @@
           <div class="col-lg-9" id="products-main">
 
             <!-- 標題對應區塊：最新 AI 工具 -->
-            <div class="category-section-block mb-5" id="latest">
-              <h3 class="h4 fw-bold text-dark mb-4 pb-2 border-bottom border-secondary-subtle d-flex align-items-center gap-2">
+            <div class="category-section-block mb-5" id="chat">
+<h3 class="h4 fw-bold text-dark mb-4 pb-2 border-bottom border-secondary-subtle d-flex align-items-center gap-2">
                 <span class="text-primary">▌</span> 最新 AI 工具
               </h3>
               <div class="row g-3">
@@ -2042,8 +2042,8 @@
             </div>
 
             <!-- 標題對應區塊：文件處理與總結 -->
-            <div class="category-section-block mb-5" id="summary">
-              <h3 class="h4 fw-bold text-dark mb-4 pb-2 border-bottom border-secondary-subtle d-flex align-items-center gap-2">
+            <div class="category-section-block mb-5" id="chat">
+<h3 class="h4 fw-bold text-dark mb-4 pb-2 border-bottom border-secondary-subtle d-flex align-items-center gap-2">
                 <span class="text-primary">▌</span> 文件處理與總結
               </h3>
               <div class="row g-3">
@@ -3702,6 +3702,7 @@
 
 
     <!-- 桌面與手機側邊欄點擊平滑滾動對焦腳本 (Fixed Navbar Offset Smooth Scroll Handler) -->
+    <!-- 側邊欄點擊平滑捲動增強對焦腳本 (Sidebar Click Scroll Fix) -->
     <script id="sidebar-click-scroll-script">
       document.addEventListener("DOMContentLoaded", function() {
         const allCatItems = document.querySelectorAll(".cat-item, .mobile-cat-pill");
@@ -3710,24 +3711,41 @@
           item.addEventListener("click", function(e) {
             e.preventDefault();
 
-            // 高亮目前點擊的項目
             allCatItems.forEach(i => i.classList.remove("active"));
             this.classList.add("active");
 
             const targetSelector = this.getAttribute("data-target");
-            if (targetSelector) {
-              const targetEl = document.querySelector(targetSelector);
-              if (targetEl) {
-                const nav = document.querySelector('.navbar, .nav-custom, header');
-                const navHeight = nav ? nav.getBoundingClientRect().height : 80;
-                const rect = targetEl.getBoundingClientRect();
-                const offsetTop = window.pageYOffset + rect.top - navHeight - 20;
+            const itemText = this.innerText.trim();
 
-                window.scrollTo({
-                  top: offsetTop,
-                  behavior: 'smooth'
-                });
-              }
+            let targetEl = null;
+            if (targetSelector) {
+              targetEl = document.querySelector(targetSelector);
+            }
+
+            if (!targetEl) {
+              // Fallback to match heading text
+              const headings = document.querySelectorAll('.category-section-block h3, .category-section-block h2');
+              headings.forEach(h => {
+                if (h.innerText.includes('聊天機器人') && itemText.includes('聊天機器人')) {
+                  targetEl = h.closest('.category-section-block');
+                } else if (h.innerText.includes('影音') && itemText.includes('影音')) {
+                  targetEl = h.closest('.category-section-block');
+                } else if (h.innerText.includes('圖像') && itemText.includes('圖像')) {
+                  targetEl = h.closest('.category-section-block');
+                }
+              });
+            }
+
+            if (targetEl) {
+              const nav = document.querySelector('.navbar, .nav-custom, header');
+              const navHeight = nav ? nav.getBoundingClientRect().height : 80;
+              const rect = targetEl.getBoundingClientRect();
+              const offsetTop = window.pageYOffset + rect.top - navHeight - 20;
+
+              window.scrollTo({
+                top: offsetTop,
+                behavior: 'smooth'
+              });
             }
           });
         });
