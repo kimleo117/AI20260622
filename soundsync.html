@@ -400,7 +400,9 @@
     const timelineContainer = document.getElementById("timelineContainer");
     const resultCountBadge = document.getElementById("resultCountBadge");
 
-    startSyncBtn.addEventListener("click", async function() {
+    startSyncBtn.addEventListener("click", async function(e) {
+      if (e) e.preventDefault();
+
       const apiKey = apiKeyInput.value.trim() || localStorage.getItem("soundsync_gemini_key");
       if (!apiKey) {
         alert("🔑 請先填入您的 Google Gemini API Key！");
@@ -408,8 +410,16 @@
         return;
       }
 
-      if (!selectedAudioFile && !currentAudioBase64) {
-        alert("🎵 請先選擇或上傳歌曲 MP3 檔案！");
+      // 雙重保險：直接從 DOM 原生按鈕與全域變數雙重擷取檔案
+      const fileInput = document.getElementById("audioFileInput");
+      let audioFile = selectedAudioFile;
+      if (!audioFile && fileInput && fileInput.files && fileInput.files.length > 0) {
+        audioFile = fileInput.files[0];
+        selectedAudioFile = audioFile;
+      }
+
+      if (!audioFile && !currentAudioBase64) {
+        alert("🎵 請先點擊 [選擇檔案] 按鈕並選取歌曲 MP3 檔案！");
         return;
       }
 
@@ -419,22 +429,33 @@
       syncProgressMsg.style.display = "block";
 
       try {
-        syncProgressText.innerText = "SoundSync AI 正在編碼音訊檔案檔載荷...";
+        syncProgressText.innerText = "SoundSync AI 正在編碼音訊檔案載荷...";
+        
         let rawBase64 = currentAudioBase64 || "";
-        if (!rawBase64 && selectedAudioFile) {
-          rawBase64 = await fileToBase64(selectedAudioFile);
+        if (!rawBase64 && audioFile) {
+          rawBase64 = await fileToBase64(audioFile);
         }
+
+        if (!rawBase64 || rawBase64.length < 100) {
+          if (audioFile) {
+            rawBase64 = await fileToBase64(audioFile);
+          }
+        }
+
+        if (!rawBase64 || rawBase64.length < 100) {
+          throw new Error("音訊檔案讀取失敗，請重新點擊 [選擇檔案] 選取歌曲。");
+        }
+
         if (rawBase64.includes(",")) {
           rawBase64 = rawBase64.split(",")[1];
         }
 
         let cleanMime = "audio/mp3";
-        if (selectedAudioFile) {
-          const name = selectedAudioFile.name.toLowerCase();
+        if (audioFile) {
+          const name = audioFile.name.toLowerCase();
           if (name.endsWith(".wav")) cleanMime = "audio/wav";
           else if (name.endsWith(".ogg")) cleanMime = "audio/ogg";
           else if (name.endsWith(".m4a")) cleanMime = "audio/m4a";
-          else if (name.endsWith(".aac")) cleanMime = "audio/aac";
           else if (name.endsWith(".flac")) cleanMime = "audio/flac";
           else cleanMime = "audio/mp3";
         }
