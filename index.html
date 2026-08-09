@@ -687,7 +687,7 @@
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-dark nav-custom fixed-top">
-      <div class="container">
+      <div class="container-fluid px-3 px-lg-4 px-xl-5">
         <a class="navbar-brand fw-bold" href="index.html">AI智能工具站</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-controls="navMenu" aria-expanded="false" aria-label="切換選單">
           <span class="navbar-toggler-icon"></span>
@@ -3217,77 +3217,7 @@
                 </div>
               </div>
             </div>
-          <!-- 【方案 A 右側貼附邊欄】：大螢幕 (xl 1200px+) 專屬懸浮熱門榜與導流 -->
-          <div class="d-none d-lg-block col-lg-3 col-xl-3">
-            <div class="right-sticky-sidebar" style="position: sticky; top: 96px;">
-              
-              <!-- 1. 今日點擊熱門榜 Top 5 -->
-              <div class="card p-3 mb-4 border-0 shadow-sm rounded-4 bg-white">
-                <h4 class="h6 fw-bold text-dark mb-3 d-flex align-items-center gap-2">
-                  <span class="fs-5">🏆</span> 今日熱門 AI 點擊榜
-                </h4>
-                <div class="list-group list-group-flush border-0">
-                  <a href="#chat" class="list-group-item list-group-item-action border-0 px-0 py-2 d-flex align-items-center gap-2">
-                    <span class="badge bg-danger rounded-circle p-2" style="width:24px; height:24px; display:inline-flex; align-items:center; justify-content:center; font-size:11px;">1</span>
-                    <span class="fw-bold text-dark small flex-grow-1">DeepSeek R1</span>
-                    <span class="badge bg-danger bg-opacity-10 text-danger fs-7" style="font-size:0.7rem;">🔥 爆火</span>
-                  </a>
-                  <a href="#featured" class="list-group-item list-group-item-action border-0 px-0 py-2 d-flex align-items-center gap-2">
-                    <span class="badge bg-warning text-dark rounded-circle p-2" style="width:24px; height:24px; display:inline-flex; align-items:center; justify-content:center; font-size:11px;">2</span>
-                    <span class="fw-bold text-dark small flex-grow-1">可靈 AI (Kling)</span>
-                    <span class="badge bg-warning bg-opacity-10 text-warning fs-7" style="font-size:0.7rem;">影音霸主</span>
-                  </a>
-                  <a href="#media" class="list-group-item list-group-item-action border-0 px-0 py-2 d-flex align-items-center gap-2">
-                    <span class="badge bg-primary rounded-circle p-2" style="width:24px; height:24px; display:inline-flex; align-items:center; justify-content:center; font-size:11px;">3</span>
-                    <span class="fw-bold text-dark small flex-grow-1">CapCut / 剪映 AI</span>
-                    <span class="badge bg-primary bg-opacity-10 text-primary fs-7" style="font-size:0.7rem;">剪輯首選</span>
-                  </a>
-                  <a href="#free" class="list-group-item list-group-item-action border-0 px-0 py-2 d-flex align-items-center gap-2">
-                    <span class="badge bg-secondary rounded-circle p-2" style="width:24px; height:24px; display:inline-flex; align-items:center; justify-content:center; font-size:11px;">4</span>
-                    <span class="fw-bold text-dark small flex-grow-1">Kimi 智能助手</span>
-                    <span class="badge bg-secondary bg-opacity-10 text-secondary fs-7" style="font-size:0.7rem;">200萬字</span>
-                  </a>
-                  <a href="#latest" class="list-group-item list-group-item-action border-0 px-0 py-2 d-flex align-items-center gap-2">
-                    <span class="badge bg-secondary rounded-circle p-2" style="width:24px; height:24px; display:inline-flex; align-items:center; justify-content:center; font-size:11px;">5</span>
-                    <span class="fw-bold text-dark small flex-grow-1">OpenAI Sora 2</span>
-                    <span class="badge bg-success bg-opacity-10 text-success fs-7" style="font-size:0.7rem;">2006標竿</span>
-                  </a>
-                </div>
-              </div>
-
-              <!-- 2. 【幻境配樂】品牌 BGM 試聽/YouTube 導流卡 -->
-              <div class="card p-3 mb-4 border-0 shadow-sm rounded-4 position-relative overflow-hidden" style="background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%); color: white;">
-                <div class="d-flex align-items-center gap-2 mb-2">
-                  <span class="fs-5">🎵</span>
-                  <div class="fw-bold text-warning small">【幻境配樂】Mirage BGM</div>
-                </div>
-                <p class="small text-light opacity-90 mb-3" style="line-height:1.5; font-size:0.825rem;">
-                  電影級史詩管弦樂 BGM，100% 免費開放 Shorts / TikTok 免費商業使用！
-                </p>
-                <a href="https://www.youtube.com/@bgm.mirage.cinematic" target="_blank" rel="noopener" class="btn btn-warning btn-sm text-dark font-bold w-100 rounded-pill shadow-sm mb-2" style="font-size:0.825rem;">
-                  ▶️ 前往 YouTube 聽神曲 ↗
-                </a>
-                <a href="about.html#brandSurveyForm" class="btn btn-outline-light btn-sm w-100 rounded-pill" style="font-size:0.8rem;">
-                  📋 填問卷拿無損試聽包 ➔
-                </a>
-              </div>
-
-              <!-- 3. 熱門快速標籤牆 -->
-              <div class="card p-3 border-0 shadow-sm rounded-4 bg-white">
-                <h4 class="h6 fw-bold text-dark mb-3 d-flex align-items-center gap-2">
-                  <span class="fs-5">🏷️</span> 熱門快速標籤
-                </h4>
-                <div class="d-flex flex-wrap gap-2">
-                  <button type="button" class="btn btn-sm btn-outline-primary rounded-pill hot-tag-btn" data-keyword="免費" style="font-size:0.75rem; padding: 4px 10px;"># 100%免費</button>
-                  <button type="button" class="btn btn-sm btn-outline-danger rounded-pill hot-tag-btn" data-keyword="影片" style="font-size:0.75rem; padding: 4px 10px;"># 短影音BGM</button>
-                  <button type="button" class="btn btn-sm btn-outline-success rounded-pill hot-tag-btn" data-keyword="去背" style="font-size:0.75rem; padding: 4px 10px;"># AI去背</button>
-                  <button type="button" class="btn btn-sm btn-outline-primary rounded-pill hot-tag-btn" data-keyword="寫程式" style="font-size:0.75rem; padding: 4px 10px;"># 寫程式</button>
-                  <button type="button" class="btn btn-sm btn-outline-info rounded-pill hot-tag-btn" data-keyword="繁體中文" style="font-size:0.75rem; padding: 4px 10px;"># 繁體中文</button>
-                  <button type="button" class="btn btn-sm btn-outline-warning text-dark rounded-pill hot-tag-btn" data-keyword="簡報" style="font-size:0.75rem; padding: 4px 10px;"># 簡報神器</button>
-                </div>
-              </div>
-
-            </div>
+          
           </div>
         </div>
       </div>
