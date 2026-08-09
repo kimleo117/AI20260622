@@ -152,7 +152,7 @@
             <div class="fs-1 text-primary mb-2">🎵</div>
             <h4 class="h6 fw-bold text-dark mb-1">拖曳歌曲 MP3 / WAV 檔案至此</h4>
             <p class="text-muted small mb-3">或點擊選擇檔案 (支援 MP3, WAV, M4A, OGG)</p>
-            <input type="file" id="audioFileInput" accept="audio/*" class="d-none">
+            <input type="file" id="audioFileInput" accept=".mp3,.wav,.m4a,.ogg,.flac,.aac,.mp4,audio/*" class="d-none">
             <button class="btn btn-outline-primary btn-sm rounded-pill px-4" onclick="document.getElementById('audioFileInput').click()">選擇檔案</button>
           </div>
           
@@ -255,6 +255,9 @@
 
       // 音訊上傳處理
       const dropZone = document.getElementById("dropZone");
+      dropZone.addEventListener("click", function(e) {
+        document.getElementById("audioFileInput").click();
+      });
       const audioFileInput = document.getElementById("audioFileInput");
       const audioPlayerContainer = document.getElementById("audioPlayerContainer");
       const audioPlayer = document.getElementById("audioPlayer");
@@ -376,14 +379,7 @@
       function handleAudioFile(file) {
         if (!file) return;
 
-        const ext = file.name.split('.').pop().toLowerCase();
-        const validExts = ['mp3', 'wav', 'm4a', 'ogg', 'flac', 'aac', 'mp4', 'webm'];
-        const isAudioType = file.type.startsWith("audio/") || file.type.startsWith("video/");
-
-        if (!isAudioType && !validExts.includes(ext)) {
-          alert("請選擇有效的音訊檔案 (支援 MP3, WAV, M4A, OGG, FLAC)！");
-          return;
-        }
+        // 允許所有選擇之音訊檔案處理
 
         selectedAudioFile = file;
         currentAudioMime = file.type || "audio/mp3";
