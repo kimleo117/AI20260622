@@ -285,11 +285,16 @@
         if (this.files.length > 0) handleAudioFile(this.files[0]);
       });
 
+      let currentAudioMime = "audio/mp3";
+
       function handleAudioFile(file) {
         if (!file.type.startsWith("audio/")) {
           alert("請選擇有效的音訊檔案 (MP3, WAV, M4A, OGG)！");
           return;
         }
+
+        currentAudioMime = file.type || "audio/mp3";
+        if (currentAudioMime === "audio/mpeg") currentAudioMime = "audio/mp3";
 
         audioFileName.innerText = file.name;
         const objectUrl = URL.createObjectURL(file);
@@ -370,20 +375,54 @@ ${userLyrics ? "參考歌詞文本如下 (請務必將以下歌詞 100% 完整�
             ]
           };
 
-          const candidateModels = [
-          "gemini-2.0-flash",
-          "gemini-1.5-flash-latest",
-          "gemini-1.5-pro-latest",
-          "gemini-1.5-flash"
+          const candidateEndpoints = [
+          { url: "https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent", name: "Gemini 1.5 Flash (v1)" },
+          { url: "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent", name: "Gemini 2.0 Flash (v1beta)" },
+          { url: "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent", name: "Gemini 1.5 Flash Latest" },
+          { url: "https://generativelanguage.googleapis.com/v1/models/gemini-1.5-pro:generateContent", name: "Gemini 1.5 Pro (v1)" }
         ];
 
         let successData = null;
         let lastError = null;
 
-        for (const modelName of candidateModels) {
+        for (const ep of candidateEndpoints) {
           try {
-            syncProgressText.innerText = `SoundSync AI 正在使用 [${modelName}] 模型解析音訊與時間軸中...`;
-            const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${apiKey}`, {
+            syncProgressText.innerText = `SoundSync AI 正在使用 [${ep.name}] 解析【${audioFileName.innerText}】中...`;
+            
+            const requestBody = {
+              contents: [
+                {
+                  parts: [
+                    {
+                      inlineData: {
+                        mimeType: currentAudioMime,
+                        data: currentAudioBase64
+                      }
+                    },
+                    {
+                      text: `你是一位專業的音訊工程師與歌詞字幕打軸大師。
+請解析這段音訊檔，將歌詞/對白進行高精度時間軸對齊 (Timestamps Alignment)。
+
+${userLyrics ? "參考歌詞文本如下 (請務必將以下歌詞 100% 完整對齊音訊時間點，絕不可遺漏任何一句)：
+" + userLyrics : "請自動聽寫並標出整首音訊的對白/歌詞與時間點。"}
+
+【輸出格式嚴格要求】：
+請務必且只能輸出一個純 JSON Array 格式，不要包含任何 markdown codeblock 標籤外殼：
+[
+  {
+    "start": "00:00:01.200",
+    "end": "00:00:04.500",
+    "text": "歌詞第一句"
+  }
+]
+時間格式必須為 HH:MM:SS.mmm (例如 00:01:12.450)。每個句子的 end 時間不可超過下一句的 start 時間。`
+                    }
+                  ]
+                }
+              ]
+            };
+
+            const response = await fetch(`${ep.url}?key=${apiKey}`, {
               method: "POST",
               headers: {
                 "Content-Type": "application/json"
@@ -393,13 +432,13 @@ ${userLyrics ? "參考歌詞文本如下 (請務必將以下歌詞 100% 完整�
 
             const data = await response.json();
             if (data.error) {
-              lastError = new Error(data.error.message || `模型 ${modelName} 呼叫失敗`);
-              continue; // 嘗試下一個相容模型
+              lastError = new Error(data.error.message || `模型 ${ep.name} 呼叫失敗`);
+              continue; // 自動換下一個相容端點
             }
 
             if (data.candidates && data.candidates[0] && data.candidates[0].content) {
               successData = data;
-              break; // 成功獲取結果，中斷循環
+              break; // 成功！中斷循環
             }
           } catch (e) {
             lastError = e;
@@ -407,7 +446,7 @@ ${userLyrics ? "參考歌詞文本如下 (請務必將以下歌詞 100% 完整�
         }
 
         if (!successData) {
-          throw lastError || new Error("全數 Gemini API 模型嘗試失敗，請檢查 API Key 是否正確。");
+          throw lastError || new Error("全數 Gemini API 端點嘗試失敗，請檢查 API Key 是否正確。");
         }
 
         let responseText = successData.candidates[0].content.parts[0].text;
