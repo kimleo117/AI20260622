@@ -101,14 +101,37 @@
       .hero-section {
         margin-top: 56px;
       }
-      .hero-slide, .hero-slide-dragon {
-        height: 340px !important;
-        min-height: 340px !important;
-        max-height: 340px !important;
+      /* 修正輪播圖文字重疊 Bug：只有 active 項目才 display: flex，非 active 項目 display: none */
+      .hero-slide {
+        height: 380px !important;
+        min-height: 380px !important;
+        max-height: 380px !important;
+        padding-top: 80px !important;
+        padding-bottom: 2rem !important;
+        text-align: center !important;
+        position: relative !important;
+        overflow: hidden !important;
+        background-position: center center !important;
+        background-size: cover !important;
+        background-repeat: no-repeat !important;
+      }
+      .carousel-item.hero-slide.active {
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
-        padding: 3rem 1.5rem !important;
+      }
+      .carousel-item.hero-slide:not(.active) {
+        display: none !important;
+      }
+      .hero-slide-dragon {
+        height: 380px !important;
+        min-height: 380px !important;
+        max-height: 380px !important;
+        padding-top: 80px !important;
+        padding-bottom: 2rem !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
         text-align: center !important;
         position: relative !important;
         overflow: hidden !important;
@@ -141,12 +164,44 @@
         font-weight: 500;
       }
       @media (max-width: 767.98px) {
-        .hero-slide, .hero-slide-dragon {
-          height: 260px !important;
-          min-height: 260px !important;
-          max-height: 260px !important;
-          padding: 2rem 1rem !important;
-        }
+        /* 修正輪播圖文字重疊 Bug：只有 active 項目才 display: flex，非 active 項目 display: none */
+      .hero-slide {
+        height: 380px !important;
+        min-height: 380px !important;
+        max-height: 380px !important;
+        padding-top: 80px !important;
+        padding-bottom: 2rem !important;
+        text-align: center !important;
+        position: relative !important;
+        overflow: hidden !important;
+        background-position: center center !important;
+        background-size: cover !important;
+        background-repeat: no-repeat !important;
+      }
+      .carousel-item.hero-slide.active {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+      }
+      .carousel-item.hero-slide:not(.active) {
+        display: none !important;
+      }
+      .hero-slide-dragon {
+        height: 380px !important;
+        min-height: 380px !important;
+        max-height: 380px !important;
+        padding-top: 80px !important;
+        padding-bottom: 2rem !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        text-align: center !important;
+        position: relative !important;
+        overflow: hidden !important;
+        background-position: center center !important;
+        background-size: cover !important;
+        background-repeat: no-repeat !important;
+      }
       }
 
     
@@ -155,7 +210,29 @@
         margin-top: 0 !important;
         padding-top: 0 !important;
       }
-      .hero-slide, .hero-slide-dragon {
+      /* 修正輪播圖文字重疊 Bug：只有 active 項目才 display: flex，非 active 項目 display: none */
+      .hero-slide {
+        height: 380px !important;
+        min-height: 380px !important;
+        max-height: 380px !important;
+        padding-top: 80px !important;
+        padding-bottom: 2rem !important;
+        text-align: center !important;
+        position: relative !important;
+        overflow: hidden !important;
+        background-position: center center !important;
+        background-size: cover !important;
+        background-repeat: no-repeat !important;
+      }
+      .carousel-item.hero-slide.active {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+      }
+      .carousel-item.hero-slide:not(.active) {
+        display: none !important;
+      }
+      .hero-slide-dragon {
         height: 380px !important;
         min-height: 380px !important;
         max-height: 380px !important;
@@ -184,12 +261,44 @@
         border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
       }
       @media (max-width: 767.98px) {
-        .hero-slide, .hero-slide-dragon {
-          height: 300px !important;
-          min-height: 300px !important;
-          max-height: 300px !important;
-          padding-top: 70px !important;
-        }
+        /* 修正輪播圖文字重疊 Bug：只有 active 項目才 display: flex，非 active 項目 display: none */
+      .hero-slide {
+        height: 380px !important;
+        min-height: 380px !important;
+        max-height: 380px !important;
+        padding-top: 80px !important;
+        padding-bottom: 2rem !important;
+        text-align: center !important;
+        position: relative !important;
+        overflow: hidden !important;
+        background-position: center center !important;
+        background-size: cover !important;
+        background-repeat: no-repeat !important;
+      }
+      .carousel-item.hero-slide.active {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+      }
+      .carousel-item.hero-slide:not(.active) {
+        display: none !important;
+      }
+      .hero-slide-dragon {
+        height: 380px !important;
+        min-height: 380px !important;
+        max-height: 380px !important;
+        padding-top: 80px !important;
+        padding-bottom: 2rem !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        text-align: center !important;
+        position: relative !important;
+        overflow: hidden !important;
+        background-position: center center !important;
+        background-size: cover !important;
+        background-repeat: no-repeat !important;
+      }
       }
 
     </style>
