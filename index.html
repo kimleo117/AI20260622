@@ -528,6 +528,59 @@
     .social-icon-line:hover { background: #06c755 !important; box-shadow: 0 6px 16px rgba(6, 199, 85, 0.45) !important; transform: translateY(-3px) !important; }
     .social-icon-ig:hover { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888) !important; box-shadow: 0 6px 16px rgba(220, 39, 67, 0.45) !important; transform: translateY(-3px) !important; }
 
+    
+      /* 全站統一高質感 Hero 頂部大圖/輪播圖尺寸樣式 */
+      .hero-section {
+        margin-top: 56px;
+      }
+      .hero-slide, .hero-slide-dragon {
+        height: 340px !important;
+        min-height: 340px !important;
+        max-height: 340px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        padding: 3rem 1.5rem !important;
+        text-align: center !important;
+        position: relative !important;
+        overflow: hidden !important;
+        background-position: center center !important;
+        background-size: cover !important;
+        background-repeat: no-repeat !important;
+      }
+      .hero-slide::before, .hero-slide-dragon::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, rgba(7, 12, 24, 0.72) 0%, rgba(15, 23, 42, 0.90) 100%);
+      }
+      .hero-slide > div, .hero-slide-dragon > div {
+        position: relative;
+        z-index: 1;
+        max-width: 860px;
+      }
+      .hero-slide h1, .hero-slide h2, .hero-slide-dragon h1 {
+        margin-bottom: 1rem;
+        font-size: clamp(2rem, 4.5vw, 3.2rem) !important;
+        font-weight: 900 !important;
+        line-height: 1.15;
+        text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+      }
+      .hero-slide p, .hero-slide-dragon p {
+        margin: 0;
+        font-size: clamp(1rem, 2vw, 1.2rem) !important;
+        opacity: 0.95;
+        font-weight: 500;
+      }
+      @media (max-width: 767.98px) {
+        .hero-slide, .hero-slide-dragon {
+          height: 260px !important;
+          min-height: 260px !important;
+          max-height: 260px !important;
+          padding: 2rem 1rem !important;
+        }
+      }
+
     </style>
           <!-- Google tag (gtag.js)這是GA4全網頁追蹤代碼 -->
       <script async src="https://www.googletagmanager.com/gtag/js?id=G-NVRRXE1GQV"></script>
