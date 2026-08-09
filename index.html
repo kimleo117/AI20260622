@@ -3374,56 +3374,125 @@
       }
     </script>
   
+    
     <script id="realtime-search-script">
       document.addEventListener("DOMContentLoaded", function() {
         const searchInput = document.getElementById("toolSearchInput");
         const clearBtn = document.getElementById("clearSearchBtn");
         const countDisplay = document.getElementById("searchResultsCount");
+        const noResultsAlert = document.getElementById("noResultsAlert");
         const toolCards = document.querySelectorAll(".ai-card-huanjing");
+        const hotTagBtns = document.querySelectorAll(".hot-tag-btn");
+        const sectionTitles = document.querySelectorAll(".section-title, .h4.fw-bold, section h2");
+
+        // 同義詞與近義詞地圖 (Synonym map for Taiwanese user search habits)
+        const synonymMap = {
+          "作影片": ["影片", "影音", "剪輯", "短影音", "動畫", "生成", "video", "media"],
+          "做影片": ["影片", "影音", "剪輯", "短影音", "動畫", "生成", "video", "media"],
+          "影片": ["影片", "影音", "剪輯", "短影音", "動畫", "生成", "video", "media"],
+          "剪片": ["影片", "影音", "剪輯", "短影音"],
+          "作圖": ["圖像", "繪圖", "去背", "圖片", "照片", "畫", "draw", "image"],
+          "做圖": ["圖像", "繪圖", "去背", "圖片", "照片", "畫", "draw", "image"],
+          "畫圖": ["圖像", "繪圖", "去背", "圖片", "照片", "畫", "draw", "image"],
+          "寫程式": ["程式", "code", "開發", "寫碼", "python", "javascript", "developer"],
+          "寫文章": ["文案", "寫作", "文章", "編輯", "創作", "writer", "copy"],
+          "聽音樂": ["音樂", "配樂", "聽打", "soundsync", "bgm", "音軌", "audio", "music"]
+        };
+
+        function performSearch(query) {
+          query = query.trim().toLowerCase();
+
+          // 判斷同義詞列表
+          let searchTerms = [query];
+          if (synonymMap[query]) {
+            searchTerms = searchTerms.concat(synonymMap[query]);
+          }
+
+          if (query.length > 0) {
+            clearBtn.style.display = "block";
+            let matchCount = 0;
+
+            toolCards.forEach(card => {
+              const cardText = (card.innerText + " " + (card.getAttribute("data-seo-keyword") || "")).toLowerCase();
+              const cardParent = card.closest(".col-md-6, .col-lg-4, .mb-4");
+
+              // 智慧比對任一關鍵詞
+              const isMatch = searchTerms.some(term => cardText.includes(term));
+
+              if (isMatch) {
+                if (cardParent) cardParent.style.display = "block";
+                card.style.display = "flex";
+                matchCount++;
+              } else {
+                if (cardParent) cardParent.style.display = "none";
+                card.style.display = "none";
+              }
+            });
+
+            // 隱藏沒有符合項目的分區標題 (Hide Empty Section Titles)
+            sectionTitles.forEach(title => {
+              const section = title.closest("section, div.mb-5, div.mb-4");
+              if (section) {
+                const visibleCards = section.querySelectorAll(".ai-card-huanjing[style*='display: flex']");
+                const headerWrapper = title.closest(".mb-4, .mb-3, h2, h3, .section-title");
+                if (visibleCards.length === 0) {
+                  if (headerWrapper) headerWrapper.style.display = "none";
+                } else {
+                  if (headerWrapper) headerWrapper.style.display = "block";
+                }
+              }
+            });
+
+            countDisplay.style.display = "block";
+            countDisplay.innerHTML = `找到了 <strong class="text-primary fs-6">${matchCount}</strong> 個符合「<strong>${query}</strong>」的 AI 工具`;
+
+            if (matchCount === 0) {
+              if (noResultsAlert) noResultsAlert.style.display = "block";
+            } else {
+              if (noResultsAlert) noResultsAlert.style.display = "none";
+            }
+          } else {
+            clearBtn.style.display = "none";
+            countDisplay.style.display = "none";
+            if (noResultsAlert) noResultsAlert.style.display = "none";
+
+            toolCards.forEach(card => {
+              const cardParent = card.closest(".col-md-6, .col-lg-4, .mb-4");
+              if (cardParent) cardParent.style.display = "block";
+              card.style.display = "flex";
+            });
+
+            // 恢復所有分區標題
+            sectionTitles.forEach(title => {
+              const headerWrapper = title.closest(".mb-4, .mb-3, h2, h3, .section-title");
+              if (headerWrapper) headerWrapper.style.display = "block";
+            });
+          }
+        }
 
         if (searchInput) {
           searchInput.addEventListener("input", function() {
-            const query = this.value.trim().toLowerCase();
-
-            if (query.length > 0) {
-              clearBtn.style.display = "block";
-              let matchCount = 0;
-
-              toolCards.forEach(card => {
-                const cardText = card.innerText.toLowerCase();
-                const cardParent = card.closest(".col-md-6, .col-lg-4, .mb-4");
-                
-                if (cardText.includes(query)) {
-                  if (cardParent) cardParent.style.display = "block";
-                  card.style.display = "flex";
-                  matchCount++;
-                } else {
-                  if (cardParent) cardParent.style.display = "none";
-                }
-              });
-
-              countDisplay.style.display = "block";
-              countDisplay.innerHTML = `找到了 <strong class="text-primary fs-6">${matchCount}</strong> 個符合「<strong>${query}</strong>」的 AI 工具`;
-            } else {
-              clearBtn.style.display = "none";
-              countDisplay.style.display = "none";
-
-              toolCards.forEach(card => {
-                const cardParent = card.closest(".col-md-6, .col-lg-4, .mb-4");
-                if (cardParent) cardParent.style.display = "block";
-                card.style.display = "flex";
-              });
-            }
+            performSearch(this.value);
           });
 
           clearBtn.addEventListener("click", function() {
             searchInput.value = "";
-            searchInput.dispatchEvent(new Event("input"));
+            performSearch("");
             searchInput.focus();
+          });
+
+          hotTagBtns.forEach(btn => {
+            btn.addEventListener("click", function() {
+              const kw = this.getAttribute("data-keyword");
+              searchInput.value = kw;
+              performSearch(kw);
+              searchInput.focus();
+            });
           });
         }
       });
     </script>
+
 
 
     <script id="mobile-scroll-script">
