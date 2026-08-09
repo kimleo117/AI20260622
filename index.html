@@ -3377,6 +3377,7 @@
     
     
     
+    
     <script id="realtime-search-script">
       document.addEventListener("DOMContentLoaded", function() {
         const searchInput = document.getElementById("toolSearchInput");
@@ -3385,20 +3386,40 @@
         const noResultsAlert = document.getElementById("noResultsAlert");
         const toolCards = document.querySelectorAll(".ai-card-huanjing");
         const hotTagBtns = document.querySelectorAll(".hot-tag-btn");
+        const catItems = document.querySelectorAll(".cat-item, .mobile-cat-pill");
 
-        // 台灣常見搜尋同義詞地圖 (精準比對，不包含雜訊)
+        // 台灣常見搜尋同義詞地圖 (精準比對，去除雜訊)
         const synonymMap = {
           "作影片": ["影片", "剪輯", "短影音", "動畫", "生成", "video"],
           "做影片": ["影片", "剪輯", "短影音", "動畫", "生成", "video"],
-          "影片": ["影片", "剪輯", "短影音", "動畫", "video"],
-          "影音": ["影音", "聲音", "音訊", "配樂", "聽打", "audio", "video"],
+          "影片": ["影片", "影音", "剪輯", "短影音", "動畫", "生成", "video"],
+          "影音": ["影音", "影片", "剪輯", "短影音", "video"],
           "圖片": ["圖像", "繪圖", "去背", "圖片", "照片", "畫", "draw", "image", "photo"],
           "作圖": ["圖像", "繪圖", "去背", "圖片", "照片", "畫", "draw", "image"],
           "做圖": ["圖像", "繪圖", "去背", "圖片", "照片", "畫", "draw", "image"],
           "畫圖": ["圖像", "繪圖", "去背", "圖片", "照片", "畫", "draw", "image"],
           "寫程式": ["程式", "code", "開發", "寫碼", "python", "javascript", "developer"],
           "寫文章": ["文案", "寫作", "文章", "編輯", "創作", "writer", "copy"],
-          "聽音樂": ["音樂", "配樂", "聽打", "soundsync", "bgm", "音軌", "audio", "music"]
+          "聽音樂": ["音樂", "配樂", "聽打", "soundsync", "bgm", "音軌", "music"]
+        };
+
+        // 關鍵字與側邊欄分區自動對應表
+        const catKeywordMap = {
+          "影片": ["#media", "影音生成"],
+          "影音": ["#media", "影音生成"],
+          "作影片": ["#media", "影音生成"],
+          "做影片": ["#media", "影音生成"],
+          "圖片": ["#visual", "圖像生成"],
+          "作圖": ["#visual", "圖像生成"],
+          "做圖": ["#visual", "圖像生成"],
+          "畫圖": ["#visual", "圖像生成"],
+          "文案": ["#creative", "文案生成"],
+          "寫文章": ["#creative", "文案生成"],
+          "程式": ["#code", "程式開發"],
+          "寫程式": ["#code", "程式開發"],
+          "音樂": ["#media", "影音生成"],
+          "聽音樂": ["#media", "影音生成"],
+          "soundsync": ["#media", "影音生成"]
         };
 
         function performSearch(query) {
@@ -3414,7 +3435,7 @@
             let matchCount = 0;
 
             toolCards.forEach(card => {
-              // 關鍵重點修復：只抓取卡片上的『標題』、『說明內文』與『標籤』，嚴禁抓取隱形SEO背景詞，避免全站卡片誤判！
+              // 抓取卡片上的『標題』、『說明內文』與『標籤』，嚴禁抓取背景隱形SEO詞
               const cardTitle = (card.querySelector('h3, h4')?.innerText || '').toLowerCase();
               const cardDesc = (card.querySelector('p')?.innerText || '').toLowerCase();
               const cardTags = Array.from(card.querySelectorAll('.badge-tag, .badge')).map(b => b.innerText.toLowerCase()).join(' ');
@@ -3434,7 +3455,7 @@
               }
             });
 
-            // 精準隱藏全站無符合項目的分區
+            // 精準隱藏無符合項目的分區標題
             const sections = document.querySelectorAll("section[id], div[id^='sec-'], #latest, #featured, #free, #paid, #work, #creative, #visual, #media, #summary, #learning, #audio, #editing, #job, #chat, #organize, #brand, #seo, #code");
             sections.forEach(sec => {
               const visibleCards = Array.from(sec.querySelectorAll(".ai-card-huanjing")).filter(c => c.style.display === "flex");
@@ -3445,6 +3466,25 @@
                 if (secHeader) secHeader.style.display = "block";
               }
             });
+
+            // 側邊欄 Highlight 與自動平滑捲動至主要目標分區
+            if (catKeywordMap[query]) {
+              const targetSelector = catKeywordMap[query][0];
+              const targetText = catKeywordMap[query][1];
+
+              catItems.forEach(item => {
+                if (item.innerText.includes(targetText) || item.getAttribute("href") === targetSelector || item.getAttribute("data-target") === targetSelector) {
+                  item.classList.add("active");
+                } else {
+                  item.classList.remove("active");
+                }
+              });
+
+              const targetSection = document.querySelector(targetSelector) || document.querySelector(`[id*="${targetText}"]`);
+              if (targetSection) {
+                targetSection.scrollIntoView({ behavior: "smooth", block: "start" });
+              }
+            }
 
             countDisplay.style.display = "block";
             countDisplay.innerHTML = `找到了 <strong class="text-primary fs-6">${matchCount}</strong> 個符合「<strong>${query}</strong>」的 AI 工具`;
@@ -3493,6 +3533,7 @@
         }
       });
     </script>
+
 
 
 
