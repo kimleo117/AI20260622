@@ -95,38 +95,34 @@
 </head>
 <body>
 <!-- 全站統一黃金標準頂部導覽列 -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3 shadow-sm sticky-top">
-    <div class="container-fluid px-3 px-lg-5">
-      <a class="navbar-brand d-flex align-items-center gap-2 fw-bold fs-4 text-white" href="index.html">
-        <img src="pic/favicon.png" alt="Logo" width="32" height="32" class="rounded-circle">
-        <span>AI智能工具站</span>
-      </a>
-      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto gap-2 gap-lg-4 align-items-center">
-          <li class="nav-item"><a class="nav-link text-white fw-bold text-nowrap" href="about.html">📖 關於我們</a></li>
-          <li class="nav-item"><a class="nav-link text-white fw-bold text-nowrap" href="pricing.html">💎 免費與付費</a></li>
-          <li class="nav-item"><a class="nav-link text-white fw-bold text-nowrap" href="index.html#sec-AI去背">✂️ AI 去背</a></li>
-          <li class="nav-item"><a class="nav-link text-white fw-bold text-nowrap" href="contact.html">✉️ 聯絡我們</a></li>
-        </ul>
-      </div>
-    </div>
-  </nav>
+  
 
   <main class="container py-2">
 
-    <!-- 主 Header 簡介區 -->
-    <div class="hero-box text-center position-relative overflow-hidden">
-      <div class="badge bg-primary px-3 py-2 rounded-pill fs-7 mb-3">⭐ 獨家自研 AI 聲樂對齊與字幕時間軸生成引擎</div>
-      <h1 class="display-5 fw-bold mb-3">🎵 SoundSync AI 字幕機對齊助手</h1>
-      <p class="lead text-light opacity-90 mb-4">微秒級聽寫對齊 • 邊界重疊自動修正 • 100% 完整歌詞輸出 • 一鍵匯出 SRT / LRC / VTT</p>
+    <!-- 🐉 金龍霸氣專屬 Header (頂部品牌 + 金龍背景 + 簡潔導覽) -->
+    <!-- 🐉 金龍霸氣專屬 Header (頂部品牌 + 金龍背景 + 簡潔導覽) -->
+    <div class="hero-box text-center position-relative overflow-hidden mb-4" style="background: linear-gradient(rgba(15, 23, 42, 0.75), rgba(15, 23, 42, 0.92)), url('pic/huanjing-1920-1080.png') center top / cover no-repeat; border-radius: 0 0 24px 24px; padding: 2rem 1.5rem 3rem 1.5rem; margin-top: 0; box-shadow: 0 15px 35px rgba(0,0,0,0.4);">
+      
+      <!-- 頂部品牌與返回首頁按鈕區 -->
+      <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom border-light border-opacity-10">
+        <a class="navbar-brand d-flex align-items-center gap-2 fw-bold fs-4 text-white" href="index.html">
+          <img src="pic/favicon.png" alt="Logo" width="36" height="36" class="rounded-circle shadow-sm">
+          <span style="text-shadow: 0 2px 8px rgba(0,0,0,0.8);">AI智能工具站</span>
+        </a>
+        <a href="index.html" class="btn btn-outline-light btn-sm rounded-pill px-4 fw-bold shadow-sm" style="backdrop-filter: blur(4px); background: rgba(255,255,255,0.1);">
+          ← 返回首頁 AI 工具庫
+        </a>
+      </div>
+
+      <!-- 標題內容區 -->
+      <div class="badge bg-primary px-3 py-2 rounded-pill fs-7 mb-3 shadow">⭐ 獨家自研 AI 聲樂對齊與字幕時間軸生成引擎</div>
+      <h1 class="display-5 fw-bold mb-3 text-white" style="text-shadow: 0 3px 15px rgba(0,0,0,0.9); font-weight: 900;">🎵 SoundSync AI 字幕機對齊助手</h1>
+      <p class="lead text-light opacity-90 mb-4" style="text-shadow: 0 2px 10px rgba(0,0,0,0.8);">微秒級聽寫對齊 • 邊界重疊自動修正 • 100% 完整歌詞輸出 • 一鍵匯出 SRT / LRC / VTT</p>
       
       <!-- API Key 設置欄位 -->
       <div class="row justify-content-center">
         <div class="col-md-8 col-lg-6">
-          <div class="p-3 bg-white bg-opacity-10 rounded-4 border border-light border-opacity-20">
+          <div class="p-3 bg-dark bg-opacity-60 rounded-4 border border-light border-opacity-20 shadow-lg" style="backdrop-filter: blur(8px);">
             <label for="apiKeyInput" class="form-label text-warning font-bold small mb-2 d-flex align-items-center justify-content-between">
               <span>🔑 填入您的 Google Gemini API Key：</span>
               <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener" class="text-info text-decoration-underline" style="font-size:0.8rem;">免費申請 Key ↗</a>
@@ -138,6 +134,8 @@
             <div id="keyStatusMsg" class="small text-success mt-2 fw-bold" style="display:none;">✓ API Key 已成功儲存於瀏覽器！</div>
           </div>
         </div>
+      </div>
+    </div>
       </div>
     </div>
 
