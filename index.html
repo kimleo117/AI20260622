@@ -684,7 +684,32 @@
     <link rel="shortcut icon" type="image/x-icon" href="pic/favicon.ico">
     <link rel="apple-touch-icon" href="pic/favicon.png">
 
-  </head>
+  
+    <style id="sidebar-wrap-fix-style">
+      /* 側邊欄文字換行 Bug 徹底修復 */
+      .left-sidebar {
+        min-width: 250px !important;
+      }
+      .cat-item {
+        display: flex !important;
+        align-items: center !important;
+        white-space: nowrap !important;
+        word-break: keep-all !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        padding: 10px 12px !important;
+      }
+      .cat-item span {
+        white-space: nowrap !important;
+        word-break: keep-all !important;
+      }
+      .cat-item .badge, .cat-item .text-muted {
+        flex-shrink: 0 !important;
+        margin-left: auto !important;
+      }
+    </style>
+
+</head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-dark nav-custom fixed-top">
       <div class="container">
