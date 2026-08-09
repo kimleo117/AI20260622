@@ -320,13 +320,13 @@
     startSyncBtn.addEventListener("click", async function() {
       const apiKey = apiKeyInput.value.trim() || localStorage.getItem("soundsync_gemini_key");
       if (!apiKey) {
-        alert("請先填入您的 Google Gemini API Key！");
+        alert("🔑 請先填入您的 Google Gemini API Key！");
         apiKeyInput.focus();
         return;
       }
 
       if (!selectedAudioFile && !currentAudioBase64) {
-        alert("請先選擇或拖曳上傳音訊檔案！");
+        alert("🎵 請先選擇或拖曳上傳音訊檔案！");
         return;
       }
 
@@ -336,38 +336,56 @@
       syncProgressMsg.style.display = "block";
 
       try {
-        let audioPayloadBase64 = currentAudioBase64;
-        let audioPayloadMime = currentAudioMime;
+        // 清理 Base64 前綴標籤
+        let rawBase64 = currentAudioBase64 || "";
+        if (rawBase64.includes(",")) {
+          rawBase64 = rawBase64.split(",")[1];
+        }
 
-        const candidateEndpoints = [
-          { url: "https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent", name: "Gemini 1.5 Flash (v1 正式版)" },
-          { url: "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent", name: "Gemini 2.0 Flash (v1beta)" },
-          { url: "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent", name: "Gemini 1.5 Flash Latest" },
-          { url: "https://generativelanguage.googleapis.com/v1/models/gemini-1.5-pro:generateContent", name: "Gemini 1.5 Pro" }
+        // 純化 MIME Type
+        let cleanMime = "audio/mp3";
+        if (selectedAudioFile) {
+          const name = selectedAudioFile.name.toLowerCase();
+          if (name.endsWith(".wav")) cleanMime = "audio/wav";
+          else if (name.endsWith(".ogg")) cleanMime = "audio/ogg";
+          else if (name.endsWith(".m4a")) cleanMime = "audio/m4a";
+          else if (name.endsWith(".aac")) cleanMime = "audio/aac";
+          else if (name.endsWith(".flac")) cleanMime = "audio/flac";
+          else cleanMime = "audio/mp3";
+        }
+
+        // 2026 官方最新 Gemini 音訊模型端點清單
+        const candidateModels = [
+          { id: "gemini-2.0-flash", name: "Gemini 2.0 Flash 旗艦模型" },
+          { id: "gemini-2.0-flash-exp", name: "Gemini 2.0 Flash Exp" },
+          { id: "gemini-1.5-flash-latest", name: "Gemini 1.5 Flash Latest" },
+          { id: "gemini-1.5-flash-8b", name: "Gemini 1.5 Flash 8B" }
         ];
 
         let successData = null;
-        let lastError = null;
+        let lastErrorMsg = "";
 
-        for (const ep of candidateEndpoints) {
+        for (const mod of candidateModels) {
           try {
-            syncProgressText.innerText = `SoundSync AI 正在使用 [${ep.name}] 解析音訊與時間軸中...`;
+            syncProgressText.innerText = `SoundSync AI 正在使用 [${mod.name}] 高速對齊打軸中...`;
             
+            const requestUrl = `https://generativelanguage.googleapis.com/v1beta/models/${mod.id}:generateContent?key=${apiKey}`;
             const requestBody = {
               contents: [
                 {
                   parts: [
                     {
                       inlineData: {
-                        mimeType: audioPayloadMime,
-                        data: audioPayloadBase64
+                        mimeType: cleanMime,
+                        data: rawBase64
                       }
                     },
                     {
                       text: `你是一位專業的音訊工程師與歌詞字幕打軸大師。
 請解析這段音訊檔，將歌詞/對白進行高精度時間軸對齊 (Timestamps Alignment)。
 
-${userLyrics ? "參考歌詞文本如下 (請務必將以下歌詞 100% 完整對齊音訊時間點，絕不可遺漏任何一句)：\n" + userLyrics : "請自動聽寫並標出整首音訊的對白/歌詞與時間點。"}
+${userLyrics ? "參考歌詞文本如下 (請務必將以下歌詞 100% 完整對齊音訊時間點，絕不可遺漏任何一句)：
+" + userLyrics : "請自動聽寫並標出整首音訊的對白/歌詞與時間點。"}
 
 【輸出格式嚴格要求】：
 請務必且只能輸出一個純 JSON Array 格式，不要包含任何 markdown codeblock 標籤外殼：
@@ -385,7 +403,7 @@ ${userLyrics ? "參考歌詞文本如下 (請務必將以下歌詞 100% 完整�
               ]
             };
 
-            const response = await fetch(`${ep.url}?key=${apiKey}`, {
+            const response = await fetch(requestUrl, {
               method: "POST",
               headers: {
                 "Content-Type": "application/json"
@@ -395,21 +413,22 @@ ${userLyrics ? "參考歌詞文本如下 (請務必將以下歌詞 100% 完整�
 
             const data = await response.json();
             if (data.error) {
-              lastError = new Error(data.error.message || `模型 ${ep.name} 呼叫失敗`);
-              continue;
+              lastErrorMsg = data.error.message || `模型 ${mod.id} 回傳錯誤`;
+              console.warn(`Model ${mod.id} failed:`, data.error);
+              continue; // 自動嘗試下一個模型
             }
 
             if (data.candidates && data.candidates[0] && data.candidates[0].content) {
               successData = data;
-              break;
+              break; // 成功！
             }
           } catch (e) {
-            lastError = e;
+            lastErrorMsg = e.message;
           }
         }
 
         if (!successData) {
-          throw lastError || new Error("全數 Gemini API 模型嘗試失敗，請檢查 API Key 是否正確。");
+          throw new Error(lastErrorMsg || "API 呼叫失敗，請檢查金鑰或網路連線。");
         }
 
         let responseText = successData.candidates[0].content.parts[0].text;
@@ -423,7 +442,9 @@ ${userLyrics ? "參考歌詞文本如下 (請務必將以下歌詞 100% 完整�
         resultCountBadge.innerText = `已精準打軸 ${parsedSubtitles.length} 句`;
 
       } catch (err) {
-        alert("生成失敗：" + err.message);
+        alert("❌ 打軸失敗：" + err.message + "
+
+👉 提示：請確保您填入的 Google Gemini API Key 正確且有效。");
       } finally {
         startSyncBtn.disabled = false;
         syncProgressMsg.style.display = "none";
