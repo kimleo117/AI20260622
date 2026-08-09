@@ -3379,6 +3379,7 @@
     
     
     
+    
     <script id="realtime-search-script">
       document.addEventListener("DOMContentLoaded", function() {
         const searchInput = document.getElementById("toolSearchInput");
@@ -3389,22 +3390,22 @@
         const hotTagBtns = document.querySelectorAll(".hot-tag-btn");
         const catItems = document.querySelectorAll(".cat-item, .mobile-cat-pill");
 
-        // 台灣常見搜尋同義詞地圖 (精準比對，去除雜訊)
+        // 台灣常見搜尋同義詞地圖 (精準去除「生成」等泛用語，避免 Kuse/NotebookLM 等卡片被誤判)
         const synonymMap = {
-          "作影片": ["影片", "剪輯", "短影音", "動畫", "生成", "video"],
-          "做影片": ["影片", "剪輯", "短影音", "動畫", "生成", "video"],
-          "影片": ["影片", "影音", "剪輯", "短影音", "動畫", "生成", "video"],
-          "影音": ["影音", "影片", "剪輯", "短影音", "video"],
-          "圖片": ["圖像", "繪圖", "去背", "圖片", "照片", "畫", "draw", "image", "photo"],
-          "作圖": ["圖像", "繪圖", "去背", "圖片", "照片", "畫", "draw", "image"],
-          "做圖": ["圖像", "繪圖", "去背", "圖片", "照片", "畫", "draw", "image"],
-          "畫圖": ["圖像", "繪圖", "去背", "圖片", "照片", "畫", "draw", "image"],
+          "作影片": ["影片", "短影音", "video", "mov"],
+          "做影片": ["影片", "短影音", "video", "mov"],
+          "影片": ["影片", "短影音", "video", "mov"],
+          "影音": ["影音", "影片", "短影音", "video"],
+          "圖片": ["圖片", "圖像", "繪圖", "去背", "照片", "photo", "image", "pic"],
+          "作圖": ["圖片", "圖像", "繪圖", "去背", "照片", "photo", "image", "pic"],
+          "做圖": ["圖片", "圖像", "繪圖", "去背", "照片", "photo", "image", "pic"],
+          "畫圖": ["圖片", "圖像", "繪圖", "去背", "照片", "photo", "image", "pic"],
           "寫程式": ["程式", "code", "開發", "寫碼", "python", "javascript", "developer"],
           "寫文章": ["文案", "寫作", "文章", "編輯", "創作", "writer", "copy"],
           "聽音樂": ["音樂", "配樂", "聽打", "soundsync", "bgm", "音軌", "music"]
         };
 
-        // 關鍵字與側邊欄分區自動對應表 (僅用於 Highlight 側邊欄，絕不強制拉扯視角)
+        // 關鍵字與側邊欄分區自動對應表
         const catKeywordMap = {
           "影片": ["#media", "影音生成"],
           "影音": ["#media", "影音生成"],
@@ -3436,7 +3437,7 @@
             let matchCount = 0;
 
             toolCards.forEach(card => {
-              // 只抓取卡片上的『標題』、『說明內文』與『標籤』，100% 剔除隱形背景詞
+              // 抓取卡片上的『標題』、『說明內文』與『標籤』，100% 剔除背景隱形SEO詞
               const cardTitle = (card.querySelector('h3, h4')?.innerText || '').toLowerCase();
               const cardDesc = (card.querySelector('p')?.innerText || '').toLowerCase();
               const cardTags = Array.from(card.querySelectorAll('.badge-tag, .badge')).map(b => b.innerText.toLowerCase()).join(' ');
@@ -3456,19 +3457,39 @@
               }
             });
 
-            // 精準隱藏無符合項目的分區標題
-            const sections = document.querySelectorAll("section[id], div[id^='sec-'], #latest, #featured, #free, #paid, #work, #creative, #visual, #media, #summary, #learning, #audio, #editing, #job, #chat, #organize, #brand, #seo, #code");
-            sections.forEach(sec => {
-              const visibleCards = Array.from(sec.querySelectorAll(".ai-card-huanjing")).filter(c => c.style.display === "flex");
-              const secHeader = sec.querySelector("h2, h3, .section-title");
-              if (visibleCards.length === 0) {
-                if (secHeader) secHeader.style.display = "none";
+            // 100% 隱藏全站無資料的分區標題 (包含 h2, h3 及分區容器)
+            const allHeaderElements = document.querySelectorAll(".container h2, .container h3, .section-title");
+            allHeaderElements.forEach(header => {
+              // 尋找此標題所屬的父容器 (如 row 或 section 或 div)
+              const parentBlock = header.closest("section, div.mb-5, div.mb-4, div.row") || header.parentElement;
+              let hasVisibleCards = false;
+
+              if (parentBlock) {
+                // 如果父容器包含卡片，檢查是否有任何張顯示
+                const cardChildren = parentBlock.querySelectorAll(".ai-card-huanjing");
+                if (cardChildren.length > 0) {
+                  hasVisibleCards = Array.from(cardChildren).some(c => c.style.display === "flex");
+                } else {
+                  // 如果同層下一個元素的卡片顯示
+                  let nextElem = header.nextElementSibling;
+                  while (nextElem && !hasVisibleCards) {
+                    const subCards = nextElem.querySelectorAll ? nextElem.querySelectorAll(".ai-card-huanjing") : [];
+                    if (subCards.length > 0) {
+                      hasVisibleCards = Array.from(subCards).some(c => c.style.display === "flex");
+                    }
+                    nextElem = nextElem.nextElementSibling;
+                  }
+                }
+              }
+
+              if (!hasVisibleCards) {
+                header.style.setProperty("display", "none", "important");
               } else {
-                if (secHeader) secHeader.style.display = "block";
+                header.style.setProperty("display", "", "");
               }
             });
 
-            // 側邊欄 Highlight (不強制捲動畫面，維護使用者打字體驗)
+            // 側邊欄 Highlight
             if (catKeywordMap[query]) {
               const targetSelector = catKeywordMap[query][0];
               const targetText = catKeywordMap[query][1];
@@ -3481,7 +3502,6 @@
                 }
               });
 
-              // 只有當使用者點擊熱門標籤時(shouldScroll=true)才滾動，鍵盤打字時絕不滾動
               if (shouldScroll) {
                 const targetSection = document.querySelector(targetSelector) || document.querySelector(`[id*="${targetText}"]`);
                 if (targetSection) {
@@ -3510,14 +3530,13 @@
             });
 
             // 恢復所有分區標題
-            const sectionHeaders = document.querySelectorAll("h2, h3, .section-title");
-            sectionHeaders.forEach(h => h.style.display = "block");
+            const allHeaderElements = document.querySelectorAll(".container h2, .container h3, .section-title");
+            allHeaderElements.forEach(h => h.style.setProperty("display", "", ""));
           }
         }
 
         if (searchInput) {
           searchInput.addEventListener("input", function() {
-            // 打字與退格刪字時只進行過濾與側邊欄Highlight，絕不安裝自動強制跳轉
             performSearch(this.value, false);
           });
 
@@ -3531,7 +3550,6 @@
             btn.addEventListener("click", function() {
               const kw = this.getAttribute("data-keyword");
               searchInput.value = kw;
-              // 點擊熱門標籤時才平滑滾動
               performSearch(kw, true);
               searchInput.focus();
             });
@@ -3539,6 +3557,7 @@
         }
       });
     </script>
+
 
 
 
