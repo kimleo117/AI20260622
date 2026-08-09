@@ -1157,7 +1157,7 @@
           <li class="nav-item"><a class="nav-link text-white fw-bold text-nowrap" href="about.html" style="font-size:0.92rem;">📖 關於我們</a></li>
           <li class="nav-item"><a class="nav-link text-white fw-bold text-nowrap" href="pricing.html" style="font-size:0.92rem;">💎 免費與付費</a></li>
           <li class="nav-item"><a class="nav-link text-warning font-bold text-nowrap active" href="index.html" style="font-size:0.92rem;">🤖 AI工具</a></li>
-          <li class="nav-item"><a class="nav-link text-white fw-bold text-nowrap" href="index.html#sec-AI去背" onclick="scrollToQubei(event)" style="font-size:0.92rem;">✂️ AI 去背</a></li>
+          <li class="nav-item"><a class="nav-link text-white fw-bold text-nowrap" href="index.html#sec-AI去背" style="font-size:0.92rem;">✂️ AI 去背</a></li>
           <li class="nav-item"><a class="nav-link text-white fw-bold text-nowrap" href="contact.html" style="font-size:0.92rem;">✉️ 聯絡我們</a></li>
         </ul>
       </div>
@@ -4118,22 +4118,6 @@
       });
     </script>
 
-<script>
-  function scrollToQubei(e) {
-    var target = document.getElementById('sec-AI去背');
-    if (target && (window.location.pathname.endsWith('index.html') || window.location.pathname.endsWith('/') || window.location.pathname === '')) {
-      e.preventDefault();
-      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      window.history.pushState(null, '', '#sec-AI去背');
-    }
-  }
 
-  // 確保點擊 AI工具 必定頂部 0,0 顯現 Hero 大圖
-  window.addEventListener('DOMContentLoaded', function() {
-    if (!window.location.hash || window.location.hash === '' || window.location.hash === '#top') {
-      window.scrollTo(0, 0);
-    }
-  });
-</script>
 </body>
 </html>

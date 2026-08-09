@@ -38,7 +38,7 @@
       }
       * { box-sizing: border-box; }
       html { scroll-behavior: smooth; }
-      body { margin: 0; background-color: #0c1221 !important; color: var(--ink); background: #f8fbff; font-family: "Noto Sans TC", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      body { margin: 0; color: #172033; background: #ffffff !important; font-family: "Noto Sans TC", sans-serif; }
       .nav-custom { background: var(--nav); backdrop-filter: blur(12px); box-shadow: 0 12px 32px rgba(3, 7, 18, 0.18); }
       
       /* Pricing Hero Carousel */
@@ -401,7 +401,7 @@
       }
       * { box-sizing: border-box; }
       html { scroll-behavior: smooth; }
-      body { margin: 0; background-color: #0c1221 !important; color: var(--ink); background: var(--bg-body); font-family: "Noto Sans TC", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      body { margin: 0; color: #172033; background: #ffffff !important; font-family: "Noto Sans TC", sans-serif; }
       
       .nav-custom { background: var(--nav); backdrop-filter: blur(12px); box-shadow: 0 12px 32px rgba(3, 7, 18, 0.22); }
       section { scroll-margin-top: 76px; }
@@ -707,22 +707,6 @@
         });
       }
     </script>
-  <script>
-  function scrollToQubei(e) {
-    var target = document.getElementById('sec-AI去背');
-    if (target && (window.location.pathname.endsWith('index.html') || window.location.pathname.endsWith('/') || window.location.pathname === '')) {
-      e.preventDefault();
-      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      window.history.pushState(null, '', '#sec-AI去背');
-    }
-  }
-
-  // 確保點擊 AI工具 必定頂部 0,0 顯現 Hero 大圖
-  window.addEventListener('DOMContentLoaded', function() {
-    if (!window.location.hash || window.location.hash === '' || window.location.hash === '#top') {
-      window.scrollTo(0, 0);
-    }
-  });
-</script>
+  
 </body>
 </html>
