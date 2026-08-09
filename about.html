@@ -635,7 +635,75 @@
         </div>
 
       </div>
-    </main>
+    <!-- 【區塊】：【幻境配樂】官方 FB 粉專最新動態區塊 -->
+        <div class="card p-4 p-lg-5 shadow-sm border-0 rounded-4 mb-5 bg-white border border-primary border-opacity-20 text-center" id="sec-fb-feed">
+          <div class="text-center mb-4">
+            <span class="badge bg-primary rounded-pill px-3 py-2 fs-7 fw-bold">👍 FB 粉專即時動態</span>
+            <h2 class="h3 fw-bold text-dark mt-2">【幻境配樂】官方 FB 粉專最新動態</h2>
+            <p class="text-secondary small">追蹤官方 Facebook 粉絲專頁，獲取每週全新電影級音軌與 AI 工具教學</p>
+          </div>
+          <div class="d-flex justify-content-center align-items-center">
+            <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fbgm.mirage.cinematic%2F&tabs=timeline&width=500&height=500&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId" width="500" height="500" style="border:none;overflow:hidden;max-width:100%;border-radius:16px;box-shadow:0 8px 24px rgba(15,23,42,0.12);" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+          </div>
+        </div>
+
+        <!-- 【區塊】：關於我們的 10 大意見反饋問卷 -->
+        <div class="card p-4 p-lg-5 shadow-sm border-0 rounded-4 mb-5 bg-white border border-warning border-opacity-30" id="sec-survey-form">
+          <div class="text-center mb-4">
+            <span class="badge bg-warning text-dark rounded-pill px-3 py-2 fs-7 fw-bold">📋 創作者意見調查</span>
+            <h2 class="h3 fw-bold text-dark mt-2">關於我們的 10 大創作者反饋問卷</h2>
+            <p class="text-secondary small">您的每一個寶貴建議，都是【幻境配樂】與【AI工具】持續進步的核心動力！</p>
+          </div>
+
+          <form id="feedbackForm" onsubmit="event.preventDefault(); document.getElementById('formSuccessMsg').style.display='block';">
+            <div class="row g-4">
+              <div class="col-md-6">
+                <label class="form-label fw-bold text-dark">1. 您的姓名或稱呼：</label>
+                <input type="text" class="form-control rounded-3" placeholder="例如：王小明 / 影音創作者" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-bold text-dark">2. 您的聯絡 Email：</label>
+                <input type="email" class="form-control rounded-3" placeholder="name@example.com" required>
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label fw-bold text-dark">3. 您最常使用的 AI 工具類型：</label>
+                <select class="form-select rounded-3">
+                  <option selected>音樂與語音生成 (如 SoundSync AI)</option>
+                  <option>文案與腳本生成 (ChatGPT / Claude)</option>
+                  <option>繪圖與影像生成 (Midjourney / SD)</option>
+                  <option>去背與圖像處理 (Remove.bg)</option>
+                  <option>其他領域工具</option>
+                </select>
+              </div>
+
+              <div class="col-md-6">
+                <label class="form-label fw-bold text-dark">4. 您對【幻境配樂】音樂品質滿意度：</label>
+                <select class="form-select rounded-3">
+                  <option selected>⭐⭐⭐⭐⭐ 非常滿意 (電影級史詩大片感)</option>
+                  <option>⭐⭐⭐⭐ 滿意 (音軌品質優秀)</option>
+                  <option>⭐⭐⭐ 普通 (符合基本需求)</option>
+                  <option>⭐⭐ 需要再提升</option>
+                </select>
+              </div>
+
+              <div class="col-12">
+                <label class="form-label fw-bold text-dark">5. 您希望我們未來增加哪些全新的 AI 工具或功能？</label>
+                <textarea class="form-control rounded-3" rows="3" placeholder="歡迎寫下您期待上架的 AI 工具或功能建議..."></textarea>
+              </div>
+            </div>
+
+            <div class="text-center mt-4">
+              <button type="submit" class="btn btn-warning font-bold px-5 py-3 fs-6 rounded-pill shadow">
+                🚀 提交創作者反饋問卷 ➔
+              </button>
+              <div id="formSuccessMsg" class="mt-3 text-success fw-bold fs-6" style="display:none;">
+                ✓ 感謝您的寶貴回饋！問卷已成功提交！
+              </div>
+            </div>
+          </form>
+        </div>
+</main>
 
     <footer class="py-5">
       <div class="container">
