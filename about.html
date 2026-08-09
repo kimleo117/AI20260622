@@ -376,47 +376,73 @@
           </div>
         </div>
 
-        
-        <!-- 【SoundSync AI 獨家自研旗艦卡片區塊】 (放置於幻境配樂深藍卡片下方) -->
-        <div class="card p-4 p-lg-5 mb-5 shadow-lg rounded-4 border-2 border-primary position-relative overflow-hidden" style="background: linear-gradient(135deg, #ffffff 0%, #f0f7ff 100%); border: 2px solid #2f6fed !important;">
-          <div class="position-absolute top-0 end-0 bg-primary text-white font-bold px-4 py-2 fs-7 shadow-sm" style="border-bottom-left-radius: 16px; font-size: 0.85rem;">
-            ⭐ 獨家自研旗艦 AI 工具
+        <!-- 白色區域：獨家與熱門 AI 工具卡片區 (新增於深藍卡片下方與頁尾上方之間) -->
+        <section class="py-5 my-4 bg-white p-4 p-lg-5 rounded-4 border shadow-sm" id="whiteAreaToolCards">
+          <div class="text-center mb-4">
+            <span class="badge bg-primary rounded-pill px-3 py-2 fs-7 fw-bold">⭐ 獨家與熱門 AI 工具卡片</span>
+            <h2 class="h3 fw-bold text-dark mt-2">精選自研與熱門創作工具區</h2>
+            <p class="text-secondary small">專為影音創作者與音樂人打造的精選 AI 工具陣容</p>
           </div>
-          <div class="row align-items-center g-4">
-            <div class="col-lg-7">
-              <div class="d-flex align-items-center gap-3 mb-3">
-                <div class="p-3 rounded-3 text-white fs-2 font-bold d-flex align-items-center justify-content-center shadow" style="width: 60px; height: 60px; background: linear-gradient(135deg, #2f6fed, #1d4ed8);">
-                  🎵
+
+          <div class="row g-4">
+            <!-- 1. SoundSync AI 自研旗艦卡片 -->
+            <div class="col-md-6 col-lg-6">
+              <article class="card h-100 p-4 shadow-sm border-2 border-primary rounded-4 position-relative overflow-hidden" style="background: linear-gradient(145deg, #ffffff 0%, #f0f7ff 100%); border: 2px solid #2f6fed !important;">
+                <div class="position-absolute top-0 end-0 bg-primary text-white font-bold px-3 py-1 fs-7 shadow-sm" style="border-bottom-left-radius: 12px; font-size: 0.75rem;">
+                  ⭐ 獨家自研旗艦
                 </div>
-                <div>
-                  <h3 class="h4 fw-bold text-dark mb-1">SoundSync AI - 音樂字幕與時間軸生成助手</h3>
-                  <div class="text-primary fw-bold small">聽打對齊再也不坑 • 影音創作者打軸必備神器</div>
+                <div class="d-flex align-items-center gap-3 mb-3">
+                  <div class="p-3 rounded-3 text-white fs-3 font-bold d-flex align-items-center justify-content-center shadow-sm" style="width: 52px; height: 52px; background: linear-gradient(135deg, #2f6fed, #1d4ed8);">
+                    🎵
+                  </div>
+                  <div>
+                    <h3 class="h5 fw-bold text-dark mb-1">SoundSync AI</h3>
+                    <div class="text-primary small fw-bold">音樂字幕與時間軸生成助手</div>
+                  </div>
                 </div>
-              </div>
-              <p class="text-secondary mb-4" style="line-height: 1.8;">
-                專為影音創作者與音樂人打造！採用 Google Gemini 2.0 / 3.6 音訊分析模型，自動聽寫歌詞並精準對齊時間軸。<strong>獨家優化邊界衝突演算法</strong>，徹底解決「上一句/下一句」時間點重疊導致的字幕跳動失靈 Bug！
-              </p>
-              <div class="d-flex flex-wrap gap-2 mb-3">
-                <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill fw-bold">🆓 100% 免費</span>
-                <span class="badge bg-success bg-opacity-10 text-success px-3 py-2 rounded-pill fw-bold">🇹🇼 繁體中文</span>
-                <span class="badge bg-warning bg-opacity-10 text-dark px-3 py-2 rounded-pill fw-bold">💾 匯出 SRT / LRC / VTT / TXT</span>
-              </div>
+                <p class="text-secondary small mb-3 flex-grow-1" style="line-height: 1.7;">
+                  獨家自研！採用 Gemini AI 音訊聽寫模型，自動聽寫歌詞並微秒級對齊時間軸。完美修復時間點衝突 Bug，影音創作者打軸必備神器！
+                </p>
+                <div class="d-flex justify-content-between align-items-center pt-2 border-top">
+                  <div>
+                    <span class="badge bg-primary bg-opacity-10 text-primary rounded-pill px-3 py-1">100% 免費</span>
+                    <span class="badge bg-success bg-opacity-10 text-success rounded-pill px-3 py-1">繁體中文</span>
+                  </div>
+                  <a href="soundsync.html" class="btn btn-sm btn-primary rounded-pill px-4 font-bold shadow-sm">
+                    立即體驗 SoundSync ↗
+                  </a>
+                </div>
+              </article>
             </div>
-            <div class="col-lg-5 text-center text-lg-end">
-              <div class="bg-white p-4 rounded-4 border shadow-sm d-inline-block text-start w-100 mb-3">
-                <div class="fw-bold text-dark mb-2">⚡ 快速功能亮點：</div>
-                <ul class="list-unstyled mb-0 small text-secondary">
-                  <li class="mb-2">✅ 支援 MP3 / WAV 影音檔直傳聽打</li>
-                  <li class="mb-2">✅ 邊界時間軸微秒級精準打軸</li>
-                  <li class="mb-0">✅ 直連 Premiere / 剪映一鍵匯出</li>
-                </ul>
-              </div>
-              <a href="soundsync.html" class="btn btn-primary font-bold px-5 py-3 fs-6 rounded-pill w-100 shadow">
-                🚀 立即體驗 SoundSync AI 專頁 ↗
-              </a>
+
+            <!-- 2. AI 去背工具卡片 -->
+            <div class="col-md-6 col-lg-6">
+              <article class="card h-100 p-4 shadow-sm border rounded-4 position-relative overflow-hidden bg-white">
+                <div class="d-flex align-items-center gap-3 mb-3">
+                  <div class="p-3 rounded-3 text-white fs-3 font-bold d-flex align-items-center justify-content-center shadow-sm" style="width: 52px; height: 52px; background: linear-gradient(135deg, #059669, #10b981);">
+                    ✂️
+                  </div>
+                  <div>
+                    <h3 class="h5 fw-bold text-dark mb-1">Remove.bg AI 去背</h3>
+                    <div class="text-success small fw-bold">一鍵智慧人像與物體去背</div>
+                  </div>
+                </div>
+                <p class="text-secondary small mb-3 flex-grow-1" style="line-height: 1.7;">
+                  創作者必備神器！5 秒內自動將去背圖片轉為高解析度透明背景 PNG，無縫搭配字幕與配樂素材封面設計！
+                </p>
+                <div class="d-flex justify-content-between align-items-center pt-2 border-top">
+                  <div>
+                    <span class="badge bg-success bg-opacity-10 text-success rounded-pill px-3 py-1">免費試用</span>
+                    <span class="badge bg-secondary bg-opacity-10 text-dark rounded-pill px-3 py-1">快速去背</span>
+                  </div>
+                  <a href="https://www.remove.bg/zh-tw" target="_blank" rel="noopener" class="btn btn-sm btn-outline-success rounded-pill px-4 font-bold">
+                    前往 AI 去背 ↗
+                  </a>
+                </div>
+              </article>
             </div>
           </div>
-        </div>
+        </section>
 
 
         <!-- 【區塊二】：說明我們「免費整理全網 AI 工具給大家使用」的創作者賦能故事 -->
