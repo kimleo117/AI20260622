@@ -406,21 +406,21 @@
           else cleanMime = "audio/mp3";
         }
 
-        const candidateModels = [
-          { id: "gemini-2.0-flash", name: "Gemini 2.0 Flash 旗艦模型" },
-          { id: "gemini-2.0-flash-exp", name: "Gemini 2.0 Flash Exp" },
-          { id: "gemini-1.5-flash-latest", name: "Gemini 1.5 Flash Latest" },
-          { id: "gemini-1.5-flash-8b", name: "Gemini 1.5 Flash 8B" }
+        const candidateEndpoints = [
+          { url: "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent", name: "Gemini 1.5 Flash (v1beta)" },
+          { url: "https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent", name: "Gemini 1.5 Flash (v1)" },
+          { url: "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent", name: "Gemini 2.0 Flash Exp" },
+          { url: "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent", name: "Gemini 1.5 Pro" }
         ];
 
         let successData = null;
         let lastErrorMsg = "";
 
-        for (const mod of candidateModels) {
+        for (const ep of candidateEndpoints) {
           try {
-            syncProgressText.innerText = `SoundSync AI 正在使用 [${mod.name}] 高速對齊打軸中...`;
+            syncProgressText.innerText = `SoundSync AI 正在使用 [${ep.name}] 解析【${document.getElementById("audioFileName").innerText}】中...`;
             
-            const requestUrl = `https://generativelanguage.googleapis.com/v1beta/models/${mod.id}:generateContent?key=${apiKey}`;
+            const requestUrl = `${ep.url}?key=${apiKey}`;
             const requestBody = {
               contents: [
                 {
@@ -435,7 +435,8 @@
                       text: `你是一位專業的音訊工程師與歌詞字幕打軸大師。
 請解析這段音訊檔，將歌詞/對白進行高精度時間軸對齊 (Timestamps Alignment)。
 
-${userLyrics ? "參考歌詞文本如下 (請務必將以下歌詞 100% 完整對齊音訊時間點，絕不可遺漏任何一句)：\n" + userLyrics : "請自動聽寫並標出整首音訊的對白/歌詞與時間點。"}
+${userLyrics ? "參考歌詞文本如下 (請務必將以下歌詞 100% 完整對齊音訊時間點，絕不可遺漏任何一句)：
+" + userLyrics : "請自動聽寫並標出整首音訊的對白/歌詞與時間點。"}
 
 【輸出格式嚴格要求】：
 請務必且只能輸出一個純 JSON Array 格式，不要包含任何 markdown codeblock 標籤外殼：
@@ -463,13 +464,14 @@ ${userLyrics ? "參考歌詞文本如下 (請務必將以下歌詞 100% 完整�
 
             const data = await response.json();
             if (data.error) {
-              lastErrorMsg = data.error.message || `模型 ${mod.id} 回傳錯誤`;
-              continue;
+              lastErrorMsg = data.error.message || `端點 ${ep.name} 呼叫失敗`;
+              console.warn(`Endpoint ${ep.name} failed:`, data.error);
+              continue; // 自動默默切換至下一個相容端點，不跳出中途彈窗！
             }
 
             if (data.candidates && data.candidates[0] && data.candidates[0].content) {
               successData = data;
-              break;
+              break; // 成功！
             }
           } catch (e) {
             lastErrorMsg = e.message;
@@ -477,7 +479,7 @@ ${userLyrics ? "參考歌詞文本如下 (請務必將以下歌詞 100% 完整�
         }
 
         if (!successData) {
-          throw new Error(lastErrorMsg || "API 呼叫失敗，請檢查金鑰或網路連線。");
+          throw new Error(lastErrorMsg || "API 端點呼叫失敗，請檢查金鑰是否正確。");
         }
 
         let responseText = successData.candidates[0].content.parts[0].text;
