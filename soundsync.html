@@ -285,7 +285,91 @@
         if (this.files.length > 0) handleAudioFile(this.files[0]);
       });
 
-      let currentAudioMime = "audio/mp3";
+      
+      // WebAudio 16kHz Mono 聽寫降噪重抽樣引擎 (SoundSync Core Resampler)
+      async function extract16kHzMonoWavBase64(file, progressCb) {
+        if (progressCb) progressCb("正在啟動 WebAudio 引擎將音訊轉為 16kHz 語音聲軌...");
+        
+        try {
+          const arrayBuffer = await file.arrayBuffer();
+          const audioCtx = new (window.AudioContext || window.webkitAudioContext)({ sampleRate: 16000 });
+          const audioBuffer = await audioCtx.decodeAudioData(arrayBuffer);
+          
+          const targetSampleRate = 16000;
+          const duration = audioBuffer.duration;
+          const targetLength = Math.ceil(duration * targetSampleRate);
+
+          const offlineCtx = new OfflineAudioContext(1, targetLength, targetSampleRate);
+          const source = offlineCtx.createBufferSource();
+          source.buffer = audioBuffer;
+          source.connect(offlineCtx.destination);
+          source.start(0);
+
+          const renderedBuffer = await offlineCtx.startRendering();
+          const pcmData = renderedBuffer.getChannelData(0);
+          const wavBuffer = createWavFileBuffer(pcmData, targetSampleRate);
+          
+          await audioCtx.close();
+          const blob = new Blob([wavBuffer], { type: "audio/wav" });
+          const base64 = await blobToBase64(blob);
+          
+          return { base64, mimeType: "audio/wav" };
+        } catch (err) {
+          console.warn("WebAudio 16kHz 轉換失敗，自動退回原檔 Base64:", err);
+          const base64 = await blobToBase64(file);
+          return { base64, mimeType: file.type || "audio/mp3" };
+        }
+      }
+
+      function createWavFileBuffer(pcmData, sampleRate) {
+        const numChannels = 1;
+        const bitsPerSample = 16;
+        const bytesPerSample = bitsPerSample / 8;
+        const blockAlign = numChannels * bytesPerSample;
+        const byteRate = sampleRate * blockAlign;
+        const dataSize = pcmData.length * bytesPerSample;
+        const buffer = new ArrayBuffer(44 + dataSize);
+        const view = new DataView(buffer);
+
+        writeString(view, 0, 'RIFF');
+        view.setUint32(4, 36 + dataSize, true);
+        writeString(view, 8, 'WAVE');
+        writeString(view, 12, 'fmt ');
+        view.setUint32(16, 16, true);
+        view.setUint16(20, 1, true);
+        view.setUint16(22, numChannels, true);
+        view.setUint32(24, sampleRate, true);
+        view.setUint32(28, byteRate, true);
+        view.setUint16(32, blockAlign, true);
+        view.setUint16(34, bitsPerSample, true);
+        writeString(view, 36, 'data');
+        view.setUint32(40, dataSize, true);
+
+        let offset = 44;
+        for (let i = 0; i < pcmData.length; i++) {
+          let s = Math.max(-1, Math.min(1, pcmData[i]));
+          view.setInt16(offset, s < 0 ? s * 0x8000 : s * 0x7FFF, true);
+          offset += 2;
+        }
+        return buffer;
+      }
+
+      function writeString(view, offset, string) {
+        for (let i = 0; i < string.length; i++) {
+          view.setUint8(offset + i, string.charCodeAt(i));
+        }
+      }
+
+      function blobToBase64(blob) {
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onloadend = () => resolve(reader.result.split(',')[1]);
+          reader.onerror = reject;
+          reader.readAsDataURL(blob);
+        });
+      }
+
+      let currentAudioMime = "audio/wav";
 
       function handleAudioFile(file) {
         if (!file.type.startsWith("audio/")) {
@@ -308,12 +392,7 @@
           audioDuration.innerText = `${mins.toString().padStart(2,'0')}:${secs.toString().padStart(2,'0')}`;
         };
 
-        const reader = new FileReader();
-        reader.onload = function(e) {
-          const result = e.target.result;
-          currentAudioBase64 = result.split(",")[1];
-        };
-        reader.readAsDataURL(file);
+        // WebAudio 原生即時聲軌擷取機制
       }
 
       // 開始 AI 對齊與時間軸生成
