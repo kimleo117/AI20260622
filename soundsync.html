@@ -13,18 +13,19 @@
       --primary: #2f6fed;
       --primary-hover: #1d4ed8;
       --ink: #0f172a;
-      --card-bg: #ffffff;
     }
     body {
       background: #f8fafc;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       color: var(--ink);
+      padding-top: 0;
     }
     .hero-box {
       background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
       color: white;
       border-radius: 24px;
-      padding: 3.5rem 2rem;
+      padding: 3rem 2rem;
+      margin-top: 1.5rem;
       margin-bottom: 2rem;
       box-shadow: 0 20px 40px rgba(15, 23, 42, 0.15);
     }
@@ -40,7 +41,7 @@
       color: white;
       font-weight: 700;
       border-radius: 999px;
-      padding: 12px 32px;
+      padding: 14px 32px;
       border: none;
       transition: all 0.2s ease;
     }
@@ -51,17 +52,17 @@
       color: white;
     }
     .drop-zone {
-      border: 2px dashed #cbd5e1;
+      border: 2px dashed #3b82f6;
       border-radius: 16px;
-      padding: 2.5rem;
+      padding: 2.5rem 1.5rem;
       text-align: center;
-      background: #f8fafc;
+      background: #f0f7ff;
       cursor: pointer;
       transition: all 0.2s ease;
     }
-    .drop-zone:hover, .drop-zone.dragover {
-      border-color: var(--primary);
-      background: #eff6ff;
+    .drop-zone:hover {
+      border-color: #1d4ed8;
+      background: #e0f2fe;
     }
     .lyric-line-item {
       padding: 10px 14px;
@@ -90,9 +91,8 @@
 </head>
 <body>
 
-  <!-- 頂部導覽列 -->
-  <!-- 頂部滿版乾淨選單 -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3 sticky-top shadow">
+  <!-- 頂部滿版硬質選單 (不重疊內容) -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3 shadow-sm">
     <div class="container-fluid px-3 px-lg-5">
       <a class="navbar-brand d-flex align-items-center gap-2 fw-bold fs-4 text-white" href="index.html">
         <img src="pic/favicon.png" alt="Logo" width="32" height="32" class="rounded-circle">
@@ -103,17 +103,17 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto gap-1 gap-lg-3 align-items-center">
-          <li class="nav-item"><a class="nav-link" href="about.html">📖 關於我們</a></li>
-          <li class="nav-item"><a class="nav-link" href="pricing.html">💎 免費與付費</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="about.html">📖 關於我們</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="pricing.html">💎 免費與付費</a></li>
           <li class="nav-item"><a class="nav-link text-warning font-bold active" href="soundsync.html">🎵 SoundSync AI 旗艦</a></li>
-          <li class="nav-item"><a class="nav-link" href="index.html#sec-AI去背">✂️ AI 去背</a></li>
-          <li class="nav-item"><a class="nav-link" href="contact.html">✉️ 聯絡我們</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="index.html#sec-AI去背">✂️ AI 去背</a></li>
+          <li class="nav-item"><a class="nav-link text-white" href="contact.html">✉️ 聯絡我們</a></li>
         </ul>
       </div>
     </div>
   </nav>
 
-  <main class="container py-4">
+  <main class="container py-2">
 
     <!-- 主 Header 簡介區 -->
     <div class="hero-box text-center position-relative overflow-hidden">
@@ -124,13 +124,13 @@
       <!-- API Key 設置欄位 -->
       <div class="row justify-content-center">
         <div class="col-md-8 col-lg-6">
-          <div class="p-3 bg-white bg-opacity-10 rounded-4 border border-light border-opacity-20 backdrop-blur">
+          <div class="p-3 bg-white bg-opacity-10 rounded-4 border border-light border-opacity-20">
             <label for="apiKeyInput" class="form-label text-warning font-bold small mb-2 d-flex align-items-center justify-content-between">
               <span>🔑 填入您的 Google Gemini API Key：</span>
               <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener" class="text-info text-decoration-underline" style="font-size:0.8rem;">免費申請 Key ↗</a>
             </label>
             <div class="input-group">
-              <input type="password" id="apiKeyInput" class="form-control rounded-start-pill px-3" placeholder="貼上您的 AI Studio API Key (AIzaSy...)">
+              <input type="password" id="apiKeyInput" class="form-control rounded-start-pill px-3" placeholder="貼上您的 API Key (AIzaSy...)">
               <button class="btn btn-warning rounded-end-pill px-4 font-bold" type="button" id="saveKeyBtn">儲存金鑰</button>
             </div>
             <div id="keyStatusMsg" class="small text-success mt-2 fw-bold" style="display:none;">✓ API Key 已成功儲存於瀏覽器！</div>
@@ -140,7 +140,7 @@
     </div>
 
     <!-- 核心工作區 (兩欄佈局) -->
-    <div class="row g-4">
+    <div class="row g-4 mb-5">
       
       <!-- 左欄：音訊上傳與參考歌詞 -->
       <div class="col-lg-6">
@@ -149,15 +149,41 @@
             <span>🎙️</span> 步驟 1：上傳音訊與參考歌詞
           </h3>
 
-          <!-- 音訊拖曳上傳 -->
-          <!-- 音訊上傳 -->
-          <div class="drop-zone mb-3" id="dropZone">
+          <!-- 音訊上傳區 (Fail-Safe 直連機制) -->
+          <div class="drop-zone mb-3" onclick="document.getElementById('audioFileInput').click()">
             <div class="fs-1 text-primary mb-2">🎵</div>
-            <h4 class="h6 fw-bold text-dark mb-1">拖曳歌曲 MP3 / WAV 檔案至此</h4>
-            <p class="text-muted small mb-3">或點擊選擇檔案 (支援所有音訊格式)</p>
-            <input type="file" id="audioFileInput" class="d-none">
-            <button type="button" class="btn btn-outline-primary btn-sm rounded-pill px-4" id="selectFileBtn">選擇檔案</button>
+            <h4 class="h6 fw-bold text-dark mb-1">點擊此處選擇歌曲 MP3 / WAV 檔案</h4>
+            <p class="text-muted small mb-3">或將音訊檔拖曳至此 (支援 MP3, WAV, M4A, OGG)</p>
+            <input type="file" id="audioFileInput" style="display:none !important;" onchange="if(this.files && this.files.length>0) handleAudioFile(this.files[0])">
+            <button type="button" class="btn btn-primary btn-sm rounded-pill px-4 font-bold" onclick="event.stopPropagation(); document.getElementById('audioFileInput').click()">📂 選擇檔案上傳</button>
           </div>
+          
+          <!-- 音訊播放器 -->
+          <div id="audioPlayerContainer" class="mb-4 p-3 bg-light rounded-3 border" style="display:none;">
+            <div class="fw-bold text-dark small mb-2 d-flex justify-content-between align-items-center">
+              <span id="audioFileName" class="text-truncate" style="max-width:260px;">已載入音訊</span>
+              <span id="audioDuration" class="time-badge">00:00</span>
+            </div>
+            <audio id="audioPlayer" controls class="w-100"></audio>
+          </div>
+
+          <!-- 參考歌詞輸入區 -->
+          <div class="mb-3">
+            <label for="lyricsInput" class="form-label fw-bold text-dark small d-flex justify-content-between">
+              <span>📜 參考歌詞 (可貼上完整歌詞，對齊 100% 精準不漏字)：</span>
+              <span class="text-muted font-normal" style="font-size:0.75rem;">(選填)</span>
+            </label>
+            <textarea id="lyricsInput" class="form-control rounded-3" rows="6" placeholder="請將歌曲歌詞貼在此處（每句一行）...&#10;範例：&#10;把說不出口的愛 寫成一首歌&#10;伴隨著旋律 唱進你的心坎&#10;這是我們的 幻境配樂"></textarea>
+          </div>
+
+          <button id="startSyncBtn" class="btn btn-primary-custom w-100 py-3 fs-6 d-flex align-items-center justify-content-center gap-2 shadow">
+            <span>⚡</span> 開始 AI 聽打與精準打軸 (Start Sync)
+          </button>
+          <div id="syncProgressMsg" class="text-primary text-center fw-bold mt-2 small" style="display:none;">
+            <span class="spinner-border spinner-border-sm me-2" role="status"></span>
+            <span id="syncProgressText">SoundSync AI 正在解析音訊與歌詞對齊中...</span>
+          </div>
+        </div>
       </div>
 
       <!-- 右欄：時間軸預覽、提詞機與匯出 -->
@@ -170,7 +196,7 @@
             <span id="resultCountBadge" class="badge bg-success bg-opacity-10 text-success fw-bold">等待生成...</span>
           </div>
 
-          <!-- 歌詞時間軸列表 (提詞區) -->
+          <!-- 歌詞時間軸列表 -->
           <div id="timelineContainer" class="flex-grow-1 border rounded-3 p-3 bg-light overflow-auto mb-3" style="max-height: 420px; min-height: 280px;">
             <div class="text-center text-muted py-5">
               <div class="fs-2 mb-2">📜</div>
@@ -203,168 +229,145 @@
   </footer>
 
   <script>
-    (function() {
-      let currentAudioBase64 = "";
-      let parsedSubtitles = [];
+    let selectedAudioFile = null;
+    let currentAudioBase64 = "";
+    let currentAudioMime = "audio/mp3";
+    let parsedSubtitles = [];
 
-      // API Key LocalStorage 持久化儲存
-      const apiKeyInput = document.getElementById("apiKeyInput");
-      const saveKeyBtn = document.getElementById("saveKeyBtn");
-      const keyStatusMsg = document.getElementById("keyStatusMsg");
+    // 音訊檔案處理函數 (全平台 100% 直連)
+    function handleAudioFile(file) {
+      if (!file) return;
+      console.log("File selected:", file.name, file.type, file.size);
 
-      const savedKey = localStorage.getItem("soundsync_gemini_key");
-      if (savedKey) {
-        apiKeyInput.value = savedKey;
-        keyStatusMsg.style.display = "block";
-      }
+      selectedAudioFile = file;
+      currentAudioMime = file.type || "audio/mp3";
+      if (currentAudioMime === "audio/mpeg") currentAudioMime = "audio/mp3";
 
-      saveKeyBtn.addEventListener("click", function() {
-        const val = apiKeyInput.value.trim();
-        if (val) {
-          localStorage.setItem("soundsync_gemini_key", val);
-          keyStatusMsg.style.display = "block";
-          alert("✓ Gemini API Key 已成功儲存於您的瀏覽器！");
-        } else {
-          alert("請填入有效的 Gemini API Key！");
-        }
-      });
-
-      // 音訊上傳處理 (移除重複觸發與嚴格檢查)
-      const dropZone = document.getElementById("dropZone");
-      const audioFileInput = document.getElementById("audioFileInput");
-      const selectFileBtn = document.getElementById("selectFileBtn");
+      document.getElementById("audioFileName").innerText = file.name;
       const audioPlayerContainer = document.getElementById("audioPlayerContainer");
       const audioPlayer = document.getElementById("audioPlayer");
-      const audioFileName = document.getElementById("audioFileName");
       const audioDuration = document.getElementById("audioDuration");
 
-      if (selectFileBtn) {
-        selectFileBtn.addEventListener("click", function(e) {
-          e.stopPropagation();
-          audioFileInput.click();
-        });
+      const objectUrl = URL.createObjectURL(file);
+      audioPlayer.src = objectUrl;
+      audioPlayerContainer.style.display = "block";
+
+      audioPlayer.onloadedmetadata = function() {
+        const dur = Math.floor(audioPlayer.duration || 0);
+        const mins = Math.floor(dur / 60);
+        const secs = dur % 60;
+        audioDuration.innerText = `${mins.toString().padStart(2,'0')}:${secs.toString().padStart(2,'0')}`;
+      };
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        currentAudioBase64 = e.target.result.split(",")[1];
+        console.log("Audio Base64 loaded successfully!");
+      };
+      reader.readAsDataURL(file);
+    }
+
+    // 拖曳上傳支援
+    const dropZone = document.querySelector(".drop-zone");
+    if (dropZone) {
+      ["dragenter", "dragover"].forEach(eventName => {
+        dropZone.addEventListener(eventName, e => {
+          e.preventDefault();
+          dropZone.style.borderColor = "#1d4ed8";
+        }, false);
+      });
+      ["dragleave", "drop"].forEach(eventName => {
+        dropZone.addEventListener(eventName, e => {
+          e.preventDefault();
+          dropZone.style.borderColor = "#3b82f6";
+        }, false);
+      });
+      dropZone.addEventListener("drop", e => {
+        const files = e.dataTransfer.files;
+        if (files.length > 0) handleAudioFile(files[0]);
+      });
+    }
+
+    // API Key 儲存機制
+    const apiKeyInput = document.getElementById("apiKeyInput");
+    const saveKeyBtn = document.getElementById("saveKeyBtn");
+    const keyStatusMsg = document.getElementById("keyStatusMsg");
+
+    const savedKey = localStorage.getItem("soundsync_gemini_key");
+    if (savedKey) {
+      apiKeyInput.value = savedKey;
+      keyStatusMsg.style.display = "block";
+    }
+
+    saveKeyBtn.addEventListener("click", function() {
+      const val = apiKeyInput.value.trim();
+      if (val) {
+        localStorage.setItem("soundsync_gemini_key", val);
+        keyStatusMsg.style.display = "block";
+        alert("✓ Gemini API Key 已成功儲存於您的瀏覽器！");
+      } else {
+        alert("請填入有效的 Gemini API Key！");
+      }
+    });
+
+    // 聽打打軸按鈕
+    const startSyncBtn = document.getElementById("startSyncBtn");
+    const syncProgressMsg = document.getElementById("syncProgressMsg");
+    const syncProgressText = document.getElementById("syncProgressText");
+    const timelineContainer = document.getElementById("timelineContainer");
+    const resultCountBadge = document.getElementById("resultCountBadge");
+
+    startSyncBtn.addEventListener("click", async function() {
+      const apiKey = apiKeyInput.value.trim() || localStorage.getItem("soundsync_gemini_key");
+      if (!apiKey) {
+        alert("請先填入您的 Google Gemini API Key！");
+        apiKeyInput.focus();
+        return;
       }
 
-      if (dropZone) {
-        dropZone.addEventListener("click", function(e) {
-          if (e.target !== selectFileBtn) {
-            audioFileInput.click();
-          }
-        });
+      if (!selectedAudioFile && !currentAudioBase64) {
+        alert("請先選擇或拖曳上傳音訊檔案！");
+        return;
       }
 
-      if (audioFileInput) {
-        audioFileInput.addEventListener("change", function() {
-          if (this.files && this.files.length > 0) {
-            handleAudioFile(this.files[0]);
-          }
-        });
-      }
+      const userLyrics = document.getElementById("lyricsInput").value.trim();
 
-      let selectedAudioFile = null;
-      let currentAudioBase64 = "";
-      let currentAudioMime = "audio/mp3";
+      startSyncBtn.disabled = true;
+      syncProgressMsg.style.display = "block";
 
-      function handleAudioFile(file) {
-        if (!file) return;
+      try {
+        let audioPayloadBase64 = currentAudioBase64;
+        let audioPayloadMime = currentAudioMime;
 
-        selectedAudioFile = file;
-        currentAudioMime = file.type || "audio/mp3";
-        if (currentAudioMime === "audio/mpeg") currentAudioMime = "audio/mp3";
+        const candidateEndpoints = [
+          { url: "https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent", name: "Gemini 1.5 Flash (v1 正式版)" },
+          { url: "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent", name: "Gemini 2.0 Flash (v1beta)" },
+          { url: "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent", name: "Gemini 1.5 Flash Latest" },
+          { url: "https://generativelanguage.googleapis.com/v1/models/gemini-1.5-pro:generateContent", name: "Gemini 1.5 Pro" }
+        ];
 
-        audioFileName.innerText = file.name;
-        const objectUrl = URL.createObjectURL(file);
-        audioPlayer.src = objectUrl;
-        audioPlayerContainer.style.display = "block";
+        let successData = null;
+        let lastError = null;
 
-        audioPlayer.onloadedmetadata = function() {
-          const dur = Math.floor(audioPlayer.duration || 0);
-          const mins = Math.floor(dur / 60);
-          const secs = dur % 60;
-          audioDuration.innerText = `${mins.toString().padStart(2,'0')}:${secs.toString().padStart(2,'0')}`;
-        };
-
-        const reader = new FileReader();
-        reader.onload = function(e) {
-          currentAudioBase64 = e.target.result.split(",")[1];
-          console.log("Audio file loaded successfully, Base64 length:", currentAudioBase64.length);
-        };
-        reader.readAsDataURL(file);
-      }
-
-      // 開始 AI 對齊與時間軸生成
-      const startSyncBtn = document.getElementById("startSyncBtn");
-      const syncProgressMsg = document.getElementById("syncProgressMsg");
-      const syncProgressText = document.getElementById("syncProgressText");
-      const timelineContainer = document.getElementById("timelineContainer");
-      const resultCountBadge = document.getElementById("resultCountBadge");
-
-      startSyncBtn.addEventListener("click", async function() {
-        const apiKey = apiKeyInput.value.trim() || localStorage.getItem("soundsync_gemini_key");
-        if (!apiKey) {
-          alert("請先填入您的 Google Gemini API Key！");
-          apiKeyInput.focus();
-          return;
-        }
-
-        if (!selectedAudioFile && !currentAudioBase64) {
-          alert("請先選擇或拖曳上傳音訊檔案！");
-          return;
-        }
-
-        const userLyrics = document.getElementById("lyricsInput").value.trim();
-
-        startSyncBtn.disabled = true;
-        syncProgressMsg.style.display = "block";
-
-        try {
-          // 若有 selectedAudioFile，優先提取 16kHz 重抽樣聲軌
-          let audioPayloadBase64 = currentAudioBase64;
-          let audioPayloadMime = currentAudioMime;
-
-          if (selectedAudioFile) {
-            try {
-              syncProgressText.innerText = "SoundSync AI 正在透過 WebAudio 提取 16kHz 降噪聲軌...";
-              const extracted = await extract16kHzMonoWavBase64(selectedAudioFile);
-              if (extracted && extracted.base64) {
-                audioPayloadBase64 = extracted.base64;
-                audioPayloadMime = extracted.mimeType;
-              }
-            } catch (wErr) {
-              console.warn("WebAudio 擷取跳過，使用原檔 Base64:", wErr);
-            }
-          }
-
-          const candidateEndpoints = [
-            { url: "https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent", name: "Gemini 1.5 Flash (v1 正式版)" },
-            { url: "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent", name: "Gemini 2.0 Flash (v1beta)" },
-            { url: "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent", name: "Gemini 1.5 Flash Latest" },
-            { url: "https://generativelanguage.googleapis.com/v1/models/gemini-1.5-pro:generateContent", name: "Gemini 1.5 Pro" }
-          ];
-
-          let successData = null;
-          let lastError = null;
-
-          for (const ep of candidateEndpoints) {
-            try {
-              syncProgressText.innerText = `SoundSync AI 正在使用 [${ep.name}] 解析【${audioFileName.innerText}】中...`;
-              
-              const requestBody = {
-                contents: [
-                  {
-                    parts: [
-                      {
-                        inlineData: {
-                          mimeType: audioPayloadMime,
-                          data: audioPayloadBase64
-                        }
-                      },
-                      {
-                        text: `你是一位專業的音訊工程師與歌詞字幕打軸大師。
+        for (const ep of candidateEndpoints) {
+          try {
+            syncProgressText.innerText = `SoundSync AI 正在使用 [${ep.name}] 解析音訊與時間軸中...`;
+            
+            const requestBody = {
+              contents: [
+                {
+                  parts: [
+                    {
+                      inlineData: {
+                        mimeType: audioPayloadMime,
+                        data: audioPayloadBase64
+                      }
+                    },
+                    {
+                      text: `你是一位專業的音訊工程師與歌詞字幕打軸大師。
 請解析這段音訊檔，將歌詞/對白進行高精度時間軸對齊 (Timestamps Alignment)。
 
-${userLyrics ? "參考歌詞文本如下 (請務必將以下歌詞 100% 完整對齊音訊時間點，絕不可遺漏任何一句)：
-" + userLyrics : "請自動聽寫並標出整首音訊的對白/歌詞與時間點。"}
+${userLyrics ? "參考歌詞文本如下 (請務必將以下歌詞 100% 完整對齊音訊時間點，絕不可遺漏任何一句)：\n" + userLyrics : "請自動聽寫並標出整首音訊的對白/歌詞與時間點。"}
 
 【輸出格式嚴格要求】：
 請務必且只能輸出一個純 JSON Array 格式，不要包含任何 markdown codeblock 標籤外殼：
@@ -376,115 +379,115 @@ ${userLyrics ? "參考歌詞文本如下 (請務必將以下歌詞 100% 完整�
   }
 ]
 時間格式必須為 HH:MM:SS.mmm (例如 00:01:12.450)。每個句子的 end 時間不可超過下一句的 start 時間。`
-                      }
-                    ]
-                  }
-                ]
-              };
+                    }
+                  ]
+                }
+              ]
+            };
 
-              const response = await fetch(`${ep.url}?key=${apiKey}`, {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json"
-                },
-                body: JSON.stringify(requestBody)
-              });
+            const response = await fetch(`${ep.url}?key=${apiKey}`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json"
+              },
+              body: JSON.stringify(requestBody)
+            });
 
-              const data = await response.json();
-              if (data.error) {
-                lastError = new Error(data.error.message || `模型 ${ep.name} 呼叫失敗`);
-                continue; // 自動嘗試下一個模型
-              }
-
-              if (data.candidates && data.candidates[0] && data.candidates[0].content) {
-                successData = data;
-                break; // 成功！
-              }
-            } catch (e) {
-              lastError = e;
+            const data = await response.json();
+            if (data.error) {
+              lastError = new Error(data.error.message || `模型 ${ep.name} 呼叫失敗`);
+              continue;
             }
-          }
 
-          if (!successData) {
-            throw lastError || new Error("全數 Gemini API 模型嘗試失敗，請檢查 API Key 是否正確。");
-          }
-
-          let responseText = successData.candidates[0].content.parts[0].text;
-          responseText = responseText.replace(/```json/g, "").replace(/```/g, "").trim();
-
-          const rawSubtitles = JSON.parse(responseText);
-          parsedSubtitles = fixSubtitleOverlaps(rawSubtitles);
-
-          renderSubtitles(parsedSubtitles);
-          enableExportButtons();
-          resultCountBadge.innerText = `已精準打軸 ${parsedSubtitles.length} 句`;
-
-        } catch (err) {
-          alert("生成失敗：" + err.message);
-        } finally {
-          startSyncBtn.disabled = false;
-          syncProgressMsg.style.display = "none";
-        }
-      });
-
-      // 獨家邊界重疊衝突修復演算法 (Overlap Eraser)
-      function fixSubtitleOverlaps(subtitles) {
-        if (!Array.isArray(subtitles)) return [];
-        for (let i = 0; i < subtitles.length - 1; i++) {
-          let currEnd = parseSeconds(subtitles[i].end);
-          let nextStart = parseSeconds(subtitles[i+1].start);
-          if (currEnd >= nextStart) {
-            let adjustedEnd = Math.max(0, nextStart - 0.05);
-            subtitles[i].end = formatSecondsToHHMMSS(adjustedEnd);
-          }
-        }
-        return subtitles;
-      }
-
-      function parseSeconds(str) {
-        if (!str) return 0;
-        const parts = str.split(":");
-        if (parts.length === 3) {
-          return parseFloat(parts[0]) * 3600 + parseFloat(parts[1]) * 60 + parseFloat(parts[2]);
-        }
-        return parseFloat(str) || 0;
-      }
-
-      function formatSecondsToHHMMSS(sec) {
-        const hrs = Math.floor(sec / 3600);
-        const mins = Math.floor((sec % 3600) / 60);
-        const secs = (sec % 60).toFixed(3);
-        return `${hrs.toString().padStart(2,'0')}:${mins.toString().padStart(2,'0')}:${secs.padStart(6,'0')}`;
-      }
-
-      // 渲染歌詞時間軸
-      function renderSubtitles(subs) {
-        timelineContainer.innerHTML = "";
-        subs.forEach((item, idx) => {
-          const div = document.createElement("div");
-          div.className = "lyric-line-item d-flex align-items-center gap-3";
-          div.setAttribute("data-index", idx);
-          div.setAttribute("data-start", parseSeconds(item.start));
-          div.setAttribute("data-end", parseSeconds(item.end));
-
-          div.innerHTML = `
-            <span class="time-badge">${item.start} ➔ ${item.end}</span>
-            <span class="lyric-text text-dark flex-grow-1">${item.text}</span>
-          `;
-
-          div.addEventListener("click", function() {
-            const s = parseFloat(this.getAttribute("data-start"));
-            if (!isNaN(s)) {
-              audioPlayer.currentTime = s;
-              audioPlayer.play();
+            if (data.candidates && data.candidates[0] && data.candidates[0].content) {
+              successData = data;
+              break;
             }
-          });
+          } catch (e) {
+            lastError = e;
+          }
+        }
 
-          timelineContainer.appendChild(div);
+        if (!successData) {
+          throw lastError || new Error("全數 Gemini API 模型嘗試失敗，請檢查 API Key 是否正確。");
+        }
+
+        let responseText = successData.candidates[0].content.parts[0].text;
+        responseText = responseText.replace(/```json/g, "").replace(/```/g, "").trim();
+
+        const rawSubtitles = JSON.parse(responseText);
+        parsedSubtitles = fixSubtitleOverlaps(rawSubtitles);
+
+        renderSubtitles(parsedSubtitles);
+        enableExportButtons();
+        resultCountBadge.innerText = `已精準打軸 ${parsedSubtitles.length} 句`;
+
+      } catch (err) {
+        alert("生成失敗：" + err.message);
+      } finally {
+        startSyncBtn.disabled = false;
+        syncProgressMsg.style.display = "none";
+      }
+    });
+
+    function fixSubtitleOverlaps(subtitles) {
+      if (!Array.isArray(subtitles)) return [];
+      for (let i = 0; i < subtitles.length - 1; i++) {
+        let currEnd = parseSeconds(subtitles[i].end);
+        let nextStart = parseSeconds(subtitles[i+1].start);
+        if (currEnd >= nextStart) {
+          let adjustedEnd = Math.max(0, nextStart - 0.05);
+          subtitles[i].end = formatSecondsToHHMMSS(adjustedEnd);
+        }
+      }
+      return subtitles;
+    }
+
+    function parseSeconds(str) {
+      if (!str) return 0;
+      const parts = str.split(":");
+      if (parts.length === 3) {
+        return parseFloat(parts[0]) * 3600 + parseFloat(parts[1]) * 60 + parseFloat(parts[2]);
+      }
+      return parseFloat(str) || 0;
+    }
+
+    function formatSecondsToHHMMSS(sec) {
+      const hrs = Math.floor(sec / 3600);
+      const mins = Math.floor((sec % 3600) / 60);
+      const secs = (sec % 60).toFixed(3);
+      return `${hrs.toString().padStart(2,'0')}:${mins.toString().padStart(2,'0')}:${secs.padStart(6,'0')}`;
+    }
+
+    function renderSubtitles(subs) {
+      timelineContainer.innerHTML = "";
+      subs.forEach((item, idx) => {
+        const div = document.createElement("div");
+        div.className = "lyric-line-item d-flex align-items-center gap-3";
+        div.setAttribute("data-index", idx);
+        div.setAttribute("data-start", parseSeconds(item.start));
+        div.setAttribute("data-end", parseSeconds(item.end));
+
+        div.innerHTML = `
+          <span class="time-badge">${item.start} ➔ ${item.end}</span>
+          <span class="lyric-text text-dark flex-grow-1">${item.text}</span>
+        `;
+
+        div.addEventListener("click", function() {
+          const s = parseFloat(this.getAttribute("data-start"));
+          if (!isNaN(s)) {
+            const audioPlayer = document.getElementById("audioPlayer");
+            audioPlayer.currentTime = s;
+            audioPlayer.play();
+          }
         });
-      }
 
-      // 播放時即時高亮對齊提詞
+        timelineContainer.appendChild(div);
+      });
+    }
+
+    const audioPlayer = document.getElementById("audioPlayer");
+    if (audioPlayer) {
       audioPlayer.addEventListener("timeupdate", function() {
         const curTime = audioPlayer.currentTime;
         const lineItems = timelineContainer.querySelectorAll(".lyric-line-item");
@@ -499,64 +502,63 @@ ${userLyrics ? "參考歌詞文本如下 (請務必將以下歌詞 100% 完整�
           }
         });
       });
+    }
 
-      // 匯出功能 (SRT, LRC, VTT, TXT)
-      function enableExportButtons() {
-        document.getElementById("exportSrtBtn").disabled = false;
-        document.getElementById("exportLrcBtn").disabled = false;
-        document.getElementById("exportVttBtn").disabled = false;
-        document.getElementById("exportTxtBtn").disabled = false;
-      }
+    function enableExportButtons() {
+      document.getElementById("exportSrtBtn").disabled = false;
+      document.getElementById("exportLrcBtn").disabled = false;
+      document.getElementById("exportVttBtn").disabled = false;
+      document.getElementById("exportTxtBtn").disabled = false;
+    }
 
-      document.getElementById("exportSrtBtn").addEventListener("click", function() {
-        let srtStr = "";
-        parsedSubtitles.forEach((sub, i) => {
-          let s = sub.start.replace(".", ",");
-          let e = sub.end.replace(".", ",");
-          srtStr += `${i + 1}\n${s} --> ${e}\n${sub.text}\n\n`;
-        });
-        downloadFile(srtStr, "SoundSync_Lyrics.srt", "text/plain");
+    document.getElementById("exportSrtBtn").addEventListener("click", function() {
+      let srtStr = "";
+      parsedSubtitles.forEach((sub, i) => {
+        let s = sub.start.replace(".", ",");
+        let e = sub.end.replace(".", ",");
+        srtStr += `${i + 1}\n${s} --> ${e}\n${sub.text}\n\n`;
       });
+      downloadFile(srtStr, "SoundSync_Lyrics.srt", "text/plain");
+    });
 
-      document.getElementById("exportLrcBtn").addEventListener("click", function() {
-        let lrcStr = "";
-        parsedSubtitles.forEach(sub => {
-          let parts = sub.start.split(":");
-          let min = parseInt(parts[0]) * 60 + parseInt(parts[1]);
-          let sec = parseFloat(parts[2]).toFixed(2);
-          lrcStr += `[${min.toString().padStart(2,'0')}:${sec.padStart(5,'0')}]${sub.text}\n`;
-        });
-        downloadFile(lrcStr, "SoundSync_Lyrics.lrc", "text/plain");
+    document.getElementById("exportLrcBtn").addEventListener("click", function() {
+      let lrcStr = "";
+      parsedSubtitles.forEach(sub => {
+        let parts = sub.start.split(":");
+        let min = parseInt(parts[0]) * 60 + parseInt(parts[1]);
+        let sec = parseFloat(parts[2]).toFixed(2);
+        lrcStr += `[${min.toString().padStart(2,'0')}:${sec.padStart(5,'0')}]${sub.text}\n`;
       });
+      downloadFile(lrcStr, "SoundSync_Lyrics.lrc", "text/plain");
+    });
 
-      document.getElementById("exportVttBtn").addEventListener("click", function() {
-        let vttStr = "WEBVTT\n\n";
-        parsedSubtitles.forEach((sub, i) => {
-          vttStr += `${i + 1}\n${sub.start} --> ${sub.end}\n${sub.text}\n\n`;
-        });
-        downloadFile(vttStr, "SoundSync_Lyrics.vtt", "text/plain");
+    document.getElementById("exportVttBtn").addEventListener("click", function() {
+      let vttStr = "WEBVTT\n\n";
+      parsedSubtitles.forEach((sub, i) => {
+        vttStr += `${i + 1}\n${sub.start} --> ${sub.end}\n${sub.text}\n\n`;
       });
+      downloadFile(vttStr, "SoundSync_Lyrics.vtt", "text/plain");
+    });
 
-      document.getElementById("exportTxtBtn").addEventListener("click", function() {
-        let txtStr = "";
-        parsedSubtitles.forEach(sub => {
-          txtStr += `[${sub.start}] ${sub.text}\n`;
-        });
-        navigator.clipboard.writeText(txtStr).then(() => {
-          alert("✓ 歌詞時間軸文字已成功複製到剪貼簿！");
-        });
+    document.getElementById("exportTxtBtn").addEventListener("click", function() {
+      let txtStr = "";
+      parsedSubtitles.forEach(sub => {
+        txtStr += `[${sub.start}] ${sub.text}\n`;
       });
+      navigator.clipboard.writeText(txtStr).then(() => {
+        alert("✓ 歌詞時間軸文字已成功複製到剪貼簿！");
+      });
+    });
 
-      function downloadFile(content, fileName, mimeType) {
-        const blob = new Blob([content], { type: mimeType });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = fileName;
-        a.click();
-        URL.revokeObjectURL(url);
-      }
-    })();
+    function downloadFile(content, fileName, mimeType) {
+      const blob = new Blob([content], { type: mimeType });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = fileName;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
   </script>
 </body>
 </html>
