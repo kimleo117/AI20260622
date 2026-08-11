@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>💚 LINE 潮款個人頭貼產生器 | 免費高清 1:1 LINE Avatar Studio</title>
+  <meta name="description" content="專業 LINE 大頭貼與社群大圖生成器，支援 LINE 圓形框模擬預覽、認證綠勾勾、尊爵皇冠邊框、自訂照片上傳與 HD PNG 高清匯出。">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@600;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --line-green: #06c755;
+      --line-green-hover: #05b34c;
+      --dark-bg: #0b0f19;
+      --card-bg: #151d2a;
+      --border-color: #2a364f;
+    }
+    body {
+      background: var(--dark-bg);
+      color: #f8fafc;
+      font-family: "Noto Sans TC", sans-serif;
+      padding-bottom: 3rem;
+    }
+    .navbar-custom {
+      background: #0f172a;
+      border-bottom: 1px solid #1e293b;
+      padding: 1rem 0;
+    }
+    .card-studio {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    }
+    .form-control-custom, .form-select-custom {
+      background: #0f172a !important;
+      color: #ffffff !important;
+      border: 1px solid #334155 !important;
+      padding: 12px 16px;
+      border-radius: 12px;
+    }
+    .form-control-custom:focus, .form-select-custom:focus {
+      border-color: var(--line-green) !important;
+      box-shadow: 0 0 0 4px rgba(6, 199, 85, 0.25) !important;
+    }
+    .btn-line {
+      background: linear-gradient(135deg, var(--line-green), #049f43);
+      border: none;
+      color: white;
+      font-weight: 700;
+      padding: 14px 32px;
+      border-radius: 999px;
+      font-size: 1.1rem;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .btn-line:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(6, 199, 85, 0.4);
+      color: white;
+    }
+    
+    /* 畫布與預覽容器 */
+    .canvas-container {
+      position: relative;
+      width: 100%;
+      max-width: 420px;
+      margin: 0 auto;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+      background: #020617;
+      border: 3px solid #334155;
+    }
+    #avatarCanvas {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 20px;
+    }
+    
+    /* LINE 圓形遮罩切換 */
+    .mask-circle #avatarCanvas {
+      border-radius: 50% !important;
+    }
+
+    /* 預設頭貼縮圖選單 */
+    .preset-avatar-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+    .preset-avatar-item {
+      aspect-ratio: 1/1;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 2px solid #334155;
+      cursor: pointer;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+    .preset-avatar-item:hover, .preset-avatar-item.active {
+      border-color: var(--line-green);
+      transform: scale(1.05);
+    }
+    .preset-avatar-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* LINE 聊天室模擬對話框 */
+    .line-chat-preview {
+      background: #8499b4;
+      border-radius: 18px;
+      padding: 1.25rem;
+      color: #000;
+    }
+    .line-msg-bubble {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 10px 14px;
+      max-width: 240px;
+      font-size: 0.95rem;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      position: relative;
+    }
+    .line-msg-bubble::before {
+      content: "";
+      position: absolute;
+      left: -8px;
+      top: 12px;
+      border-top: 6px solid transparent;
+      border-bottom: 6px solid transparent;
+      border-right: 8px solid #ffffff;
+    }
+    .chat-avatar-thumb {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1.5px solid rgba(255,255,255,0.8);
+    }
+
+    .tutorial-step-card {
+      background: linear-gradient(135deg, #06c75515 0%, #3b82f615 100%);
+      border: 1px solid #06c75540;
+      border-radius: 16px;
+      padding: 1.2rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 導覽列 -->
+  <nav class="navbar navbar-expand-lg navbar-dark navbar-custom mb-4">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center gap-2 fw-bold fs-4 text-white" href="index.html">
+        <span class="fs-3">💚</span> LINE 潮款個人頭貼產生器
+      </a>
+      <div class="d-flex gap-2">
+        <a href="index.html" class="btn btn-outline-light rounded-pill px-3 py-1 btn-sm">🏠 返回首頁</a>
+        <a href="about.html" class="btn btn-outline-success rounded-pill px-3 py-1 btn-sm">✨ 關於我們</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container" style="max-width: 1140px;">
+    
+    <!-- 💡 超新手 3 步驟圖文教學卡片 -->
+    <div class="tutorial-step-card mb-4 text-white">
+      <div class="d-flex align-items-center gap-2 mb-2">
+        <span class="fs-4">💡</span>
+        <h2 class="h5 fw-bold text-success mb-0">超簡單 3 步驟！自己做專屬 LINE 認證質感頭貼：</h2>
+      </div>
+      <div class="row g-3 text-start mt-1">
+        <div class="col-md-4">
+          <div class="p-2 rounded-3 bg-dark bg-opacity-50 border border-secondary border-opacity-30 h-100">
+            <div class="fw-bold text-warning small mb-1">1️⃣ 第一步：選擇或上傳圖片</div>
+            <div class="small text-secondary">點右側「📁 上傳照片」選您自己的大頭照，或點選 4 張預設 AI 頭像。</div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="p-2 rounded-3 bg-dark bg-opacity-50 border border-secondary border-opacity-30 h-100">
+            <div class="fw-bold text-info small mb-1">2️⃣ 第二步：微調與加綠勾勾/皇冠</div>
+            <div class="small text-secondary">拉動縮放與旋轉調整位置，並在「👑 認證與徽章」頁籤加上 LINE 綠勾勾或皇冠！</div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="p-2 rounded-3 bg-dark bg-opacity-50 border border-secondary border-opacity-30 h-100">
+            <div class="fw-bold text-success small mb-1">3️⃣ 第三步：一鍵下載 PNG</div>
+            <div class="small text-secondary">點左側綠色「💾 下載 LINE 標準高清頭貼」按鈕，直接存手機或電腦替換！</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-studio mb-4">
+      <div class="row g-4">
+        
+        <!-- 左半部：畫布與 LINE 聊天室模擬預覽區 -->
+        <div class="col-lg-5 text-center">
+          
+          <div class="d-flex align-items-center justify-content-between mb-3 px-2">
+            <h2 class="h5 fw-bold text-white mb-0">🖼️ 頭貼即時預覽 (1000×1000 HD)</h2>
+            
+            <!-- 方形 / LINE 圓形切換 -->
+            <div class="btn-group btn-group-sm" role="group">
+              <button type="button" class="btn btn-outline-success active" id="viewRoundBtn">⭕ LINE 圓形框</button>
+              <button type="button" class="btn btn-outline-secondary" id="viewSquareBtn">⬛ 原圖方形框</button>
+            </div>
+          </div>
+
+          <!-- HTML5 Canvas 畫布容器 -->
+          <div class="canvas-container mask-circle mb-4" id="canvasFrame">
+            <canvas id="avatarCanvas" width="1000" height="1000"></canvas>
+          </div>
+
+          <!-- LINE 聊天室實境對話框模擬區 -->
+          <div class="line-chat-preview text-start mb-3 shadow-sm">
+            <div class="small fw-bold text-secondary mb-2" style="color: #475569 !important;">💬 LINE 聊天室實際效果模擬：</div>
+            <div class="d-flex align-items-start gap-3">
+              <img id="chatAvatarThumb" class="chat-avatar-thumb" src="img/avatar_preset1.jpg" alt="Chat Avatar">
+              <div>
+                <div class="fw-bold small text-dark mb-1" id="chatUserName">幻境 AI 創作者</div>
+                <div class="line-msg-bubble">
+                  這是我的全新 LINE 質感大頭貼！是不是超有個人風格！✨💚
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 一鍵下載與複製按鈕 -->
+          <div class="d-grid gap-2">
+            <button id="downloadPngBtn" class="btn btn-line shadow">💾 一鍵下載 LINE 標準高清頭貼 (PNG)</button>
+            <button id="copyCanvasBtn" class="btn btn-outline-light rounded-pill font-bold">📋 複製圖片到剪貼簿</button>
+          </div>
+
+        </div>
+
+        <!-- 右半部：潮款客製化控制面板 -->
+        <div class="col-lg-7">
+          
+          <ul class="nav nav-pills gap-2 mb-3 border-bottom border-secondary border-opacity-25 pb-3" id="avatarTab" role="tablist">
+            <li class="nav-item">
+              <button class="nav-link active fw-bold rounded-pill px-3 py-2" id="tab-presets" data-bs-toggle="pill" data-bs-target="#panel-presets">🎨 潮流頭像集</button>
+            </li>
+            <li class="nav-item">
+              <button class="nav-link fw-bold rounded-pill px-3 py-2" id="tab-badges" data-bs-toggle="pill" data-bs-target="#panel-badges">👑 認證與徽章</button>
+            </li>
+            <li class="nav-item">
+              <button class="nav-link fw-bold rounded-pill px-3 py-2" id="tab-bg" data-bs-toggle="pill" data-bs-target="#panel-bg">🌈 背景與顏色</button>
+            </li>
+            <li class="nav-item">
+              <button class="nav-link fw-bold rounded-pill px-3 py-2" id="tab-text" data-bs-toggle="pill" data-bs-target="#panel-text">🏷️ 個人標籤文字</button>
+            </li>
+          </ul>
+
+          <div class="tab-content" id="avatarTabContent">
+            
+            <!-- 面板 1：潮流頭像集 & 上傳照片 -->
+            <div class="tab-pane fade show active" id="panel-presets">
+              <div class="mb-4">
+                <label class="form-label fw-bold text-warning fs-6 mb-2">📁 自訂相片上傳 (選擇您自己的大頭照)：</label>
+                <input type="file" id="uploadImageInput" class="form-control form-control-custom w-100" accept="image/*">
+                <div class="form-text text-secondary small mt-1">上傳後可自由縮放與旋轉調整居中！</div>
+              </div>
+
+              <div class="mb-4">
+                <label class="form-label fw-bold text-success fs-6 mb-2">✨ 或精選 AI 潮流頭像範本 (一鍵套用)：</label>
+                <div class="preset-avatar-grid">
+                  <div class="preset-avatar-item active" data-src="img/avatar_preset1.jpg">
+                    <img src="img/avatar_preset1.jpg" alt="賽博霓虹">
+                  </div>
+                  <div class="preset-avatar-item" data-src="img/avatar_preset2.jpg">
+                    <img src="img/avatar_preset2.jpg" alt="日系動漫">
+                  </div>
+                  <div class="preset-avatar-item" data-src="img/avatar_preset3.jpg">
+                    <img src="img/avatar_preset3.jpg" alt="3D黏土">
+                  </div>
+                  <div class="preset-avatar-item" data-src="img/avatar_preset4.jpg">
+                    <img src="img/avatar_preset4.jpg" alt="尊爵商務">
+                  </div>
+                </div>
+              </div>
+
+              <!-- 圖片縮放與旋轉調整 -->
+              <div class="p-3 bg-dark rounded-3 border border-secondary border-opacity-30">
+                <div class="fw-bold text-info small mb-3">🔍 相片尺寸與位置縮放微調：</div>
+                
+                <div class="mb-3">
+                  <div class="d-flex justify-content-between small text-secondary mb-1">
+                    <span>圖片縮放比例 (Zoom)</span>
+                    <span id="zoomValText">100%</span>
+                  </div>
+                  <input type="range" class="form-range" id="zoomRange" min="50" max="200" value="100">
+                </div>
+
+                <div class="mb-0">
+                  <div class="d-flex justify-content-between small text-secondary mb-1">
+                    <span>圖片旋轉角度 (Rotate)</span>
+                    <span id="rotateValText">0°</span>
+                  </div>
+                  <input type="range" class="form-range" id="rotateRange" min="-180" max="180" value="0">
+                </div>
+              </div>
+            </div>
+
+            <!-- 面板 2：認證與徽章外框 -->
+            <div class="tab-pane fade" id="panel-badges">
+              <div class="mb-4">
+                <label class="form-label fw-bold text-info fs-6 mb-2">☑️ LINE 認證標籤 / 徽章裝飾：</label>
+                <select id="badgeSelect" class="form-select form-select-custom w-100">
+                  <option value="none" selected>🚫 無徽章</option>
+                  <option value="line_verified">☑️ LINE 官方認證綠勾勾 (右下角)</option>
+                  <option value="crown">👑 VIP 尊爵黃金皇冠 (正上方)</option>
+                  <option value="star">⭐ 星級創作者金星 (右下角)</option>
+                  <option value="heart">💖 甜美粉紅愛心 (右下角)</option>
+                  <option value="fire">🔥 熱門爆款火焰 (右下角)</option>
+                </select>
+              </div>
+
+              <div class="mb-4">
+                <label class="form-label fw-bold text-success fs-6 mb-2">⭕ 外框光圈邊框樣式：</label>
+                <select id="borderSelect" class="form-select form-select-custom w-100">
+                  <option value="none" selected>🚫 無外框</option>
+                  <option value="line_green">💚 LINE 品牌經典綠色光條</option>
+                  <option value="gold_glow">✨ 尊爵炫金發光邊框</option>
+                  <option value="cyber_neon">⚡ 賽博霓虹粉藍雙色邊框</option>
+                  <option value="white_clean">🤍 純白俐落邊框</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- 面板 3：背景與顏色 -->
+            <div class="tab-pane fade" id="panel-bg">
+              <div class="mb-4">
+                <label class="form-label fw-bold text-warning fs-6 mb-2">🎨 背景樣式風格：</label>
+                <select id="bgTypeSelect" class="form-select form-select-custom w-100">
+                  <option value="image" selected>🖼️ 使用原始相片背景</option>
+                  <option value="gradient_cyber">🌌 賽博極光漸層 (紫藍)</option>
+                  <option value="gradient_sunset">🌅 暮光夕陽漸層 (粉橘)</option>
+                  <option value="gradient_emerald">翡翠金綠漸層 (綠金)</option>
+                  <option value="gradient_darkgold">🏆 黑金尊爵漸層 (黑金)</option>
+                  <option value="solid">🎨 單色自訂背景</option>
+                </select>
+              </div>
+
+              <div class="mb-4" id="solidColorPickerBox" style="display: none;">
+                <label class="form-label fw-bold text-info fs-6 mb-2">🎨 選擇單色背景顏色：</label>
+                <input type="color" id="solidColorInput" class="form-control form-control-color w-100" value="#06c755" style="height: 48px;">
+              </div>
+            </div>
+
+            <!-- 面板 4：個人標籤文字 -->
+            <div class="tab-pane fade" id="panel-text">
+              <div class="mb-3">
+                <label class="form-label fw-bold text-warning fs-6 mb-1">🏷️ 浮雕標籤文字 (例如：CREATOR / BOSS / 幻境配樂)：</label>
+                <input type="text" id="overlayTextInput" class="form-control form-control-custom w-100" placeholder="輸入浮雕文字 (選填)">
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label fw-bold text-info fs-6 mb-1">💬 LINE 聊天室顯示姓名 (僅供下方對話框模擬)：</label>
+                <input type="text" id="userNameInput" class="form-control form-control-custom w-100" value="幻境 AI 創作者">
+              </div>
+
+              <div class="row g-3">
+                <div class="col-6">
+                  <label class="form-label text-secondary small mb-1">標籤背景顏色</label>
+                  <input type="color" id="tagBgColorInput" class="form-control form-control-color w-100" value="#06c755" style="height: 42px;">
+                </div>
+                <div class="col-6">
+                  <label class="form-label text-secondary small mb-1">文字顏色</label>
+                  <input type="color" id="tagTextColorInput" class="form-control form-control-color w-100" value="#ffffff" style="height: 42px;">
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const canvas = document.getElementById('avatarCanvas');
+    const ctx = canvas.getContext('2d');
+
+    const viewRoundBtn = document.getElementById('viewRoundBtn');
+    const viewSquareBtn = document.getElementById('viewSquareBtn');
+    const canvasFrame = document.getElementById('canvasFrame');
+    const chatAvatarThumb = document.getElementById('chatAvatarThumb');
+    const chatUserName = document.getElementById('chatUserName');
+
+    const uploadImageInput = document.getElementById('uploadImageInput');
+    const zoomRange = document.getElementById('zoomRange');
+    const rotateRange = document.getElementById('rotateRange');
+    const zoomValText = document.getElementById('zoomValText');
+    const rotateValText = document.getElementById('rotateValText');
+
+    const badgeSelect = document.getElementById('badgeSelect');
+    const borderSelect = document.getElementById('borderSelect');
+    const bgTypeSelect = document.getElementById('bgTypeSelect');
+    const solidColorPickerBox = document.getElementById('solidColorPickerBox');
+    const solidColorInput = document.getElementById('solidColorInput');
+
+    const overlayTextInput = document.getElementById('overlayTextInput');
+    const userNameInput = document.getElementById('userNameInput');
+    const tagBgColorInput = document.getElementById('tagBgColorInput');
+    const tagTextColorInput = document.getElementById('tagTextColorInput');
+
+    const downloadPngBtn = document.getElementById('downloadPngBtn');
+    const copyCanvasBtn = document.getElementById('copyCanvasBtn');
+
+    let currentImg = new Image();
+    currentImg.crossOrigin = "anonymous";
+    currentImg.src = 'img/avatar_preset1.jpg';
+
+    currentImg.onload = () => {
+      renderCanvas();
+    };
+
+    // 圓形 / 方形切換
+    viewRoundBtn.addEventListener('click', () => {
+      viewRoundBtn.classList.remove('btn-outline-secondary');
+      viewRoundBtn.classList.add('btn-outline-success', 'active');
+      viewSquareBtn.classList.remove('btn-outline-success', 'active');
+      viewSquareBtn.classList.add('btn-outline-secondary');
+      canvasFrame.classList.add('mask-circle');
+    });
+
+    viewSquareBtn.addEventListener('click', () => {
+      viewSquareBtn.classList.remove('btn-outline-secondary');
+      viewSquareBtn.classList.add('btn-outline-success', 'active');
+      viewRoundBtn.classList.remove('btn-outline-success', 'active');
+      viewRoundBtn.classList.add('btn-outline-secondary');
+      canvasFrame.classList.remove('mask-circle');
+    });
+
+    // 預設頭貼套用
+    document.querySelectorAll('.preset-avatar-item').forEach(item => {
+      item.addEventListener('click', () => {
+        document.querySelectorAll('.preset-avatar-item').forEach(i => i.classList.remove('active'));
+        item.classList.add('active');
+        const src = item.getAttribute('data-src');
+        currentImg = new Image();
+        currentImg.crossOrigin = "anonymous";
+        currentImg.src = src;
+        currentImg.onload = () => renderCanvas();
+      });
+    });
+
+    // 上傳個人相片
+    uploadImageInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          currentImg = new Image();
+          currentImg.src = event.target.result;
+          currentImg.onload = () => renderCanvas();
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    // 微調即時繪製 Canvas
+    zoomRange.addEventListener('input', () => {
+      zoomValText.textContent = `${zoomRange.value}%`;
+      renderCanvas();
+    });
+    rotateRange.addEventListener('input', () => {
+      rotateValText.textContent = `${rotateRange.value}°`;
+      renderCanvas();
+    });
+    badgeSelect.addEventListener('change', renderCanvas);
+    borderSelect.addEventListener('change', renderCanvas);
+    
+    bgTypeSelect.addEventListener('change', () => {
+      if (bgTypeSelect.value === 'solid') {
+        solidColorPickerBox.style.display = 'block';
+      } else {
+        solidColorPickerBox.style.display = 'none';
+      }
+      renderCanvas();
+    });
+    solidColorInput.addEventListener('input', renderCanvas);
+    overlayTextInput.addEventListener('input', renderCanvas);
+    tagBgColorInput.addEventListener('input', renderCanvas);
+    tagTextColorInput.addEventListener('input', renderCanvas);
+
+    userNameInput.addEventListener('input', () => {
+      chatUserName.textContent = userNameInput.value.trim() || 'LINE 使用者';
+    });
+
+    // 🎨 Canvas 核心繪製邏輯 (1000x1000 超高清)
+    function renderCanvas() {
+      const size = 1000;
+      ctx.clearRect(0, 0, size, size);
+
+      // 1. 繪製背景
+      const bgType = bgTypeSelect.value;
+      if (bgType === 'solid') {
+        ctx.fillStyle = solidColorInput.value;
+        ctx.fillRect(0, 0, size, size);
+      } else if (bgType.startsWith('gradient_')) {
+        let grad = ctx.createLinearGradient(0, 0, size, size);
+        if (bgType === 'gradient_cyber') {
+          grad.addColorStop(0, '#3b0764');
+          grad.addColorStop(1, '#1e40af');
+        } else if (bgType === 'gradient_sunset') {
+          grad.addColorStop(0, '#be123c');
+          grad.addColorStop(1, '#f59e0b');
+        } else if (bgType === 'gradient_emerald') {
+          grad.addColorStop(0, '#064e3b');
+          grad.addColorStop(1, '#10b981');
+        } else if (bgType === 'gradient_darkgold') {
+          grad.addColorStop(0, '#0f172a');
+          grad.addColorStop(1, '#d97706');
+        }
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, size, size);
+      }
+
+      // 2. 繪製圖片 (支援 Zoom 與 Rotate)
+      ctx.save();
+      ctx.translate(size / 2, size / 2);
+      const rad = (parseFloat(rotateRange.value) * Math.PI) / 180;
+      ctx.rotate(rad);
+      const scale = parseFloat(zoomRange.value) / 100;
+
+      if (currentImg && currentImg.complete && currentImg.naturalWidth !== 0) {
+        const iw = currentImg.naturalWidth;
+        const ih = currentImg.naturalHeight;
+        const aspect = iw / ih;
+
+        let drawW, drawH;
+        if (aspect > 1) {
+          drawH = size * scale;
+          drawW = drawH * aspect;
+        } else {
+          drawW = size * scale;
+          drawH = drawW / aspect;
+        }
+
+        ctx.drawImage(currentImg, -drawW / 2, -drawH / 2, drawW, drawH);
+      }
+      ctx.restore();
+
+      // 3. 繪製外框光圈
+      const borderType = borderSelect.value;
+      if (borderType !== 'none') {
+        ctx.save();
+        ctx.lineWidth = 36;
+        if (borderType === 'line_green') {
+          ctx.strokeStyle = '#06c755';
+        } else if (borderType === 'gold_glow') {
+          ctx.strokeStyle = '#f59e0b';
+          ctx.shadowColor = '#fbbf24';
+          ctx.shadowBlur = 30;
+        } else if (borderType === 'cyber_neon') {
+          ctx.strokeStyle = '#ec4899';
+          ctx.shadowColor = '#3b82f6';
+          ctx.shadowBlur = 35;
+        } else if (borderType === 'white_clean') {
+          ctx.strokeStyle = '#ffffff';
+        }
+        ctx.beginPath();
+        ctx.arc(size / 2, size / 2, size / 2 - 18, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.restore();
+      }
+
+      // 4. 繪製 LINE 認證標籤 / 徽章
+      const badge = badgeSelect.value;
+      if (badge === 'line_verified') {
+        // 右下角 LINE 綠勾勾
+        const cx = 820, cy = 820, r = 90;
+        ctx.save();
+        ctx.fillStyle = '#06c755';
+        ctx.beginPath();
+        ctx.arc(cx, cy, r, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.lineWidth = 12;
+        ctx.strokeStyle = '#ffffff';
+        ctx.stroke();
+
+        // 勾勾圖案
+        ctx.lineWidth = 20;
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineCap = 'round';
+        ctx.beginPath();
+        ctx.moveTo(cx - 36, cy);
+        ctx.lineTo(cx - 10, cy + 28);
+        ctx.lineTo(cx + 40, cy - 28);
+        ctx.stroke();
+        ctx.restore();
+      } else if (badge === 'crown') {
+        // 正上方皇冠
+        ctx.save();
+        ctx.font = "160px sans-serif";
+        ctx.textAlign = "center";
+        ctx.fillText("👑", size / 2, 180);
+        ctx.restore();
+      } else if (badge === 'star') {
+        ctx.save();
+        ctx.font = "160px sans-serif";
+        ctx.fillText("⭐", 720, 880);
+        ctx.restore();
+      } else if (badge === 'heart') {
+        ctx.save();
+        ctx.font = "160px sans-serif";
+        ctx.fillText("💖", 720, 880);
+        ctx.restore();
+      } else if (badge === 'fire') {
+        ctx.save();
+        ctx.font = "160px sans-serif";
+        ctx.fillText("🔥", 720, 880);
+        ctx.restore();
+      }
+
+      // 5. 繪製浮雕標籤文字
+      const textVal = overlayTextInput.value.trim();
+      if (textVal) {
+        ctx.save();
+        ctx.font = "bold 52px 'Outfit', 'Noto Sans TC', sans-serif";
+        const textWidth = ctx.measureText(textVal).width;
+        const paddingX = 40, paddingY = 20;
+        const rectW = textWidth + paddingX * 2;
+        const rectH = 80;
+        const rx = (size - rectW) / 2;
+        const ry = size - 140;
+
+        // 藥丸背景
+        ctx.fillStyle = tagBgColorInput.value;
+        ctx.beginPath();
+        ctx.roundRect(rx, ry, rectW, rectH, 999);
+        ctx.fill();
+        ctx.lineWidth = 6;
+        ctx.strokeStyle = "#ffffff";
+        ctx.stroke();
+
+        // 文字
+        ctx.fillStyle = tagTextColorInput.value;
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText(textVal, size / 2, ry + rectH / 2);
+        ctx.restore();
+      }
+
+      // 更新 LINE 聊天室縮圖預覽
+      chatAvatarThumb.src = canvas.toDataURL("image/png");
+    }
+
+    // 下載 PNG 檔案
+    downloadPngBtn.addEventListener('click', () => {
+      const link = document.createElement('a');
+      link.download = 'line_avatar_hd.png';
+      link.href = canvas.toDataURL('image/png', 1.0);
+      link.click();
+    });
+
+    // 複製圖片至剪貼簿
+    copyCanvasBtn.addEventListener('click', () => {
+      canvas.toBlob(blob => {
+        try {
+          navigator.clipboard.write([
+            new ClipboardItem({ 'image/png': blob })
+          ]);
+          alert('✓ 已成功複製高清頭貼至剪貼簿！可以直接貼上！');
+        } catch (e) {
+          alert('您的瀏覽器不支援直接複製圖片，請點擊【下載圖片】！');
+        }
+      });
+    });
+  </script>
+<!-- 🛡️ SERVICE INFORMATION 服務與使用說明 (頁尾唯一整合版) -->
+<!-- 🛡️ SERVICE INFORMATION 服務與使用說明 (100% 原生零相依零失敗 展開版) -->
+<!-- 🛡️ 頁尾完整版 (包含 存在.jpg 原本3欄資訊 + 小怕 5 大宣告卡片 + 版權行) -->
+<footer class="footer py-5" style="background: #0f172a; border-top: 1px solid rgba(255,255,255,0.1);">
+  <div class="container" id="serviceInformation">
+    
+    <!-- 1. 原本的 3 欄式頁尾資訊 (來自 存在.jpg) -->
+    <div class="row text-white mb-4">
+      <!-- 左欄: 🤖 AI工具 & 聯絡資訊 -->
+      <div class="col-lg-5 mb-4 mb-lg-0">
+        <h4 style="font-weight: 800; color: #ffffff; font-size: 20px;" class="mb-3">🤖 AI工具</h4>
+        <p style="color: #94a3b8; font-size: 14px; line-height: 1.6;" class="mb-3">致力於讓 AI 技術普及化，打造人人都能使用的智能工具平台。</p>
+        
+        <p class="mb-2" style="font-size: 14px; color: #cbd5e1;">
+          💬 <strong style="color: #ffffff;">LINE 官方帳號：</strong>
+          <a href="https://lin.ee/WVGxiWT" target="_blank" style="color: #06c755; font-weight: 700; text-decoration: underline;">點我加 LINE 好友 (lin.ee/WVGxiWT)</a>
+        </p>
+        <p class="mb-2" style="font-size: 14px; color: #cbd5e1;">✉️ contact@aitools.com</p>
+        <p class="mb-2" style="font-size: 14px; color: #cbd5e1;">📞 (香港) 3345678</p>
+        <p class="mb-0" style="font-size: 14px; color: #cbd5e1;">📍 天堂島 (Themyscira 亞馬遜天堂島)</p>
+      </div>
+
+      <!-- 中欄: 快速連結 -->
+      <div class="col-lg-3 mb-4 mb-lg-0">
+        <h5 style="font-weight: 800; color: #ffffff; font-size: 18px;" class="mb-3">快速連結</h5>
+        <ul class="list-unstyled" style="line-height: 2.2; font-size: 14px;">
+          <li><a href="about.html" style="color: #38bdf8; text-decoration: none;">📖 關於我們</a></li>
+          <li><a href="pricing.html" style="color: #38bdf8; text-decoration: none;">💎 免費與付費</a></li>
+          <li><a href="index.html" style="color: #94a3b8; text-decoration: none;">AI 工具</a></li>
+          <li><a href="contact.html" style="color: #38bdf8; text-decoration: none;">✉️ 聯絡我們</a></li>
+        </ul>
+      </div>
+
+      <!-- 右欄: 關注我們 (社群圖示) -->
+      <div class="col-lg-4">
+        <h5 style="font-weight: 800; color: #ffffff; font-size: 18px;" class="mb-3">關注我們</h5>
+        <p style="color: #94a3b8; font-size: 14px;" class="mb-3">追蹤社群獲取最新 AI 工具動態與教學</p>
+        <div class="d-flex gap-3">
+          <a href="#" style="background: rgba(255,255,255,0.1); width: 40px; height: 40px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; color: #ffffff; text-decoration: none; margin-right: 10px;" title="Facebook">📘</a>
+          <a href="#" style="background: rgba(255,255,255,0.1); width: 40px; height: 40px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; color: #ffffff; text-decoration: none; margin-right: 10px;" title="YouTube">▶️</a>
+          <a href="https://lin.ee/WVGxiWT" target="_blank" style="background: rgba(255,255,255,0.1); width: 40px; height: 40px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; color: #06c755; text-decoration: none; margin-right: 10px;" title="LINE">💬</a>
+          <a href="#" style="background: rgba(255,255,255,0.1); width: 40px; height: 40px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; color: #ffffff; text-decoration: none;" title="Instagram">📷</a>
+        </div>
+      </div>
+    </div>
+
+    <hr style="border-top: 1px solid rgba(255,255,255,0.1); margin: 25px 0;">
+
+    <!-- 2. 小怕 (魯米那) 權威 5 大宣告手風琴 (原生 JS 秒速展開) -->
+    <div class="service-info-section p-4 mb-4" style="background: linear-gradient(145deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.9) 100%); border: 1px solid rgba(56, 189, 248, 0.25); border-radius: 20px; backdrop-filter: blur(16px); box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);">
+      
+      <div class="row align-items-center mb-4">
+        <div class="col-lg-12 text-center">
+          <span style="color: #38bdf8; font-size: 14px; font-weight: 800; letter-spacing: 3px; text-transform: uppercase; background: rgba(56, 189, 248, 0.1); padding: 5px 16px; border-radius: 50px; border: 1px solid rgba(56, 189, 248, 0.3);">SERVICE INFORMATION</span>
+          <h3 style="color: #ffffff; font-size: 26px; font-weight: 900; margin-top: 12px; margin-bottom: 8px;">服務說明、免責聲明與隱私條款</h3>
+          
+          <div class="d-inline-block mt-2" style="background: rgba(245, 158, 11, 0.15); border: 1px solid #f59e0b; padding: 8px 20px; border-radius: 50px;">
+            <span style="color: #f59e0b; font-size: 14px; font-weight: 800;">💡 初次聯繫：</span>
+            <span style="color: #ffffff; font-size: 14px; font-weight: 700;">歡迎簡單告訴我們「您目前最想釐清的一件事」（例如：AI 史詩配樂客製、商業授權與 Safelisting 白名單詢問、短影音 BGM 選曲等）。</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="row justify-content-center">
+        <div class="col-lg-11">
+          <div class="accordion">
+            
+            <!-- 1. 服務介紹與諮詢方式 -->
+            <div class="card mb-2" style="background: #1e293b; border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 12px; overflow: hidden;">
+              <div class="card-header p-0" style="background: transparent; border: none;">
+                <button class="btn btn-block text-left font-weight-bold p-3 text-white d-flex justify-content-between align-items-center" type="button" onclick="toggleAcc('footCollapseOne', 'arrowOne')" style="font-size: 16px; text-decoration: none; width: 100%; cursor: pointer;">
+                  <span>🛡️ 1. 服務介紹與諮詢方式</span>
+                  <span id="arrowOne" style="color: #38bdf8; transition: transform 0.3s; transform: rotate(180deg);">▼</span>
+                </button>
+              </div>
+              <div id="footCollapseOne" style="display: block;">
+                <div class="card-body" style="color: #cbd5e1; font-size: 14px; line-height: 1.7; background: #0f172a; border-top: 1px solid rgba(255,255,255,0.05); padding: 18px;">
+                  <p class="mb-1"><strong style="color: #38bdf8;">• 服務範圍：</strong>【幻境配樂】提供電影級史詩配樂、免版稅短影音 BGM 素材、AI 聲音工具指導、自動化頻道白名單 (Safelisting) 及商業授權諮詢。</p>
+                  <p class="mb-0"><strong style="color: #38bdf8;">• 聯繫管道：</strong>目前主要透過官方 Facebook 粉絲專頁、LINE 官方帳號及指定 Email 提供諮詢與洽談。</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- 2. 服務界線與免責聲明 -->
+            <div class="card mb-2" style="background: #1e293b; border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 12px; overflow: hidden;">
+              <div class="card-header p-0" style="background: transparent; border: none;">
+                <button class="btn btn-block text-left font-weight-bold p-3 text-white d-flex justify-content-between align-items-center" type="button" onclick="toggleAcc('footCollapseTwo', 'arrowTwo')" style="font-size: 16px; text-decoration: none; width: 100%; cursor: pointer;">
+                  <span>⚖️ 2. 服務界線與免責聲明</span>
+                  <span id="arrowTwo" style="color: #38bdf8; transition: transform 0.3s;">▼</span>
+                </button>
+              </div>
+              <div id="footCollapseTwo" style="display: none;">
+                <div class="card-body" style="color: #cbd5e1; font-size: 14px; line-height: 1.7; background: #0f172a; border-top: 1px solid rgba(255,255,255,0.05); padding: 18px;">
+                  <p class="mb-1"><strong style="color: #f59e0b;">• 服務性質：</strong>本網站所提供之 AI 工具整理、配樂下載與諮詢建議，均基於「現狀 (As-Is)」及「可供使用 (As-Available)」之基礎提供。</p>
+                  <p class="mb-1"><strong style="color: #f59e0b;">• 第三方平台機制：</strong>YouTube、TikTok、Meta 等第三方平台之演算法、 Content ID 審查及社群守則均由該第三方獨立營運。本平台提供自動化 Safelisting 白名單機制，但不對使用者因違反第三方規範或其演算法變更所致之影片下架、流量受限或收益損失承擔連帶責任。</p>
+                  <p class="mb-0"><strong style="color: #f59e0b;">• 責任限制上限：</strong>在適用法律允許的最大範圍內，本平台對使用者承擔之累積賠償責任總額，最高不超過該使用者於事件發生前 12 個月內實際支付予本平台之服務費用總額。</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- 3. 隱私與資料使用宣告 -->
+            <div class="card mb-2" style="background: #1e293b; border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 12px; overflow: hidden;">
+              <div class="card-header p-0" style="background: transparent; border: none;">
+                <button class="btn btn-block text-left font-weight-bold p-3 text-white d-flex justify-content-between align-items-center" type="button" onclick="toggleAcc('footCollapseThree', 'arrowThree')" style="font-size: 16px; text-decoration: none; width: 100%; cursor: pointer;">
+                  <span>🔒 3. 隱私與資料使用宣告</span>
+                  <span id="arrowThree" style="color: #38bdf8; transition: transform 0.3s;">▼</span>
+                </button>
+              </div>
+              <div id="footCollapseThree" style="display: none;">
+                <div class="card-body" style="color: #cbd5e1; font-size: 14px; line-height: 1.7; background: #0f172a; border-top: 1px solid rgba(255,255,255,0.05); padding: 18px;">
+                  <p class="mb-1"><strong style="color: #06c755;">• 資料蒐集原則：</strong>依個人資料保護法，本網站蒐集之個資（如姓名、Email、YouTube Channel ID）僅用於服務提供、驗證授權與自動化 Content ID 白名單清關。</p>
+                  <p class="mb-1"><strong style="color: #06c755;">• YouTube API 與保密承諾：</strong>透過 YouTube API Services 取得之頻道資料僅用於 Safelisting 白名單，未經授權絕不公開或出售給第三方。您可隨時透過 Google 安全設定撤銷授權，系統將於 30 日內清除綁定快取。</p>
+                  <p class="mb-0"><strong style="color: #06c755;">• 不提供資料之影響：</strong>若您自由選擇不提供 Channel ID 等必要資料，將無法享受自動化免版權主張與白名單保障服務。</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- 4. 預約、改期與退款說明 -->
+            <div class="card mb-2" style="background: #1e293b; border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 12px; overflow: hidden;">
+              <div class="card-header p-0" style="background: transparent; border: none;">
+                <button class="btn btn-block text-left font-weight-bold p-3 text-white d-flex justify-content-between align-items-center" type="button" onclick="toggleAcc('footCollapseFour', 'arrowFour')" style="font-size: 16px; text-decoration: none; width: 100%; cursor: pointer;">
+                  <span>📅 4. 預約、改期與退款說明</span>
+                  <span id="arrowFour" style="color: #38bdf8; transition: transform 0.3s;">▼</span>
+                </button>
+              </div>
+              <div id="footCollapseFour" style="display: none;">
+                <div class="card-body" style="color: #cbd5e1; font-size: 14px; line-height: 1.7; background: #0f172a; border-top: 1px solid rgba(255,255,255,0.05); padding: 18px;">
+                  <p class="mb-1"><strong style="color: #a855f7;">• 預約與改期：</strong>若已預約 1 對 1 諮詢或專屬配樂服務，如需改期，請於預定時間前至少 24 小時透過官方管道通知。</p>
+                  <p class="mb-0"><strong style="color: #a855f7;">• 退款機制：</strong>客製化配樂、數位音訊資產或專案授權一經開始製作、交付檔案或完成授權綁定，即不適用無條件退款；若因不可抗力因素致服務無法進行，將扣除已發生之必要成本後退還餘額。</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- 5. 網站內容、著作權與肖像/AI 授權宣告 -->
+            <div class="card mb-2" style="background: #1e293b; border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 12px; overflow: hidden;">
+              <div class="card-header p-0" style="background: transparent; border: none;">
+                <button class="btn btn-block text-left font-weight-bold p-3 text-white d-flex justify-content-between align-items-center" type="button" onclick="toggleAcc('footCollapseFive', 'arrowFive')" style="font-size: 16px; text-decoration: none; width: 100%; cursor: pointer;">
+                  <span>📜 5. 網站內容、著作權與肖像/AI 授權宣告</span>
+                  <span id="arrowFive" style="color: #38bdf8; transition: transform 0.3s;">▼</span>
+                </button>
+              </div>
+              <div id="footCollapseFive" style="display: none;">
+                <div class="card-body" style="color: #cbd5e1; font-size: 14px; line-height: 1.7; background: #0f172a; border-top: 1px solid rgba(255,255,255,0.05); padding: 18px;">
+                  <p class="mb-1"><strong style="color: #ec4899;">• 智慧財產權：</strong>本網站所有文字、版面設計、商標與原創音訊資產，均受智慧財產權法保護，未經授權不得擅自重製、轉載、二次轉售或擅自登記為 Content ID 音訊指紋。</p>
+                  <p class="mb-1"><strong style="color: #ec4899;">• 【幻境配樂】商用聲明：</strong>全頻道專屬 1 分鐘 BGM 開放符合規範之短影音（Shorts / TikTok / Reels）免費商業使用。</p>
+                  <p class="mb-0"><strong style="color: #ec4899;">• 肖像權與未成年人保護：</strong>本網站展示之合作案例與人物照片均已取得同意；本服務不刻意收集未滿 13 歲兒童個資，未成年人需在法定代理人同意下始得使用。</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 頁尾版權行 -->
+    <p class="text-center mb-0 mt-3" style="color: #64748b; font-size: 13px;">© <span class="auto-current-year">2026</span> 🤖 AI工具百寶箱 & 【幻境配樂 Mirage Cinematic BGM】 版權所有 All Rights Reserved.</p>
+  </div>
+</footer>
+
+<script>
+  function toggleAcc(contentId, arrowId) {
+    var content = document.getElementById(contentId);
+    var arrow = document.getElementById(arrowId);
+    if (!content) return;
+    if (content.style.display === 'none' || content.style.display === '') {
+      content.style.display = 'block';
+      if (arrow) arrow.style.transform = 'rotate(180deg)';
+    } else {
+      content.style.display = 'none';
+      if (arrow) arrow.style.transform = 'rotate(0deg)';
+    }
+  }
+</script>
+
+<script>
+  function toggleAcc(contentId, arrowId) {
+    var content = document.getElementById(contentId);
+    var arrow = document.getElementById(arrowId);
+    if (!content) return;
+    if (content.style.display === 'none' || content.style.display === '') {
+      content.style.display = 'block';
+      if (arrow) arrow.style.transform = 'rotate(180deg)';
+    } else {
+      content.style.display = 'none';
+      if (arrow) arrow.style.transform = 'rotate(0deg)';
+    }
+  }
+</script>
+</body>
+</html>
