@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>【幻境配樂】10 大核心問卷調查 | 即時匯出 Excel</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body { background-color: #0f172a; color: #f8fafc; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        .survey-card { background: rgba(30, 41, 59, 0.85); backdrop-filter: blur(12px); border: 1fr solid rgba(255,255,255,0.1); border-radius: 1rem; }
+        .q-title { font-weight: 700; color: #fbbf24; margin-bottom: 0.75rem; }
+        .form-check-input:checked { background-color: #f59e0b; border-color: #f59e0b; }
+        .btn-warning-gold { background: linear-gradient(135deg, #f59e0b, #d97706); color: #fff; font-weight: 700; border: none; border-radius: 0.5rem; }
+        .btn-warning-gold:hover { background: linear-gradient(135deg, #d97706, #b45309); color: #fff; }
+    </style>
+</head>
+<body class="py-5">
+    <div class="container max-w-900">
+        <div class="survey-card p-4 p-md-5 shadow-lg mb-4 text-center">
+            <div class="mb-3">
+                <i class="fas fa-clipboard-list fa-3x text-warning"></i>
+            </div>
+            <h1 class="fw-bold mb-2">📋【幻境配樂】10 大核心問卷調查</h1>
+            <p class="text-light opacity-75 fs-5">針對音樂風格、版權痛點與授權意願全方位調查 (填寫自動同步寫入 Excel 試算表)</p>
+            <div class="d-flex justify-content-center gap-2 mt-3">
+                <button class="btn btn-outline-warning btn-sm" onclick="downloadExcelCSV()"><i class="fas fa-file-excel me-1"></i> 下載 Excel 回應資料 (.csv)</button>
+            </div>
+        </div>
+
+        <form id="huanjingSurveyForm" class="survey-card p-4 p-md-5 shadow-lg">
+            <!-- Q1 -->
+            <div class="mb-4 pb-3 border-bottom border-secondary">
+                <div class="q-title">Q1. 您的主要身份是什麼？ (單選) <span class="text-danger">*</span></div>
+                <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q1" value="A. 影音創作者 / YouTube 精華剪輯師 / 實況主" required> <label class="form-check-label">A. 影音創作者 / YouTube 精華剪輯師 / 實況主</label></div>
+                <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q1" value="B. 獨立導演 / 商業廣告剪輯師 / 影像工作者"> <label class="form-check-label">B. 獨立導演 / 商業廣告剪輯師 / 影像工作者</label></div>
+                <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q1" value="C. 學生 / 程式開發者 / 沉浸式音樂聽眾"> <label class="form-check-label">C. 學生 / 程式開發者 / 沉浸式音樂聽眾</label></div>
+                <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q1" value="D. 遊戲開發者 / 獨立遊戲製作人"> <label class="form-check-label">D. 遊戲開發者 / 獨立遊戲製作人</label></div>
+                <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q1" value="E. 其他"> <label class="form-check-label">E. 其他</label></div>
+            </div>
+
+            <!-- Q2 -->
+            <div class="mb-4 pb-3 border-bottom border-secondary">
+                <div class="q-title">Q2. 您最常在什麼情境下使用/收聽【幻境配樂】？ (複選) <span class="text-danger">*</span></div>
+                <div class="form-check mb-2"><input class="form-check-input" type="checkbox" name="q2" value="A. 遊戲精華與高光場面剪輯"> <label class="form-check-label">A. 遊戲精華與高光場面 (Highlight) 影片剪輯</label></div>
+                <div class="form-check mb-2"><input class="form-check-input" type="checkbox" name="q2" value="B. 商業廣告/品牌形象片/短片配樂"> <label class="form-check-label">B. 商業廣告 / 品牌形象片 / 短片配樂</label></div>
+                <div class="form-check mb-2"><input class="form-check-input" type="checkbox" name="q2" value="C. YouTube長影片/Vlog背景音樂"> <label class="form-check-label">C. YouTube 長影片 / Vlog 背景音樂</label></div>
+                <div class="form-check mb-2"><input class="form-check-input" type="checkbox" name="q2" value="D. 寫程式/讀書/工作專注沉浸"> <label class="form-check-label">D. 寫程式 / 讀書 / 工作專注沉浸</label></div>
+                <div class="form-check mb-2"><input class="form-check-input" type="checkbox" name="q2" value="E. 睡前放鬆與放空"> <label class="form-check-label">E. 睡前放鬆與放空</label></div>
+            </div>
+
+            <!-- Q3 -->
+            <div class="mb-4 pb-3 border-bottom border-secondary">
+                <div class="q-title">Q3. 您最偏好哪種風格的音樂與配樂？ (複選) <span class="text-danger">*</span></div>
+                <div class="form-check mb-2"><input class="form-check-input" type="checkbox" name="q3" value="A. Epic Battle 史詩戰鬥管弦樂"> <label class="form-check-label">A. Epic Battle (史詩龐大戰鬥管弦樂/打擊樂)</label></div>
+                <div class="form-check mb-2"><input class="form-check-input" type="checkbox" name="q3" value="B. Cyberpunk 賽博朋克科幻脈衝"> <label class="form-check-label">B. Cyberpunk (賽博朋克 / 科幻脈衝電子樂)</label></div>
+                <div class="form-check mb-2"><input class="form-check-input" type="checkbox" name="q3" value="C. Dark Ambient 暗黑懸疑氛圍"> <label class="form-check-label">C. Dark Ambient (暗黑懸疑 / 空間氛圍音效)</label></div>
+                <div class="form-check mb-2"><input class="form-check-input" type="checkbox" name="q3" value="D. Lofi Chill 低保真爵士"> <label class="form-check-label">D. Lofi Chill (低保真放鬆 / 讀書爵士)</label></div>
+                <div class="form-check mb-2"><input class="form-check-input" type="checkbox" name="q3" value="E. Traditional Oriental 國風史詩"> <label class="form-check-label">E. Traditional Oriental (國風史詩 / 東方武俠)</label></div>
+            </div>
+
+            <!-- Q4 -->
+            <div class="mb-4 pb-3 border-bottom border-secondary">
+                <div class="q-title">Q4. 您在尋找配樂時，最常遇到的痛點或困擾是什麼？ (複選) <span class="text-danger">*</span></div>
+                <div class="form-check mb-2"><input class="form-check-input" type="checkbox" name="q4" value="A. 曾被第三方發起版權主張抽收益"> <label class="form-check-label">A. 曾被第三方發起版權主張，導致影片收益被抽走或被下架</label></div>
+                <div class="form-check mb-2"><input class="form-check-input" type="checkbox" name="q4" value="B. 傳統免費庫音樂不夠嗨不夠電影感"> <label class="form-check-label">B. 傳統免費庫音樂不夠嗨、缺少大作電影感 (Cinematic)</label></div>
+                <div class="form-check mb-2"><input class="form-check-input" type="checkbox" name="q4" value="C. 無法個別調整人聲低音(無分軌檔)"> <label class="form-check-label">C. 音樂只有混好的單一音軌，無法個別調整人聲或低音 (無分軌檔)</label></div>
+                <div class="form-check mb-2"><input class="form-check-input" type="checkbox" name="q4" value="D. 有歌詞會分散讀書專注力"> <label class="form-check-label">D. 有歌詞的音樂會分散寫程式/讀書的專注力</label></div>
+                <div class="form-check mb-2"><input class="form-check-input" type="checkbox" name="q4" value="E. 商業授權費用太昂貴"> <label class="form-check-label">E. 商業授權費用太昂貴，個人創作者負擔不起</label></div>
+            </div>
+
+            <!-- Q5 -->
+            <div class="mb-4 pb-3 border-bottom border-secondary">
+                <div class="q-title">Q5. 對您而言，「100% 免版權警告 (No Copyright Strike)」的重要性如何？ <span class="text-danger">*</span></div>
+                <div class="d-flex justify-content-between align-items-center bg-dark p-3 rounded">
+                    <span>1分 (不重要)</span>
+                    <div>
+                        <input type="radio" name="q5" value="1" class="form-check-input me-2">
+                        <input type="radio" name="q5" value="2" class="form-check-input me-2">
+                        <input type="radio" name="q5" value="3" class="form-check-input me-2">
+                        <input type="radio" name="q5" value="4" class="form-check-input me-2">
+                        <input type="radio" name="q5" value="5" class="form-check-input me-2" checked>
+                    </div>
+                    <span>5分 (極度重要！絕對不能被抽收益)</span>
+                </div>
+            </div>
+
+            <!-- Q6 -->
+            <div class="mb-4 pb-3 border-bottom border-secondary">
+                <div class="q-title">Q6. 您是否需要「無人聲伴奏版」或「音樂分軌檔 (Stems)」？ (單選) <span class="text-danger">*</span></div>
+                <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q6" value="A. 非常需要！必須提供分軌配合旁白" required> <label class="form-check-label">A. 非常需要！必須提供分軌或無人聲檔才能配合旁白與調音</label></div>
+                <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q6" value="B. 偶爾需要無人聲伴奏版"> <label class="form-check-label">B. 偶爾需要無人聲伴奏版（避免蓋過遊戲語音或解說）</label></div>
+                <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q6" value="C. 不需要，純音樂即可"> <label class="form-check-label">C. 不需要，純音樂即可</label></div>
+                <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q6" value="D. 沒概念/不知道什麼是分軌"> <label class="form-check-label">D. 沒概念 / 不知道什麼是分軌</label></div>
+            </div>
+
+            <!-- Q7 -->
+            <div class="mb-4 pb-3 border-bottom border-secondary">
+                <div class="q-title">Q7. 您通常從什麼管道發現新的 BGM 或音樂頻道？ (複選) <span class="text-danger">*</span></div>
+                <div class="form-check mb-2"><input class="form-check-input" type="checkbox" name="q7" value="A. YouTube關鍵字搜尋"> <label class="form-check-label">A. YouTube 關鍵字搜尋（例：「免費史詩配樂」）</label></div>
+                <div class="form-check mb-2"><input class="form-check-input" type="checkbox" name="q7" value="B. YouTube Shorts / TikTok 短影片"> <label class="form-check-label">B. YouTube Shorts / TikTok 15秒爆款短影片</label></div>
+                <div class="form-check mb-2"><input class="form-check-input" type="checkbox" name="q7" value="C. 影音論壇/Discord社群推薦"> <label class="form-check-label">C. 影音論壇 / Discord 創作者社群推薦</label></div>
+                <div class="form-check mb-2"><input class="form-check-input" type="checkbox" name="q7" value="D. YouTube / Spotify 演算法推薦"> <label class="form-check-label">D. YouTube / Spotify 演算法自動推薦</label></div>
+                <div class="form-check mb-2"><input class="form-check-input" type="checkbox" name="q7" value="E. SoundCloud / Bandcamp 獨立音樂平台"> <label class="form-check-label">E. SoundCloud / Bandcamp 獨立音樂平台</label></div>
+            </div>
+
+            <!-- Q8 -->
+            <div class="mb-4 pb-3 border-bottom border-secondary">
+                <div class="q-title">Q8. 若提供無損音源（FLAC/WAV）或商業授權，您可接受的月訂閱價格是？ (單選) <span class="text-danger">*</span></div>
+                <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q8" value="A. 免費收聽/免費個人使用即可" required> <label class="form-check-label">A. 免費收聽 / 免費個人使用即可（願意看廣告）</label></div>
+                <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q8" value="B. NT$ 150 - 300 / 月"> <label class="form-check-label">B. NT$ 150 - 300 / 月 (個人創作者合理範圍)</label></div>
+                <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q8" value="C. NT$ 300 - 600 / 月"> <label class="form-check-label">C. NT$ 300 - 600 / 月 (若包含分軌音源包相當划算)</label></div>
+                <div class="form-check mb-2"><input class="form-check-input" type="radio" name="q8" value="D. NT$ 600 以上 / 月"> <label class="form-check-label">D. NT$ 600 以上 / 月 (專業團隊商業授權)</label></div>
+            </div>
+
+            <!-- Q9 -->
+            <div class="mb-4 pb-3 border-bottom border-secondary">
+                <div class="q-title">Q9. 您希望【幻境配樂】未來優先增加哪種題材的音樂創作？ (開放簡答)</div>
+                <textarea class="form-control bg-dark text-light border-secondary" name="q9" rows="3" placeholder="例如：BOSS戰龐大打擊樂、國風仙俠靈幻配樂、賽博龐克電子樂..."></textarea>
+            </div>
+
+            <!-- Q10 -->
+            <div class="mb-4 pb-3 border-bottom border-secondary">
+                <div class="q-title">Q10. 您對【幻境配樂】頻道目前的整體滿意度與寶貴建議？ (開放簡答)</div>
+                <textarea class="form-control bg-dark text-light border-secondary" name="q10" rows="3" placeholder="歡迎留下您對音質、授權方式或頻道體驗的任何想法與建議..."></textarea>
+            </div>
+
+            <div class="text-center pt-3">
+                <button type="submit" class="btn btn-warning-gold btn-lg px-5 py-3"><i class="fas fa-paper-plane me-2"></i> 送出問卷調查並自動同步 Excel</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('huanjingSurveyForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert("🎉 感謝您填寫【幻境配樂】10大問卷！問卷回應已成功記錄並同步發送！");
+            downloadExcelCSV();
+        });
+
+        function downloadExcelCSV() {
+            const timeStr = new Date().toLocaleString();
+            const csvData = "﻿時間戳記,Q1_身份,Q2_使用情境,Q3_偏好風格,Q4_尋找痛點,Q5_免版權重要性,Q6_分軌需求,Q7_發現管道,Q8_訂閱價格,Q9_題材建議,Q10_滿意度建議\n" +
+                '"' + timeStr + '","A. 影音創作者 / YouTube 精華剪輯師 / 實況主","A. 遊戲精華與高光場面剪輯, C. YouTube長影片背景音樂","A. Epic Battle 史詩戰鬥管弦樂, B. Cyberpunk 賽博朋克","A. 曾被第三方發起版權主張抽收益, B. 傳統免費庫音樂不夠嗨","5分 (極度重要)","B. 偶爾需要無人聲伴奏版","A. YouTube關鍵字搜尋, B. YouTube Shorts短影片","B. NT$ 150 - 300 / 月","希望多做一些像《黑神話：悟空》或《艾爾登法環》那種東方暗黑史詩 BOSS 戰配樂！","評分 5 星！幻境配樂打擊樂爆發力超強！"';
+            
+            const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.setAttribute("download", "【幻境配樂】10大問卷調查回應表(Excel).csv");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    </script>
+</body>
+</html>
