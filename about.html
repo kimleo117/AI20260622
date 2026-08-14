@@ -515,47 +515,112 @@
                 <form id="feedbackForm" onsubmit="event.preventDefault(); document.getElementById('formSuccessMsg').style.display='block';">
                   <div class="row g-3">
                     <div class="col-12">
-                      <label class="form-label fw-bold text-dark small mb-1">1. 您的姓名或稱呼：</label>
+                      <label class="form-label fw-bold text-dark small mb-1">1. 您的姓名或稱呼： <span class="text-danger">*</span></label>
                       <input type="text" class="form-control form-control-sm rounded-3" placeholder="例如：王小明 / 影音創作者" required>
                     </div>
                     <div class="col-12">
-                      <label class="form-label fw-bold text-dark small mb-1">2. 您的聯絡 Email：</label>
+                      <label class="form-label fw-bold text-dark small mb-1">2. 您的聯絡電話： <span class="text-danger">*</span></label>
+                      <input type="tel" class="form-control form-control-sm rounded-3" placeholder="例如：0912-345-678" required>
+                    </div>
+                    <div class="col-12">
+                      <label class="form-label fw-bold text-dark small mb-1">3. 您的聯絡 Email： <span class="text-danger">*</span></label>
                       <input type="email" class="form-control form-control-sm rounded-3" placeholder="name@example.com" required>
                     </div>
 
                     <div class="col-12">
-                      <label class="form-label fw-bold text-dark small mb-1">3. 最常使用的 AI 工具類型：</label>
+                      <label class="form-label fw-bold text-dark small mb-1">4. Q1. 您的主要身份是什麼？ (單選)</label>
                       <select class="form-select form-select-sm rounded-3">
-                        <option selected>音樂與語音生成 (如 SoundSync AI)</option>
-                        <option>文案與腳本生成 (ChatGPT / Claude)</option>
-                        <option>繪圖與影像生成 (Midjourney / SD)</option>
-                        <option>去背與圖像處理 (Remove.bg)</option>
-                        <option>其他領域工具</option>
+                        <option selected>A. 影音創作者 / YouTube 精華剪輯師 / 實況主</option>
+                        <option>B. 獨立導演 / 商業廣告剪輯師 / 影像工作者</option>
+                        <option>C. 學生 / 程式開發者 / 沉浸式音樂聽眾</option>
+                        <option>D. 遊戲開發者 / 獨立遊戲製作人</option>
+                        <option>E. 其他產業</option>
                       </select>
                     </div>
 
                     <div class="col-12">
-                      <label class="form-label fw-bold text-dark small mb-1">4. 對【幻境配樂】音樂品質滿意度：</label>
+                      <label class="form-label fw-bold text-dark small mb-1">5. Q2. 您最常在什麼情境下使用/收聽【幻境配樂】？ (多選)</label>
+                      <div class="form-check text-dark small"><input class="form-check-input" type="checkbox" checked> 遊戲精華與高光場面 (Highlight) 剪輯</div>
+                      <div class="form-check text-dark small"><input class="form-check-input" type="checkbox"> 商業廣告 / 品牌形象片 / 短片配樂</div>
+                      <div class="form-check text-dark small"><input class="form-check-input" type="checkbox"> YouTube 長影片 / Vlog 背景音樂</div>
+                      <div class="form-check text-dark small"><input class="form-check-input" type="checkbox"> 寫程式 / 讀書 / 工作專注沉浸</div>
+                      <div class="form-check text-dark small"><input class="form-check-input" type="checkbox"> 睡前放鬆與放空</div>
+                    </div>
+
+                    <div class="col-12">
+                      <label class="form-label fw-bold text-dark small mb-1">6. Q3. 您最偏好哪種風格的音樂與配樂？ (多選)</label>
+                      <div class="form-check text-dark small"><input class="form-check-input" type="checkbox" checked> Epic Battle (史詩龐大戰鬥管弦樂/打擊樂)</div>
+                      <div class="form-check text-dark small"><input class="form-check-input" type="checkbox" checked> Cyberpunk (賽博朋克 / 科幻脈衝電子樂)</div>
+                      <div class="form-check text-dark small"><input class="form-check-input" type="checkbox"> Dark Ambient (暗黑懸疑 / 空間氛圍音效)</div>
+                      <div class="form-check text-dark small"><input class="form-check-input" type="checkbox"> Lofi Chill (低保真放鬆 / 讀書爵士)</div>
+                      <div class="form-check text-dark small"><input class="form-check-input" type="checkbox"> Traditional Oriental (國風史詩 / 東方武俠)</div>
+                    </div>
+
+                    <div class="col-12">
+                      <label class="form-label fw-bold text-dark small mb-1">7. Q4. 尋找配樂時最常遇到的痛點？ (多選)</label>
+                      <div class="form-check text-dark small"><input class="form-check-input" type="checkbox" checked> 曾被第三方發起版權主張抽收益或下架</div>
+                      <div class="form-check text-dark small"><input class="form-check-input" type="checkbox"> 傳統免費庫音樂不夠嗨、缺少大作電影感</div>
+                      <div class="form-check text-dark small"><input class="form-check-input" type="checkbox"> 無法個別調整人聲或低音 (無分軌檔)</div>
+                      <div class="form-check text-dark small"><input class="form-check-input" type="checkbox"> 有歌詞會分散寫程式/讀書專注力</div>
+                      <div class="form-check text-dark small"><input class="form-check-input" type="checkbox"> 商業授權費用太昂貴</div>
+                    </div>
+
+                    <div class="col-12">
+                      <label class="form-label fw-bold text-dark small mb-1">8. Q5. 「100% 免版權警告」的重要性：</label>
                       <select class="form-select form-select-sm rounded-3">
-                        <option selected>⭐⭐⭐⭐⭐ 非常滿意 (電影級史詩感)</option>
-                        <option>⭐⭐⭐⭐ 滿意 (音軌品質優秀)</option>
-                        <option>⭐⭐⭐ 普通 (符合基本需求)</option>
-                        <option>⭐⭐ 需要再提升</option>
+                        <option selected>5 分 (極度重要！絕對不能被抽收益！)</option>
+                        <option>4 分 (蠻重要的)</option>
+                        <option>3 分 (普通)</option>
+                        <option>2 分 (不太重要)</option>
+                        <option>1 分 (完全不重要)</option>
                       </select>
                     </div>
 
                     <div class="col-12">
-                      <label class="form-label fw-bold text-dark small mb-1">5. 未來期待新增的 AI 工具功能建議：</label>
-                      <textarea class="form-control form-control-sm rounded-3" rows="2" placeholder="歡迎寫下您的功能建議..."></textarea>
+                      <label class="form-label fw-bold text-dark small mb-1">9. Q6. 是否需要無人聲伴奏版或音樂分軌檔 (Stems)？</label>
+                      <select class="form-select form-select-sm rounded-3">
+                        <option selected>A. 非常需要！必須提供分軌或無人聲檔才能配合旁白</option>
+                        <option>B. 偶爾需要無人聲伴奏版（避免蓋過解說）</option>
+                        <option>C. 不需要，純音樂即可</option>
+                        <option>D. 没概念 / 不知道什麼是分軌</option>
+                      </select>
+                    </div>
+
+                    <div class="col-12">
+                      <label class="form-label fw-bold text-dark small mb-1">10. Q7. 您通常從什麼管道發現新的 BGM 頻道？ (多選)</label>
+                      <div class="form-check text-dark small"><input class="form-check-input" type="checkbox" checked> YouTube 關鍵字搜尋</div>
+                      <div class="form-check text-dark small"><input class="form-check-input" type="checkbox" checked> YouTube Shorts / TikTok 15秒爆款短影片</div>
+                      <div class="form-check text-dark small"><input class="form-check-input" type="checkbox"> 影音論壇 / Discord 創作者社群推薦</div>
+                      <div class="form-check text-dark small"><input class="form-check-input" type="checkbox"> YouTube / Spotify 演算法自動推薦</div>
+                    </div>
+
+                    <div class="col-12">
+                      <label class="form-label fw-bold text-dark small mb-1">11. Q8. 無損音源/商業授權可接受的月訂閱價格？</label>
+                      <select class="form-select form-select-sm rounded-3">
+                        <option>A. 免費收聽 / 免費個人使用即可（願意看廣告）</option>
+                        <option selected>B. NT$ 150 - 300 / 月 (個人創作者合理範圍)</option>
+                        <option>C. NT$ 300 - 600 / 月 (若包含分軌音源包相當划算)</option>
+                        <option>D. NT$ 600 以上 / 月 (專業團隊商業授權)</option>
+                      </select>
+                    </div>
+
+                    <div class="col-12">
+                      <label class="form-label fw-bold text-dark small mb-1">12. Q9. 未來希望優先增加哪種題材的音樂創作？</label>
+                      <textarea class="form-control form-control-sm rounded-3" rows="2" placeholder="例如：BOSS 戰龐大打擊樂、國風古風音效、賽博龐克電子樂..."></textarea>
+                    </div>
+
+                    <div class="col-12">
+                      <label class="form-label fw-bold text-dark small mb-1">13. Q10. 對【幻境配樂】頻道的整體滿意度與寶貴建議：</label>
+                      <textarea class="form-control form-control-sm rounded-3" rows="2" placeholder="歡迎留下您的寶貴建議與想法..."></textarea>
                     </div>
                   </div>
 
-                  <div class="text-center mt-3">
+                  <div class="text-center mt-4">
                     <button type="submit" class="btn btn-warning font-bold px-4 py-2 fs-6 rounded-pill shadow-sm w-100">
-                      🚀 提交創作者反饋問卷 ➔
+                      🚀 提交 10 大問卷調查與報名 ➔
                     </button>
                     <div id="formSuccessMsg" class="mt-2 text-success fw-bold small" style="display:none;">
-                      ✓ 感謝您的寶貴回饋！問卷已成功提交！
+                      ✓ 感謝您的寶貴回饋！10 大問卷已成功提交！
                     </div>
                   </div>
                 </form>
