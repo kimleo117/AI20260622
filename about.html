@@ -529,8 +529,9 @@
 
                     <div class="col-12">
                       <label class="form-label fw-bold text-dark small mb-1">4. Q1. 您的主要身份是什麼？ (單選)</label>
-                      <select class="form-select form-select-sm rounded-3">
-                        <option selected>A. 影音創作者 / YouTube 精華剪輯師 / 實況主</option>
+                      <select class="form-select form-select-sm rounded-3" required>
+                        <option value="" disabled selected>-- 請選擇您的身份 --</option>
+                        <option>A. 影音創作者 / YouTube 精華剪輯師 / 實況主</option>
                         <option>B. 獨立導演 / 商業廣告剪輯師 / 影像工作者</option>
                         <option>C. 學生 / 程式開發者 / 沉浸式音樂聽眾</option>
                         <option>D. 遊戲開發者 / 獨立遊戲製作人</option>
@@ -539,8 +540,8 @@
                     </div>
 
                     <div class="col-12">
-                      <label class="form-label fw-bold text-dark small mb-1">5. Q2. 您最常在什麼情境下使用/收聽【幻境配樂】？ (多選)</label>
-                      <div class="form-check text-dark small"><input class="form-check-input" type="checkbox" checked> 遊戲精華與高光場面 (Highlight) 剪輯</div>
+                      <label class="form-label fw-bold text-dark small mb-1">5. Q2. 您最常在什麼情境下使用/收聽【幻境配樂】？ (複選)</label>
+                      <div class="form-check text-dark small"><input class="form-check-input" type="checkbox"> 遊戲精華與高光場面 (Highlight) 剪輯</div>
                       <div class="form-check text-dark small"><input class="form-check-input" type="checkbox"> 商業廣告 / 品牌形象片 / 短片配樂</div>
                       <div class="form-check text-dark small"><input class="form-check-input" type="checkbox"> YouTube 長影片 / Vlog 背景音樂</div>
                       <div class="form-check text-dark small"><input class="form-check-input" type="checkbox"> 寫程式 / 讀書 / 工作專注沉浸</div>
@@ -548,17 +549,17 @@
                     </div>
 
                     <div class="col-12">
-                      <label class="form-label fw-bold text-dark small mb-1">6. Q3. 您最偏好哪種風格的音樂與配樂？ (多選)</label>
-                      <div class="form-check text-dark small"><input class="form-check-input" type="checkbox" checked> Epic Battle (史詩龐大戰鬥管弦樂/打擊樂)</div>
-                      <div class="form-check text-dark small"><input class="form-check-input" type="checkbox" checked> Cyberpunk (賽博朋克 / 科幻脈衝電子樂)</div>
+                      <label class="form-label fw-bold text-dark small mb-1">6. Q3. 您最偏好哪種風格的音樂與配樂？ (複選)</label>
+                      <div class="form-check text-dark small"><input class="form-check-input" type="checkbox"> Epic Battle (史詩龐大戰鬥管弦樂/打擊樂)</div>
+                      <div class="form-check text-dark small"><input class="form-check-input" type="checkbox"> Cyberpunk (賽博朋克 / 科幻脈衝電子樂)</div>
                       <div class="form-check text-dark small"><input class="form-check-input" type="checkbox"> Dark Ambient (暗黑懸疑 / 空間氛圍音效)</div>
                       <div class="form-check text-dark small"><input class="form-check-input" type="checkbox"> Lofi Chill (低保真放鬆 / 讀書爵士)</div>
                       <div class="form-check text-dark small"><input class="form-check-input" type="checkbox"> Traditional Oriental (國風史詩 / 東方武俠)</div>
                     </div>
 
                     <div class="col-12">
-                      <label class="form-label fw-bold text-dark small mb-1">7. Q4. 尋找配樂時最常遇到的痛點？ (多選)</label>
-                      <div class="form-check text-dark small"><input class="form-check-input" type="checkbox" checked> 曾被第三方發起版權主張抽收益或下架</div>
+                      <label class="form-label fw-bold text-dark small mb-1">7. Q4. 尋找配樂時最常遇到的痛點？ (複選)</label>
+                      <div class="form-check text-dark small"><input class="form-check-input" type="checkbox"> 曾被第三方發起版權主張抽收益或下架</div>
                       <div class="form-check text-dark small"><input class="form-check-input" type="checkbox"> 傳統免費庫音樂不夠嗨、缺少大作電影感</div>
                       <div class="form-check text-dark small"><input class="form-check-input" type="checkbox"> 無法個別調整人聲或低音 (無分軌檔)</div>
                       <div class="form-check text-dark small"><input class="form-check-input" type="checkbox"> 有歌詞會分散寫程式/讀書專注力</div>
@@ -568,7 +569,8 @@
                     <div class="col-12">
                       <label class="form-label fw-bold text-dark small mb-1">8. Q5. 「100% 免版權警告」的重要性：</label>
                       <select class="form-select form-select-sm rounded-3">
-                        <option selected>5 分 (極度重要！絕對不能被抽收益！)</option>
+                        <option value="" disabled selected>-- 請評分 --</option>
+                        <option>5 分 (極度重要！絕對不能被抽收益！)</option>
                         <option>4 分 (蠻重要的)</option>
                         <option>3 分 (普通)</option>
                         <option>2 分 (不太重要)</option>
@@ -579,7 +581,8 @@
                     <div class="col-12">
                       <label class="form-label fw-bold text-dark small mb-1">9. Q6. 是否需要無人聲伴奏版或音樂分軌檔 (Stems)？</label>
                       <select class="form-select form-select-sm rounded-3">
-                        <option selected>A. 非常需要！必須提供分軌或無人聲檔才能配合旁白</option>
+                        <option value="" disabled selected>-- 請選擇 --</option>
+                        <option>A. 非常需要！必須提供分軌或無人聲檔才能配合旁白</option>
                         <option>B. 偶爾需要無人聲伴奏版（避免蓋過解說）</option>
                         <option>C. 不需要，純音樂即可</option>
                         <option>D. 没概念 / 不知道什麼是分軌</option>
@@ -587,18 +590,20 @@
                     </div>
 
                     <div class="col-12">
-                      <label class="form-label fw-bold text-dark small mb-1">10. Q7. 您通常從什麼管道發現新的 BGM 頻道？ (多選)</label>
-                      <div class="form-check text-dark small"><input class="form-check-input" type="checkbox" checked> YouTube 關鍵字搜尋</div>
-                      <div class="form-check text-dark small"><input class="form-check-input" type="checkbox" checked> YouTube Shorts / TikTok 15秒爆款短影片</div>
+                      <label class="form-label fw-bold text-dark small mb-1">10. Q7. 您通常從什麼管道發現新的 BGM 頻道？ (複選)</label>
+                      <div class="form-check text-dark small"><input class="form-check-input" type="checkbox"> YouTube 關鍵字搜尋</div>
+                      <div class="form-check text-dark small"><input class="form-check-input" type="checkbox"> YouTube Shorts / TikTok 15秒爆款短影片</div>
                       <div class="form-check text-dark small"><input class="form-check-input" type="checkbox"> 影音論壇 / Discord 創作者社群推薦</div>
                       <div class="form-check text-dark small"><input class="form-check-input" type="checkbox"> YouTube / Spotify 演算法自動推薦</div>
+                      <div class="form-check text-dark small"><input class="form-check-input" type="checkbox"> SoundCloud / Bandcamp 獨立音樂平台</div>
                     </div>
 
                     <div class="col-12">
                       <label class="form-label fw-bold text-dark small mb-1">11. Q8. 無損音源/商業授權可接受的月訂閱價格？</label>
                       <select class="form-select form-select-sm rounded-3">
+                        <option value="" disabled selected>-- 請選擇價位 --</option>
                         <option>A. 免費收聽 / 免費個人使用即可（願意看廣告）</option>
-                        <option selected>B. NT$ 150 - 300 / 月 (個人創作者合理範圍)</option>
+                        <option>B. NT$ 150 - 300 / 月 (個人創作者合理範圍)</option>
                         <option>C. NT$ 300 - 600 / 月 (若包含分軌音源包相當划算)</option>
                         <option>D. NT$ 600 以上 / 月 (專業團隊商業授權)</option>
                       </select>
@@ -627,19 +632,19 @@
               </div>
             </div>
 
-            <!-- 右側欄位：【幻境配樂】FB 粉專即時動態 (col-lg-6) -->
-            <div class="col-lg-6">
-              <div class="card p-4 h-100 shadow-sm border-0 rounded-4 bg-white border border-primary border-opacity-20 text-center">
+            <!-- 右側欄位：【幻境配樂】FB 粉專即時動態 (col-lg-6 帶 Sticky 浮動) -->
+            <div class="col-lg-6" style="position: sticky; top: 96px; height: fit-content;">
+              <div class="card p-4 shadow-sm border-0 rounded-4 bg-white border border-primary border-opacity-20 text-center">
                 <div class="text-center mb-3">
                   <span class="badge bg-primary rounded-pill px-3 py-2 fs-7 fw-bold">👍 FB 粉專即時動態</span>
                   <h3 class="h4 fw-bold text-dark mt-2 mb-1">【幻境配樂】FB 粉專即時動態</h3>
                   <p class="text-secondary small mb-0">追蹤官方 Facebook 粉絲專頁，獲取每週全新音軌與教學</p>
                 </div>
-                <div class="d-flex justify-content-center align-items-center flex-grow-1 pt-2">
-                  <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fbgm.mirage.cinematic%2F&tabs=timeline&width=450&height=520&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId" width="100%" height="520" style="border:none;overflow:hidden;border-radius:14px;box-shadow:0 6px 18px rgba(15,23,42,0.08);" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+                <div class="d-flex justify-content-center align-items-center pt-2">
+                  <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fbgm.mirage.cinematic%2F&tabs=timeline&width=450&height=650&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId" width="100%" height="650" style="border:none;overflow:hidden;border-radius:14px;box-shadow:0 6px 18px rgba(15,23,42,0.08);" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
                 </div>
               </div>
-            </div>
+            </div></div>
 
           </div>
         </div>
