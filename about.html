@@ -915,5 +915,37 @@
     })();
   </script>
 
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  var form = document.getElementById("feedbackForm");
+  if (!form) return;
+
+  form.addEventListener("submit", function(e) {
+    // FormSubmit default submission will execute, but we also fire fetch to Google Apps Script if deployed
+    var formData = new FormData(form);
+    var data = {};
+    formData.forEach(function(val, key) {
+      if (data[key]) {
+        data[key] = data[key] + ", " + val;
+      } else {
+        data[key] = val;
+      }
+    });
+
+    // Check if window.GAS_WEB_APP_URL is set
+    var gasUrl = window.GAS_WEB_APP_URL || "";
+    if (gasUrl && gasUrl.startsWith("https://script.google.com")) {
+      fetch(gasUrl, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      }).catch(function(err){ console.log("GAS Post err:", err); });
+    }
+  });
+});
+</script>
+
 </body>
 </html>
