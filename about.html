@@ -512,7 +512,12 @@
                   <p class="text-secondary small mb-0">您的寶貴建議是我們持續進步的核心動力！</p>
                 </div>
 
-                <form id="feedbackForm" onsubmit="event.preventDefault(); alert('✓ 感謝您的寶貴回饋！10 大問卷已成功提交！');">
+                <form id="feedbackForm" action="https://formsubmit.co/kl0919268370@gmail.com" method="POST">
+                  <!-- ⚙️ 自動抄送 Yahoo 信箱與主旨設定 -->
+                  <input type="hidden" name="_cc" value="kimleo117@yahoo.com.tw">
+                  <input type="hidden" name="_subject" value="🔔【10大問卷報名通知】來自網頁的最新訪客問卷提交！">
+                  <input type="hidden" name="_captcha" value="false">
+                  <input type="hidden" name="_template" value="table">
                   <div class="row g-3">
                     <!-- 基本聯絡資料 -->
                     <div class="col-12">
