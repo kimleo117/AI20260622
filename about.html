@@ -1049,7 +1049,7 @@ document.addEventListener("DOMContentLoaded", function() {
     var fsPromise = fetch("https://formsubmit.co/ajax/kl0919268370@gmail.com", {
       method: "POST",
       headers: { "Content-Type": "application/json", "Accept": "application/json" },
-      body: JSON.stringify(Object.assign({ _cc: "kimleo117@yahoo.com.tw", _subject: "🔔【10大問卷報名通知】來自網頁的最新訪客問卷提交！" }, data))
+      body: JSON.stringify(Object.assign({ _cc: "kimleo117@yahoo.com.tw", _subject: "🔔【10大問卷報名通知】來自網頁的最新訪客問卷提交！", _next: "https://kimleo117.github.io/AI20260622/about.html" }, data))
     });
 
     Promise.allSettled([gasPromise, fsPromise]).then(function() {
