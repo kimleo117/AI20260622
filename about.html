@@ -512,7 +512,7 @@
                   <p class="text-secondary small mb-0">您的寶貴建議是我們持續進步的核心動力！</p>
                 </div>
 
-                <form id="feedbackForm">
+                <form id="feedbackForm" onsubmit="handleFormSubmit(event)">
                   <!-- ⚙️ 自動抄送 Yahoo 信箱與主旨設定 -->
                   <input type="hidden" name="_cc" value="kimleo117@yahoo.com.tw">
                   <input type="hidden" name="_subject" value="🔔【10大問卷報名通知】來自網頁的最新訪客問卷提交！">
@@ -980,6 +980,7 @@ document.addEventListener("DOMContentLoaded", function() {
 </script>
 
 
+
 <!-- 🟢 100% 繁體中文問卷提交成功專屬彈窗 Modal -->
 <div class="modal fade" id="surveySuccessModal" tabindex="-1" aria-hidden="true" style="z-index: 999999;">
   <div class="modal-dialog modal-dialog-centered">
@@ -988,7 +989,7 @@ document.addEventListener("DOMContentLoaded", function() {
         <div class="mb-3 d-inline-flex align-items-center justify-content-center rounded-circle" style="width: 70px; height: 70px; background: rgba(245, 158, 11, 0.2); border: 2px solid #f59e0b;">
           <span style="font-size: 36px;">🎉</span>
         </div>
-        <h3 class="fw-bold mb-2" style="color: #fbbf24; font-size: 22px;">問卷提交大成功！</h3>
+        <h3 class="fw-bold mb-2" style="color: #fbbf24; font-size: 22px;">問卷已成功送出！</h3>
         <p class="text-light mb-3" style="font-size: 15px; line-height: 1.6;">
           非常感謝您參與【幻境配樂】10 大問卷調查！<br>
           您的回應資料與聯絡資訊已 100% 成功傳送！
@@ -1013,67 +1014,67 @@ document.addEventListener("DOMContentLoaded", function() {
 </div>
 
 <script>
-document.addEventListener("DOMContentLoaded", function() {
+function handleFormSubmit(e) {
+  if (e) { e.preventDefault(); e.stopPropagation(); }
+
   var form = document.getElementById("feedbackForm");
-  if (!form) return;
+  if (!form) return false;
 
-  form.addEventListener("submit", function(e) {
-    e.preventDefault(); // 🛑 100% 阻止瀏覽器跳轉到任何英文頁面
+  var submitBtn = form.querySelector('button[type="submit"]');
+  var originalBtnText = submitBtn ? submitBtn.innerHTML : "🚀 提交 10 大問卷調查與報名 ➔";
+  if (submitBtn) {
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = "⏳ 正在秒速提交與傳送通知中...";
+  }
 
-    var submitBtn = form.querySelector('button[type="submit"]');
-    var originalBtnText = submitBtn ? submitBtn.innerHTML : "🚀 提交 10 大問卷調查與報名 ➔";
-    if (submitBtn) {
-      submitBtn.disabled = true;
-      submitBtn.innerHTML = "⏳ 正在秒速提交並傳送通知中...";
+  var formData = new FormData(form);
+  var data = {};
+  formData.forEach(function(val, key) {
+    if (data[key]) {
+      data[key] = data[key] + ", " + val;
+    } else {
+      data[key] = val;
     }
+  });
 
-    var formData = new FormData(form);
-    var data = {};
-    formData.forEach(function(val, key) {
-      if (data[key]) {
-        data[key] = data[key] + ", " + val;
+  // 1. 🚀 發送至 Google Apps Script Web App (Email + LINE 手機推播)
+  var gasPromise = fetch("https://script.google.com/macros/s/AKfycbxHG-M-0FYVPNAawBeCwFNDxdyYi07f81xx6E89zjylR-wagkwbPL0RQYqZk27krtzS/exec", {
+    method: "POST",
+    mode: "no-cors",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data)
+  });
+
+  // 2. 🚀 發送至 FormSubmit AJAX 背景發信 (不跳轉)
+  var fsPromise = fetch("https://formsubmit.co/ajax/kl0919268370@gmail.com", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "Accept": "application/json" },
+    body: JSON.stringify(Object.assign({ _cc: "kimleo117@yahoo.com.tw", _subject: "🔔【10大問卷報名通知】來自網頁的最新訪客問卷提交！" }, data))
+  });
+
+  Promise.allSettled([gasPromise, fsPromise]).then(function() {
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = originalBtnText;
+    }
+    form.reset();
+    
+    // 顯示 100% 繁體中文「問卷已成功送出」專屬彈窗
+    try {
+      var modalEl = document.getElementById("surveySuccessModal");
+      if (modalEl && typeof bootstrap !== "undefined") {
+        var modal = new bootstrap.Modal(modalEl);
+        modal.show();
       } else {
-        data[key] = val;
+        alert("🎉 感謝您的參與！【10 大問卷與報名】已成功送出！問卷結果已全自動發送至 LINE 手機推播與您的電子信箱！");
       }
-    });
+    } catch(err) {
+      alert("🎉 感謝您的參與！【10 大問卷與報名】已成功送出！問卷結果已全自動發送至 LINE 手機推播與您的電子信箱！");
+    }
+  });
 
-    // 1. 🚀 觸發 Google Apps Script (Email + LINE 手機推播)
-    var gasPromise = fetch("https://script.google.com/macros/s/AKfycbxHG-M-0FYVPNAawBeCwFNDxdyYi07f81xx6E89zjylR-wagkwbPL0RQYqZk27krtzS/exec", {
-      method: "POST",
-      mode: "no-cors",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data)
-    });
-
-    // 2. 🚀 觸發 FormSubmit 背景備份發信 (不跳轉)
-    var fsPromise = fetch("https://formsubmit.co/ajax/kl0919268370@gmail.com", {
-      method: "POST",
-      headers: { "Content-Type": "application/json", "Accept": "application/json" },
-      body: JSON.stringify(Object.assign({ _cc: "kimleo117@yahoo.com.tw", _subject: "🔔【10大問卷報名通知】來自網頁的最新訪客問卷提交！", _next: "https://kimleo117.github.io/AI20260622/about.html" }, data))
-    });
-
-    Promise.allSettled([gasPromise, fsPromise]).then(function() {
-      if (submitBtn) {
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = originalBtnText;
-      }
-      form.reset();
-      
-      // 顯示 100% 繁體中文成功彈窗
-      try {
-        var modalEl = document.getElementById("surveySuccessModal");
-        if (modalEl && typeof bootstrap !== "undefined") {
-          var modal = new bootstrap.Modal(modalEl);
-          modal.show();
-        } else {
-          alert("🎉 感謝您的參與！【10 大問卷與報名】已成功提交！問卷結果已全自動發送至 LINE 手機推播與您的電子信箱！");
-        }
-      } catch(err) {
-        alert("🎉 感謝您的參與！【10 大問卷與報名】已成功提交！問卷結果已全自動發送至 LINE 手機推播與您的電子信箱！");
-      }
-    });
-  }});
-});
+  return false;
+}
 </script>
 
 </body>
