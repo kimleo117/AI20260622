@@ -947,5 +947,37 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 </script>
 
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  var form = document.getElementById("feedbackForm");
+  if (!form) return;
+
+  form.addEventListener("submit", function(e) {
+    var formData = new FormData(form);
+    var data = {};
+    formData.forEach(function(val, key) {
+      if (data[key]) {
+        data[key] = data[key] + ", " + val;
+      } else {
+        data[key] = val;
+      }
+    });
+
+    // 🚀 即時連動觸發 Google Apps Script Web App (Email + LINE 手機推播)
+    fetch("https://script.google.com/macros/s/AKfycbxHG-M-0FYVPNAawBeCwFNDxdyYi07f81xx6E89zjylR-wagkwbPL0RQYqZk27krtzS/exec", {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data)
+    }).then(function() {
+      console.log("✅ Apps Script (Email + LINE) 觸發成功！");
+    }).catch(function(err) {
+      console.log("⚠️ Apps Script 觸發例外:", err);
+    });
+  });
+});
+</script>
+
 </body>
 </html>
