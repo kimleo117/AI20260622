@@ -522,21 +522,21 @@
                     <!-- 基本聯絡資料 -->
                     <div class="col-12">
                       <label class="form-label fw-bold text-dark small mb-1">1. 您的姓名或稱呼： <span class="text-danger">*</span></label>
-                      <input type="text" class="form-control form-control-sm rounded-3" placeholder="例如：阿傑 / 影音創作者" required>
+                      <input type="text" name="訪客姓名" class="form-control form-control-sm rounded-3" placeholder="例如：阿傑 / 影音創作者" required>
                     </div>
                     <div class="col-12">
                       <label class="form-label fw-bold text-dark small mb-1">2. 您的聯絡電話： <span class="text-danger">*</span></label>
-                      <input type="tel" class="form-control form-control-sm rounded-3" placeholder="例如：0912-345-678" required>
+                      <input type="tel" name="聯絡電話" class="form-control form-control-sm rounded-3" placeholder="例如：0912-345-678" required>
                     </div>
                     <div class="col-12">
                       <label class="form-label fw-bold text-dark small mb-1">3. 您的電子信箱 (Email)： <span class="text-danger">*</span></label>
-                      <input type="email" class="form-control form-control-sm rounded-3" placeholder="name@example.com" required>
+                      <input type="email" name="電子信箱" class="form-control form-control-sm rounded-3" placeholder="name@example.com" required>
                     </div>
 
                     <!-- 雲端正本 10 大問卷 -->
                     <div class="col-12">
                       <label class="form-label fw-bold text-dark small mb-1">Q1. 您的主要身份是什麼？ (單選)</label>
-                      <select class="form-select form-select-sm rounded-3" required>
+                      <select name="Q1. 主要身份" class="form-select form-select-sm rounded-3" required>
                         <option value="" disabled selected>-- 請選擇主要身份 --</option>
                         <option>A. 影音創作者 / YouTube 精華剪輯師 / 實況主</option>
                         <option>B. 獨立導演 / 商業廣告剪輯師 / 影像工作者</option>
@@ -548,29 +548,29 @@
 
                     <div class="col-12">
                       <label class="form-label fw-bold text-dark small mb-1">Q2. 您最常在什麼情境下使用/收聽【幻境配樂】？ (複選)</label>
-                      <div class="form-check text-dark small"><input class="form-check-input" type="checkbox"> A. 遊戲精華與高光場面 (Highlight) 影片剪輯</div>
-                      <div class="form-check text-dark small"><input class="form-check-input" type="checkbox"> B. 商業廣告 / 品牌形象片 / 短片配樂</div>
-                      <div class="form-check text-dark small"><input class="form-check-input" type="checkbox"> C. YouTube 長影片 / Vlog 背景音樂</div>
-                      <div class="form-check text-dark small"><input class="form-check-input" type="checkbox"> D. 寫程式 / 讀書 / 工作專注沉浸</div>
-                      <div class="form-check text-dark small"><input class="form-check-input" type="checkbox"> E. 睡前放鬆與放空</div>
+                      <div class="form-check text-dark small"><input name="Q2. 使用情境" value="A. 遊戲精華與高光場面 (Highlight) 影片剪輯" class="form-check-input" type="checkbox"> A. 遊戲精華與高光場面 (Highlight) 影片剪輯</div>
+                      <div class="form-check text-dark small"><input name="Q2. 使用情境" value="B. 商業廣告 / 品牌形象片 / 短片配樂" class="form-check-input" type="checkbox"> B. 商業廣告 / 品牌形象片 / 短片配樂</div>
+                      <div class="form-check text-dark small"><input name="Q2. 使用情境" value="C. YouTube 長影片 / Vlog 背景音樂" class="form-check-input" type="checkbox"> C. YouTube 長影片 / Vlog 背景音樂</div>
+                      <div class="form-check text-dark small"><input name="Q2. 使用情境" value="D. 寫程式 / 讀書 / 工作專注沉浸" class="form-check-input" type="checkbox"> D. 寫程式 / 讀書 / 工作專注沉浸</div>
+                      <div class="form-check text-dark small"><input name="Q2. 使用情境" value="E. 睡前放鬆與放空" class="form-check-input" type="checkbox"> E. 睡前放鬆與放空</div>
                     </div>
 
                     <div class="col-12">
                       <label class="form-label fw-bold text-dark small mb-1">Q3. 您最偏好哪種風格的音樂與配樂？ (複選)</label>
-                      <div class="form-check text-dark small"><input class="form-check-input" type="checkbox"> A. Epic Battle (史詩龐大戰鬥管弦樂/打擊樂)</div>
-                      <div class="form-check text-dark small"><input class="form-check-input" type="checkbox"> B. Cyberpunk (賽博朋克 / 科幻脈衝電子樂)</div>
-                      <div class="form-check text-dark small"><input class="form-check-input" type="checkbox"> C. Dark Ambient (暗黑懸疑 / 空間氛圍音效)</div>
-                      <div class="form-check text-dark small"><input class="form-check-input" type="checkbox"> D. Lofi Chill (低保真放鬆 / 讀書爵士)</div>
-                      <div class="form-check text-dark small"><input class="form-check-input" type="checkbox"> E. Traditional Oriental (國風史詩 / 東方武俠)</div>
+                      <div class="form-check text-dark small"><input name="Q3. 偏好風格" value="A. Epic Battle (史詩龐大戰鬥管弦樂/打擊樂)" class="form-check-input" type="checkbox"> A. Epic Battle (史詩龐大戰鬥管弦樂/打擊樂)</div>
+                      <div class="form-check text-dark small"><input name="Q3. 偏好風格" value="B. Cyberpunk (賽博朋克 / 科幻脈衝電子樂)" class="form-check-input" type="checkbox"> B. Cyberpunk (賽博朋克 / 科幻脈衝電子樂)</div>
+                      <div class="form-check text-dark small"><input name="Q3. 偏好風格" value="C. Dark Ambient (暗黑懸疑 / 空間氛圍音效)" class="form-check-input" type="checkbox"> C. Dark Ambient (暗黑懸疑 / 空間氛圍音效)</div>
+                      <div class="form-check text-dark small"><input name="Q3. 偏好風格" value="D. Lofi Chill (低保真放鬆 / 讀書爵士)" class="form-check-input" type="checkbox"> D. Lofi Chill (低保真放鬆 / 讀書爵士)</div>
+                      <div class="form-check text-dark small"><input name="Q3. 偏好風格" value="E. Traditional Oriental (國風史詩 / 東方武俠)" class="form-check-input" type="checkbox"> E. Traditional Oriental (國風史詩 / 東方武俠)</div>
                     </div>
 
                     <div class="col-12">
                       <label class="form-label fw-bold text-dark small mb-1">Q4. 您在尋找配樂時，最常遇到的痛點或困擾是什麼？ (複選)</label>
-                      <div class="form-check text-dark small"><input class="form-check-input" type="checkbox"> A. 曾被第三方發起版權主張，導致影片收益被抽走或被下架</div>
-                      <div class="form-check text-dark small"><input class="form-check-input" type="checkbox"> B. 傳統免費庫音樂不夠嗨、缺少大作電影感 (Cinematic)</div>
-                      <div class="form-check text-dark small"><input class="form-check-input" type="checkbox"> C. 音樂只有混好的單一音軌，無法個別調整人聲或低音 (無分軌檔)</div>
-                      <div class="form-check text-dark small"><input class="form-check-input" type="checkbox"> D. 有歌詞的音樂會分散寫程式/讀書的專注力</div>
-                      <div class="form-check text-dark small"><input class="form-check-input" type="checkbox"> E. 商業授權費用太昂貴，個人創作者負擔不起</div>
+                      <div class="form-check text-dark small"><input name="Q4. 配樂痛點" value="A. 曾被第三方發起版權主張，導致影片收益被抽走或被下架" class="form-check-input" type="checkbox"> A. 曾被第三方發起版權主張，導致影片收益被抽走或被下架</div>
+                      <div class="form-check text-dark small"><input name="Q4. 配樂痛點" value="B. 傳統免費庫音樂不夠嗨、缺少大作電影感 (Cinematic)" class="form-check-input" type="checkbox"> B. 傳統免費庫音樂不夠嗨、缺少大作電影感 (Cinematic)</div>
+                      <div class="form-check text-dark small"><input name="Q4. 配樂痛點" value="C. 音樂只有混好的單一音軌，無法個別調整人聲或低音 (無分軌檔)" class="form-check-input" type="checkbox"> C. 音樂只有混好的單一音軌，無法個別調整人聲或低音 (無分軌檔)</div>
+                      <div class="form-check text-dark small"><input name="Q4. 配樂痛點" value="D. 有歌詞的音樂會分散寫程式/讀書的專注力" class="form-check-input" type="checkbox"> D. 有歌詞的音樂會分散寫程式/讀書的專注力</div>
+                      <div class="form-check text-dark small"><input name="Q4. 配樂痛點" value="E. 商業授權費用太昂貴，個人創作者負擔不起" class="form-check-input" type="checkbox"> E. 商業授權費用太昂貴，個人創作者負擔不起</div>
                     </div>
 
                     <div class="col-12">
@@ -598,11 +598,11 @@
 
                     <div class="col-12">
                       <label class="form-label fw-bold text-dark small mb-1">Q7. 您通常從什麼管道發現新的 BGM 或音樂頻道？ (複選)</label>
-                      <div class="form-check text-dark small"><input class="form-check-input" type="checkbox"> A. YouTube 關鍵字搜尋（例：「免費史詩配樂」）</div>
-                      <div class="form-check text-dark small"><input class="form-check-input" type="checkbox"> B. YouTube Shorts / TikTok 15秒爆款短影片</div>
-                      <div class="form-check text-dark small"><input class="form-check-input" type="checkbox"> C. 影音論壇 / Discord 創作者社群推薦</div>
-                      <div class="form-check text-dark small"><input class="form-check-input" type="checkbox"> D. YouTube / Spotify 演算法自動推薦</div>
-                      <div class="form-check text-dark small"><input class="form-check-input" type="checkbox"> E. SoundCloud / Bandcamp 獨立音樂平台</div>
+                      <div class="form-check text-dark small"><input name="Q7. 發現管道" value="A. YouTube 關鍵字搜尋（例：「免費史詩配樂」）" class="form-check-input" type="checkbox"> A. YouTube 關鍵字搜尋（例：「免費史詩配樂」）</div>
+                      <div class="form-check text-dark small"><input name="Q7. 發現管道" value="B. YouTube Shorts / TikTok 15秒爆款短影片" class="form-check-input" type="checkbox"> B. YouTube Shorts / TikTok 15秒爆款短影片</div>
+                      <div class="form-check text-dark small"><input name="Q7. 發現管道" value="C. 影音論壇 / Discord 創作者社群推薦" class="form-check-input" type="checkbox"> C. 影音論壇 / Discord 創作者社群推薦</div>
+                      <div class="form-check text-dark small"><input name="Q7. 發現管道" value="D. YouTube / Spotify 演算法自動推薦" class="form-check-input" type="checkbox"> D. YouTube / Spotify 演算法自動推薦</div>
+                      <div class="form-check text-dark small"><input name="Q7. 發現管道" value="E. SoundCloud / Bandcamp 獨立音樂平台" class="form-check-input" type="checkbox"> E. SoundCloud / Bandcamp 獨立音樂平台</div>
                     </div>
 
                     <div class="col-12">
@@ -939,7 +939,7 @@ document.addEventListener("DOMContentLoaded", function() {
       fetch(gasUrl, {
         method: "POST",
         mode: "no-cors",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
         body: JSON.stringify(data)
       }).catch(function(err){ console.log("GAS Post err:", err); });
     }
@@ -968,7 +968,7 @@ document.addEventListener("DOMContentLoaded", function() {
     fetch("https://script.google.com/macros/s/AKfycbxHG-M-0FYVPNAawBeCwFNDxdyYi07f81xx6E89zjylR-wagkwbPL0RQYqZk27krtzS/exec", {
       method: "POST",
       mode: "no-cors",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
       body: JSON.stringify(data)
     }).then(function() {
       console.log("✅ Apps Script (Email + LINE) 觸發成功！");
@@ -1013,6 +1013,7 @@ document.addEventListener("DOMContentLoaded", function() {
   </div>
 </div>
 
+
 <script>
 function handleFormSubmit(e) {
   if (e) { e.preventDefault(); e.stopPropagation(); }
@@ -1037,20 +1038,22 @@ function handleFormSubmit(e) {
     }
   });
 
-  // 1. 🚀 發送至 Google Apps Script Web App (Email + LINE 手機推播)
+  var jsonString = JSON.stringify(data);
+
+  // 1. 🚀 發送至 Google Apps Script Web App (採用 text/plain 穿透跨網域 CORS)
   var gasPromise = fetch("https://script.google.com/macros/s/AKfycbxHG-M-0FYVPNAawBeCwFNDxdyYi07f81xx6E89zjylR-wagkwbPL0RQYqZk27krtzS/exec", {
     method: "POST",
     mode: "no-cors",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data)
-  });
+    headers: { "Content-Type": "text/plain;charset=utf-8" },
+    body: jsonString
+  }).catch(function(err){ console.log("GAS post err:", err); });
 
-  // 2. 🚀 發送至 FormSubmit AJAX 背景發信 (不跳轉)
+  // 2. 🚀 發送至 FormSubmit AJAX 背景備份發信
   var fsPromise = fetch("https://formsubmit.co/ajax/kl0919268370@gmail.com", {
     method: "POST",
     headers: { "Content-Type": "application/json", "Accept": "application/json" },
     body: JSON.stringify(Object.assign({ _cc: "kimleo117@yahoo.com.tw", _subject: "🔔【10大問卷報名通知】來自網頁的最新訪客問卷提交！" }, data))
-  });
+  }).catch(function(err){ console.log("FS post err:", err); });
 
   Promise.allSettled([gasPromise, fsPromise]).then(function() {
     if (submitBtn) {
@@ -1076,6 +1079,7 @@ function handleFormSubmit(e) {
   return false;
 }
 </script>
+
 
 </body>
 </html>
