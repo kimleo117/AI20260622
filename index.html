@@ -1254,21 +1254,21 @@
             <span class="badge bg-danger bg-opacity-10 text-danger rounded-pill px-2 py-1 fs-7">🔥 每日更新</span>
           </div>
           <div class="d-flex flex-wrap gap-2 pt-1">
-            <a href="#chat" class="btn btn-sm btn-light border text-dark rounded-pill fw-bold d-flex align-items-center gap-1" style="font-size:0.8rem;">
+            <button type="button" data-target="#chat" class="btn btn-sm btn-light border text-dark rounded-pill fw-bold d-flex align-items-center gap-1 hot-tag-btn" style="font-size:0.8rem;">
               <span class="badge bg-danger rounded-circle" style="width:18px; height:18px; padding:0; line-height:18px; font-size:10px;">1</span> DeepSeek R1
-            </a>
-            <a href="#featured" class="btn btn-sm btn-light border text-dark rounded-pill fw-bold d-flex align-items-center gap-1" style="font-size:0.8rem;">
+            </button>
+            <button type="button" data-target="#featured" class="btn btn-sm btn-light border text-dark rounded-pill fw-bold d-flex align-items-center gap-1 hot-tag-btn" style="font-size:0.8rem;">
               <span class="badge bg-warning text-dark rounded-circle" style="width:18px; height:18px; padding:0; line-height:18px; font-size:10px;">2</span> 可靈 AI (Kling)
-            </a>
-            <a href="#media" class="btn btn-sm btn-light border text-dark rounded-pill fw-bold d-flex align-items-center gap-1" style="font-size:0.8rem;">
+            </button>
+            <button type="button" data-target="#media" class="btn btn-sm btn-light border text-dark rounded-pill fw-bold d-flex align-items-center gap-1 hot-tag-btn" style="font-size:0.8rem;">
               <span class="badge bg-primary rounded-circle" style="width:18px; height:18px; padding:0; line-height:18px; font-size:10px;">3</span> CapCut / 剪映
-            </a>
-            <a href="#free" class="btn btn-sm btn-light border text-dark rounded-pill fw-bold d-flex align-items-center gap-1" style="font-size:0.8rem;">
+            </button>
+            <button type="button" data-target="#free" class="btn btn-sm btn-light border text-dark rounded-pill fw-bold d-flex align-items-center gap-1 hot-tag-btn" style="font-size:0.8rem;">
               <span class="badge bg-secondary rounded-circle" style="width:18px; height:18px; padding:0; line-height:18px; font-size:10px;">4</span> Kimi 智能助手
-            </a>
-            <a href="#latest" class="btn btn-sm btn-light border text-dark rounded-pill fw-bold d-flex align-items-center gap-1" style="font-size:0.8rem;">
+            </button>
+            <button type="button" data-target="#latest" class="btn btn-sm btn-light border text-dark rounded-pill fw-bold d-flex align-items-center gap-1 hot-tag-btn" style="font-size:0.8rem;">
               <span class="badge bg-secondary rounded-circle" style="width:18px; height:18px; padding:0; line-height:18px; font-size:10px;">5</span> OpenAI Sora 2
-            </a>
+            </button>
           </div>
         </div>
 
@@ -4184,7 +4184,7 @@
               }
             });
 
-            // 側邊欄 Highlight 與平滑捲動
+            // 側邊欄 Highlight (純標註分類，絕不自動滾走畫面)
             if (catKeywordMap[query]) {
               const targetSelector = catKeywordMap[query][0];
               const targetText = catKeywordMap[query][1];
@@ -4196,13 +4196,6 @@
                   item.classList.remove("active");
                 }
               });
-
-              if (triggerScroll) {
-                const targetSection = document.querySelector(targetSelector) || document.querySelector(`[id*="${targetText}"]`);
-                if (targetSection) {
-                  targetSection.scrollIntoView({ behavior: "smooth", block: "start" });
-                }
-              }
             }
 
             countDisplay.style.display = "block";
