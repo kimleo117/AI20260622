@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-N7DCW89H');</script>
+    <!-- End Google Tag Manager -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🧪 SoundSync AI - 全功能本機音訊打軸與編輯存檔工作室</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body { background: #070a12; color: #f8fafc; font-family: "Noto Sans TC", sans-serif; padding: 2rem 1rem; }
+    .card-test { background: #0f172a; border: 1px solid #1e293b; border-radius: 20px; padding: 2.5rem; box-shadow: 0 20px 50px rgba(0,0,0,0.6); }
+    .form-control-custom, .form-select-custom { background: #1e293b !important; color: #ffffff !important; border: 1px solid #334155 !important; padding: 14px 18px; border-radius: 12px; font-size: 1.05rem; }
+    .form-control-custom:focus, .form-select-custom:focus { border-color: #3b82f6 !important; box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.25) !important; }
+    .btn-action { background: linear-gradient(135deg, #2563eb, #1d4ed8); border: none; font-weight: 700; padding: 16px 40px; border-radius: 999px; font-size: 1.15rem; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+    .btn-action:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(37, 99, 235, 0.45); }
+    .btn-action:disabled { background: linear-gradient(135deg, #b45309, #d97706) !important; color: #ffffff !important; cursor: not-allowed; transform: none; box-shadow: 0 0 20px rgba(217, 119, 6, 0.5) !important; }
+    .btn-export { background: #10b981; border: none; font-weight: bold; border-radius: 999px; padding: 10px 24px; color: #ffffff; font-size: 0.95rem; }
+    .btn-export:hover { background: #059669; }
+    
+    .editor-textarea {
+      width: 100% !important;
+      min-height: 480px !important;
+      background: #020617 !important;
+      color: #38bdf8 !important;
+      padding: 1.5rem !important;
+      border-radius: 16px !important;
+      border: 2px solid #1e293b !important;
+      line-height: 1.8 !important;
+      font-family: "Fira Code", monospace !important;
+      font-size: 1.1rem !important;
+      box-shadow: inset 0 2px 8px rgba(0,0,0,0.5);
+    }
+    .editor-textarea:focus { border-color: #3b82f6 !important; outline: none; }
+    audio { width: 100%; filter: invert(0.9) hue-rotate(180deg); border-radius: 12px; }
+    
+    .giant-loading-banner {
+      display: none;
+      animation: giantPulse 1.2s infinite;
+      border: 3px solid #3b82f6 !important;
+      background: linear-gradient(135deg, #0b1329 0%, #172554 100%) !important;
+    }
+    
+    @keyframes giantPulse {
+      0% { box-shadow: 0 0 15px rgba(59, 130, 246, 0.4); border-color: #3b82f6; }
+      50% { box-shadow: 0 0 45px rgba(59, 130, 246, 0.9); border-color: #60a5fa; }
+      100% { box-shadow: 0 0 15px rgba(59, 130, 246, 0.4); border-color: #3b82f6; }
+    }
+
+    .sync-lyric-box {
+      background: #020617;
+      border: 1px solid #1e293b;
+      border-radius: 16px;
+      padding: 1.5rem;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+    .lyric-line-item {
+      padding: 10px 16px;
+      margin-bottom: 6px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.2s ease;
+      color: #94a3b8;
+    }
+    .lyric-line-item:hover {
+      background: rgba(59, 130, 246, 0.15);
+      color: #38bdf8;
+      transform: translateX(4px);
+    }
+    .lyric-line-item.active-playing {
+      background: linear-gradient(90deg, #2563eb 0%, #1d4ed8 100%) !important;
+      color: #ffffff !important;
+      font-weight: 700;
+      font-size: 1.1rem;
+      box-shadow: 0 4px 16px rgba(37, 99, 235, 0.4);
+    }
+  </style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N7DCW89H"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+  <div class="container-fluid px-3 px-md-5" style="max-width: 1300px;">
+    <div class="card-test my-3">
+      
+      <!-- 頂部標題列 -->
+      <div class="d-flex align-items-center gap-3 mb-4 border-bottom border-secondary border-opacity-25 pb-4">
+        <div class="fs-1 p-3 bg-primary bg-opacity-10 rounded-4 border border-primary border-opacity-25">🎵</div>
+        <div>
+          <h1 class="h3 fw-bold text-white mb-1">SoundSync AI - 全畫面聽打對齊、即時視聽微調與一鍵存檔</h1>
+          <p class="text-secondary small mb-0">本機專用工作室 • 修復 CRLF 換行符相容性 • 完整健壯 SRT 字幕解析</p>
+        </div>
+      </div>
+
+      <!-- 📌 巨型滿版超顯眼『AI 打軸運算中』高亮橫幅卡片 -->
+      <div id="giantLoadingBanner" class="giant-loading-banner mb-4 p-4 rounded-4 text-white">
+        <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-3 border-bottom border-primary border-opacity-50 pb-3">
+          <div class="d-flex align-items-center gap-3">
+            <div class="spinner-border text-warning" style="width: 2.2rem; height: 2.2rem;" role="status"></div>
+            <div>
+              <h3 class="h4 fw-bold text-warning mb-0" id="giantBannerTitle">🚀 Google AI Studio 正全力衝刺打軸中...</h3>
+              <div class="small text-info fw-bold" id="giantBannerSubtitle">請保持網頁開啟，AI 正在即時聆聽音訊聲波標記字幕微秒時間軸...</div>
+            </div>
+          </div>
+          <div class="text-end">
+            <div class="fs-3 fw-extrabold text-success" id="giantTimerText">⏱️ 已耗時: 0.1 秒</div>
+            <div class="badge bg-warning text-dark fs-7 px-3 py-2 mt-1 fw-bold" id="giantModelBadge">使用模型: gemini-1.5-flash</div>
+          </div>
+        </div>
+
+        <div class="progress mb-2" style="height: 22px; border-radius: 999px; background: #020617;">
+          <div id="progressBar" class="progress-bar progress-bar-striped progress-bar-animated bg-warning text-dark fw-bold fs-7" role="progressbar" style="width: 5%;">5%</div>
+        </div>
+
+        <div class="mt-3 p-3 bg-black bg-opacity-70 rounded-3 font-monospace border border-primary border-opacity-30 small text-light" id="progressSubDetail" style="line-height: 1.6; max-height: 140px; overflow-y: auto;">
+          > [00:00.1s] 🚀 [衝刺中] 任務啟動...
+        </div>
+      </div>
+
+      <div class="row g-4">
+        
+        <!-- 左半部控制區 -->
+        <div class="col-lg-5">
+          
+          <!-- 步驟 1：API Key -->
+          <div class="mb-4 p-3 rounded-4 bg-dark border border-secondary border-opacity-30">
+            <div class="d-flex align-items-center justify-content-between mb-2">
+              <label class="form-label fw-bold text-warning fs-6 mb-0">🔑 第一步：API Key (自動記憶)：</label>
+              <button id="clearKeyBtn" class="btn btn-sm btn-outline-danger py-0 px-2" style="font-size: 0.8rem;">清除</button>
+            </div>
+            <input type="text" id="geminiApiKey" class="form-control form-control-custom w-100" placeholder="貼入 API Key (AIzaSy...)，瀏覽器自動記憶！">
+            <div class="form-text text-success mt-2 small" id="keyRememberedStatus">🔒 已自動記憶金鑰。</div>
+          </div>
+
+          <!-- 步驟 2：選擇模型 (預設 gemini-1.5-flash 100% 穩定) -->
+          <div class="mb-4 p-3 rounded-4 bg-dark border border-secondary border-opacity-30">
+            <label class="form-label fw-bold text-success fs-6 mb-2">🤖 第二步：選擇 AI 模型 (預設 1.5 Flash 最穩定):</label>
+            <select id="geminiModelSelect" class="form-select form-select-custom w-100">
+              <option value="gemini-1.5-flash" selected>🛡️ gemini-1.5-flash (第一優先 • 官方最穩定模型)</option>
+              <option value="gemini-2.0-flash">🎵 gemini-2.0-flash (備用模型 • 2.0 高速 Flash)</option>
+              <option value="gemini-1.5-pro">🔥 gemini-1.5-pro (備用模型 • Pro 大數據對齊)</option>
+            </select>
+          </div>
+
+          <!-- 步驟 3：音樂選擇與試聽播放器 -->
+          <div class="mb-4 p-3 rounded-4 bg-dark border border-secondary border-opacity-30">
+            <label class="form-label fw-bold text-info fs-6 mb-2">🎵 第三步：選擇音樂檔與試聽播放器：</label>
+            <input type="file" id="audioFileInput" class="form-control form-control-custom w-100 mb-3" accept="audio/*">
+            
+            <div class="p-3 bg-secondary bg-opacity-10 rounded-3 border border-secondary border-opacity-30">
+              <div class="fw-bold text-light mb-2 small d-flex justify-content-between align-items-center">
+                <span>🎧 即時對齊試聽播放器：</span>
+                <small class="text-warning">點右側字幕可直接跳轉秒數</small>
+              </div>
+              <audio id="audioPlayer" controls class="w-100"></audio>
+              <div id="fileInfo" class="mt-2 text-info small fw-bold"></div>
+            </div>
+          </div>
+
+          <!-- 步驟 4：開始聽打打軸按鈕 -->
+          <div class="mb-4 pt-2">
+            <button id="startProcessBtn" class="btn btn-action text-white shadow w-100 d-flex align-items-center justify-content-center gap-2">
+              <span id="btnIcon">🚀</span> <span id="btnText">開始呼叫 Google AI Studio 聽打打軸</span>
+            </button>
+          </div>
+
+          <!-- 狀態提示 -->
+          <div id="statusAlert" class="alert alert-info d-none mb-4 rounded-3 fw-bold" role="alert"></div>
+        </div>
+
+        <!-- 右半部全寬度滿版視聽區 -->
+        <div class="col-lg-7">
+          
+          <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3">
+            <ul class="nav nav-pills gap-2" id="studioTab" role="tablist">
+              <li class="nav-item" role="presentation">
+                <button class="nav-link active fw-bold px-4 py-2 rounded-pill" id="tab-editor" data-bs-toggle="pill" data-bs-target="#panel-editor" type="button">📝 全滿版 SRT 編輯器</button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link fw-bold px-4 py-2 rounded-pill" id="tab-sync" data-bs-toggle="pill" data-bs-target="#panel-sync" type="button">🎧 音樂即時同頻對齊驗證區</button>
+              </li>
+            </ul>
+
+            <div class="d-flex flex-wrap gap-2">
+              <button id="downloadSrtBtn" class="btn btn-export shadow-sm">💾 匯出 SRT</button>
+              <button id="downloadLrcBtn" class="btn btn-export shadow-sm" style="background:#8b5cf6;">💾 匯出 LRC</button>
+              <button id="copyBtn" class="btn btn-outline-light rounded-pill font-bold py-1 px-3">📋 複製</button>
+            </div>
+          </div>
+
+          <div class="tab-content" id="studioTabContent">
+            <div class="tab-pane fade show active" id="panel-editor" role="tabpanel">
+              <p class="text-secondary small mb-2">可以在下方框中自由修改歌詞或時間點。已自動為您過濾清除多餘的 ```srt 符號！</p>
+              <textarea id="outputResult" class="editor-textarea" placeholder="// 選取音訊檔案並點擊左側藍色按鈕後，生成的字幕時間軸將顯示於此..."></textarea>
+            </div>
+
+            <div class="tab-pane fade" id="panel-sync" role="tabpanel">
+              <div class="p-3 bg-dark rounded-3 border border-secondary border-opacity-30 mb-3">
+                <div class="fw-bold text-warning mb-1">💡 驗證教學：</div>
+                <div class="small text-secondary">播放左側音樂時，下方目前唱到的歌詞會<strong>自動亮起藍光高亮</strong>！點擊任何一句歌詞，音樂播放器會<strong>自動跳轉到該句時間點</strong>！</div>
+              </div>
+
+              <div class="sync-lyric-box" id="syncLyricContainer">
+                <div class="text-center text-secondary py-5">// 尚未生成字幕時間軸，請先點擊左側按鈕開始聽打打軸...</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const apiKeyInput = document.getElementById('geminiApiKey');
+    const modelSelect = document.getElementById('geminiModelSelect');
+    const clearKeyBtn = document.getElementById('clearKeyBtn');
+    const keyRememberedStatus = document.getElementById('keyRememberedStatus');
+    const fileInput = document.getElementById('audioFileInput');
+    const audioPlayer = document.getElementById('audioPlayer');
+    const startBtn = document.getElementById('startProcessBtn');
+    const btnIcon = document.getElementById('btnIcon');
+    const btnText = document.getElementById('btnText');
+
+    const giantLoadingBanner = document.getElementById('giantLoadingBanner');
+    const giantBannerTitle = document.getElementById('giantBannerTitle');
+    const giantBannerSubtitle = document.getElementById('giantBannerSubtitle');
+    const giantTimerText = document.getElementById('giantTimerText');
+    const giantModelBadge = document.getElementById('giantModelBadge');
+
+    const progressBar = document.getElementById('progressBar');
+    const progressSubDetail = document.getElementById('progressSubDetail');
+
+    const statusAlert = document.getElementById('statusAlert');
+    const outputResult = document.getElementById('outputResult');
+    const fileInfo = document.getElementById('fileInfo');
+    const syncLyricContainer = document.getElementById('syncLyricContainer');
+
+    const downloadSrtBtn = document.getElementById('downloadSrtBtn');
+    const downloadLrcBtn = document.getElementById('downloadLrcBtn');
+    const copyBtn = document.getElementById('copyBtn');
+
+    let timerInterval = null;
+    let startTimeMs = 0;
+    let parsedParsedLyrics = [];
+    let logHistory = [];
+
+    function appendLog(msg) {
+      const elapsedSec = ((Date.now() - startTimeMs) / 1000).toFixed(1);
+      const logLine = `> [${elapsedSec}s] ${msg}`;
+      logHistory.push(logLine);
+      progressSubDetail.innerHTML = logHistory.slice(-5).join('<br>');
+      progressSubDetail.scrollTop = progressSubDetail.scrollHeight;
+    }
+
+    const savedKey = localStorage.getItem('soundsync_gemini_api_key');
+    if (savedKey) {
+      apiKeyInput.value = savedKey;
+      keyRememberedStatus.textContent = '✅ 已成功自動載入本機記憶的 API Key！';
+    }
+
+    apiKeyInput.addEventListener('input', () => {
+      const val = apiKeyInput.value.trim();
+      if (val) {
+        localStorage.setItem('soundsync_gemini_api_key', val);
+        keyRememberedStatus.textContent = '✅ 已自動儲存 API Key 至瀏覽器本機記憶體！';
+      } else {
+        localStorage.removeItem('soundsync_gemini_api_key');
+        keyRememberedStatus.textContent = 'ℹ️ 請填入 API Key';
+      }
+    });
+
+    clearKeyBtn.addEventListener('click', () => {
+      localStorage.removeItem('soundsync_gemini_api_key');
+      apiKeyInput.value = '';
+      keyRememberedStatus.textContent = 'ℹ️ 已清除記憶的 Key';
+    });
+
+    fileInput.addEventListener('change', () => {
+      const file = fileInput.files[0];
+      if (file) {
+        fileInfo.textContent = `✅ 已載入: ${file.name} (${(file.size / (1024 * 1024)).toFixed(2)} MB)`;
+        const objectUrl = URL.createObjectURL(file);
+        audioPlayer.src = objectUrl;
+      }
+    });
+
+    function fileToBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          const result = reader.result;
+          const base64Data = result.split(',')[1];
+          resolve(base64Data);
+        };
+        reader.onerror = error => reject(error);
+        reader.readAsDataURL(file);
+      });
+    }
+
+    function cleanMarkdownFences(rawText) {
+      if (!rawText) return '';
+      let cleaned = rawText.trim();
+      cleaned = cleaned.replace(/^```[a-zA-Z]*
+?/i, '');
+      cleaned = cleaned.replace(/
+?```$/i, '');
+      return cleaned.trim();
+    }
+
+    function parseTimeToSeconds(timeStr) {
+      if (!timeStr) return 0;
+      const parts = timeStr.trim().split(':');
+      if (parts.length === 3) {
+        const hrs = parseFloat(parts[0]);
+        const mins = parseFloat(parts[1]);
+        const secs = parseFloat(parts[2].replace(',', '.'));
+        return hrs * 3600 + mins * 60 + secs;
+      } else if (parts.length === 2) {
+        const mins = parseFloat(parts[0]);
+        const secs = parseFloat(parts[1].replace(',', '.'));
+        return mins * 60 + secs;
+      }
+      return 0;
+    }
+
+    // 🔧 徹底修復 CRLF (
+) 換行符相容性問題，絕不受 Windows 換行符影響！
+    function parseSrtText(srtContent) {
+      if (!srtContent) return [];
+      const clean = cleanMarkdownFences(srtContent)
+        .replace(/
+/g, '
+')
+        .replace(/
+/g, '
+');
+      
+      const blocks = clean.split(/
+\s*
+/);
+      const items = [];
+
+      blocks.forEach(block => {
+        const lines = block.trim().split('
+');
+        if (lines.length >= 2) {
+          let timeLineIdx = -1;
+          for (let i = 0; i < lines.length; i++) {
+            if (lines[i].includes('-->')) {
+              timeLineIdx = i;
+              break;
+            }
+          }
+          if (timeLineIdx !== -1) {
+            const timeParts = lines[timeLineIdx].split('-->');
+            const startTime = parseTimeToSeconds(timeParts[0]);
+            const endTime = parseTimeToSeconds(timeParts[1]);
+            const lyricText = lines.slice(timeLineIdx + 1).join(' ').trim();
+            if (lyricText) {
+              items.push({ start: startTime, end: endTime, text: lyricText, rawTime: lines[timeLineIdx].trim() });
+            }
+          }
+        }
+      });
+      return items;
+    }
+
+    function renderSyncLyricBox(items) {
+      parsedParsedLyrics = items;
+      if (!items || items.length === 0) {
+        syncLyricContainer.innerHTML = '<div class="text-center text-secondary py-5">// 無法解析時間軸，請確認字幕格式...</div>';
+        return;
+      }
+
+      let html = '';
+      items.forEach((item, idx) => {
+        html += `<div class="lyric-line-item" data-idx="${idx}" data-start="${item.start}">
+          <span class="badge bg-secondary me-2">${item.rawTime}</span>
+          <span>${item.text}</span>
+        </div>`;
+      });
+      syncLyricContainer.innerHTML = html;
+
+      document.querySelectorAll('.lyric-line-item').forEach(el => {
+        el.addEventListener('click', () => {
+          const startTime = parseFloat(el.getAttribute('data-start'));
+          audioPlayer.currentTime = startTime;
+          audioPlayer.play();
+        });
+      });
+    }
+
+    audioPlayer.addEventListener('timeupdate', () => {
+      const curTime = audioPlayer.currentTime;
+      if (!parsedParsedLyrics || parsedParsedLyrics.length === 0) return;
+
+      parsedParsedLyrics.forEach((item, idx) => {
+        const el = syncLyricContainer.querySelector(`[data-idx="${idx}"]`);
+        if (el) {
+          if (curTime >= item.start && curTime <= item.end + 0.5) {
+            el.classList.add('active-playing');
+            el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          } else {
+            el.classList.remove('active-playing');
+          }
+        }
+      });
+    });
+
+    function startProgressAnimation(selectedModelName) {
+      startTimeMs = Date.now();
+      logHistory = [];
+      
+      giantLoadingBanner.style.display = 'block';
+      giantModelBadge.textContent = `使用模型: ${selectedModelName}`;
+      giantBannerTitle.textContent = `🚀 Google AI Studio 正全力衝刺打軸中...`;
+      giantBannerSubtitle.textContent = `請保持網頁開啟，AI 正在即時對齊聲波與標記微秒時間軸...`;
+      
+      outputResult.value = `⏳ 【AI 聽打打軸全速衝刺中...】
+
+系統正在使用 ${selectedModelName} 分析音訊中！
+字幕生成完畢後將立刻印於此處，請稍候...`;
+
+      startBtn.disabled = true;
+      btnIcon.textContent = '🔥';
+      btnText.textContent = `${selectedModelName} 全速分析中... (點擊鎖定中)`;
+
+      let currentPercent = 5;
+      progressBar.style.width = '5%';
+      progressBar.textContent = '5%';
+      giantTimerText.textContent = `⏱️ 已耗時: 0.1 秒`;
+
+      appendLog(`🚀 [任務啟動] 正在使用 ${selectedModelName} 分析音訊...`);
+
+      if (timerInterval) clearInterval(timerInterval);
+
+      timerInterval = setInterval(() => {
+        const elapsedSec = (Date.now() - startTimeMs) / 1000;
+        const mins = Math.floor(elapsedSec / 60);
+        const secs = (elapsedSec % 60).toFixed(1);
+        
+        let timeStr = `${secs} 秒`;
+        if (mins > 0) timeStr = `${mins} 分 ${secs} 秒`;
+
+        giantTimerText.textContent = `⏱️ 已耗時: ${timeStr}`;
+
+        if (currentPercent < 95) {
+          currentPercent += 0.3;
+          progressBar.style.width = currentPercent.toFixed(0) + '%';
+          progressBar.textContent = currentPercent.toFixed(0) + '%';
+        }
+
+        if (elapsedSec >= 300) {
+          stopProgressAnimation(false, '⚠️ 請求超時：請確認網路連線或使用較短音訊檔！');
+        }
+      }, 100);
+    }
+
+    function stopProgressAnimation(isSuccess = true, message = '') {
+      if (timerInterval) clearInterval(timerInterval);
+      startBtn.disabled = false;
+      btnIcon.textContent = '🚀';
+      btnText.textContent = '開始呼叫 Google AI Studio 聽打打軸';
+
+      const totalSec = ((Date.now() - startTimeMs) / 1000).toFixed(1);
+      const mins = Math.floor(totalSec / 60);
+      const secs = (totalSec % 60).toFixed(1);
+      let timeStr = `${secs}秒`;
+      if (mins > 0) timeStr = `${mins}分 ${secs}秒`;
+
+      if (isSuccess) {
+        progressBar.style.width = '100%';
+        progressBar.textContent = '100%';
+        progressBar.classList.remove('bg-warning');
+        progressBar.classList.add('bg-success');
+        giantBannerTitle.textContent = `🎉 100% 打軸完成！`;
+        giantBannerSubtitle.textContent = `字幕已成功精準印在右側編輯框中，總耗時 ${timeStr}！`;
+        appendLog(`🎉 [成功] 音訊聽打與時間軸標記完成！總耗時 ${timeStr}`);
+      } else {
+        progressBar.style.width = '100%';
+        progressBar.textContent = '失敗/超時';
+        progressBar.classList.remove('bg-warning');
+        progressBar.classList.add('bg-danger');
+        giantBannerTitle.textContent = `❌ 打軸中止`;
+        giantBannerSubtitle.textContent = message;
+        appendLog(`❌ [失敗/超時] ${message}`);
+      }
+    }
+
+    async function tryGenerateWithModel(apiKey, modelName, base64Audio, mimeType) {
+      const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${apiKey}`;
+
+      const promptText = `你是一個專業的音訊聽打打軸助手。請精準監聽這段音訊檔，逐句辨識所有歌詞與對白，並標記精確的開始與結束微秒時間點。
+請格式化輸出標準 SRT 字幕，格式範例如下：
+
+1
+00:00:01,250 --> 00:00:04,800
+第一句歌詞/對白
+
+2
+00:00:05,100 --> 00:00:08,950
+第二句歌詞/對白
+
+請嚴格確保時間軸精準對齊音訊聲波，不要遺漏任何語句！請直接輸出乾淨的 SRT 字幕文字，不要加上 Markdown 符號。`;
+
+      const requestBody = {
+        contents: [
+          {
+            parts: [
+              { inlineData: { mimeType: mimeType, data: base64Audio } },
+              { text: promptText }
+            ]
+          }
+        ],
+        generationConfig: {
+          temperature: 0.2,
+          maxOutputTokens: 8192
+        }
+      };
+
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 300000);
+
+      try {
+        appendLog(`📡 發送 POST 請求至 Google REST API (${modelName})...`);
+        const response = await fetch(apiUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(requestBody),
+          signal: controller.signal
+        });
+        clearTimeout(timeoutId);
+
+        if (!response.ok) {
+          const errText = await response.text();
+          throw new Error(`HTTP ${response.status}: ${errText}`);
+        }
+
+        appendLog(`✅ 收到 Google 伺服器成功回傳 200 OK 封包！`);
+        return await response.json();
+      } catch (err) {
+        clearTimeout(timeoutId);
+        throw err;
+      }
+    }
+
+    startBtn.addEventListener('click', async () => {
+      const apiKey = apiKeyInput.value.trim();
+      const selectedModelName = modelSelect.value;
+      const file = fileInput.files[0];
+
+      if (!apiKey) {
+        alert('請先輸入有效的 Google Gemini API Key！');
+        return;
+      }
+      if (!file) {
+        alert('請先選擇一個音訊檔案！');
+        return;
+      }
+
+      startProgressAnimation(selectedModelName);
+
+      setTimeout(async () => {
+        try {
+          const fileSizeMb = (file.size / (1024 * 1024)).toFixed(2);
+          appendLog(`🎵 讀取音訊檔: ${file.name} (${fileSizeMb} MB)...`);
+          appendLog(`⚡ 將 ${fileSizeMb} MB 音訊轉碼 Base64...`);
+          
+          const base64Audio = await fileToBase64(file);
+          const mimeType = file.type || 'audio/mp3';
+          appendLog(`✅ Base64 轉碼完成！(長度: ${base64Audio.length} 字元)`);
+
+          let successData = null;
+          let usedModelName = selectedModelName;
+          let lastErrorMsg = '';
+
+          const fallbackList = [selectedModelName, 'gemini-1.5-flash', 'gemini-2.0-flash', 'gemini-1.5-pro'];
+          const uniqueModels = [...new Set(fallbackList)];
+
+          for (let i = 0; i < uniqueModels.length; i++) {
+            const mName = uniqueModels[i];
+            appendLog(`🤖 嘗試呼叫模型: ${mName}...`);
+
+            try {
+              successData = await tryGenerateWithModel(apiKey, mName, base64Audio, mimeType);
+              usedModelName = mName;
+              break;
+            } catch (err) {
+              appendLog(`⚠️ 模型 ${mName} 回傳錯誤: ${err.message}`);
+              lastErrorMsg = err.message;
+            }
+          }
+
+          if (successData && usedModelName) {
+            stopProgressAnimation(true);
+
+            if (successData.candidates && successData.candidates[0] && successData.candidates[0].content) {
+              const rawText = successData.candidates[0].content.parts.map(p => p.text).join('
+');
+              const cleanText = cleanMarkdownFences(rawText);
+              outputResult.value = cleanText;
+
+              const parsedItems = parseSrtText(cleanText);
+              renderSyncLyricBox(parsedItems);
+              appendLog(`🎉 已成功由 ${usedModelName} 渲染 ${parsedItems.length} 行精準 SRT 字幕時間軸！`);
+            } else {
+              outputResult.value = JSON.stringify(successData, null, 2);
+            }
+          } else {
+            stopProgressAnimation(false, `所有模型順序調用均未成功 (最後錯誤: ${lastErrorMsg})`);
+          }
+
+        } catch (err) {
+          stopProgressAnimation(false, err.message);
+          outputResult.value = err.stack || err.message;
+        }
+      }, 20);
+    });
+
+    outputResult.addEventListener('input', () => {
+      const clean = cleanMarkdownFences(outputResult.value);
+      const parsedItems = parseSrtText(clean);
+      renderSyncLyricBox(parsedItems);
+    });
+
+    function downloadFile(content, fileName, mimeType) {
+      const cleanContent = cleanMarkdownFences(content);
+      const blob = new Blob([cleanContent], { type: mimeType });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = fileName;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    downloadSrtBtn.addEventListener('click', () => {
+      const text = outputResult.value.trim();
+      if (!text) { alert('沒有可匯出的字幕內容！'); return; }
+      downloadFile(text, 'subtitle.srt', 'text/plain;charset=utf-8');
+    });
+
+    downloadLrcBtn.addEventListener('click', () => {
+      const text = outputResult.value.trim();
+      if (!text) { alert('沒有可匯出的字幕內容！'); return; }
+      downloadFile(text, 'lyrics.lrc', 'text/plain;charset=utf-8');
+    });
+
+    copyBtn.addEventListener('click', () => {
+      outputResult.select();
+      document.execCommand('copy');
+      alert('✓ 已成功將字幕時間軸複製至剪貼簿！');
+    });
+  </script>
+<!-- 🛡️ SERVICE INFORMATION 服務與使用說明 (頁尾唯一整合版) -->
+<!-- 🛡️ SERVICE INFORMATION 服務與使用說明 (100% 原生零相依零失敗 展開版) -->
+<!-- 🛡️ 頁尾完整版 (包含 存在.jpg 原本3欄資訊 + 小怕 5 大宣告卡片 + 版權行) -->
+<!-- 🛡️ 頁尾完整版 (包含 存在.jpg 原本3欄資訊 + FontAwesome 權威 Icon + 小怕 5 大宣告卡片 + 版權行) -->
+<footer class="footer py-5" style="background: #0f172a; border-top: 1px solid rgba(255,255,255,0.1);">
+  <div class="container" id="serviceInformation">
+    
+    <!-- 1. 原本的 3 欄式頁尾資訊 (來自 存在.jpg 與 我的ICON呢.jpg 修正版) -->
+    <div class="row text-white mb-4">
+      <!-- 左欄: 🤖 AI工具 & 聯絡資訊 -->
+      <div class="col-lg-5 mb-4 mb-lg-0">
+        <h4 style="font-weight: 800; color: #ffffff; font-size: 20px;" class="mb-3">🤖 AI工具</h4>
+        <p style="color: #94a3b8; font-size: 14px; line-height: 1.6;" class="mb-3">致力於讓 AI 技術普及化，打造人人都能使用的智能工具平台。</p>
+        
+        <p class="mb-2" style="font-size: 14px; color: #cbd5e1;">
+          <i class="fab fa-line" style="color: #06c755; margin-right: 6px;"></i> <strong style="color: #ffffff;">LINE 官方帳號：</strong>
+          <a href="https://lin.ee/WVGxiWT" target="_blank" style="color: #06c755; font-weight: 700; text-decoration: underline;">點我加 LINE 好友 (lin.ee/WVGxiWT)</a>
+        </p>
+        <p class="mb-2" style="font-size: 14px; color: #cbd5e1;"><i class="fas fa-envelope" style="color: #38bdf8; margin-right: 6px;"></i> contact@aitools.com</p>
+        <p class="mb-2" style="font-size: 14px; color: #cbd5e1;"><i class="fas fa-phone-alt" style="color: #f59e0b; margin-right: 6px;"></i> (香港) 3345678</p>
+        <p class="mb-0" style="font-size: 14px; color: #cbd5e1;"><i class="fas fa-map-marker-alt" style="color: #ec4899; margin-right: 6px;"></i> 天堂島 (Themyscira 亞馬遜天堂島)</p>
+      </div>
+
+      <!-- 中欄: 快速連結 (修復 AI工具 缺少 Icon 的協調問題) -->
+      <div class="col-lg-3 mb-4 mb-lg-0">
+        <h5 style="font-weight: 800; color: #ffffff; font-size: 18px;" class="mb-3">快速連結</h5>
+        <ul class="list-unstyled" style="line-height: 2.2; font-size: 14px;">
+          <li><a href="about.html" style="color: #38bdf8; text-decoration: none;"><i class="fas fa-book-open" style="margin-right: 6px;"></i> 關於我們</a></li>
+          <li><a href="pricing.html" style="color: #38bdf8; text-decoration: none;"><i class="fas fa-gem" style="margin-right: 6px;"></i> 免費與付費</a></li>
+          <li><a href="index.html" style="color: #38bdf8; text-decoration: none;"><i class="fas fa-robot" style="margin-right: 6px;"></i> AI 工具</a></li>
+          <li><a href="contact.html" style="color: #38bdf8; text-decoration: none;"><i class="fas fa-paper-plane" style="margin-right: 6px;"></i> 聯絡我們</a></li>
+        </ul>
+      </div>
+
+      <!-- 右欄: 關注我們 (修復 FontAwesome 原生社群圖示) -->
+      <div class="col-lg-4">
+        <h5 style="font-weight: 800; color: #ffffff; font-size: 18px;" class="mb-3">關注我們</h5>
+        <p style="color: #94a3b8; font-size: 14px;" class="mb-3">追蹤社群獲取最新 AI 工具動態與教學</p>
+        <div class="d-flex gap-3">
+          <a href="#" style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); width: 44px; height: 44px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; text-decoration: none; margin-right: 12px; transition: transform 0.2s;" title="Facebook">
+            <i class="fab fa-facebook-f" style="color: #1877f2; font-size: 20px;"></i>
+          </a>
+          <a href="#" style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); width: 44px; height: 44px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; text-decoration: none; margin-right: 12px; transition: transform 0.2s;" title="YouTube">
+            <i class="fab fa-youtube" style="color: #ff0000; font-size: 20px;"></i>
+          </a>
+          <a href="https://lin.ee/WVGxiWT" target="_blank" style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); width: 44px; height: 44px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; text-decoration: none; margin-right: 12px; transition: transform 0.2s;" title="LINE">
+            <i class="fab fa-line" style="color: #06c755; font-size: 20px;"></i>
+          </a>
+          <a href="#" style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); width: 44px; height: 44px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; text-decoration: none; transition: transform 0.2s;" title="Instagram">
+            <i class="fab fa-instagram" style="color: #e4405f; font-size: 20px;"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <hr style="border-top: 1px solid rgba(255,255,255,0.1); margin: 25px 0;">
+
+    <!-- 2. 小怕 (魯米那) 權威 5 大宣告手風琴 (原生 JS 秒速展開) -->
+    <div class="service-info-section p-4 mb-4" style="background: linear-gradient(145deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.9) 100%); border: 1px solid rgba(56, 189, 248, 0.25); border-radius: 20px; backdrop-filter: blur(16px); box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);">
+      
+      <div class="row align-items-center mb-4">
+        <div class="col-lg-12 text-center">
+          <span style="color: #38bdf8; font-size: 14px; font-weight: 800; letter-spacing: 3px; text-transform: uppercase; background: rgba(56, 189, 248, 0.1); padding: 5px 16px; border-radius: 50px; border: 1px solid rgba(56, 189, 248, 0.3);">SERVICE INFORMATION</span>
+          <h3 style="color: #ffffff; font-size: 26px; font-weight: 900; margin-top: 12px; margin-bottom: 8px;">服務說明、免責聲明與隱私條款</h3>
+          
+          <div class="d-inline-block mt-2" style="background: rgba(245, 158, 11, 0.15); border: 1px solid #f59e0b; padding: 8px 20px; border-radius: 50px;">
+            <span style="color: #f59e0b; font-size: 14px; font-weight: 800;">💡 初次聯繫：</span>
+            <span style="color: #ffffff; font-size: 14px; font-weight: 700;">歡迎簡單告訴我們「您目前最想釐清的一件事」（例如：AI 史詩配樂客製、商業授權與 Safelisting 白名單詢問、短影音 BGM 選曲等）。</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="row justify-content-center">
+        <div class="col-lg-11">
+          <div class="accordion">
+            
+            <!-- 1. 服務介紹與諮詢方式 -->
+            <div class="card mb-2" style="background: #1e293b; border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 12px; overflow: hidden;">
+              <div class="card-header p-0" style="background: transparent; border: none;">
+                <button class="btn btn-block text-left font-weight-bold p-3 text-white d-flex justify-content-between align-items-center" type="button" onclick="toggleAcc('footCollapseOne', 'arrowOne')" style="font-size: 16px; text-decoration: none; width: 100%; cursor: pointer;">
+                  <span>🛡️ 1. 服務介紹與諮詢方式</span>
+                  <span id="arrowOne" style="color: #38bdf8; transition: transform 0.3s; transform: rotate(180deg);">▼</span>
+                </button>
+              </div>
+              <div id="footCollapseOne" style="display: block;">
+                <div class="card-body" style="color: #cbd5e1; font-size: 14px; line-height: 1.7; background: #0f172a; border-top: 1px solid rgba(255,255,255,0.05); padding: 18px;">
+                  <p class="mb-1"><strong style="color: #38bdf8;">• 服務範圍：</strong>【幻境配樂】提供電影級史詩配樂、免版稅短影音 BGM 素材、AI 聲音工具指導、自動化頻道白名單 (Safelisting) 及商業授權諮詢。</p>
+                  <p class="mb-0"><strong style="color: #38bdf8;">• 聯繫管道：</strong>目前主要透過官方 Facebook 粉絲專頁、LINE 官方帳號及指定 Email 提供諮詢與洽談。</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- 2. 服務界線與免責聲明 -->
+            <div class="card mb-2" style="background: #1e293b; border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 12px; overflow: hidden;">
+              <div class="card-header p-0" style="background: transparent; border: none;">
+                <button class="btn btn-block text-left font-weight-bold p-3 text-white d-flex justify-content-between align-items-center" type="button" onclick="toggleAcc('footCollapseTwo', 'arrowTwo')" style="font-size: 16px; text-decoration: none; width: 100%; cursor: pointer;">
+                  <span>⚖️ 2. 服務界線與免責聲明</span>
+                  <span id="arrowTwo" style="color: #38bdf8; transition: transform 0.3s;">▼</span>
+                </button>
+              </div>
+              <div id="footCollapseTwo" style="display: none;">
+                <div class="card-body" style="color: #cbd5e1; font-size: 14px; line-height: 1.7; background: #0f172a; border-top: 1px solid rgba(255,255,255,0.05); padding: 18px;">
+                  <p class="mb-1"><strong style="color: #f59e0b;">• 服務性質：</strong>本網站所提供之 AI 工具整理、配樂下載與諮詢建議，均基於「現狀 (As-Is)」及「可供使用 (As-Available)」之基礎提供。</p>
+                  <p class="mb-1"><strong style="color: #f59e0b;">• 第三方平台機制：</strong>YouTube、TikTok、Meta 等第三方平台之演算法、 Content ID 審查及社群守則均由該第三方獨立營運。本平台提供自動化 Safelisting 白名單機制，但不對使用者因違反第三方規範或其演算法變更所致之影片下架、流量受限或收益損失承擔連帶責任。</p>
+                  <p class="mb-0"><strong style="color: #f59e0b;">• 責任限制上限：</strong>在適用法律允許的最大範圍內，本平台對使用者承擔之累積賠償責任總額，最高不超過該使用者於事件發生前 12 個月內實際支付予本平台之服務費用總額。</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- 3. 隱私與資料使用宣告 -->
+            <div class="card mb-2" style="background: #1e293b; border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 12px; overflow: hidden;">
+              <div class="card-header p-0" style="background: transparent; border: none;">
+                <button class="btn btn-block text-left font-weight-bold p-3 text-white d-flex justify-content-between align-items-center" type="button" onclick="toggleAcc('footCollapseThree', 'arrowThree')" style="font-size: 16px; text-decoration: none; width: 100%; cursor: pointer;">
+                  <span>🔒 3. 隱私與資料使用宣告</span>
+                  <span id="arrowThree" style="color: #38bdf8; transition: transform 0.3s;">▼</span>
+                </button>
+              </div>
+              <div id="footCollapseThree" style="display: none;">
+                <div class="card-body" style="color: #cbd5e1; font-size: 14px; line-height: 1.7; background: #0f172a; border-top: 1px solid rgba(255,255,255,0.05); padding: 18px;">
+                  <p class="mb-1"><strong style="color: #06c755;">• 資料蒐集原則：</strong>依個人資料保護法，本網站蒐集之個資（如姓名、Email、YouTube Channel ID）僅用於服務提供、驗證授權與自動化 Content ID 白名單清關。</p>
+                  <p class="mb-1"><strong style="color: #06c755;">• YouTube API 與保密承諾：</strong>透過 YouTube API Services 取得之頻道資料僅用於 Safelisting 白名單，未經授權絕不公開或出售給第三方。您可隨時透過 Google 安全設定撤銷授權，系統將於 30 日內清除綁定快取。</p>
+                  <p class="mb-0"><strong style="color: #06c755;">• 不提供資料之影響：</strong>若您自由選擇不提供 Channel ID 等必要資料，將無法享受自動化免版權主張與白名單保障服務。</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- 4. 預約、改期與退款說明 -->
+            <div class="card mb-2" style="background: #1e293b; border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 12px; overflow: hidden;">
+              <div class="card-header p-0" style="background: transparent; border: none;">
+                <button class="btn btn-block text-left font-weight-bold p-3 text-white d-flex justify-content-between align-items-center" type="button" onclick="toggleAcc('footCollapseFour', 'arrowFour')" style="font-size: 16px; text-decoration: none; width: 100%; cursor: pointer;">
+                  <span>📅 4. 預約、改期與退款說明</span>
+                  <span id="arrowFour" style="color: #38bdf8; transition: transform 0.3s;">▼</span>
+                </button>
+              </div>
+              <div id="footCollapseFour" style="display: none;">
+                <div class="card-body" style="color: #cbd5e1; font-size: 14px; line-height: 1.7; background: #0f172a; border-top: 1px solid rgba(255,255,255,0.05); padding: 18px;">
+                  <p class="mb-1"><strong style="color: #a855f7;">• 預約與改期：</strong>若已預約 1 對 1 諮詢或專屬配樂服務，如需改期，請於預定時間前至少 24 小時透過官方管道通知。</p>
+                  <p class="mb-0"><strong style="color: #a855f7;">• 退款機制：</strong>客製化配樂、數位音訊資產或專案授權一經開始製作、交付檔案或完成授權綁定，即不適用無條件退款；若因不可抗力因素致服務無法進行，將扣除已發生之必要成本後退還餘額。</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- 5. 網站內容、著作權與肖像/AI 授權宣告 -->
+            <div class="card mb-2" style="background: #1e293b; border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 12px; overflow: hidden;">
+              <div class="card-header p-0" style="background: transparent; border: none;">
+                <button class="btn btn-block text-left font-weight-bold p-3 text-white d-flex justify-content-between align-items-center" type="button" onclick="toggleAcc('footCollapseFive', 'arrowFive')" style="font-size: 16px; text-decoration: none; width: 100%; cursor: pointer;">
+                  <span>📜 5. 網站內容、著作權與肖像/AI 授權宣告</span>
+                  <span id="arrowFive" style="color: #38bdf8; transition: transform 0.3s;">▼</span>
+                </button>
+              </div>
+              <div id="footCollapseFive" style="display: none;">
+                <div class="card-body" style="color: #cbd5e1; font-size: 14px; line-height: 1.7; background: #0f172a; border-top: 1px solid rgba(255,255,255,0.05); padding: 18px;">
+                  <p class="mb-1"><strong style="color: #ec4899;">• 智慧財產權：</strong>本網站所有文字、版面設計、商標與原創音訊資產，均受智慧財產權法保護，未經授權不得擅自重製、轉載、二次轉售或擅自登記為 Content ID 音訊指紋。</p>
+                  <p class="mb-1"><strong style="color: #ec4899;">• 【幻境配樂】商用聲明：</strong>全頻道專屬 1 分鐘 BGM 開放符合規範之短影音（Shorts / TikTok / Reels）免費商業使用。</p>
+                  <p class="mb-0"><strong style="color: #ec4899;">• 肖像權與未成年人保護：</strong>本網站展示之合作案例與人物照片均已取得同意；本服務不刻意收集未滿 13 歲兒童個資，未成年人需在法定代理人同意下始得使用。</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 頁尾版權行 -->
+    <p class="text-center mb-0 mt-3" style="color: #64748b; font-size: 13px;">© <span class="auto-current-year">2026</span> 🤖 AI工具百寶箱 & 【幻境配樂 Mirage Cinematic BGM】 版權所有 All Rights Reserved.</p>
+  </div>
+</footer>
+
+<script>
+  function toggleAcc(contentId, arrowId) {
+    var content = document.getElementById(contentId);
+    var arrow = document.getElementById(arrowId);
+    if (!content) return;
+    if (content.style.display === 'none' || content.style.display === '') {
+      content.style.display = 'block';
+      if (arrow) arrow.style.transform = 'rotate(180deg)';
+    } else {
+      content.style.display = 'none';
+      if (arrow) arrow.style.transform = 'rotate(0deg)';
+    }
+  }
+</script>
+
+<script>
+  function toggleAcc(contentId, arrowId) {
+    var content = document.getElementById(contentId);
+    var arrow = document.getElementById(arrowId);
+    if (!content) return;
+    if (content.style.display === 'none' || content.style.display === '') {
+      content.style.display = 'block';
+      if (arrow) arrow.style.transform = 'rotate(180deg)';
+    } else {
+      content.style.display = 'none';
+      if (arrow) arrow.style.transform = 'rotate(0deg)';
+    }
+  }
+</script>
+
+<script>
+  function toggleAcc(contentId, arrowId) {
+    var content = document.getElementById(contentId);
+    var arrow = document.getElementById(arrowId);
+    if (!content) return;
+    if (content.style.display === 'none' || content.style.display === '') {
+      content.style.display = 'block';
+      if (arrow) arrow.style.transform = 'rotate(180deg)';
+    } else {
+      content.style.display = 'none';
+      if (arrow) arrow.style.transform = 'rotate(0deg)';
+    }
+  }
+</script>
+</body>
+</html>
