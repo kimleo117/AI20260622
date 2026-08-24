@@ -4150,29 +4150,25 @@
               }
             });
 
-            // 精準隱藏全站無符合項目的分區標題
-            const allHeaderElements = document.querySelectorAll(".container h2, .container h3, .section-title");
-            allHeaderElements.forEach(header => {
-              const parentBlock = header.closest("section, div.mb-5, div.mb-4, div.row") || header.parentElement;
-              let hasVisibleCards = false;
-
-              if (parentBlock) {
-                const cardChildren = parentBlock.querySelectorAll(".ai-card-huanjing");
-                if (cardChildren.length > 0) {
-                  hasVisibleCards = Array.from(cardChildren).some(c => c.style.display === "flex");
+            // 精準隱藏全站無符合項目的「整塊分類容器」與分區標題（徹底消除空白間距）
+            const allCategoryBlocks = document.querySelectorAll(".category-section-block, section, #products-main > div.mb-5, #products-main > div.mb-4");
+            allCategoryBlocks.forEach(block => {
+              const cardChildren = block.querySelectorAll(".ai-card-huanjing");
+              if (cardChildren.length > 0) {
+                const hasVisibleCards = Array.from(cardChildren).some(c => c.style.display === "flex");
+                if (!hasVisibleCards) {
+                  block.style.setProperty("display", "none", "important");
                 } else {
-                  let nextElem = header.nextElementSibling;
-                  while (nextElem && !hasVisibleCards) {
-                    const subCards = nextElem.querySelectorAll ? nextElem.querySelectorAll(".ai-card-huanjing") : [];
-                    if (subCards.length > 0) {
-                      hasVisibleCards = Array.from(subCards).some(c => c.style.display === "flex");
-                    }
-                    nextElem = nextElem.nextElementSibling;
-                  }
+                  block.style.setProperty("display", "", "");
                 }
               }
+            });
 
-              if (!hasVisibleCards) {
+            // 精準處理獨立標題
+            const allHeaderElements = document.querySelectorAll(".container h2, .container h3, .section-title");
+            allHeaderElements.forEach(header => {
+              const parentBlock = header.closest(".category-section-block, section, div.mb-5, div.mb-4, div.row") || header.parentElement;
+              if (parentBlock && parentBlock.style.display === "none") {
                 header.style.setProperty("display", "none", "important");
               } else {
                 header.style.setProperty("display", "", "");
@@ -4218,6 +4214,10 @@
               if (cardParent) cardParent.style.display = "block";
               card.style.display = "flex";
             });
+
+            // 恢復所有分類區塊與標題
+            const allCategoryBlocks = document.querySelectorAll(".category-section-block, section, #products-main > div.mb-5, #products-main > div.mb-4");
+            allCategoryBlocks.forEach(b => b.style.setProperty("display", "", ""));
 
             const allHeaderElements = document.querySelectorAll(".container h2, .container h3, .section-title");
             allHeaderElements.forEach(h => h.style.setProperty("display", "", ""));
