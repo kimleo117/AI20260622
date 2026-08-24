@@ -394,6 +394,10 @@
         scroll-margin-top: 90px;
       }
 
+      #products-main {
+        min-height: 900px;
+      }
+
       @keyframes highlight {
         0% { box-shadow: 0 0 0 0 rgba(99,102,241,0.0); }
         10% { box-shadow: 0 8px 24px -8px rgba(99,102,241,0.14); }
@@ -4229,17 +4233,22 @@
           }
         }
 
+        let searchDebounceTimer = null;
         if (searchInput) {
           searchInput.addEventListener("input", function() {
-            // 打字時進行精準比對，不滾動視角
-            performSearch(this.value, false);
+            clearTimeout(searchDebounceTimer);
+            const val = this.value;
+            searchDebounceTimer = setTimeout(() => {
+              performSearch(val, false);
+            }, 40);
           });
 
-          // 按 Enter 鍵時平滑對焦至目標分區
+          // 按 Enter 鍵時保持視野平穩，不跳動
           searchInput.addEventListener("keydown", function(e) {
             if (e.key === "Enter") {
               e.preventDefault();
-              performSearch(this.value, true);
+              clearTimeout(searchDebounceTimer);
+              performSearch(this.value, false);
             }
           });
 
@@ -4249,12 +4258,19 @@
             searchInput.focus();
           });
 
-          hotTagBtns.forEach(btn => {
-            btn.addEventListener("click", function() {
-              const kw = this.getAttribute("data-keyword");
-              searchInput.value = kw;
-              performSearch(kw, true);
-              searchInput.focus();
+          // Top 5 榜單按鈕與熱門標籤點擊：平滑導航，防止原生錨點跳動
+          document.querySelectorAll(".hot-tag-btn, .card a[href^='#']").forEach(btn => {
+            btn.addEventListener("click", function(e) {
+              const targetId = this.getAttribute("href") || this.getAttribute("data-target");
+              if (targetId && targetId.startsWith("#")) {
+                const targetEl = document.querySelector(targetId);
+                if (targetEl) {
+                  e.preventDefault();
+                  const navHeight = document.querySelector('.navbar')?.offsetHeight || 70;
+                  const targetTop = targetEl.getBoundingClientRect().top + window.pageYOffset - navHeight - 16;
+                  window.scrollTo({ top: targetTop, behavior: "smooth" });
+                }
+              }
             });
           });
         }
