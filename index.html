@@ -1327,6 +1327,14 @@
 
           <div class="col-lg-6 col-xl-7" id="products-main">
 
+            <!-- 【搜尋專用：相關度智能排序結果容器】 -->
+            <div id="searchResultsSection" class="mb-5" style="display:none;">
+              <h3 class="h4 fw-bold text-dark mb-4 pb-2 border-bottom border-primary d-flex align-items-center justify-content-between">
+                <span class="d-flex align-items-center gap-2"><span class="text-primary">▌</span> 🔍 搜尋結果（依相關度優先排序）</span>
+              </h3>
+              <div id="searchResultsGrid" class="row g-3"></div>
+            </div>
+
             <!-- 標題對應區塊：最新 AI 工具 -->
             <!-- 標題對應區塊：最新 AI 工具 (依據：2026最新發表與升級旗艦) -->
             <div class="category-section-block mb-5" id="latest">
@@ -4225,8 +4233,12 @@
           "soundsync": ["#media", "影音生成"]
         };
 
-        function performSearch(query, triggerScroll = false) {
+        function performSearch(query) {
           query = query.trim().toLowerCase();
+
+          const searchResultsSection = document.getElementById("searchResultsSection");
+          const searchResultsGrid = document.getElementById("searchResultsGrid");
+          const allCategoryBlocks = document.querySelectorAll("#products-main .category-section-block");
 
           let searchTerms = [query];
           if (synonymMap[query]) {
@@ -4235,55 +4247,101 @@
 
           if (query.length > 0) {
             clearBtn.style.display = "block";
-            let matchCount = 0;
+            let scoredItems = [];
 
             toolCards.forEach(card => {
-              const cardTitle = (card.querySelector('h3, h4')?.innerText || '').toLowerCase();
+              const cardTitle = (card.querySelector('h3, h4, h5')?.innerText || '').toLowerCase();
               const cardDesc = (card.querySelector('p')?.innerText || '').toLowerCase();
               const cardTags = Array.from(card.querySelectorAll('.badge-tag, .badge')).map(b => b.innerText.toLowerCase()).join(' ');
-              const cardSection = card.closest("section, div[id]")?.id || "";
+              const cardKeywords = (card.getAttribute('data-seo-keyword') || '').toLowerCase();
+              const cardHref = (card.closest('a')?.getAttribute('href') || '').toLowerCase();
+              const cardSection = (card.closest("div[id]")?.id || "").toLowerCase();
 
-              let isMatch = false;
+              let score = 0;
 
-              // 如果搜尋「影片」或「影音」，優先將【影音生成】專區(#media)的所有卡片全部判斷為強匹配！
-              if ((query === "影片" || query === "影音" || query === "作影片" || query === "做影片") && (cardSection === "media" || cardSection.includes("影音"))) {
-                isMatch = true;
-              } else {
-                // 否則進行內文精準比對 (忽略僅提及 "YouTube 影片" 的文章保存工具)
-                if (cardDesc.includes("youtube 影片") && !query.includes("youtube")) {
-                  isMatch = false;
-                } else {
-                  isMatch = searchTerms.some(term => cardTitle.includes(term) || cardDesc.includes(term) || cardTags.includes(term));
+              // 1. 標題完全一致或開頭精準命中 (最高權重 1200 分)
+              if (cardTitle === query || cardTitle.startsWith(query + " ") || cardTitle.startsWith(query + "(") || cardTitle.startsWith(query + "-")) {
+                score += 1200;
+              } else if (cardTitle.startsWith(query)) {
+                score += 900;
+              } else if (cardTitle.includes(query)) {
+                score += 600;
+              }
+
+              // 2. SEO 關鍵字與品牌標籤完全命中 (450 分)
+              if (searchTerms.some(term => cardKeywords.includes(term))) {
+                score += 450;
+              }
+
+              // 3. 網址域名精準命中 (例如 adobe.com, stitch, flux)
+              if (searchTerms.some(term => cardHref.includes(term))) {
+                score += 350;
+              }
+
+              // 4. 分類關聯強匹配 (例如搜尋「影片」命中 #media 區塊)
+              if ((query === "影片" || query === "影音" || query === "作影片" || query === "做影片") && cardSection === "media") {
+                score += 300;
+              }
+
+              // 5. 標籤精準匹配 (150 分)
+              if (searchTerms.some(term => cardTags.includes(term))) {
+                score += 150;
+              }
+
+              // 6. 內文單字包含 (50 分，避免 YouTube 影片干擾)
+              if (searchTerms.some(term => cardDesc.includes(term))) {
+                if (!(cardDesc.includes("youtube 影片") && !query.includes("youtube"))) {
+                  score += 50;
                 }
               }
 
-              const cardParent = card.closest(".col-md-6, .col-lg-4, .mb-4");
-
-              if (isMatch) {
-                if (cardParent) cardParent.style.display = "block";
-                card.style.display = "flex";
-                matchCount++;
-              } else {
-                if (cardParent) cardParent.style.display = "none";
-                card.style.display = "none";
+              if (score > 0) {
+                const cardParent = card.closest(".col-md-6, .col-lg-4, .mb-4");
+                scoredItems.push({
+                  card: card,
+                  parent: cardParent,
+                  score: score,
+                  title: cardTitle
+                });
               }
             });
 
-            // 精準只隱藏 #products-main 內部無符合項目的分類區塊（絕不觸碰外層 section 與搜尋框）
-            const allCategoryBlocks = document.querySelectorAll("#products-main .category-section-block");
-            allCategoryBlocks.forEach(block => {
-              const cardChildren = block.querySelectorAll(".ai-card-huanjing");
-              if (cardChildren.length > 0) {
-                const hasVisibleCards = Array.from(cardChildren).some(c => c.style.display === "flex");
-                if (!hasVisibleCards) {
-                  block.style.display = "none";
-                } else {
-                  block.style.display = "";
-                }
-              }
-            });
+            // 依權重評分由高到低嚴格降冪排序
+            scoredItems.sort((a, b) => b.score - a.score);
 
-            // 側邊欄 Highlight (純標註分類，絕不自動滾走畫面)
+            const matchCount = scoredItems.length;
+
+            if (matchCount > 0) {
+              // 隱藏靜態 21 個分類區塊
+              allCategoryBlocks.forEach(b => b.style.display = "none");
+
+              // 清空並重新填充智能排序後的卡片
+              if (searchResultsGrid) {
+                searchResultsGrid.innerHTML = "";
+                // 為了避免跨分區重複卡片在搜尋結果中洗榜，按 href 進行結果去重
+                const seenUrls = new Set();
+                scoredItems.forEach(item => {
+                  const itemHref = item.parent?.querySelector("a")?.getAttribute("href") || item.title;
+                  if (!seenUrls.has(itemHref) && item.parent) {
+                    seenUrls.add(itemHref);
+                    const clone = item.parent.cloneNode(true);
+                    clone.style.display = "block";
+                    const cloneCard = clone.querySelector(".ai-card-huanjing");
+                    if (cloneCard) cloneCard.style.display = "flex";
+                    searchResultsGrid.appendChild(clone);
+                  }
+                });
+              }
+
+              if (searchResultsSection) searchResultsSection.style.display = "block";
+              if (noResultsAlert) noResultsAlert.style.display = "none";
+            } else {
+              allCategoryBlocks.forEach(b => b.style.display = "none");
+              if (searchResultsSection) searchResultsSection.style.display = "none";
+              if (noResultsAlert) noResultsAlert.style.display = "block";
+            }
+
+            // 側邊欄 Highlight
             if (catKeywordMap[query]) {
               const targetSelector = catKeywordMap[query][0];
               const targetText = catKeywordMap[query][1];
@@ -4298,26 +4356,22 @@
             }
 
             countDisplay.style.display = "block";
-            countDisplay.innerHTML = `找到了 <strong class="text-primary fs-6">${matchCount}</strong> 個符合「<strong>${query}</strong>」的 AI 工具`;
-
-            if (matchCount === 0) {
-              if (noResultsAlert) noResultsAlert.style.display = "block";
-            } else {
-              if (noResultsAlert) noResultsAlert.style.display = "none";
-            }
+            countDisplay.innerHTML = `找到了 <strong class="text-primary fs-6">${matchCount}</strong> 個符合「<strong>${query}</strong>」的 AI 工具（已依相關度優先排序）`;
           } else {
             clearBtn.style.display = "none";
             countDisplay.style.display = "none";
             if (noResultsAlert) noResultsAlert.style.display = "none";
 
+            if (searchResultsSection) searchResultsSection.style.display = "none";
+            if (searchResultsGrid) searchResultsGrid.innerHTML = "";
+
+            // 恢復所有 21 個分類區塊與卡片
             toolCards.forEach(card => {
               const cardParent = card.closest(".col-md-6, .col-lg-4, .mb-4");
               if (cardParent) cardParent.style.display = "block";
               card.style.display = "flex";
             });
 
-            // 恢復 #products-main 內部的所有 21 個分類區塊
-            const allCategoryBlocks = document.querySelectorAll("#products-main .category-section-block");
             allCategoryBlocks.forEach(b => b.style.display = "");
           }
         }
