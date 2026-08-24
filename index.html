@@ -390,6 +390,10 @@
         animation: highlight 2s ease-in-out;
       }
 
+      .category-section-block {
+        scroll-margin-top: 90px;
+      }
+
       @keyframes highlight {
         0% { box-shadow: 0 0 0 0 rgba(99,102,241,0.0); }
         10% { box-shadow: 0 8px 24px -8px rgba(99,102,241,0.14); }
@@ -1284,8 +1288,9 @@
           <div class="mobile-cat-pill" data-target="#brand">🏷️ 品牌工具</div>
           <div class="mobile-cat-pill" data-target="#seo">🔍 搜尋與瀏覽器</div>
           <div class="mobile-cat-pill" data-target="#code">💻 程式開發</div>
-          <div class="mobile-cat-pill" data-target="#sec-AI去背">📐 UI/UX設計</div>
-          <div class="mobile-cat-pill" data-target="#sec-ChatGPT與AI應用">🤖 ChatGPT應用</div>
+          <div class="mobile-cat-pill" data-target="#design">📐 UI/UX設計</div>
+          <div class="mobile-cat-pill" data-target="#chatgpt">🤖 ChatGPT應用</div>
+          <div class="mobile-cat-pill" data-target="#fun">🎯 有趣應用</div>
         </div>
 
         <div class="row">
@@ -1310,9 +1315,9 @@
               <div class="cat-item" data-target="#brand"><span class="cat-icon me-1">🏷️</span><span>品牌工具</span><span class="ms-auto text-muted small">6</span></div>
               <div class="cat-item" data-target="#seo"><span class="cat-icon me-1">🔍</span><span>搜尋引擎與瀏覽器</span><span class="ms-auto text-muted small">4</span></div>
               <div class="cat-item" data-target="#code"><span class="cat-icon me-1">💻</span><span>程式開發</span><span class="ms-auto text-muted small">15</span></div>
-              <div class="cat-item" data-target="#sec-設計師工具UIUX"><span class="cat-icon me-1">📐</span><span>設計師工具 (UI/UX)</span><span class="ms-auto text-muted small">4</span></div>
-              <div class="cat-item" data-target="#sec-ChatGPT與AI應用"><span class="cat-icon me-1">🤖</span><span>ChatGPT 與 AI 應用</span><span class="ms-auto text-muted small">2</span></div>
-              <div class="cat-item" data-target="#sec-有趣應用"><span class="cat-icon me-1">🎯</span><span>有趣應用</span><span class="ms-auto text-muted small">5</span></div>
+              <div class="cat-item" data-target="#design"><span class="cat-icon me-1">📐</span><span>設計師工具 (UI/UX)</span><span class="ms-auto text-muted small">4</span></div>
+              <div class="cat-item" data-target="#chatgpt"><span class="cat-icon me-1">🤖</span><span>ChatGPT 與 AI 應用</span><span class="ms-auto text-muted small">2</span></div>
+              <div class="cat-item" data-target="#fun"><span class="cat-icon me-1">🎯</span><span>有趣應用</span><span class="ms-auto text-muted small">5</span></div>
             </div>
           </aside>
 
@@ -2810,7 +2815,7 @@
             </div>
 
             <!-- 標題對應區塊：聊天機器人 -->
-            <div class="category-section-block mb-5" id="sec-聊天機器人">
+            <div class="category-section-block mb-5" id="chat">
               <h3 class="h4 fw-bold text-dark mb-4 pb-2 border-bottom border-secondary-subtle d-flex align-items-center gap-2">
                 <span class="text-primary">▌</span> 聊天機器人
               </h3>
@@ -2936,7 +2941,7 @@
             </div>
 
             <!-- 標題對應區塊：重點整理 -->
-            <div class="category-section-block mb-5" id="sec-重點整理">
+            <div class="category-section-block mb-5" id="organize">
               <h3 class="h4 fw-bold text-dark mb-4 pb-2 border-bottom border-secondary-subtle d-flex align-items-center gap-2">
                 <span class="text-primary">▌</span> 重點整理
               </h3>
@@ -3123,7 +3128,7 @@
             </div>
 
             <!-- 標題對應區塊：搜尋引擎與瀏覽器 -->
-            <div class="category-section-block mb-5" id="sec-搜尋引擎與瀏覽器">
+            <div class="category-section-block mb-5" id="seo">
               <h3 class="h4 fw-bold text-dark mb-4 pb-2 border-bottom border-secondary-subtle d-flex align-items-center gap-2">
                 <span class="text-primary">▌</span> 搜尋引擎與瀏覽器
               </h3>
@@ -3388,7 +3393,7 @@
             </div>
 
             <!-- 標題對應區塊：設計師工具 (UI/UX) -->
-            <div class="category-section-block mb-5" id="sec-AI去背">
+            <div class="category-section-block mb-5" id="design">
               <h3 class="h4 fw-bold text-dark mb-4 pb-2 border-bottom border-secondary-subtle d-flex align-items-center gap-2">
                 <span class="text-primary">▌</span> 設計師工具 (UI/UX)
               </h3>
@@ -3449,7 +3454,7 @@
             </div>
 
             <!-- 標題對應區塊：ChatGPT 與 AI 應用 -->
-            <div class="category-section-block mb-5" id="sec-ChatGPT與AI應用">
+            <div class="category-section-block mb-5" id="chatgpt">
               <h3 class="h4 fw-bold text-dark mb-4 pb-2 border-bottom border-secondary-subtle d-flex align-items-center gap-2">
                 <span class="text-primary">▌</span> ChatGPT 與 AI 應用
               </h3>
@@ -3484,7 +3489,7 @@
             </div>
 
             <!-- 標題對應區塊：有趣應用 -->
-            <div class="category-section-block mb-5" id="sec-有趣應用">
+            <div class="category-section-block mb-5" id="fun">
               <h3 class="h4 fw-bold text-dark mb-4 pb-2 border-bottom border-secondary-subtle d-flex align-items-center gap-2">
                 <span class="text-primary">▌</span> 有趣應用
               </h3>
