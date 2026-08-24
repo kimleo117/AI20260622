@@ -4121,19 +4121,38 @@
             document.querySelectorAll('.left-sidebar .cat-item').forEach(i=>i.classList.remove('active'));
             item.classList.add('active');
 
-            if(!target || target === 'all'){
-              resetFilter();
-              const productsTop = document.querySelector('#products-main');
-              if(productsTop) scrollWithOffset(productsTop);
-              return;
+            // 如果目前有搜尋內容，先清空搜尋恢復全站分區可見
+            const searchInput = document.getElementById("toolSearchInput");
+            if (searchInput && searchInput.value.trim().length > 0) {
+              searchInput.value = "";
+              const searchResultsSection = document.getElementById("searchResultsSection");
+              const searchResultsGrid = document.getElementById("searchResultsGrid");
+              if (searchResultsSection) searchResultsSection.style.display = "none";
+              if (searchResultsGrid) searchResultsGrid.innerHTML = "";
+              const countDisplay = document.getElementById("searchResultsCount");
+              if (countDisplay) countDisplay.style.display = "none";
+              const clearBtn = document.getElementById("clearSearchBtn");
+              if (clearBtn) clearBtn.style.display = "none";
+              document.querySelectorAll("#products-main .category-section-block").forEach(b => b.style.display = "");
             }
 
-            if(target.startsWith('#')){
-              const el = document.querySelector(target);
-              if(el) scrollWithOffset(el);
-              resetFilter();
-              return;
-            }
+            setTimeout(() => {
+              if(!target || target === 'all'){
+                resetFilter();
+                const productsTop = document.querySelector('#products-main');
+                if(productsTop) scrollWithOffset(productsTop);
+                return;
+              }
+
+              if(target.startsWith('#')){
+                const el = document.querySelector(target);
+                if(el) scrollWithOffset(el);
+                resetFilter();
+                return;
+              }
+            }, 10);
+          });
+        });
 
             if(target.startsWith('cat:')){
               const cat = target.split(':')[1];
@@ -4401,18 +4420,30 @@
             searchInput.focus();
           });
 
-          // Top 5 榜單按鈕與熱門標籤點擊：平滑導航，防止原生錨點跳動
+          // Top 5 榜單按鈕與熱門標籤點擊：先清除搜尋篩選（確保分區立即可見），再平滑滑動到位
           document.querySelectorAll(".hot-tag-btn, .card a[href^='#']").forEach(btn => {
             btn.addEventListener("click", function(e) {
+              e.preventDefault();
               const targetId = this.getAttribute("href") || this.getAttribute("data-target");
               if (targetId && targetId.startsWith("#")) {
-                const targetEl = document.querySelector(targetId);
-                if (targetEl) {
-                  e.preventDefault();
-                  const navHeight = document.querySelector('.navbar')?.offsetHeight || 70;
-                  const targetTop = targetEl.getBoundingClientRect().top + window.pageYOffset - navHeight - 16;
-                  window.scrollTo({ top: targetTop, behavior: "smooth" });
+                // 如果目前有搜尋內容，先清空搜尋恢復全站分區可見
+                if (searchInput && searchInput.value.trim().length > 0) {
+                  searchInput.value = "";
+                  performSearch("");
                 }
+                setTimeout(() => {
+                  const targetEl = document.querySelector(targetId);
+                  if (targetEl) {
+                    const navHeight = document.querySelector('.navbar')?.offsetHeight || 70;
+                    const targetTop = targetEl.getBoundingClientRect().top + window.pageYOffset - navHeight - 16;
+                    window.scrollTo({ top: targetTop, behavior: "smooth" });
+
+                    targetEl.classList.remove('section-highlight');
+                    void targetEl.offsetWidth;
+                    targetEl.classList.add('section-highlight');
+                    setTimeout(() => targetEl.classList.remove('section-highlight'), 2000);
+                  }
+                }, 10);
               }
             });
           });
@@ -4436,10 +4467,30 @@
             mobilePills.forEach(p => p.classList.remove("active"));
             this.classList.add("active");
             const targetId = this.getAttribute("data-target");
-            const targetSec = document.querySelector(targetId);
-            if (targetSec) {
-              targetSec.scrollIntoView({ behavior: "smooth", block: "start" });
+
+            // 如果目前有搜尋內容，先清空搜尋恢復全站分區可見
+            const searchInput = document.getElementById("toolSearchInput");
+            if (searchInput && searchInput.value.trim().length > 0) {
+              searchInput.value = "";
+              const searchResultsSection = document.getElementById("searchResultsSection");
+              const searchResultsGrid = document.getElementById("searchResultsGrid");
+              if (searchResultsSection) searchResultsSection.style.display = "none";
+              if (searchResultsGrid) searchResultsGrid.innerHTML = "";
+              const countDisplay = document.getElementById("searchResultsCount");
+              if (countDisplay) countDisplay.style.display = "none";
+              const clearBtn = document.getElementById("clearSearchBtn");
+              if (clearBtn) clearBtn.style.display = "none";
+              document.querySelectorAll("#products-main .category-section-block").forEach(b => b.style.display = "");
             }
+
+            setTimeout(() => {
+              const targetSec = document.querySelector(targetId);
+              if (targetSec) {
+                const navHeight = document.querySelector('.navbar')?.offsetHeight || 70;
+                const targetTop = targetSec.getBoundingClientRect().top + window.pageYOffset - navHeight - 16;
+                window.scrollTo({ top: targetTop, behavior: "smooth" });
+              }
+            }, 10);
           });
         });
       });
