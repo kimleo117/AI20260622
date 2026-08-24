@@ -4188,20 +4188,18 @@
                 resetFilter();
                 return;
               }
-            }, 10);
-          });
-        });
 
-            if(target.startsWith('cat:')){
-              const cat = target.split(':')[1];
-              cards.forEach(c=>{
-                const cats = (c.getAttribute('data-cat')||'').split(',');
-                c.style.display = cats.includes(cat) ? '' : 'none';
-              });
-              const productsTop = document.querySelector('#products-main');
-              if(productsTop) scrollWithOffset(productsTop);
-              return;
-            }
+              if(target.startsWith('cat:')){
+                const cat = target.split(':')[1];
+                cards.forEach(c=>{
+                  const cats = (c.getAttribute('data-cat')||'').split(',');
+                  c.style.display = cats.includes(cat) ? '' : 'none';
+                });
+                const productsTop = document.querySelector('#products-main');
+                if(productsTop) scrollWithOffset(productsTop);
+                return;
+              }
+            }, 10);
           });
         });
 
@@ -4215,23 +4213,29 @@
       })();
 
       // Back to Top button show/hide & scroll behavior
-      const backToTopBtn = document.getElementById("backToTopBtn");
-      if (backToTopBtn) {
+      (function initBackToTop() {
+        const backToTopBtn = document.getElementById("backToTopBtn");
+        if (!backToTopBtn) return;
+
         function checkScroll() {
-          if (window.pageYOffset > 150 || document.documentElement.scrollTop > 150) {
+          const scrollPos = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+          if (scrollPos > 100) {
             backToTopBtn.classList.add("show");
           } else {
             backToTopBtn.classList.remove("show");
           }
         }
-        window.addEventListener("scroll", checkScroll);
+
+        window.addEventListener("scroll", checkScroll, { passive: true });
         window.addEventListener("load", checkScroll);
+        document.addEventListener("DOMContentLoaded", checkScroll);
         checkScroll();
 
-        backToTopBtn.addEventListener("click", () => {
+        backToTopBtn.addEventListener("click", function(e) {
+          e.preventDefault();
           window.scrollTo({ top: 0, behavior: "smooth" });
         });
-      }
+      })();
     </script>
   
     
