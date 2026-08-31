@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0, user-scalable=yes">
+<title>陳克銘 (Rumina) ‧ 24 頁全方位多媒體視覺設計 ＆ AI Agent 專案作品集</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@700;900&family=Noto+Sans+TC:wght@400;500;700;900&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #090d16; color: #f8fafc; font-family: "Noto Sans TC", sans-serif;
+    min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* 頂部 Header */
+  header {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(9, 13, 22, 0.94); backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(56, 189, 248, 0.2); padding: 12px 20px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .logo-title {
+    display: flex; align-items: center; gap: 12px; font-size: 17px; font-weight: 900;
+  }
+  .logo-badge {
+    width: 36px; height: 36px; background: linear-gradient(135deg, #2563eb, #38bdf8);
+    border-radius: 10px; display: flex; align-items: center; justify-content: center;
+    color: #ffffff; font-weight: 900; font-size: 18px; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+  }
+  .author-sub {
+    font-size: 12px; font-weight: 600; color: #94a3b8; letter-spacing: 0.5px;
+  }
+  .header-links { display: flex; gap: 10px; align-items: center; }
+  .btn-nav {
+    background: #1e293b; border: 1.5px solid #475569; color: #f8fafc;
+    padding: 7px 14px; border-radius: 10px; font-size: 13px; font-weight: 800;
+    cursor: pointer; transition: all 0.2s; text-decoration: none; display: flex; align-items: center; gap: 6px;
+  }
+  .btn-nav:hover { background: #2563eb; border-color: #38bdf8; transform: translateY(-1px); }
+  .btn-line { background: #06c755; border-color: #06c755; color: #ffffff; }
+  .btn-line:hover { background: #05a847; border-color: #05a847; }
+
+  /* 主作品集畫廊區 (置中與適應各螢幕) */
+  main {
+    flex-grow: 1; display: flex; flex-direction: column; align-items: center;
+    padding: 20px 12px 90px 12px; max-width: 1000px; margin: 0 auto; width: 100%;
+  }
+
+  .viewer-container {
+    position: relative; width: 100%; display: flex; justify-content: center; align-items: center;
+    margin-bottom: 20px; touch-action: pan-y pinch-zoom;
+  }
+
+  .page-card {
+    background: #0f172a; border-radius: 18px; overflow: hidden;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(56, 189, 248, 0.15);
+    width: 100%; max-width: 900px; display: flex; flex-direction: column;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+  .page-img {
+    width: 100%; height: auto; display: block; object-fit: contain;
+    user-select: none; -webkit-user-drag: none;
+  }
+
+  /* 底部浮動快速導航控制列 */
+  .floating-controls {
+    position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+    background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(20px);
+    border: 1.5px solid rgba(56, 189, 248, 0.4); border-radius: 35px; padding: 8px 18px;
+    display: flex; align-items: center; gap: 14px; z-index: 100;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6), 0 0 20px rgba(56, 189, 248, 0.2);
+  }
+  .btn-ctrl {
+    background: linear-gradient(135deg, #2563eb, #1d4ed8); border: none; color: #ffffff;
+    width: 42px; height: 42px; border-radius: 50%; font-size: 18px; font-weight: 900;
+    display: flex; align-items: center; justify-content: center; cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3); transition: all 0.15s;
+  }
+  .btn-ctrl:active { transform: scale(0.92); }
+  .btn-ctrl:hover { background: #38bdf8; color: #0f172a; }
+  .page-indicator {
+    font-size: 14px; font-weight: 800; color: #e2e8f0; white-space: nowrap;
+    text-align: center; min-width: 140px;
+  }
+
+  /* 目錄選單抽屜 (Drawer Modal) */
+  .menu-modal {
+    display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85);
+    backdrop-filter: blur(10px); z-index: 200; padding: 20px;
+    justify-content: center; align-items: center;
+  }
+  .modal-content {
+    background: #0f172a; border: 1.5px solid rgba(56, 189, 248, 0.3); border-radius: 24px;
+    width: 100%; max-width: 650px; max-height: 85vh; overflow-y: auto; padding: 24px;
+    display: flex; flex-direction: column; gap: 14px; box-shadow: 0 25px 60px rgba(0,0,0,0.8);
+  }
+  .modal-top {
+    display: flex; justify-content: space-between; align-items: center;
+    border-bottom: 1.5px solid #334155; padding-bottom: 14px;
+  }
+  .modal-title { font-size: 18px; font-weight: 900; color: #38bdf8; }
+  .menu-list { display: grid; grid-template-columns: 1fr; gap: 8px; }
+  .menu-item {
+    background: #1e293b; border: 1px solid #334155; padding: 12px 18px; border-radius: 12px;
+    color: #f8fafc; font-size: 14px; font-weight: 700; display: flex; justify-content: space-between;
+    align-items: center; cursor: pointer; transition: all 0.2s;
+  }
+  .menu-item:hover, .menu-item.active {
+    background: #2563eb; border-color: #38bdf8; color: #ffffff; transform: translateX(4px);
+  }
+</style>
+</head>
+<body>
+
+  <!-- 頂部 Header -->
+  <header>
+    <div class="logo-title">
+      <div class="logo-badge">R</div>
+      <div>
+        <div>陳克銘 (Rumina) 作品集</div>
+        <div class="author-sub">24 頁全方位視覺設計 ＆ AI 專案全集</div>
+      </div>
+    </div>
+    <div class="header-links">
+      <button class="btn-nav" onclick="toggleMenu()">📑 24 頁目錄全覽</button>
+    </div>
+  </header>
+
+  <!-- 主作品集畫廊區 (支援左右滑動與翻頁) -->
+  <main>
+    <div class="viewer-container" id="viewerContainer">
+      <div class="page-card" id="pageCard">
+        <img class="page-img" id="pageImage" src="images/page_01.png" alt="陳克銘 24 頁作品集">
+      </div>
+    </div>
+  </main>
+
+  <!-- 底部懸浮控制器 -->
+  <div class="floating-controls">
+    <button class="btn-ctrl" onclick="prevPage()" title="上一頁 (鍵盤 ◀)">◀</button>
+    <div class="page-indicator" id="pageIndicator">第 01 / 24 頁</div>
+    <button class="btn-ctrl" onclick="nextPage()" title="下一頁 (鍵盤 ▶)">▶</button>
+  </div>
+
+  <!-- 24 頁專案全集目錄彈窗 -->
+  <div class="menu-modal" id="menuModal" onclick="if(event.target===this)toggleMenu()">
+    <div class="modal-content">
+      <div class="modal-top">
+        <div class="modal-title">📚 24 頁作品集全覽目錄</div>
+        <button class="btn-ctrl" style="width:36px;height:36px;font-size:16px;" onclick="toggleMenu()">✕</button>
+      </div>
+      <div class="menu-list" id="menuList"></div>
+    </div>
+  </div>
+
+<script>
+  const pages = [
+    { index: 1, title: "01. 封面 ‧ 多媒體視覺設計與 AI Agent 專案全集", file: "images/page_01.png" },
+    { index: 2, title: "02. 個人簡介 ‧ 自我介紹與核心專業技能", file: "images/page_02.png" },
+    { index: 3, title: "03. 作品目錄 ‧ 六大專案精選全覽", file: "images/page_03.png" },
+    { index: 4, title: "04. Logo 設計 ‧ 標誌理念與美學構圖", file: "images/page_04.png" },
+    { index: 5, title: "05. Logo 設計 ‧ 標準色彩與比例規範", file: "images/page_05.png" },
+    { index: 6, title: "06. Logo 設計 ‧ 商用情境模擬展示", file: "images/page_06.png" },
+    { index: 7, title: "07. Logo 設計 ‧ 品牌延伸應用", file: "images/page_07.png" },
+    { index: 8, title: "08. 卡片包裝 ‧ 結構設計與視覺概念", file: "images/page_08.png" },
+    { index: 9, title: "09. 卡片包裝 ‧ 刀模工藝與材質選定", file: "images/page_09.png" },
+    { index: 10, title: "10. 時尚包裝 ‧ 專案概念與風格定調", file: "images/page_10.png" },
+    { index: 11, title: "11. 時尚包裝 ‧ 3D 擬真渲染展演", file: "images/page_11.png" },
+    { index: 12, title: "12. 網站設計 ‧ UI/UX 介面架構規劃", file: "images/page_12.png" },
+    { index: 13, title: "13. 網站設計 ‧ 響應式 RWD 前端落地", file: "images/page_13.png" },
+    { index: 14, title: "14. 網站設計 ‧ 互動特效與動態體驗", file: "images/page_14.png" },
+    { index: 15, title: "15. AI 工具網站 ‧ 150+ 款工具庫門戶", file: "images/page_15.png" },
+    { index: 16, title: "16. 品牌行銷 ‧ 4A 策略與市場定位", file: "images/page_16.png" },
+    { index: 17, title: "17. 品牌行銷 ‧ Persona 目標受眾分析", file: "images/page_17.png" },
+    { index: 18, title: "18. 品牌行銷 ‧ 360 度整合行銷傳播", file: "images/page_18.png" },
+    { index: 19, title: "19. 品牌行銷 ‧ 品牌資產與成果回顧", file: "images/page_19.png" },
+    { index: 20, title: "20. LINE 貼圖 ‧ IP 角色設定與世界觀", file: "images/page_20.png" },
+    { index: 21, title: "21. LINE 貼圖 ‧ 表情包繪製與上架實證", file: "images/page_21.png" },
+    { index: 22, title: "22. 智能小黑 ‧ 本機 AI Agent 系統架構", file: "images/page_22.png" },
+    { index: 23, title: "23. 智能小黑 ‧ LINE 實機直控全功能大秀", file: "images/page_23.png" },
+    { index: 24, title: "24. 封底總覽 ‧ 虛實整合與聯絡資訊", file: "images/page_24.png" }
+  ];
+
+  let currentIndex = 0;
+  const pageImage = document.getElementById('pageImage');
+  const pageIndicator = document.getElementById('pageIndicator');
+  const menuList = document.getElementById('menuList');
+  const menuModal = document.getElementById('menuModal');
+  const pageCard = document.getElementById('pageCard');
+
+  function renderPage(idx) {
+    if (idx < 0 || idx >= pages.length) return;
+    currentIndex = idx;
+    
+    // 淡入淡出轉場效果
+    pageCard.style.opacity = '0.3';
+    setTimeout(() => {
+      pageImage.src = pages[currentIndex].file;
+      const numStr = (currentIndex + 1 < 10 ? '0' : '') + (currentIndex + 1);
+      pageIndicator.innerText = `第 ${numStr} / 24 頁`;
+      pageCard.style.opacity = '1';
+    }, 150);
+
+    // 更新目錄高亮
+    document.querySelectorAll('.menu-item').forEach((el, i) => {
+      el.classList.toggle('active', i === currentIndex);
+    });
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function prevPage() {
+    if (currentIndex > 0) renderPage(currentIndex - 1);
+  }
+
+  function nextPage() {
+    if (currentIndex < pages.length - 1) renderPage(currentIndex + 1);
+  }
+
+  function toggleMenu() {
+    menuModal.style.display = (menuModal.style.display === 'flex') ? 'none' : 'flex';
+  }
+
+  // 鍵盤左右鍵與空白鍵翻頁
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') prevPage();
+    if (e.key === 'ArrowRight' || e.key === ' ') nextPage();
+  });
+
+  // 手機觸控左右滑動支援 (Swipe gesture)
+  let touchStartX = 0;
+  let touchEndX = 0;
+  const viewerContainer = document.getElementById('viewerContainer');
+
+  viewerContainer.addEventListener('touchstart', (e) => {
+    touchStartX = e.changedTouches[0].screenX;
+  }, { passive: true });
+
+  viewerContainer.addEventListener('touchend', (e) => {
+    touchEndX = e.changedTouches[0].screenX;
+    handleSwipe();
+  }, { passive: true });
+
+  function handleSwipe() {
+    const diff = touchEndX - touchStartX;
+    if (Math.abs(diff) > 45) {
+      if (diff < 0) nextPage();
+      else prevPage();
+    }
+  }
+
+  // 初始化目錄列表
+  pages.forEach((p, idx) => {
+    const item = document.createElement('div');
+    item.className = 'menu-item';
+    item.innerHTML = `<span>${p.title}</span> <span>➜</span>`;
+    item.onclick = () => {
+      renderPage(idx);
+      toggleMenu();
+    };
+    menuList.appendChild(item);
+  });
+
+  renderPage(0);
+</script>
+</body>
+</html>
