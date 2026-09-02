@@ -119,11 +119,11 @@
       <div class="logo-badge">R</div>
       <div>
         <div>陳克銘 (Rumina) 作品集</div>
-        <div class="author-sub">24 頁全方位視覺設計 ＆ AI 專案全集</div>
+        <div class="author-sub">25 頁全方位視覺設計 ＆ AI 專案全集</div>
       </div>
     </div>
     <div class="header-links">
-      <button class="btn-nav" onclick="toggleMenu()">📑 24 頁目錄全覽</button>
+      <button class="btn-nav" onclick="toggleMenu()">📑 25 頁目錄全覽</button>
     </div>
   </header>
 
@@ -131,7 +131,7 @@
   <main>
     <div class="viewer-container" id="viewerContainer">
       <div class="page-card" id="pageCard">
-        <img class="page-img" id="pageImage" src="images/page_01.png" alt="陳克銘 24 頁作品集">
+        <img class="page-img" id="pageImage" src="images/page_01.png" alt="陳克銘 25 頁作品集">
       </div>
     </div>
   </main>
@@ -139,15 +139,15 @@
   <!-- 底部懸浮控制器 -->
   <div class="floating-controls">
     <button class="btn-ctrl" onclick="prevPage()" title="上一頁 (鍵盤 ◀)">◀</button>
-    <div class="page-indicator" id="pageIndicator">第 01 / 24 頁</div>
+    <div class="page-indicator" id="pageIndicator">第 01 / 25 頁</div>
     <button class="btn-ctrl" onclick="nextPage()" title="下一頁 (鍵盤 ▶)">▶</button>
   </div>
 
-  <!-- 24 頁專案全集目錄彈窗 -->
+  <!-- 25 頁專案全集目錄彈窗 -->
   <div class="menu-modal" id="menuModal" onclick="if(event.target===this)toggleMenu()">
     <div class="modal-content">
       <div class="modal-top">
-        <div class="modal-title">📚 24 頁作品集全覽目錄</div>
+        <div class="modal-title">📚 25 頁作品集全覽目錄</div>
         <button class="btn-ctrl" style="width:36px;height:36px;font-size:16px;" onclick="toggleMenu()">✕</button>
       </div>
       <div class="menu-list" id="menuList"></div>
@@ -155,7 +155,7 @@
   </div>
 
 <script>
-  const pages = [
+    const pages = [
     { index: 1, title: "01. 封面 ‧ 多媒體視覺設計與 AI Agent 專案全集", file: "images/page_01.png" },
     { index: 2, title: "02. 個人簡介 ‧ 自我介紹與核心專業技能", file: "images/page_02.png" },
     { index: 3, title: "03. 作品目錄 ‧ 六大專案精選全覽", file: "images/page_03.png" },
@@ -176,10 +176,11 @@
     { index: 18, title: "18. 品牌行銷 ‧ 360 度整合行銷傳播", file: "images/page_18.png" },
     { index: 19, title: "19. 品牌行銷 ‧ 品牌資產與成果回顧", file: "images/page_19.png" },
     { index: 20, title: "20. LINE 貼圖 ‧ IP 角色設定與世界觀", file: "images/page_20.png" },
-    { index: 21, title: "21. LINE 貼圖 ‧ 表情包繪製與上架實證", file: "images/page_21.png" },
-    { index: 22, title: "22. 智能小黑 ‧ 本機 AI Agent 系統架構", file: "images/page_22.png" },
-    { index: 23, title: "23. 智能小黑 ‧ LINE 實機直控全功能大秀", file: "images/page_23.png" },
-    { index: 24, title: "24. 封底總覽 ‧ 虛實整合與聯絡資訊", file: "images/page_24.png" }
+    { index: 21, title: "21. 智能小黑 ‧ 24hr LINE 貼身秘書 ＆ MCP 本機直控", file: "images/page_21.png" },
+    { index: 22, title: "22. 智能小黑 ‧ Google 試算表動態庫 ✕ 全能語音多模態", file: "images/page_22.png" },
+    { index: 23, title: "23. 專業認證 ‧ Google 官方 4 大專業能力認證", file: "images/page_23.png" },
+    { index: 24, title: "24. 國際證照 ‧ Adobe CC 官方認證 ＆ 專業技能評測", file: "images/page_24.png" },
+    { index: 25, title: "25. 封底總覽 ‧ 虛實整合與聯絡資訊", file: "images/page_25.png" }
   ];
 
   let currentIndex = 0;
@@ -198,7 +199,7 @@
     setTimeout(() => {
       pageImage.src = pages[currentIndex].file;
       const numStr = (currentIndex + 1 < 10 ? '0' : '') + (currentIndex + 1);
-      pageIndicator.innerText = `第 ${numStr} / 24 頁`;
+      pageIndicator.innerText = `第 ${numStr} / 25 頁`;
       pageCard.style.opacity = '1';
     }, 150);
 
