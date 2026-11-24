@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0, user-scalable=yes">
-<title>陳克銘 (Rumina) ‧ 39 頁全方位多媒體視覺設計 ＆ AI Agent 專案作品集</title>
+<title>陳克銘 (Rumina) ‧ 41 頁全方位多媒體視覺設計 ＆ AI Agent 專案作品集</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@700;900&family=Noto+Sans+TC:wght@400;500;700;900&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -119,11 +119,11 @@
       <div class="logo-badge">R</div>
       <div>
         <div>陳克銘 (Rumina) 作品集</div>
-        <div class="author-sub">39 頁全方位視覺設計 ＆ AI 專案全集</div>
+        <div class="author-sub">41 頁全方位視覺設計 ＆ AI 專案全集</div>
       </div>
     </div>
     <div class="header-links">
-      <button class="btn-nav" onclick="toggleMenu()">📑 39 頁目錄全覽</button>
+      <button class="btn-nav" onclick="toggleMenu()">📑 41 頁目錄全覽</button>
     </div>
   </header>
 
@@ -131,7 +131,7 @@
   <main>
     <div class="viewer-container" id="viewerContainer">
       <div class="page-card" id="pageCard">
-        <img class="page-img" id="pageImage" src="images/page_01.png" alt="陳克銘 39 頁作品集">
+        <img class="page-img" id="pageImage" src="images/page_01.png" alt="陳克銘 41 頁作品集">
       </div>
     </div>
   </main>
@@ -139,15 +139,15 @@
   <!-- 底部懸浮控制器 -->
   <div class="floating-controls">
     <button class="btn-ctrl" onclick="prevPage()" title="上一頁 (鍵盤 ◀)">◀</button>
-    <div class="page-indicator" id="pageIndicator">第 01 / 39 頁</div>
+    <div class="page-indicator" id="pageIndicator">第 01 / 41 頁</div>
     <button class="btn-ctrl" onclick="nextPage()" title="下一頁 (鍵盤 ▶)">▶</button>
   </div>
 
-  <!-- 37 頁專案全集目錄彈窗 -->
+  <!-- 41 頁專案全集目錄彈窗 -->
   <div class="menu-modal" id="menuModal" onclick="if(event.target===this)toggleMenu()">
     <div class="modal-content">
       <div class="modal-top">
-        <div class="modal-title">📚 39 頁作品集全覽目錄</div>
+        <div class="modal-title">📚 41 頁作品集全覽目錄</div>
         <button class="btn-ctrl" style="width:36px;height:36px;font-size:16px;" onclick="toggleMenu()">✕</button>
       </div>
       <div class="menu-list" id="menuList"></div>
@@ -158,7 +158,7 @@
     const pages = [
     { index: 1, title: "01. 封面 ‧ 多媒體視覺設計與 AI Agent 專案全集", file: "images/page_01.png" },
     { index: 2, title: "02. 個人簡介 ‧ 自我介紹與核心專業技能", file: "images/page_02.png" },
-    { index: 3, title: "03. 作品目錄 ‧ 九大專案精選全覽", file: "images/page_03.png" },
+    { index: 3, title: "03. 作品目錄 ‧ 十大專案精選全覽", file: "images/page_03.png" },
     { index: 4, title: "04. Logo 設計 ‧ 標誌理念與美學構圖", file: "images/page_04.png" },
     { index: 5, title: "05. Logo 設計 ‧ 標準色彩與比例規範", file: "images/page_05.png" },
     { index: 6, title: "06. Logo 設計 ‧ 商用情境模擬展示", file: "images/page_06.png" },
@@ -192,9 +192,11 @@
     { index: 34, title: "34. 地球異界錄 ‧ 全流程成果總覽：卡塔通博閃電實機 QR ＆ 20 部作品矩陣", file: "images/page_34.png" },
     { index: 35, title: "35. 全域懸浮語音聽打 ‧ Whisper ✕ LLM 雙核心全能語音助手架構", file: "images/page_35.png" },
     { index: 36, title: "36. 全域懸浮語音聽打 ‧ 三代版本演進過程 (V0 ➔ V1 ➔ V2) ＆ 四大核心工程突破", file: "images/page_36.png" },
-    { index: 37, title: "37. 專業認證 ‧ Google 官方 4 大專業能力認證", file: "images/page_37.png" },
-    { index: 38, title: "38. 國際證照 ‧ Adobe CC 官方認證 ＆ 專業技能評測", file: "images/page_38.png" },
-    { index: 39, title: "39. 封底總覽 ‧ 虛實整合與聯絡資訊", file: "images/page_39.png" }
+    { index: 37, title: "37. 開源角色一致性工程 ‧ Qwen 2.1 三向鎖臉與 16:9 / 9:16 崩臉機制演進", file: "images/page_37.png" },
+    { index: 38, title: "38. 開源角色一致性工程 ‧ 黑-25 三代防違規演化、失敗復盤 ＆ 跨角度高奢成品牆", file: "images/page_38.png" },
+    { index: 39, title: "39. 專業認證 ‧ Google 官方 4 大專業能力認證", file: "images/page_39.png" },
+    { index: 40, title: "40. 國際證照 ‧ Adobe CC 官方認證 ＆ 專業技能評測", file: "images/page_40.png" },
+    { index: 41, title: "41. 封底總覽 ‧ 虛實整合與聯絡資訊", file: "images/page_41.png" }
   ];
 
   let currentIndex = 0;
