@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0, user-scalable=yes">
-<title>陳克銘 (Rumina) ‧ 41 頁全方位多媒體視覺設計 ＆ AI Agent 專案作品集</title>
+<title>陳克銘 (Rumina) ‧ 45 頁全方位多媒體視覺設計 ＆ AI Agent 專案作品集</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@700;900&family=Noto+Sans+TC:wght@400;500;700;900&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -119,11 +119,11 @@
       <div class="logo-badge">R</div>
       <div>
         <div>陳克銘 (Rumina) 作品集</div>
-        <div class="author-sub">41 頁全方位視覺設計 ＆ AI 專案全集</div>
+        <div class="author-sub">45 頁全方位視覺設計 ＆ AI 專案全集</div>
       </div>
     </div>
     <div class="header-links">
-      <button class="btn-nav" onclick="toggleMenu()">📑 41 頁目錄全覽</button>
+      <button class="btn-nav" onclick="toggleMenu()">📑 45 頁目錄全覽</button>
     </div>
   </header>
 
@@ -131,7 +131,7 @@
   <main>
     <div class="viewer-container" id="viewerContainer">
       <div class="page-card" id="pageCard">
-        <img class="page-img" id="pageImage" src="images/page_01.png" alt="陳克銘 41 頁作品集">
+        <img class="page-img" id="pageImage" src="images/page_01.png?v=20261127" alt="陳克銘 45 頁作品集">
       </div>
     </div>
   </main>
@@ -139,15 +139,15 @@
   <!-- 底部懸浮控制器 -->
   <div class="floating-controls">
     <button class="btn-ctrl" onclick="prevPage()" title="上一頁 (鍵盤 ◀)">◀</button>
-    <div class="page-indicator" id="pageIndicator">第 01 / 41 頁</div>
+    <div class="page-indicator" id="pageIndicator">第 01 / 45 頁</div>
     <button class="btn-ctrl" onclick="nextPage()" title="下一頁 (鍵盤 ▶)">▶</button>
   </div>
 
-  <!-- 41 頁專案全集目錄彈窗 -->
+  <!-- 45 頁專案全集目錄彈窗 -->
   <div class="menu-modal" id="menuModal" onclick="if(event.target===this)toggleMenu()">
     <div class="modal-content">
       <div class="modal-top">
-        <div class="modal-title">📚 41 頁作品集全覽目錄</div>
+        <div class="modal-title">📚 45 頁作品集全覽目錄</div>
         <button class="btn-ctrl" style="width:36px;height:36px;font-size:16px;" onclick="toggleMenu()">✕</button>
       </div>
       <div class="menu-list" id="menuList"></div>
@@ -156,47 +156,51 @@
 
 <script>
     const pages = [
-    { index: 1, title: "01. 封面 ‧ 多媒體視覺設計與 AI Agent 專案全集", file: "images/page_01.png" },
-    { index: 2, title: "02. 個人簡介 ‧ 自我介紹與核心專業技能", file: "images/page_02.png" },
-    { index: 3, title: "03. 作品目錄 ‧ 十大專案精選全覽", file: "images/page_03.png" },
-    { index: 4, title: "04. Logo 設計 ‧ 標誌理念與美學構圖", file: "images/page_04.png" },
-    { index: 5, title: "05. Logo 設計 ‧ 標準色彩與比例規範", file: "images/page_05.png" },
-    { index: 6, title: "06. Logo 設計 ‧ 商用情境模擬展示", file: "images/page_06.png" },
-    { index: 7, title: "07. Logo 設計 ‧ 品牌延伸應用", file: "images/page_07.png" },
-    { index: 8, title: "08. 卡片包裝 ‧ 結構設計與視覺概念", file: "images/page_08.png" },
-    { index: 9, title: "09. 卡片包裝 ‧ 刀模工藝與材質選定", file: "images/page_09.png" },
-    { index: 10, title: "10. 時尚包裝 ‧ 專案概念與風格定調", file: "images/page_10.png" },
-    { index: 11, title: "11. 時尚包裝 ‧ 3D 擬真渲染展演", file: "images/page_11.png" },
-    { index: 12, title: "12. 網站設計 ‧ UI/UX 介面架構規劃", file: "images/page_12.png" },
-    { index: 13, title: "13. 網站設計 ‧ 響應式 RWD 前端落地", file: "images/page_13.png" },
-    { index: 14, title: "14. 網站設計 ‧ 互動特效與動態體驗", file: "images/page_14.png" },
-    { index: 15, title: "15. AI 工具網站 ‧ 150+ 款工具庫門戶", file: "images/page_15.png" },
-    { index: 16, title: "16. 品牌行銷 ‧ 4A 策略與市場定位", file: "images/page_16.png" },
-    { index: 17, title: "17. 品牌行銷 ‧ Persona 目標受眾分析", file: "images/page_17.png" },
-    { index: 18, title: "18. 品牌行銷 ‧ 360 度整合行銷傳播", file: "images/page_18.png" },
-    { index: 19, title: "19. 品牌行銷 ‧ 品牌資產與成果回顧", file: "images/page_19.png" },
-    { index: 20, title: "20. LINE 貼圖 ‧ IP 角色設定與世界觀", file: "images/page_20.png" },
-    { index: 21, title: "21. 智能小黑 ‧ 24hr LINE 貼身秘書 ＆ MCP 本機直控", file: "images/page_21.png" },
-    { index: 22, title: "22. 智能小黑 ‧ Google 試算表動態庫 ✕ 全能語音多模態", file: "images/page_22.png" },
-    { index: 23, title: "23. 開源 AIGC 工作流 ‧ 16G 輕量化雙階段視覺與動態架構", file: "images/page_23.png" },
-    { index: 24, title: "24. 開源 AIGC 工作流 ‧ 視覺大片展示：神話巨獸 ＆ 暗黑奇幻", file: "images/page_24.png" },
-    { index: 25, title: "25. 開源 AIGC 工作流 ‧ 基礎工作流架構、取樣器演算法與權重調優全景", file: "images/page_25.png" },
-    { index: 26, title: "26. 開源 AIGC 工作流 ‧ 技術困難復盤 ＆ 工業級防禦修正方案", file: "images/page_26.png" },
-    { index: 27, title: "27. 開源 AIGC 工作流 ‧ 開源生圖轉 LTX 動態影片 ＆ 二採放大與抓尾幀解密", file: "images/page_27.png" },
-    { index: 28, title: "28. 開源 AIGC 工作流 ‧ 全流程實戰案例展示：大荒饕餮 ＆ 音畫串接成片", file: "images/page_28.png" },
-    { index: 29, title: "29. 地球異界錄 ‧ AI 短影音視覺敘事與音畫製作工作流總覽", file: "images/page_29.png" },
-    { index: 30, title: "30. 地球異界錄 ‧ 六大奇觀光譜輪替 ＆ 後期 8 題五維配分評選", file: "images/page_30.png" },
-    { index: 31, title: "31. 地球異界錄 ‧ 60 秒六鏡導演分鏡設計 ＆ 字幕與視覺整體優化", file: "images/page_31.png" },
-    { index: 32, title: "32. 地球異界錄 ‧ 字幕大小演進實證、動態校正與側鏈混音優化", file: "images/page_32.png" },
-    { index: 33, title: "33. 地球異界錄 ‧ ASS 畫面座標優化、庫存生產與 FIFO 發布系統", file: "images/page_33.png" },
-    { index: 34, title: "34. 地球異界錄 ‧ 全流程成果總覽：卡塔通博閃電實機 QR ＆ 20 部作品矩陣", file: "images/page_34.png" },
-    { index: 35, title: "35. 全域懸浮語音聽打 ‧ Whisper ✕ LLM 雙核心全能語音助手架構", file: "images/page_35.png" },
-    { index: 36, title: "36. 全域懸浮語音聽打 ‧ 三代版本演進過程 (V0 ➔ V1 ➔ V2) ＆ 四大核心工程突破", file: "images/page_36.png" },
-    { index: 37, title: "37. 開源角色一致性工程 ‧ Qwen 2.1 三向鎖臉與 16:9 / 9:16 崩臉機制演進", file: "images/page_37.png" },
-    { index: 38, title: "38. 開源角色一致性工程 ‧ 黑-25 三代防違規演化、失敗復盤 ＆ 跨角度高奢成品牆", file: "images/page_38.png" },
-    { index: 39, title: "39. 專業認證 ‧ Google 官方 4 大專業能力認證", file: "images/page_39.png" },
-    { index: 40, title: "40. 國際證照 ‧ Adobe CC 官方認證 ＆ 專業技能評測", file: "images/page_40.png" },
-    { index: 41, title: "41. 封底總覽 ‧ 虛實整合與聯絡資訊", file: "images/page_41.png" }
+    { index: 1, title: "01. 封面 ‧ 多媒體視覺設計 ＆ AI 智慧應用作品集", file: "images/page_01.png?v=20261127" },
+    { index: 2, title: "02. 個人簡介 ‧ 經歷背景、核心專長與六大實戰實績", file: "images/page_02.png?v=20261127" },
+    { index: 3, title: "03. 作品目錄 ‧ 十大專案精選全覽", file: "images/page_03.png?v=20261127" },
+    { index: 4, title: "04. North_Han CIS ‧ 品牌標誌正稿規範、設計理念與色彩計畫", file: "images/page_04.png?v=20261127" },
+    { index: 5, title: "05. North_Han CIS ‧ 標誌幾何構圖演進與手繪黑板工程藍圖", file: "images/page_05.png?v=20261127" },
+    { index: 6, title: "06. North_Han CIS ‧ VI 三大標準色票、標準字體與安全邊界規範", file: "images/page_06.png?v=20261127" },
+    { index: 7, title: "07. North_Han CIS ‧ 實體商業載體模擬展示與人機協作配比", file: "images/page_07.png?v=20261127" },
+    { index: 8, title: "08. 布魯瑪莉 LINE 貼圖 ‧ 原創 IP 角色演進與 40 張全彩貼圖矩陣", file: "images/page_08.png?v=20261127" },
+    { index: 9, title: "09. 布魯瑪莉 LINE 貼圖 ‧ 官方上架實測、商業化規格與人機配比", file: "images/page_09.png?v=20261127" },
+    { index: 10, title: "10. 賽馬時光宣傳影片 ‧ 多軌剪輯工程重點與動態視覺合成", file: "images/page_10.png?v=20261127" },
+    { index: 11, title: "11. 賽馬時光宣傳影片 ‧ 動態特效拆解與純手工後製（Pr／Ae）", file: "images/page_11.png?v=20261127" },
+    { index: 12, title: "12. AI 智慧工具站 ‧ 全站視覺門戶、DESIGN.MD 色彩系統與四大架構", file: "images/page_12.png?v=20261127" },
+    { index: 13, title: "13. AI 智慧工具站 ‧ 五階段全端開發演進史（XD → Figma → VS Code → AI）", file: "images/page_13.png?v=20261127" },
+    { index: 14, title: "14. AI 智慧工具站 ‧ 150+ 三層選品金字塔、卡片解剖與 17+ 分類矩陣", file: "images/page_14.png?v=20261127" },
+    { index: 15, title: "15. AI 智慧工具站 ‧ 多端響應式 RWD 實機展示、前端效能與人機配比", file: "images/page_15.png?v=20261127" },
+    { index: 16, title: "16. 幻境配樂 ‧ 品牌核心定位與 4A 商業策略量化指標", file: "images/page_16.png?v=20261127" },
+    { index: 17, title: "17. 幻境配樂 ‧ 三大純音樂曲風規範（史詩管弦／新古典空靈／高燃戰鬥）", file: "images/page_17.png?v=20261127" },
+    { index: 18, title: "18. 幻境配樂 ‧ Stems 音軌分離技術與三層商業變現模式", file: "images/page_18.png?v=20261127" },
+    { index: 19, title: "19. 幻境配樂 ‧ 商業配樂五階段自動上架管線、八道閘門與人機配比", file: "images/page_19.png?v=20261127" },
+    { index: 20, title: "20. 智能小黑 AI Agent ‧ 產品起源與三階段技術演進史（MCP 本機直控）", file: "images/page_20.png?v=20261127" },
+    { index: 21, title: "21. 智能小黑 AI Agent ‧ 24hr LINE 對話實戰、JSON 帳本與硬體溫控", file: "images/page_21.png?v=20261127" },
+    { index: 22, title: "22. 智能小黑 AI Agent ‧ Google 試算表雙向同步、語音多模態與人機配比", file: "images/page_22.png?v=20261127" },
+    { index: 23, title: "23. 開源 AIGC 工作流 ‧ 本機自動化生圖總控台 (AI Studio Console)", file: "images/page_23.png?v=20261127" },
+    { index: 24, title: "24. 開源 AIGC 工作流 ‧ 七大題材視覺光譜矩陣與商業落地", file: "images/page_24.png?v=20261127" },
+    { index: 25, title: "25. 開源 AIGC 工作流 ‧ ComfyUI 基礎生圖架構、取樣演算法與四大模型配置", file: "images/page_25.png?v=20261127" },
+    { index: 26, title: "26. 開源 AIGC 工作流 ‧ 生圖實戰技術復盤、防爆顯存方案與人機配比", file: "images/page_26.png?v=20261127" },
+    { index: 27, title: "27. 開源 AIGC 工作流 ‧ LTX-2.5 動態影片二採放大與自動抓尾幀接力", file: "images/page_27.png?v=20261127" },
+    { index: 28, title: "28. 開源 AIGC 工作流 ‧ 開源動態成片實戰案例、YouTube 預覽與人機配比", file: "images/page_28.png?v=20261127" },
+    { index: 29, title: "29. 地球異界錄 ‧ AI 短影音八步驟標準工作流 (v1.0 → v2.0 實戰演進)", file: "images/page_29.png?v=20261127" },
+    { index: 30, title: "30. 地球異界錄 ‧ 六大奇觀光譜輪替、五維配分評選與實網考證", file: "images/page_30.png?v=20261127" },
+    { index: 31, title: "31. 地球異界錄 ‧ 60 秒六鏡導演分鏡設計與 82pt 單行字幕規格", file: "images/page_31.png?v=20261127" },
+    { index: 32, title: "32. 地球異界錄 ‧ 字幕演進實證、動態校正與 48kHz 側鏈混音", file: "images/page_32.png?v=20261127" },
+    { index: 33, title: "33. 地球異界錄 ‧ 紀錄片旁白敘事、原創配樂與 FIFO 庫存發布系統", file: "images/page_33.png?v=20261127" },
+    { index: 34, title: "34. 地球異界錄 ‧ 全流程實戰成果、20+ 集精選作品矩陣與人機配比", file: "images/page_34.png?v=20261127" },
+    { index: 35, title: "35. 全域懸浮語音聽打 ‧ Whisper ✕ LLM 雙核心架構與 Alt+A 單手盲操", file: "images/page_35.png?v=20261127" },
+    { index: 36, title: "36. 全域懸浮語音聽打 ‧ 三代版本演進 (V0 → V1 → V2) 與四大工程突破", file: "images/page_36.png?v=20261127" },
+    { index: 37, title: "37. 開源角色一致性工程 ‧ Qwen 2.1 四圖三向鎖臉工作流演進", file: "images/page_37.png?v=20261127" },
+    { index: 38, title: "38. 開源角色一致性工程 ‧ 多角度全身棚拍定錨實戰、失敗復盤與人機配比", file: "images/page_38.png?v=20261127" },
+    { index: 39, title: "39. 開源角色一致性工程 ‧ H3 Ref2VA 60 秒參考動作遷移與一鏡到底接力", file: "images/page_39.png?v=20261127" },
+    { index: 40, title: "40. 開源角色一致性工程 ‧ 60 秒動線實戰除錯復盤、SOP 與人機配比", file: "images/page_40.png?v=20261127" },
+    { index: 41, title: "41. 開源角色一致性工程 ‧ 多角度分鏡圖生影 92 秒長片運鏡實戰", file: "images/page_41.png?v=20261127" },
+    { index: 42, title: "42. 開源角色一致性工程 ‧ 92 秒分鏡除錯復盤、YouTube 完整成片與人機配比", file: "images/page_42.png?v=20261127" },
+    { index: 43, title: "43. 專業認證 ‧ Google 官方 4 大專業能力認證", file: "images/page_43.png?v=20261127" },
+    { index: 44, title: "44. 國際證照 ‧ Adobe Photoshop CC 官方國際專業證照", file: "images/page_44.png?v=20261127" },
+    { index: 45, title: "45. 封底總覽 ‧ 跨界能力總結與聯絡資訊", file: "images/page_45.png?v=20261127" }
   ];
 
   let currentIndex = 0;
